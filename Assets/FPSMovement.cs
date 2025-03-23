@@ -65,6 +65,9 @@ public class FPSMovement : MonoBehaviour
             velocity.y = -2f; // keep the player grounded
         }
 
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             Debug.Log("Is grounded: " + controller.isGrounded);
@@ -75,8 +78,5 @@ public class FPSMovement : MonoBehaviour
             Debug.Log("Jump!");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
-
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
     }
 }

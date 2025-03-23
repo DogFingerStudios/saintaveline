@@ -11,6 +11,8 @@ public class DoorMech : MonoBehaviour
 
 	public bool doorBool;
 
+	private float doorTimer = 0f;
+
 
 	void Start()
 	{
@@ -30,6 +32,13 @@ public class DoorMech : MonoBehaviour
 
 	void Update()
 	{
+		doorTimer += Time.deltaTime;
+		if (doorTimer >= 5f)
+		{
+			doorBool = !doorBool;
+			doorTimer = 0f;
+		}
+
 		if (doorBool)
 			transform.rotation = Quaternion.Lerp (transform.rotation, Quaternion.Euler (OpenRotation), rotSpeed * Time.deltaTime);
 		else
