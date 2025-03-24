@@ -803,6 +803,7 @@ GameObject:
   - component: {fileID: 1830504926}
   - component: {fileID: 1830504927}
   - component: {fileID: 1830504928}
+  - component: {fileID: 1830504929}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -919,6 +920,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  sprintSpeedFactor: 5
   jumpHeight: 2
   mouseSensitivity: 2
   maxLookAngle: 75
@@ -939,6 +941,20 @@ MonoBehaviour:
   thirdPersonPosition: {fileID: 296751747}
   transitionSpeed: 5
   toggleKey: 96
+--- !u!114 &1830504929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830504921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fb4390bcf03c545bfafe9b490fbfd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  terrain: {fileID: 1387448000}
+  edgeDistanceThreshold: 20
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

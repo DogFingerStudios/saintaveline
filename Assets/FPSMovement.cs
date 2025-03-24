@@ -5,6 +5,7 @@ public class FPSMovement : MonoBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;       // Walking speed
+    public float sprintSpeedFactor = 5f; // Sprint speed factor
     public float jumpHeight = 2f;      // Jump power
 
     [Header("Mouse Look Settings")]
@@ -42,7 +43,7 @@ public class FPSMovement : MonoBehaviour
         var localMoveSpeed = moveSpeed;
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            localMoveSpeed *= 2;
+            localMoveSpeed *= sprintSpeedFactor;
         }
 
         // Rotate the Player body left/right
