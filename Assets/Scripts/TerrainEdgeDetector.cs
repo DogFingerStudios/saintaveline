@@ -24,8 +24,13 @@ public class TerrainEdgeDetector : MonoBehaviour
             distanceToTopEdge <= edgeDistanceThreshold ||
             distanceToBottomEdge <= edgeDistanceThreshold)
         {
-            Debug.Log("Near the edge of the terrain!");
-            SceneManager.LoadScene("MainMenu");
+            gameOver();
         }
+    }
+
+    private void gameOver()
+    {
+        Debug.Log("Game Over!");
+        SceneManager.LoadScene("MainMenu");
     }
 }
