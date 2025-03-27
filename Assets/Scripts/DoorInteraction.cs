@@ -27,10 +27,13 @@ public class DoorInteraction : MonoBehaviour
         if (Physics.Raycast(ray, out hit, interactionDistance))
         {
             // Check if the object hit by the ray has the door script
-            Door targetDoor = hit.collider.GetComponent<Door>();
+            // DoorMech targetDoor = hit.collider.GetComponent<DoorMech>();
+            DoorMech targetDoor = hit.collider.transform.parent != null ? hit.collider.transform.parent.GetComponent<DoorMech>() : null;
             if (targetDoor != null)
             {
                 // targetDoor.ToggleDoor();  // Open or close the door
+                Debug.Log("Door named: " + targetDoor.name + " was interacted with.");
+                targetDoor.doorBool = !targetDoor.doorBool;
             }
         }
     }
