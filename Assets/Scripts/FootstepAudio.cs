@@ -5,21 +5,27 @@ public class FootstepAudio : MonoBehaviour
     public AudioClip[] footstepClips;
     public float stepInterval = 0.5f;
 
-    private CharacterController controller;
     private AudioSource audioSource;
+    private CharacterController controller;
+    private Vector3 lastPosition;
     private float stepTimer;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
+        lastPosition = transform.position;
     }
 
     void Update()
     {
-        bool isMoving = controller.velocity.magnitude > 0.01f;// && controller.isGrounded;
+        Vector3 horizontalMove = transform.position - lastPosition;
+        horizontalMove.y = 0f; // Ignore vertical movement
 
-        if (isMoving)
+        bool isMovingHorizontally = horizontalMove.magnitude > 0.01f;
+        bool isGrounded = controller.isGrounded;
+
+        if (isMovingHorizontally && isGrounded)
         {
             stepTimer -= Time.deltaTime;
             if (stepTimer <= 0f)
@@ -28,10 +34,8 @@ public class FootstepAudio : MonoBehaviour
                 stepTimer = stepInterval;
             }
         }
-        else
-        {
-            stepTimer = 0f; // Reset the timer when not moving
-        }
+
+        lastPosition = transform.position;
     }
 
     void PlayFootstep()

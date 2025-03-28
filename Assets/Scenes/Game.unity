@@ -200,6 +200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hudPanel: {fileID: 1420598127}
   groundedText: {fileID: 1306678621}
+  speedText: {fileID: 0}
   controller: {fileID: 1830504926}
 --- !u!1 &348393292 stripped
 GameObject:
@@ -1178,7 +1179,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -433.00003}
-  m_SizeDelta: {x: 300, y: 866}
+  m_SizeDelta: {x: 200, y: 866}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &897691375
 MonoBehaviour:
@@ -1541,9 +1542,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 897691374}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -172, y: -25}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 140, y: -25}
   m_SizeDelta: {x: 280, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1306678621
@@ -1593,8 +1594,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2148,7 +2149,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1830504921}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f66b57962c455648af7c520c9c30d5f, type: 3}
   m_Name: 
@@ -2156,10 +2157,14 @@ MonoBehaviour:
   footstepClips:
   - {fileID: 8300000, guid: 8e001351cd7065543a068386cde4c960, type: 3}
   - {fileID: 8300000, guid: c41fb169b2991c247a5466e00faa6639, type: 3}
-  - {fileID: 8300000, guid: 44737e645aa918043b3d8cab5d1511bc, type: 3}
-  - {fileID: 8300000, guid: 0b8aed54efbbfa946af2f31d3d92f9cd, type: 3}
-  - {fileID: 8300000, guid: b91418e7e651a5741a14cd31af0f5ba8, type: 3}
-  - {fileID: 8300000, guid: a5d1dce4bff0e0a458049ab99fef06c4, type: 3}
+  - {fileID: 8300000, guid: 76c66b3ae15685a45a334b0628d1edd1, type: 3}
+  - {fileID: 8300000, guid: cb9aa4db4b3a12147bf2fe3d88fee270, type: 3}
+  - {fileID: 8300000, guid: 2e832dbb2c7c9ba4e97fd3005fe850b7, type: 3}
+  - {fileID: 8300000, guid: 3af6e561e364a274aa306461461c386b, type: 3}
+  - {fileID: 8300000, guid: 30668cf6c5cbfef478b0812fc59eb646, type: 3}
+  - {fileID: 8300000, guid: eea9624d96ae191439615ca598fe01fa, type: 3}
+  - {fileID: 8300000, guid: a45bdfd5056ed1d4d8f667cc2498ca12, type: 3}
+  - {fileID: 8300000, guid: ec4bd5988d7de0c41ab2d9959705dd8b, type: 3}
   stepInterval: 0.5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
