@@ -611,7 +611,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1875161216842860738, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       propertyPath: OpenRotation.y
-      value: 90
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 1875161216909753061, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       propertyPath: doorBool
@@ -619,7 +619,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1875161216909753061, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       propertyPath: OpenRotation.y
-      value: 90
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875161216909753061, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
+      propertyPath: CloseRotation.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 1875161217135212626, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       propertyPath: OpenRotation.y
@@ -672,6 +676,10 @@ PrefabInstance:
     - target: {fileID: 1875161217685728290, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       propertyPath: OpenRotation.y
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1875161217685728290, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
+      propertyPath: CloseRotation.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 1875161217831160465, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       propertyPath: m_Name
@@ -1486,7 +1494,7 @@ Transform:
   m_GameObject: {fileID: 1830504921}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 250.7, y: 1.76, z: 290.3}
+  m_LocalPosition: {x: 250.7, y: 1.76, z: 285.39}
   m_LocalScale: {x: 1, y: 1.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
