@@ -23,7 +23,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 | Tool / Engine | Purpose |
 |---------------|---------|
-| **Unity 6000** | Game engine |
+| **Unity 6000.0.43f1** | Game engine |
 | **C#** | Core gameplay logic and systems |
 | **NavMesh Components** | AI pathfinding and navigation |
 | **TextMeshPro** | UI and HUD systems |
