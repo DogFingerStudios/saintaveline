@@ -31,9 +31,23 @@ public class DoorInteraction : MonoBehaviour
             DoorMech targetDoor = hit.collider.transform.parent != null ? hit.collider.transform.parent.GetComponent<DoorMech>() : null;
             if (targetDoor != null)
             {
-                // targetDoor.ToggleDoor();  // Open or close the door
-                Debug.Log("Door named: " + targetDoor.name + " was interacted with.");
                 targetDoor.doorBool = !targetDoor.doorBool;
+                if (targetDoor.name == "DoorEntry_R_LOD")
+                {
+                    DoorMech leftDoor = GameObject.Find("DoorEntry_L_LOD").GetComponent<DoorMech>();
+                    if (leftDoor != null)
+                    {
+                        leftDoor.doorBool = targetDoor.doorBool;
+                    }
+                }
+                else if (targetDoor.name == "DoorEntry_L_LOD")
+                {
+                    DoorMech leftDoor = GameObject.Find("DoorEntry_R_LOD").GetComponent<DoorMech>();
+                    if (leftDoor != null)
+                    {
+                        leftDoor.doorBool = targetDoor.doorBool;
+                    }
+                }
             }
         }
     }
