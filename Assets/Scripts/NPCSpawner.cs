@@ -30,10 +30,10 @@ public class NPCSpawner : MonoBehaviour
                 bool doneLocating = false;
                 while (!doneLocating)
                 {
-                    if (!usedSpawnPoints.Contains( Vector3Int.RoundToInt(npc.transform.position)))
+                    if (!usedSpawnPoints.Contains(Vector3Int.RoundToInt(npc.transform.position)))
                     {
-                        usedSpawnPoints.Add( Vector3Int.RoundToInt(npc.transform.position));
-                        doneLocating = true;
+                        usedSpawnPoints.Add(Vector3Int.RoundToInt(npc.transform.position));
+                        doneLocating = true; 
                         continue;
                     }
 
