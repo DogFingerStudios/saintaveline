@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8057289084356656309}
   - component: {fileID: 2352606144182103831}
   - component: {fileID: -2698667393064116215}
+  - component: {fileID: 5119510973030090555}
   m_Layer: 0
   m_Name: NPC_Capsule
   m_TagString: NPC
@@ -161,3 +162,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5119510973030090555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8018992134920938627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b7a44335fee1344b914d19a2f02e794, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRange: 500
