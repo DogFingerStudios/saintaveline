@@ -5,7 +5,7 @@ public class NPCSpawner : MonoBehaviour
     public GameObject npcPrefab;
     public Transform[] spawnPoints;
     public int npcCount = 3;
-
+    public Color npcColor = Color.red;
     void Start()
     {
         SpawnNPCs();
@@ -18,12 +18,11 @@ public class NPCSpawner : MonoBehaviour
             int index = Random.Range(0, spawnPoints.Length);
             Transform spawn = spawnPoints[index];
             
-            // Find closest NavMesh-valid position near spawn point
             UnityEngine.AI.NavMeshHit navHit;
             if (UnityEngine.AI.NavMesh.SamplePosition(spawn.position, out navHit, 5f, UnityEngine.AI.NavMesh.AllAreas))
             {
-                // Spawn NPC at this valid NavMesh location
-                Instantiate(npcPrefab, navHit.position, spawn.rotation);
+                GameObject npc = Instantiate(npcPrefab, navHit.position, spawn.rotation);
+                npc.GetComponent<Renderer>().material.color = npcColor;
             }
             else
             {
