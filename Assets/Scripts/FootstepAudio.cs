@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class FootstepAudio : MonoBehaviour
 {
-    public AudioClip[] footstepClips;
+    public AudioClip[] concreteSteps;
+    public AudioClip[] woodSteps;
+    public AudioClip[] dirtSteps;
     public float stepInterval = 0.5f;
+    // public LayerMask groundLayers;
 
-    private AudioSource audioSource;
     private CharacterController controller;
-    private Vector3 lastPosition;
+    private AudioSource audioSource;
     private float stepTimer;
+    private Vector3 lastPosition;
 
     void Start()
     {
@@ -19,13 +22,10 @@ public class FootstepAudio : MonoBehaviour
 
     void Update()
     {
-        Vector3 horizontalMove = transform.position - lastPosition;
-        horizontalMove.y = 0f; // Ignore vertical movement
+        Vector3 move = transform.position - lastPosition;
+        move.y = 0f;
 
-        bool isMovingHorizontally = horizontalMove.magnitude > 0.01f;
-        bool isGrounded = controller.isGrounded;
-
-        if (isMovingHorizontally && isGrounded)
+        if (move.magnitude > 0.01f && controller.isGrounded)
         {
             stepTimer -= Time.deltaTime;
             if (stepTimer <= 0f)
@@ -40,9 +40,46 @@ public class FootstepAudio : MonoBehaviour
 
     void PlayFootstep()
     {
-        if (footstepClips.Length == 0) return;
+        SurfaceType surface = DetectSurface();
 
-        int index = Random.Range(0, footstepClips.Length);
-        audioSource.PlayOneShot(footstepClips[index]);
+        AudioClip clip = GetRandomClipForSurface(surface);
+        if (clip != null)
+        {
+            audioSource.pitch = Random.Range(0.9f, 1.1f);
+            audioSource.PlayOneShot(clip);
+        }
+    }
+
+    SurfaceType DetectSurface()
+    {
+        Ray ray = new Ray(transform.position + Vector3.up * 0.1f, Vector3.down);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 2f))
+        {
+            SurfaceIdentifier identifier = hit.collider.GetComponent<SurfaceIdentifier>();
+            if (identifier != null)
+            {
+                return identifier.surfaceType;
+            }
+        }
+
+        return SurfaceType.Concrete; // Default
+    }
+
+    AudioClip GetRandomClipForSurface(SurfaceType surface)
+    {
+        switch (surface)
+        {
+            case SurfaceType.Concrete:
+                return concreteSteps[Random.Range(0, concreteSteps.Length)];
+            case SurfaceType.Wood:
+                return woodSteps[Random.Range(0, woodSteps.Length)];
+            case SurfaceType.Dirt:
+                return dirtSteps[Random.Range(0, dirtSteps.Length)];
+            default:
+                return null;
+        }
     }
 }
+
