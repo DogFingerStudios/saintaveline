@@ -32,8 +32,150 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 ---
 
-## 🗺️ Prototype Roadmap
+## 🎯 **Prototype Goals**
+- ✅ Establish basic player movement (FPS + 3rd person toggle)
+- ✅ Build a small portion of the tower (Ground Floor + 9th Floor + Roof)
+- ✅ Implement basic AI (patrol, chase, attack)
+- ✅ Create initial stealth and combat mechanics
+- ✅ Set up family NPCs with basic interaction and survival dynamics
+- ✅ Establish basic ending conditions (reach the roof or kill all guards)
 
-### ✅ Core Mechanics
-- [x] FPS / TPS toggle
-- [x] Terrain with NavMesh
+---
+
+## 🏗️ **1. Foundation & Scene Setup**
+
+1. **Create a New Unity Project**
+   - Set up a 3D scene with default lighting
+   - Import basic player model, camera, and controller
+
+2. **Create Test Tower Layout**
+   - Build 3 floors for testing:
+     - 🛡️ **Ground Floor** – Sandbags, entry points, 1–2 guards
+     - 🏠 **9th Floor** – Player apartment, family interaction
+     - 🚁 **Roof** – Flare signal point
+   - Use ProBuilder or modular building assets
+
+3. **Lighting and Atmosphere**
+   - Use dim lighting for tension
+   - Add ambient war sounds (gunfire, footsteps, wind)
+
+---
+
+## 🎮 **2. Player & Camera Setup**
+
+1. **FPS and 3rd Person Controller**
+   - Use `CharacterController`
+   - Implement WASD + mouse look
+   - Add jump and crouch
+   - Toggle between FPS and 3rd-person modes
+
+2. **Smooth Camera Transitions**
+   - Use `Lerp` or `SmoothDamp`
+   - Adjust FOV per perspective
+
+---
+
+## 👹 **3. AI and Enemy Mechanics**
+
+1. **Basic AI States**
+   - 🟢 Patrol – NavMesh-based pathing
+   - 🟡 Alert – React to noise or sight
+   - 🔴 Chase – Pursue player
+   - ☠️ Attack – Trigger animation or damage
+
+2. **Stealth Mechanics**
+   - Raycast for enemy vision
+   - Line-of-sight logic
+   - Detection meter UI element
+
+---
+
+## 🏃 **4. Survival and Combat**
+
+1. **Weapons**
+   - Add knife or Molotov
+   - Hit detection and damage logic
+
+2. **Noise Distraction**
+   - Player can generate sound (e.g. pututu horn)
+   - AI reacts and enters alert state
+
+---
+
+## 👨‍👩‍👧‍👦 **5. Family Dynamics**
+
+1. **Family AI**
+   - 👦 Pachacuti (son) follows player, uses pututu
+   - 👧 Kusi-Rose (daughter) crawls through vents
+   - 👴 Túpac (grandfather) helps in combat
+
+2. **Permadeath System**
+   - Family death is permanent and impactful
+
+---
+
+## 🏆 **6. Victory and Failure Conditions**
+
+1. **Victory**
+   - 🚁 Reach roof and signal helicopter
+   - ☠️ Eliminate all enemy guards
+
+2. **Failure**
+   - 💀 Player or essential family death
+   - 🛑 Caught by enemy AI
+
+---
+
+## 🎯 **7. UI and Feedback**
+
+1. ❤️ Health Bar for player/family
+2. 👁️ Detection Meter (stealth feedback)
+3. 🎒 Ammo/Inventory UI
+
+---
+
+## 🔥 **8. Playtesting and Refinement**
+
+1. Test:
+   - Stealth system (vision, noise)
+   - AI behavior (patrol, chase, attack)
+   - Combat feedback
+
+2. Adjust difficulty and AI based on feedback
+
+---
+
+## ⏳ **Estimated Time for Prototype**
+
+| Phase              | Time Estimate |
+|--------------------|---------------|
+| Scene Setup        | 3–4 days      |
+| Player & Camera    | 2–3 days      |
+| AI & Stealth       | 4–5 days      |
+| Combat             | 3–4 days      |
+| Family AI          | 3–4 days      |
+| Endgame Triggers   | 2–3 days      |
+| UI & Testing       | 3–4 days      |
+| **Total**          | **~3–4 weeks**|
+
+---
+
+## ✅ **Why This Plan Works**
+
+✔️ Core mechanics first  
+✔️ Function over polish  
+✔️ Modular AI + player loop  
+✔️ Deliverable vertical slice in 3–4 weeks  
+
+---
+
+## 🚀 **Next Steps**
+
+1. Finalize **NavMesh & NPC chase**
+2. Add **Interaction System (e.g., doors, lamps)**
+3. Finalize **Crosshair + Detection HUD**
+4. Create **Main Menu, Game Over, and Scene Flow**
+5. Polish family dynamics (follow, survive, die)
+
+---
+
