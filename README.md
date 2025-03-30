@@ -42,7 +42,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 ---
 
-## 🏗️ **1. Foundation & Scene Setup**
+### 🏗️ **1. Foundation & Scene Setup**
 
 1. **Create a New Unity Project**
    - Set up a 3D scene with default lighting
@@ -61,7 +61,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 ---
 
-## 🎮 **2. Player & Camera Setup**
+### 🎮 **2. Player & Camera Setup**
 
 1. **FPS and 3rd Person Controller**
    - Use `CharacterController`
@@ -75,7 +75,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 ---
 
-## 👹 **3. AI and Enemy Mechanics**
+### 👹 **3. AI and Enemy Mechanics**
 
 1. **Basic AI States**
    - 🟢 Patrol – NavMesh-based pathing
@@ -90,7 +90,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 ---
 
-## 🏃 **4. Survival and Combat**
+### 🏃 **4. Survival and Combat**
 
 1. **Weapons**
    - Add knife or Molotov
@@ -102,7 +102,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 ---
 
-## 👨‍👩‍👧‍👦 **5. Family Dynamics**
+### 👨‍👩‍👧‍👦 **5. Family Dynamics**
 
 1. **Family AI**
    - 👦 Pachacuti (son) follows player, uses pututu
@@ -114,7 +114,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 ---
 
-## 🏆 **6. Victory and Failure Conditions**
+### 🏆 **6. Victory and Failure Conditions**
 
 1. **Victory**
    - 🚁 Reach roof and signal helicopter
@@ -126,7 +126,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 ---
 
-## 🎯 **7. UI and Feedback**
+### 🎯 **7. UI and Feedback**
 
 1. ❤️ Health Bar for player/family
 2. 👁️ Detection Meter (stealth feedback)
@@ -134,7 +134,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 ---
 
-## 🔥 **8. Playtesting and Refinement**
+### 🔥 **8. Playtesting and Refinement**
 
 1. Test:
    - Stealth system (vision, noise)
@@ -143,39 +143,4 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 2. Adjust difficulty and AI based on feedback
 
----
-
-## ⏳ **Estimated Time for Prototype**
-
-| Phase              | Time Estimate |
-|--------------------|---------------|
-| Scene Setup        | 3–4 days      |
-| Player & Camera    | 2–3 days      |
-| AI & Stealth       | 4–5 days      |
-| Combat             | 3–4 days      |
-| Family AI          | 3–4 days      |
-| Endgame Triggers   | 2–3 days      |
-| UI & Testing       | 3–4 days      |
-| **Total**          | **~3–4 weeks**|
-
----
-
-## ✅ **Why This Plan Works**
-
-✔️ Core mechanics first  
-✔️ Function over polish  
-✔️ Modular AI + player loop  
-✔️ Deliverable vertical slice in 3–4 weeks  
-
----
-
-## 🚀 **Next Steps**
-
-1. Finalize **NavMesh & NPC chase**
-2. Add **Interaction System (e.g., doors, lamps)**
-3. Finalize **Crosshair + Detection HUD**
-4. Create **Main Menu, Game Over, and Scene Flow**
-5. Polish family dynamics (follow, survive, die)
-
----
 
