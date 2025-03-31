@@ -30,7 +30,9 @@ public class PlayerInteractor : MonoBehaviour
 
                 crosshairImage.color = highlightColor;
 
-                if (Input.GetMouseButtonDown(0))
+                // if (Input.GetMouseButtonDown(0))
+                if (Input.GetKeyDown(KeyCode.E))
+
                 {
                     currentFocus.Interact();
                 }
