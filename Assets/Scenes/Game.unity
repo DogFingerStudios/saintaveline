@@ -599,6 +599,11 @@ Transform:
   - {fileID: 426842818}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &372650115 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1876665681830261705, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
+  m_PrefabInstance: {fileID: 821480156}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &404665008 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1875161217831160473, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
@@ -842,7 +847,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1873542579504147305, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1873542579504147305, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1394,7 +1399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1875259775736363093, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1875259775736363093, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1615,6 +1620,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1876665681830261705, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 1975859384}
     - targetCorrespondingSourceObject: {fileID: 1875161217324525343, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
       insertIndex: 10
       addedObject: {fileID: 1703404299}
@@ -2957,39 +2965,6 @@ MonoBehaviour:
   m_Script: {fileID: 910771039, guid: f56d46228aee4734f9114056c53bb57e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  surfacevecs: []
-  tdataFloat: []
-  terrainData: {fileID: 15600000, guid: 2cd9429857066aa45aaf25a4e980bce6, type: 2}
-  xStart: 0
-  zStart: 0
-  roadSurface: {fileID: 0}
-  surfaceMesh: {fileID: 0}
-  surfaceCollider: {fileID: 0}
-  terrainDataStored: []
-  terrainChanges: []
-  terrainTrees: []
-  detailInstances: []
-  detailInstanceStarts: 
-  surfaceObjects: []
-  terrainTestPoints: []
-  splatData: []
-  addedTrees: []
-  holes: []
-  terrainHeightsBackup: []
-  terrainTreesBackup: []
-  terrainDetailBackup: []
-  terrainSplatBackup: []
-  detailInstanceStartsBackUp: 
-  heightmapFlag: 0
-  splatmapFlag: 0
-  treeFlag: 0
-  detailFlag: 0
-  holesFlag: 0
-  terrainDone: 0
-  backupFlagNotification: 0
-  ignore: 0
-  backupObject: {fileID: 0}
-  terrain: {fileID: 0}
 --- !u!1 &1420598127
 GameObject:
   m_ObjectHideFlags: 0
@@ -3166,59 +3141,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4434581720254571454, guid: e30467be0b3d14569aeedb55cdff2be2, type: 3}
   m_PrefabInstance: {fileID: 1537194980}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1542927592
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1542927594}
-  - component: {fileID: 1542927593}
-  m_Layer: 3
-  m_Name: Thingy (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!65 &1542927593
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542927592}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 7, y: 0.25, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!4 &1542927594
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542927592}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 247.64, y: 0.136, z: 265.4}
-  m_LocalScale: {x: 1, y: 1, z: 0.82262}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1600876059 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2526731885960997922, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
@@ -3918,7 +3840,7 @@ GameObject:
   - component: {fileID: 1975859384}
   - component: {fileID: 1975859383}
   m_Layer: 3
-  m_Name: Thingy
+  m_Name: FrontDoorNavMeshLip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3954,11 +3876,11 @@ Transform:
   m_GameObject: {fileID: 1975859382}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 253.05, y: 0.136, z: 265.4}
-  m_LocalScale: {x: 1, y: 1, z: 0.82262}
+  m_LocalPosition: {x: 0.46749878, y: 0.90500003, z: 7.720501}
+  m_LocalScale: {x: 0.375, y: 0.5, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 372650115}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1985385872 stripped
 GameObject:
@@ -4000,7 +3922,5 @@ SceneRoots:
   - {fileID: 1420598131}
   - {fileID: 355636726}
   - {fileID: 737079847}
-  - {fileID: 1975859384}
-  - {fileID: 1542927594}
   - {fileID: 1711401047}
   - {fileID: 1321524496}
