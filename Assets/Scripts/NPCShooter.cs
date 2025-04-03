@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class NPCShooter : MonoBehaviour
@@ -9,7 +10,16 @@ public class NPCShooter : MonoBehaviour
     public LayerMask targetMask;
 
     private float nextFireTime = 0f;
+    private LineRenderer lineRenderer;
 
+    void Start()
+    {
+        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.enabled = false;
+        lineRenderer.positionCount = 2;
+        lineRenderer.startWidth = 0.05f;
+        lineRenderer.endWidth = 0.05f;
+    }
     void Update()
     {
         if (Time.time >= nextFireTime)
@@ -27,9 +37,26 @@ public class NPCShooter : MonoBehaviour
         if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, range, targetMask))
         {
             Debug.Log(gameObject.name + " hit: " + hit.collider.name);
+            StartCoroutine(FireRayEffect(hit.point));
 
             // Optional: call a damage script
             // hit.collider.GetComponent<Health>()?.TakeDamage(damage);
         }
+        else
+        {
+            Debug.Log(gameObject.name + " missed!");
+            StartCoroutine(FireRayEffect(firePoint.position + firePoint.forward * range));
+        }
+    }
+
+    IEnumerator FireRayEffect(Vector3 hitPoint)
+    {
+        lineRenderer.SetPosition(0, firePoint.position);
+        lineRenderer.SetPosition(1, hitPoint);
+        lineRenderer.enabled = true;
+
+        yield return new WaitForSeconds(0.05f);
+
+        lineRenderer.enabled = false;
     }
 }
