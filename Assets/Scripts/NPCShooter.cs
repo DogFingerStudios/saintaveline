@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class NPCShooter : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class NPCShooter : MonoBehaviour
     public float fireRate = 1f;
     public float range = 50f;
     public float damage = 10f;
+    public float defaultDamage = 10f;
     public LayerMask targetMask;
 
     private float nextFireTime = 0f;
@@ -39,8 +42,10 @@ public class NPCShooter : MonoBehaviour
             Debug.Log(gameObject.name + " hit: " + hit.collider.name);
             StartCoroutine(FireRayEffect(hit.point));
 
-            // Optional: call a damage script
-            hit.collider.GetComponent<PlayerStats>()?.TakeDamage(10);
+            // get the distance from the fire point to the hit point
+            float distance = Vector3.Distance(firePoint.position, hit.point);
+            int damage = Mathf.RoundToInt(defaultDamage * (1 - (distance / range)));
+            hit.collider.GetComponent<PlayerStats>()?.TakeDamage(damage);
         }
         else
         {
