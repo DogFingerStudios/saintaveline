@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 public class SonNPC : MonoBehaviour
 {
     public Transform father;

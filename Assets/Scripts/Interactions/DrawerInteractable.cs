@@ -5,7 +5,7 @@ public class DrawerInteractable : Interactable
     public override void Interact()
     {
         // print the name of the object being interacted with
-        Debug.Log("Drawer " + gameObject.name + " opened!");
+        // Debug.Log("Drawer " + gameObject.name + " opened!");
 
         DrawerMech drawer = GetComponent<DrawerMech>();
         if (drawer == null) return;
@@ -17,6 +17,6 @@ public class DrawerInteractable : Interactable
     public override void OnFocus()
     {
         // print the name of the object being focused on
-        Debug.Log("Looking at drawer " + gameObject.name);
+        // Debug.Log("Looking at drawer " + gameObject.name);
     }
 }

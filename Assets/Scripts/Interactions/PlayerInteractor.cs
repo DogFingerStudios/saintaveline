@@ -7,53 +7,112 @@ public class PlayerInteractor : MonoBehaviour
     public Image crosshairImage;
     public Color defaultColor = Color.white;
     public Color highlightColor = Color.green;
+    public CommandMenu commandMenu;
 
-    private Interactable currentFocus;
+    private Interactable _currentFocus;
 
-    void Update()
+    private void checkInteractions()
     {
-        Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
+        Ray ray = new Ray(transform.position, transform.forward);
 
         if (Physics.Raycast(ray, out hit, interactRange))
         {
             Interactable interactable = hit.collider.GetComponent<Interactable>();
-
             if (interactable != null)
             {
-                if (interactable != currentFocus)
+                if (interactable != _currentFocus)
                 {
                     ClearFocus();
-                    currentFocus = interactable;
-                    currentFocus.OnFocus();
+                    _currentFocus = interactable;
+                    _currentFocus.OnFocus();
+                    crosshairImage.color = highlightColor;
                 }
 
-                crosshairImage.color = highlightColor;
-
-                // if (Input.GetMouseButtonDown(0))
                 if (Input.GetKeyDown(KeyCode.E))
-
                 {
-                    currentFocus.Interact();
+                    _currentFocus.Interact();
                 }
             }
             else
             {
                 ClearFocus();
             }
+
+            if (hit.collider.CompareTag("FriendlyNPC"))
+            {
+                SonNPC son = hit.collider.GetComponent<SonNPC>();
+                if (son != null)
+                {
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        commandMenu.Open(son);
+                    }
+                }
+            }
+        
+
         }
-        else
-        {
-            ClearFocus();
-        }
+    }
+
+    void Update()
+    {
+        checkInteractions();
+
+        // Ray ray = new Ray(transform.position, transform.forward);
+        // RaycastHit hit;
+
+        // if (Physics.Raycast(ray, out hit, interactRange))
+        // {
+        //     Interactable interactable = hit.collider.GetComponent<Interactable>();
+        //     if (interactable != null)
+        //     {
+        //         if (interactable != currentFocus)
+        //         {
+        //             ClearFocus();
+        //             currentFocus = interactable;
+        //             currentFocus.OnFocus();
+        //         }
+
+        //         crosshairImage.color = highlightColor;
+
+        //         // if (Input.GetMouseButtonDown(0))
+        //         if (Input.GetKeyDown(KeyCode.E))
+        //         {
+        //             currentFocus.Interact();
+        //         }
+        //     }
+        //     else
+        //     {
+        //         ClearFocus();
+        //     }
+        
+        //     if (Input.GetKeyDown(KeyCode.E))
+        //     {
+        //         if (hit.collider.CompareTag("FriendlyNPC"))
+        //         {
+        //             SonNPC son = hit.collider.GetComponent<SonNPC>();
+        //             if (son != null)
+        //             {
+        //                 commandMenu.Open(son);
+        //             }
+        //         }
+        //     }
+
+        
+        // }
+        // else
+        // {
+        //     ClearFocus();
+        // }
     }
 
     void ClearFocus()
     {
-        if (currentFocus != null)
+        if (_currentFocus != null)
         {
-            currentFocus.OnDefocus();
-            currentFocus = null;
+            _currentFocus.OnDefocus();
+            _currentFocus = null;
         }
 
         crosshairImage.color = defaultColor;
