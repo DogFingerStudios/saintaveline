@@ -5,7 +5,7 @@ public class ChasePlayer : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Transform player;
-    public float detectionRange = 20f;
+    public float detectionRange = 50f;
 
     void Start()
     {
