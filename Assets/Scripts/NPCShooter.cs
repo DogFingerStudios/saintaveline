@@ -40,7 +40,7 @@ public class NPCShooter : MonoBehaviour
             StartCoroutine(FireRayEffect(hit.point));
 
             // Optional: call a damage script
-            // hit.collider.GetComponent<Health>()?.TakeDamage(damage);
+            hit.collider.GetComponent<PlayerStats>()?.TakeDamage(10);
         }
         else
         {
