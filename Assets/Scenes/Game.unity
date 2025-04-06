@@ -2710,7 +2710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f96768bca52470f46b2ebaeea9fdcd7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactRange: 3
+  interactRange: 5
   crosshairImage: {fileID: 184610869}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   highlightColor: {r: 0, g: 1, b: 0, a: 1}
@@ -3630,7 +3630,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1358450824
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3792,7 +3792,6 @@ GameObject:
   - component: {fileID: 1387448000}
   - component: {fileID: 1387447999}
   - component: {fileID: 1387448002}
-  - component: {fileID: 1387448004}
   m_Layer: 3
   m_Name: Terrain
   m_TagString: Untagged
@@ -3891,18 +3890,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surfaceType: 2
---- !u!114 &1387448004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1387447998}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 910771039, guid: f56d46228aee4734f9114056c53bb57e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1420598127
 GameObject:
   m_ObjectHideFlags: 0

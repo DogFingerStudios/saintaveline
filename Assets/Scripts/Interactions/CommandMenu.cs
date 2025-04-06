@@ -13,26 +13,26 @@ public class CommandMenu : MonoBehaviour
     public void Open(SonNPC npc)
     {
         currentNPC = npc;
-        panel.SetActive(true);
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        panel.SetActive(true);
         crossHair.SetActive(false);
+        Debug.Log("Command Menu Opened");
     }
 
     public void Close()
     {
-        panel.SetActive(false);
-        currentNPC = null;
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         crossHair.SetActive(true);
+        panel.SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        currentNPC = null;
+        Debug.Log("Command Menu Closed");
     }
 
     void Start()
     {
-        panel.SetActive(false);
+        panel.SetActive(true);
 
         stayButton.onClick.AddListener(() =>
         {
@@ -45,5 +45,13 @@ public class CommandMenu : MonoBehaviour
             // currentNPC?.SetStateFollow();
             Close();
         });
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Close();
+        }
     }
 }
