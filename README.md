@@ -61,7 +61,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 
 3. **Lighting and Atmosphere**
    - Use dim lighting for tension
-   - Add ambient war sounds (gunfire, footsteps, wind)
+   - Add ambient war sounds (gunfire, footsteps, wind, etc)
 
 ---
 
