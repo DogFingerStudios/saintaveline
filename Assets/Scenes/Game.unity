@@ -7278,7 +7278,7 @@ CharacterController:
   m_Height: 1.8
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.5
+  m_StepOffset: 0.6
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -7295,27 +7295,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7.5
-  sprintSpeedFactor: 2
+  sprintSpeedFactor: 5
   jumpHeight: 2
   mouseSensitivity: 2
   maxLookAngle: 75
-  gravity: -40
-  preventCameraClipping: 1
-  clipDistance: 0.2
-  minNearClipPlane: 0.005
-  defaultNearClipPlane: 0.03
-  sampleCount: 30
-  cameraCollisionLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  preventNPCStepping: 1
-  npcLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  npcDetectionRadius: 1.5
-  npcExtraHeight: 0.3
-  npcUpdateFrequency: 0.1
-  showNPCDebugVisuals: 1
+  gravity: -9.81
 --- !u!114 &1830504928
 MonoBehaviour:
   m_ObjectHideFlags: 0
