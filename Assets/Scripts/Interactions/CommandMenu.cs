@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class CommandMenu : MonoBehaviour
 {
     public GameObject panel;
+    public GameObject crossHair;
     public Button stayButton;
     public Button followButton;
 
@@ -13,12 +14,20 @@ public class CommandMenu : MonoBehaviour
     {
         currentNPC = npc;
         panel.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        crossHair.SetActive(false);
     }
 
     public void Close()
     {
         panel.SetActive(false);
         currentNPC = null;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        crossHair.SetActive(true);
     }
 
     void Start()

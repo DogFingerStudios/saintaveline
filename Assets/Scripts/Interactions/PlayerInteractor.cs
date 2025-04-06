@@ -1,3 +1,4 @@
+using NUnit.Framework.Internal.Commands;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +8,7 @@ public class PlayerInteractor : MonoBehaviour
     public Image crosshairImage;
     public Color defaultColor = Color.white;
     public Color highlightColor = Color.green;
-    public CommandMenu commandMenu;
+    // public CommandMenu commandMenu;
 
     private Interactable _currentFocus;
 
@@ -15,9 +16,14 @@ public class PlayerInteractor : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = new Ray(transform.position, transform.forward);
-
-        if (Physics.Raycast(ray, out hit, interactRange))
+        Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.green);
+        if (Physics.Raycast(ray, out hit, interactRange, ~0))
         {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("Raycast hit: " + hit.collider.name);
+            }
+            
             Interactable interactable = hit.collider.GetComponent<Interactable>();
             if (interactable != null)
             {
@@ -38,73 +44,12 @@ public class PlayerInteractor : MonoBehaviour
             {
                 ClearFocus();
             }
-
-            if (hit.collider.CompareTag("FriendlyNPC"))
-            {
-                SonNPC son = hit.collider.GetComponent<SonNPC>();
-                if (son != null)
-                {
-                    if (Input.GetKeyDown(KeyCode.E))
-                    {
-                        commandMenu.Open(son);
-                    }
-                }
-            }
-        
-
         }
     }
 
     void Update()
     {
         checkInteractions();
-
-        // Ray ray = new Ray(transform.position, transform.forward);
-        // RaycastHit hit;
-
-        // if (Physics.Raycast(ray, out hit, interactRange))
-        // {
-        //     Interactable interactable = hit.collider.GetComponent<Interactable>();
-        //     if (interactable != null)
-        //     {
-        //         if (interactable != currentFocus)
-        //         {
-        //             ClearFocus();
-        //             currentFocus = interactable;
-        //             currentFocus.OnFocus();
-        //         }
-
-        //         crosshairImage.color = highlightColor;
-
-        //         // if (Input.GetMouseButtonDown(0))
-        //         if (Input.GetKeyDown(KeyCode.E))
-        //         {
-        //             currentFocus.Interact();
-        //         }
-        //     }
-        //     else
-        //     {
-        //         ClearFocus();
-        //     }
-        
-        //     if (Input.GetKeyDown(KeyCode.E))
-        //     {
-        //         if (hit.collider.CompareTag("FriendlyNPC"))
-        //         {
-        //             SonNPC son = hit.collider.GetComponent<SonNPC>();
-        //             if (son != null)
-        //             {
-        //                 commandMenu.Open(son);
-        //             }
-        //         }
-        //     }
-
-        
-        // }
-        // else
-        // {
-        //     ClearFocus();
-        // }
     }
 
     void ClearFocus()
