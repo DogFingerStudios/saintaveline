@@ -6,7 +6,7 @@ public class LampInteractable : Interactable
     public AudioClip lampSwitchSound;
     public override void Interact()
     {
-        Debug.Log("Lamp " + gameObject.name + " toggled!");
+        // Debug.Log("Lamp " + gameObject.name + " toggled!");
 
         Light bulb = GetComponentInChildren<Light>();
         if (bulb == null) return;
@@ -21,6 +21,6 @@ public class LampInteractable : Interactable
 
     public override void OnFocus()
     {
-        Debug.Log("Looking at lamp " + gameObject.name);
+        // Debug.Log("Looking at lamp " + gameObject.name);
     }
 }

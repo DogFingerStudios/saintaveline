@@ -18,7 +18,8 @@ public class FPSMovement : MonoBehaviour
     private CharacterController controller;
     private Vector3 velocity;          
     private Transform cameraTransform; 
-    private float xRotation = 0f;      
+    private float xRotation = 0f;
+    private float cachedXRotation;
 
     void Start()
     {
@@ -36,6 +37,12 @@ public class FPSMovement : MonoBehaviour
 
     void Update()
     {
+        if (Cursor.lockState != CursorLockMode.Locked)
+        {
+            cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+            return;
+        }
+
         // 1. Mouse Look
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
