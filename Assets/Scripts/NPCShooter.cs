@@ -34,12 +34,8 @@ public class NPCShooter : MonoBehaviour
 
     void Shoot()
     {
-        Debug.DrawRay(firePoint.position, firePoint.forward * range, Color.red, 0.5f);
-        Debug.Log(gameObject.name + " is shooting!");
-
         if (Physics.Raycast(firePoint.position, firePoint.forward, out RaycastHit hit, range, targetMask))
         {
-            Debug.Log(gameObject.name + " hit: " + hit.collider.name);
             StartCoroutine(FireRayEffect(hit.point));
 
             // get the distance from the fire point to the hit point
@@ -49,7 +45,6 @@ public class NPCShooter : MonoBehaviour
         }
         else
         {
-            Debug.Log(gameObject.name + " missed!");
             StartCoroutine(FireRayEffect(firePoint.position + firePoint.forward * range));
         }
     }
