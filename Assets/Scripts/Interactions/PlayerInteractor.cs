@@ -1,4 +1,5 @@
 using NUnit.Framework.Internal.Commands;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,22 +9,23 @@ public class PlayerInteractor : MonoBehaviour
     public Image crosshairImage;
     public Color defaultColor = Color.white;
     public Color highlightColor = Color.green;
-    // public CommandMenu commandMenu;
+    public TextMeshProUGUI helpTextUI; 
 
     private Interactable _currentFocus;
+
+    private void Start()
+    {
+        helpTextUI.gameObject.SetActive(false);
+    }
 
     private void checkInteractions()
     {
         RaycastHit hit;
         Ray ray = new Ray(transform.position, transform.forward);
         Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.green);
+
         if (Physics.Raycast(ray, out hit, interactRange, ~0))
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Debug.Log("Raycast hit: " + hit.collider.name);
-            }
-            
             Interactable interactable = hit.collider.GetComponent<Interactable>();
             if (interactable != null)
             {
@@ -33,6 +35,9 @@ public class PlayerInteractor : MonoBehaviour
                     _currentFocus = interactable;
                     _currentFocus.OnFocus();
                     crosshairImage.color = highlightColor;
+
+                    helpTextUI.text = interactable.helpText; 
+                    helpTextUI.gameObject.SetActive(true);
                 }
 
                 if (Input.GetKeyDown(KeyCode.E))
@@ -60,6 +65,8 @@ public class PlayerInteractor : MonoBehaviour
             _currentFocus = null;
         }
 
+        helpTextUI.text = "";
+        helpTextUI.gameObject.SetActive(false);
         crosshairImage.color = defaultColor;
     }
 }

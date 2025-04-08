@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class LampInteractable : Interactable
 {
+    public override string helpText
+    {
+        get { return "Press [E] to toggle lamp"; }
+    }
+
     // public AudioSource audioSource;
     public AudioClip lampSwitchSound;
     public override void Interact()
