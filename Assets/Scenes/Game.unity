@@ -1064,7 +1064,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd1fcec2fd31b34c94d734a3c1c3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helpText: Press [E] to interact
   lampSwitchSound: {fileID: 8300000, guid: 89943cedd1ae98e4ebf6486a350b1c6e, type: 3}
 --- !u!65 &153272139
 BoxCollider:
@@ -1588,7 +1587,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bec677ef091fa94db3b5c72a886e6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helpText: Press [E] to interact
 --- !u!1 &311557601
 GameObject:
   m_ObjectHideFlags: 0
@@ -5469,7 +5467,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd1fcec2fd31b34c94d734a3c1c3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helpText: Press [E] to interact
   lampSwitchSound: {fileID: 8300000, guid: 89943cedd1ae98e4ebf6486a350b1c6e, type: 3}
 --- !u!65 &1014224827
 BoxCollider:
@@ -6700,9 +6697,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panel: {fileID: 1358450823}
-  crossHair: {fileID: 184610867}
   stayButton: {fileID: 1943054747}
   followButton: {fileID: 1556150836}
+  crossHair: {fileID: 184610867}
+  helpText: {fileID: 147772724}
 --- !u!1001 &1366918368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7604,7 +7602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd1fcec2fd31b34c94d734a3c1c3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helpText: Press [E] to interact
   lampSwitchSound: {fileID: 0}
 --- !u!1001 &1638685880
 PrefabInstance:
@@ -7915,7 +7912,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fe1494ead26de4396127076aaff28f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helpText: Press [E] to interact
   father: {fileID: 1830504925}
   rotationSpeed: 90
   commandMenu: {fileID: 1358450827}
@@ -8030,6 +8026,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: cc62858f928532245b1b0434a2daf2a8, type: 2}
+    - target: {fileID: 6891348782625597385, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8968,7 +8968,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bec677ef091fa94db3b5c72a886e6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  helpText: Press [E] to interact
 --- !u!1 &2003358770 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5914747739038109871, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
