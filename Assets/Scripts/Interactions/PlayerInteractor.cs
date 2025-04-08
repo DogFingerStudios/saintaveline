@@ -50,6 +50,10 @@ public class PlayerInteractor : MonoBehaviour
                 ClearFocus();
             }
         }
+        else
+        {
+            ClearFocus();
+        }
     }
 
     void Update()

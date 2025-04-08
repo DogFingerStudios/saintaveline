@@ -4,9 +4,13 @@ using UnityEngine.UI;
 public class CommandMenu : MonoBehaviour
 {
     public GameObject panel;
-    public GameObject crossHair;
     public Button stayButton;
     public Button followButton;
+
+    [Header("External Widgets")]
+    [Tooltip("These widgets are disabled when the menu is open")]
+    public GameObject crossHair;
+    public GameObject helpText;
 
     private SonNPC currentNPC;
 
@@ -17,11 +21,13 @@ public class CommandMenu : MonoBehaviour
         Cursor.visible = true;
         panel.SetActive(true);
         crossHair.SetActive(false);
+        helpText.SetActive(false);
         Debug.Log("Command Menu Opened");
     }
 
     public void Close()
     {
+        helpText.SetActive(true);
         crossHair.SetActive(true);
         panel.SetActive(false);
         Cursor.visible = false;
