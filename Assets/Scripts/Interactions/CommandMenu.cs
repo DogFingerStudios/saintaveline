@@ -12,9 +12,9 @@ public class CommandMenu : MonoBehaviour
     public GameObject crossHair;
     public GameObject helpText;
 
-    private SonNPC currentNPC;
+    private FriendlyNPC currentNPC;
 
-    public void Open(SonNPC npc)
+    public void Open(FriendlyNPC npc)
     {
         currentNPC = npc;
         Cursor.lockState = CursorLockMode.None;
@@ -42,13 +42,13 @@ public class CommandMenu : MonoBehaviour
 
         stayButton.onClick.AddListener(() =>
         {
-            // currentNPC?.SetStateIdle();
+            currentNPC?.setState(new NPCIdleState());
             Close();
         });
 
         followButton.onClick.AddListener(() =>
         {
-            // currentNPC?.SetStateFollow();
+            currentNPC?.setState(new NPCFollowState());
             Close();
         });
     }

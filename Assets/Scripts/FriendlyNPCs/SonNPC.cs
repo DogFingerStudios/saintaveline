@@ -2,9 +2,7 @@ using UnityEngine;
 
 
 public class SonNPC : FriendlyNPC
-{
-    public override float rotationSpeed { get; set; } = 90f;
-    
+{   
     public override void OnFocus()
     {
         // Optional: highlight outline, play sound, etc.
@@ -23,6 +21,7 @@ public class SonNPC : FriendlyNPC
     private void Start()
     {
         stateMachine.SetState(new NPCIdleState(), this);
+        // agent = GetComponent<UnityEngine.AI.NavMeshAgent>(); // Should be done from base
     }
 
     private void Update()
