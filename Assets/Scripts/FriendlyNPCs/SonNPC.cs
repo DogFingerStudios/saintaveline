@@ -1,14 +1,10 @@
 using UnityEngine;
 
 
-public class SonNPC : Interactable
+public class SonNPC : FriendlyNPC
 {
-    public Transform father;
-    public float rotationSpeed = 90f;
-    private NPCStateMachine stateMachine = new NPCStateMachine();
-
-    public CommandMenu commandMenu;
-
+    public override float rotationSpeed { get; set; } = 90f;
+    
     public override void OnFocus()
     {
         // Optional: highlight outline, play sound, etc.

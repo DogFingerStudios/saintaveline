@@ -11,8 +11,7 @@ public class DoorMech : MonoBehaviour
 
 	public bool doorBool;
 
-	private float doorTimer = 0f;
-
+	// private float doorTimer = 0f;
 
     public float interactionDistance = 3f;
     private Camera playerCamera;
