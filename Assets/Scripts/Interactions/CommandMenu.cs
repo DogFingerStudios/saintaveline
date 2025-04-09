@@ -22,7 +22,6 @@ public class CommandMenu : MonoBehaviour
         panel.SetActive(true);
         crossHair.SetActive(false);
         helpText.SetActive(false);
-        Debug.Log("Command Menu Opened");
     }
 
     public void Close()
@@ -33,7 +32,6 @@ public class CommandMenu : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         currentNPC = null;
-        Debug.Log("Command Menu Closed");
     }
 
     void Start()
