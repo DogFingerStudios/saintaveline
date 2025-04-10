@@ -17,9 +17,9 @@ public class NPCFollowIdleState : NPCState
             return new NPCFollowState();
         }
 
+        // turn in the direction of the target
         Vector3 direction = npc.target.position - npc.transform.position;
         direction.y = 0f; // Keep rotation flat
-
         if (direction.sqrMagnitude > 0.001f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
