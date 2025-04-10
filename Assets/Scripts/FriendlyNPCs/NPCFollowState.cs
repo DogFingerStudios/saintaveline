@@ -38,6 +38,7 @@ public class NPCFollowState : NPCState
         if (distance < npc.stopDistance)
         {
             // we're close enough to the target, stop moving
+            agent.isStopped = true;
             agent.ResetPath();
             return new NPCFollowIdleState();
         }
@@ -50,6 +51,7 @@ public class NPCFollowState : NPCState
         else
         {
             // the target is out of range, stop moving
+            agent.isStopped = true;
             agent.ResetPath();
             return new NPCFollowIdleState();
         }
