@@ -12,7 +12,8 @@ public class NPCFollowState : NPCState
         if (agent != null)
         {
             agent.isStopped = false;
-            agent.speed = 3.5f; // Set speed for following
+            agent.speed = npc.moveSpeed;
+            agent.angularSpeed = npc.rotationSpeed;
         }
     }
 
@@ -28,6 +29,7 @@ public class NPCFollowState : NPCState
             else
             {
                 agent.ResetPath();
+                return new NPCFollowIdleState();
             }
         }
 
@@ -36,6 +38,7 @@ public class NPCFollowState : NPCState
 
     public override void Exit(FriendlyNPC npc)
     {
+        agent?.ResetPath();
         agent = null;
     }
 }

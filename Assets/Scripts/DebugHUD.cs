@@ -9,6 +9,7 @@ public class DebugHUD : MonoBehaviour
 
     public SonNPC sonNPC;
     public TextMeshProUGUI sonNPCStateText;
+    public TextMeshProUGUI sonNPCDistanceText;
 
     private bool isVisible = true;
 
@@ -24,7 +25,9 @@ public class DebugHUD : MonoBehaviour
         if (isVisible)
         {
             groundedText.text = "Grounded: " + controller.isGrounded.ToString();
-            sonNPCStateText.text = "Son NPC State: " + sonNPC.StateMachine.CurrentState?.GetType().Name;
+            sonNPCStateText.text = "SonNPC State: " + sonNPC.StateMachine.CurrentState?.GetType().Name;
+            float distance = Vector3.Distance(controller.transform.position, sonNPC.transform.position);
+            sonNPCDistanceText.text = "SonNPC Dist: " + distance.ToString("F2");
         }
     }
 }
