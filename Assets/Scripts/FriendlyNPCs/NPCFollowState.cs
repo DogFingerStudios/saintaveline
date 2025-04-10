@@ -16,12 +16,22 @@ public class NPCFollowState : NPCState
         }
     }
 
-    public override void Update(FriendlyNPC npc)
+    public override NPCState? Update(FriendlyNPC npc)
     {
-        if (npc.leader != null)
+        if (npc.target != null && agent != null)
         {
-            agent?.SetDestination(npc.leader.transform.position);
+            float distance = Vector3.Distance(npc.transform.position, npc.target.position);
+            if (distance < npc.detectionDistance)
+            {
+                agent.SetDestination(npc.target.transform.position);
+            }
+            else
+            {
+                agent.ResetPath();
+            }
         }
+
+        return null;
     }
 
     public override void Exit(FriendlyNPC npc)

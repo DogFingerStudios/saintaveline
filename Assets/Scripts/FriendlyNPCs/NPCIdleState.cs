@@ -7,12 +7,11 @@ public class NPCIdleState : NPCState
         // Debug or animation trigger if needed
     }
 
-    public override void Update(FriendlyNPC npc)
+    public override NPCState? Update(FriendlyNPC npc)
     {
-        if (npc.leader == null)
-            return;
+        if (npc.target == null) return null;
 
-        Vector3 direction = npc.leader.position - npc.transform.position;
+        Vector3 direction = npc.target.position - npc.transform.position;
         direction.y = 0f; // Keep rotation flat
 
         if (direction.sqrMagnitude > 0.001f)
@@ -24,6 +23,8 @@ public class NPCIdleState : NPCState
                 npc.rotationSpeed * Time.deltaTime
             );
         }
+
+        return null;
     }
 
     public override void Exit(FriendlyNPC npc)
