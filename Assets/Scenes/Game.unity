@@ -3223,7 +3223,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &737079846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8092,6 +8092,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1165786314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1481908752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8018992134920938627, guid: 94f70f9b31d9b104eac9625dbf1e0515, type: 3}
+  m_PrefabInstance: {fileID: 1936254412}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1486942379 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1875161217831160465, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
@@ -9815,6 +9820,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 322283500}
     m_Modifications:
+    - target: {fileID: 1917807492943388215, guid: 94f70f9b31d9b104eac9625dbf1e0515, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119510973030090555, guid: 94f70f9b31d9b104eac9625dbf1e0515, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5311034482893019840, guid: 94f70f9b31d9b104eac9625dbf1e0515, type: 3}
       propertyPath: m_LocalPosition.x
       value: 241.19
@@ -9862,13 +9875,34 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8018992134920938627, guid: 94f70f9b31d9b104eac9625dbf1e0515, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1936254414}
   m_SourcePrefab: {fileID: 100100000, guid: 94f70f9b31d9b104eac9625dbf1e0515, type: 3}
 --- !u!4 &1936254413 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5311034482893019840, guid: 94f70f9b31d9b104eac9625dbf1e0515, type: 3}
   m_PrefabInstance: {fileID: 1936254412}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1936254414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481908752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e06c73fa0516429f9afe1adebd46f18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints:
+  - {fileID: 1433692101}
+  - {fileID: 1763563709}
+  - {fileID: 1356903438}
+  - {fileID: 1556346279}
+  arrivalThreshold: 0.5
 --- !u!1 &1943054745
 GameObject:
   m_ObjectHideFlags: 0
