@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class NPCIdleState : NPCState
 {
-    private FriendlyNPC? npc;
+    private FriendlyNPC? _npc;
 
-    public void Enter(BaseNPC baseNpc)
+    NPCIdleState(BaseNPC baseNpc)
     {
-        // TODO: this should probably have some good error checking
         if (baseNpc is not FriendlyNPC friendlyNpc) return;
-        this.npc = friendlyNpc;
-        if (npc.target == null) return;
+        this._npc = friendlyNpc;
+
+        if (_npc.target == null)
+        {
+            throw new System.Exception("NPC target is null. Please set a target before entering the idle state.");
+        }
+    }
+
+    public void Enter()
+    {
+        // nothing to do
     }
 
     public NPCState? Update(BaseNPC x)
@@ -34,6 +42,6 @@ public class NPCIdleState : NPCState
 
     public void Exit(BaseNPC x)
     {
-        // Clean up if needed
+        // nothing to do
     }
 }

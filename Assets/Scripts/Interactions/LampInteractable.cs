@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LampInteractable : MonoBehaviour,Interactable
+public class LampInteractable : MonoBehaviour, Interactable
 {
     public string HelpText
     {
