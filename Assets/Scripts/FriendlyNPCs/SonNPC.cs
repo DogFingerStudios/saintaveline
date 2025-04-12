@@ -21,7 +21,6 @@ public class SonNPC : FriendlyNPC
     private void Start()
     {
         stateMachine.SetState(new NPCIdleState(), this);
-        // agent = GetComponent<UnityEngine.AI.NavMeshAgent>(); // Should be done from base
     }
 
     private void Update()

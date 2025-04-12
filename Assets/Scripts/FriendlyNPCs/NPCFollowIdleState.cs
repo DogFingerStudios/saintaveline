@@ -11,7 +11,7 @@ public class NPCFollowIdleState : NPCState
         if (npc.target == null) return null;
 
         float distance = Vector3.Distance(npc.transform.position, npc.target.position);
-        if (distance < npc.detectionDistance)
+        if (distance > npc.stopDistance && distance < npc.detectionDistance)
         {
             // If the target is within detection distance, switch to follow state
             return new NPCFollowState();
