@@ -5,9 +5,15 @@ using UnityEngine;
 public class NPCFollowState : NPCState
 {
     private UnityEngine.AI.NavMeshAgent? agent;
+    private FriendlyNPC? npc;
 
-    public override void Enter(FriendlyNPC npc)
+    public void Enter(BaseNPC baseNpc)
     {
+        // TODO: this should probably have some good error checking
+        if (baseNpc is not FriendlyNPC friendlyNpc) return;
+        this.npc = friendlyNpc;
+        if (npc.target == null) return;
+
         agent = npc.GetComponent<UnityEngine.AI.NavMeshAgent>();
         if (agent != null)
         {
@@ -17,9 +23,9 @@ public class NPCFollowState : NPCState
         }
     }
 
-    public override NPCState? Update(FriendlyNPC npc)
+    public NPCState? Update(BaseNPC x)
     {
-        if (npc.target == null || agent == null) return null;
+        if (npc == null || npc.target == null || agent == null) return null;
         
         float distance = Vector3.Distance(npc.transform.position, npc.target.position);
         if (distance < npc.stopDistance)
@@ -46,7 +52,7 @@ public class NPCFollowState : NPCState
         return null;
     }
 
-    public override void Exit(FriendlyNPC npc)
+    public void Exit(BaseNPC x)
     {
         agent?.ResetPath();
         agent = null;

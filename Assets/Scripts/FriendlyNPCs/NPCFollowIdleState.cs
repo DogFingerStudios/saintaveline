@@ -2,11 +2,17 @@ using UnityEngine;
 
 public class NPCFollowIdleState : NPCState
 {
-    public override void Enter(FriendlyNPC npc)
+    private FriendlyNPC? npc;
+
+    public void Enter(BaseNPC baseNpc)
     {
+        // TODO: this should probably have some good error checking
+        if (baseNpc is not FriendlyNPC friendlyNpc) return;
+        this.npc = friendlyNpc;
+        if (npc.target == null) return;
     }
 
-    public override NPCState? Update(FriendlyNPC npc)
+    public NPCState? Update(BaseNPC x)
     {
         if (npc.target == null) return null;
 
@@ -33,7 +39,7 @@ public class NPCFollowIdleState : NPCState
         return null;
     }
 
-    public override void Exit(FriendlyNPC npc)
+    public void Exit(BaseNPC x)
     {
         // Clean up if needed
     }

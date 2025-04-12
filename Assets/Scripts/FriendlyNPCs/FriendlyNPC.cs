@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class FriendlyNPC : MonoBehaviour, Interactable
+public abstract class FriendlyNPC : BaseNPC, Interactable
 {
     [SerializeField]
     [Tooltip("The rate at which the NPC rotates towards the target")]
@@ -19,9 +19,9 @@ public abstract class FriendlyNPC : MonoBehaviour, Interactable
     [Tooltip("The distance at which the NPC will stop moving towards the target")]
     public float stopDistance = 1f;
 
-    public Transform target;
     public CommandMenu commandMenu;
 
+#region Interactable Interface Implementation
     public string HelpText => "Press [E] to interact";
 
     public void OnFocus()
@@ -38,12 +38,6 @@ public abstract class FriendlyNPC : MonoBehaviour, Interactable
     {
         commandMenu.Open(this);
     }
+#endregion
 
-    public void setState(NPCState state)
-    {
-        stateMachine.SetState(state, this);
-    }
-
-    protected NPCStateMachine stateMachine = new NPCStateMachine();
-    public NPCStateMachine StateMachine => stateMachine;
 }

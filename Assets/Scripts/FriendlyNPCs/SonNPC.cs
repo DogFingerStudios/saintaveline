@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SonNPC : FriendlyNPC
 {   
-
     private void Start()
     {
         stateMachine.SetState(new NPCIdleState(), this);
