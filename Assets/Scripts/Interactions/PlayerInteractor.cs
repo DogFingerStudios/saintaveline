@@ -36,7 +36,7 @@ public class PlayerInteractor : MonoBehaviour
                     _currentFocus.OnFocus();
                     crosshairImage.color = highlightColor;
 
-                    helpTextUI.text = interactable.helpText; 
+                    helpTextUI.text = interactable.HelpText; 
                     helpTextUI.gameObject.SetActive(true);
                 }
 

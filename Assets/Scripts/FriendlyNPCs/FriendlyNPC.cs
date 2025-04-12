@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class FriendlyNPC : Interactable
+public abstract class FriendlyNPC : MonoBehaviour, Interactable
 {
     [SerializeField]
     [Tooltip("The rate at which the NPC rotates towards the target")]
@@ -21,6 +21,23 @@ public abstract class FriendlyNPC : Interactable
 
     public Transform target;
     public CommandMenu commandMenu;
+
+    public string HelpText => "Press [E] to interact";
+
+    public void OnFocus()
+    {
+        // Optional: highlight outline, play sound, etc.
+    }
+
+    public void OnDefocus()
+    {
+        // Cleanup when not hovered
+    }
+
+    public void Interact()
+    {
+        commandMenu.Open(this);
+    }
 
     public void setState(NPCState state)
     {

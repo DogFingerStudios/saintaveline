@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class LampInteractable : Interactable
+public class LampInteractable : MonoBehaviour,Interactable
 {
-    public override string helpText
+    public string HelpText
     {
         get { return "Press [E] to toggle lamp"; }
     }
 
     // public AudioSource audioSource;
     public AudioClip lampSwitchSound;
-    public override void Interact()
+    public void Interact()
     {
         // Debug.Log("Lamp " + gameObject.name + " toggled!");
 
@@ -24,8 +24,13 @@ public class LampInteractable : Interactable
         }
     }
 
-    public override void OnFocus()
+    public void OnFocus()
     {
         // Debug.Log("Looking at lamp " + gameObject.name);
+    }
+
+    public void OnDefocus()
+    {
+        // Debug.Log("Defocused from lamp " + gameObject.name);
     }
 }

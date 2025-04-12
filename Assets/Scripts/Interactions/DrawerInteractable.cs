@@ -1,8 +1,13 @@
 using UnityEngine;
 
-public class DrawerInteractable : Interactable
+public class DrawerInteractable : MonoBehaviour, Interactable
 {
-    public override void Interact()
+    public string HelpText
+    {
+        get { return "Press [E] to open/close drawer"; }
+    }
+
+    public void Interact()
     {
         // print the name of the object being interacted with
         // Debug.Log("Drawer " + gameObject.name + " opened!");
@@ -14,9 +19,15 @@ public class DrawerInteractable : Interactable
         drawer.drawerBool = !drawer.drawerBool;
     }
 
-    public override void OnFocus()
+    public void OnFocus()
     {
         // print the name of the object being focused on
         // Debug.Log("Looking at drawer " + gameObject.name);
+    }
+
+    public void OnDefocus()
+    {
+        // print the name of the object being defocused from
+        // Debug.Log("Defocused from drawer " + gameObject.name);
     }
 }
