@@ -4,6 +4,23 @@ public class BaseNPC : MonoBehaviour
 {
     public Transform target;
 
+    public float Health { get; protected set; } = 100f;
+    public float MaxHealth {get; protected set; } = 100f;
+
+    public float TakeDamage(float damage)
+    {
+        Health -= damage;
+        if (Health < 0) Health = 0;
+        return Health;
+    }
+    
+    public float Heal(float amount)
+    {
+        Health += amount;
+        if (Health > MaxHealth) Health = MaxHealth;
+        return Health;
+    }
+
     public void setState(NPCState state)
     {
         stateMachine.SetState(state, this);
