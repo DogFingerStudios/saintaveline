@@ -18,10 +18,13 @@ public class BaseNPC : MonoBehaviour
     [Tooltip("The distance at which the NPC will stop moving towards the target")]
     public float stopDistance = 1f;
 
-    public Transform target;
+    [SerializeField]
+    public float Health = 100f;
+    
+    [SerializeField]
+    public float MaxHealth = 100f;
 
-    public float Health { get; protected set; } = 100f;
-    public float MaxHealth {get; protected set; } = 100f;
+    public Transform target;
 
     public float TakeDamage(float damage)
     {

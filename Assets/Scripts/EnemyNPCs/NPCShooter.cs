@@ -41,7 +41,15 @@ public class NPCShooter : MonoBehaviour
             // get the distance from the fire point to the hit point
             float distance = Vector3.Distance(firePoint.position, hit.point);
             int damage = Mathf.RoundToInt(defaultDamage * (1 - (distance / range)));
-            hit.collider.GetComponent<PlayerStats>()?.TakeDamage(damage);
+
+            if (hit.collider.GetComponent<PlayerStats>() != null)
+            {
+                hit.collider.GetComponent<PlayerStats>()?.TakeDamage(damage);
+            }
+            else if (hit.collider.GetComponent<FriendlyNPC>() != null)
+            {
+                hit.collider.GetComponent<FriendlyNPC>()?.TakeDamage(damage);
+            }
         }
         else
         {

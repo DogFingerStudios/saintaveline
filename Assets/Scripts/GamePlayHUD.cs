@@ -7,6 +7,9 @@ public class GamePlayHUD : MonoBehaviour
     public GameObject player;
     public TextMeshProUGUI healthText; 
 
+    public SonNPC sonNPC;
+    public TextMeshProUGUI sonHealthText;
+
     void Start()
     {
         
@@ -21,5 +24,7 @@ public class GamePlayHUD : MonoBehaviour
         {
             healthText.text = "Health: " + stats.health.ToString() + "/" + stats.maxHealth.ToString();
         }
+        if (sonNPC == null) return;
+        sonHealthText.text = "Son Health: " + sonNPC.Health.ToString() + "/" + sonNPC.MaxHealth.ToString();
     }
 }
