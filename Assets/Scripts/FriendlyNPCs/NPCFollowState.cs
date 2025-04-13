@@ -4,57 +4,67 @@ using UnityEngine;
 
 public class NPCFollowState : NPCState
 {
-    private UnityEngine.AI.NavMeshAgent? agent;
-    private FriendlyNPC? npc;
+    private UnityEngine.AI.NavMeshAgent? _agent;
 
-    public void Enter(BaseNPC baseNpc)
+    public NPCFollowState(BaseNPC baseNpc) : base(baseNpc)
     {
-        // TODO: this should probably have some good error checking
-        if (baseNpc is not FriendlyNPC friendlyNpc) return;
-        this.npc = friendlyNpc;
-        if (npc.target == null) return;
-
-        agent = npc.GetComponent<UnityEngine.AI.NavMeshAgent>();
-        if (agent != null)
+        if (baseNpc is not FriendlyNPC friendlyNPC)
         {
-            agent.isStopped = false;
-            agent.speed = npc.moveSpeed;
-            agent.angularSpeed = npc.rotationSpeed;
+            throw new System.Exception("BaseNPC is not a FriendlyNPC. Cannot enter idle state.");
+        }
+
+        if (NPC.target == null)
+        {
+            throw new System.Exception("Target is null. Cannot enter follow state.");
+        }
+
+        _agent = this.NPC.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (_agent == null)
+        {
+            throw new System.Exception("NavMeshAgent component not found on NPC.");
         }
     }
 
-    public NPCState? Update(BaseNPC x)
+    // remove this ctor type
+    private NPCFollowState(NPCState? nextState, BaseNPC? npc = null) {}
+
+    public override void Enter()
     {
-        if (npc == null || npc.target == null || agent == null) return null;
-        
-        float distance = Vector3.Distance(npc.transform.position, npc.target.position);
-        if (distance < npc.stopDistance)
+        _agent.isStopped = false;
+        _agent.speed = this.NPC.moveSpeed;
+        _agent.angularSpeed = this.NPC.rotationSpeed;
+    }
+
+    public override INPCState? Update()
+    {
+        float distance = Vector3.Distance(this.NPC.transform.position, this.NPC.target.position);
+        if (distance < this.NPC.stopDistance)
         {
             // we're close enough to the target, stop moving
-            agent.isStopped = true;
-            agent.ResetPath();
-            return new NPCFollowIdleState();
+            _agent.isStopped = true;
+            _agent.ResetPath();
+            return new NPCFollowIdleState(this.NPC);
         }
 
-        if (distance < npc.detectionDistance)
+        if (distance < this.NPC.detectionDistance)
         {
             // we're chasing the target
-            agent.SetDestination(npc.target.transform.position);
+            _agent.SetDestination(this.NPC.target.transform.position);
         }
         else
         {
             // the target is out of range, stop moving
-            agent.isStopped = true;
-            agent.ResetPath();
-            return new NPCFollowIdleState();
+            _agent.isStopped = true;
+            _agent.ResetPath();
+            return new NPCFollowIdleState(this.NPC);
         }
 
         return null;
     }
 
-    public void Exit(BaseNPC x)
+    public override void Exit()
     {
-        agent?.ResetPath();
-        agent = null;
+        _agent.ResetPath();
+        _agent = null;
     }
 }
