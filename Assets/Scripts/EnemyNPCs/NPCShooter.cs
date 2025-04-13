@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Android;
 
@@ -11,6 +12,11 @@ public class NPCShooter : MonoBehaviour
     public float damage = 10f;
     public float defaultDamage = 10f;
     public LayerMask targetMask;
+    
+    [Header("Audio")]
+    [Tooltip("Audio clip to play when the gun is fired.")]
+    private AudioSource audioSource;
+    public AudioClip[] gunshotSounds;
 
     private float nextFireTime = 0f;
     private LineRenderer lineRenderer;
@@ -22,13 +28,30 @@ public class NPCShooter : MonoBehaviour
         lineRenderer.positionCount = 2;
         lineRenderer.startWidth = 0.05f;
         lineRenderer.endWidth = 0.05f;
+
+        // set the volume dropoff curve
+        AnimationCurve rolloff = new AnimationCurve();
+        rolloff.AddKey(0f, 1f);    // Full volume at 0 distance
+        rolloff.AddKey(10f, 0.8f); // 80% volume at 10 units
+        rolloff.AddKey(30f, 0.3f); // 30% volume at 30 units
+        rolloff.AddKey(50f, 0.15f);// almost silent at 50 units
+
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.spatialBlend = 1f; // 3D sound
+        audioSource.rolloffMode = AudioRolloffMode.Logarithmic; // More realistic falloff
+        audioSource.playOnAwake = false;
+        audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, rolloff);
+        audioSource.maxDistance = 50f; // Can tweak based on how far you want it heard
     }
+
     void Update()
     {
         if (Time.time >= nextFireTime)
         {
             Shoot();
-            nextFireTime = Time.time + 1f / fireRate;
+            // get a random time between 0.5 and 1.5 seconds
+            float randomTime = UnityEngine.Random.Range(0.5f, 1.5f);
+            nextFireTime = Time.time + randomTime;
         }
     }
 
@@ -55,6 +78,8 @@ public class NPCShooter : MonoBehaviour
         {
             StartCoroutine(FireRayEffect(firePoint.position + firePoint.forward * range));
         }
+
+        audioSource.PlayOneShot(gunshotSounds[UnityEngine.Random.Range(0, gunshotSounds.Length)]);
     }
 
     IEnumerator FireRayEffect(Vector3 hitPoint)

@@ -282,9 +282,15 @@ MonoBehaviour:
   fireRate: 1
   range: 50
   damage: 10
+  defaultDamage: 10
   targetMask:
     serializedVersion: 2
     m_Bits: 64
+  gunshotClip: {fileID: 8300000, guid: 27b62ac7389d14447852f8314ca7244c, type: 3}
+  gunshotSounds:
+  - {fileID: 8300000, guid: 27b62ac7389d14447852f8314ca7244c, type: 3}
+  - {fileID: 8300000, guid: 1dd85d727f1234f46a8c0599abe8a676, type: 3}
+  - {fileID: 8300000, guid: 7ce4d13b788f64814b87aded6da205ab, type: 3}
 --- !u!120 &807902537088747893
 LineRenderer:
   serializedVersion: 2
