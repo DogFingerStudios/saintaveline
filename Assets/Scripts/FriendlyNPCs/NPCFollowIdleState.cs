@@ -4,45 +4,54 @@ using UnityEngine;
 
 public class NPCFollowIdleState : NPCState
 {
-    private FriendlyNPC? npc;
-
-    public void Enter(BaseNPC baseNpc)
+    public NPCFollowIdleState(BaseNPC baseNpc) : base(baseNpc)
     {
-        // TODO: this should probably have some good error checking
-        if (baseNpc is not FriendlyNPC friendlyNpc) return;
-        this.npc = friendlyNpc;
-        if (npc.target == null) return;
+        if (baseNpc is not FriendlyNPC)
+        {
+            throw new System.Exception("BaseNPC is not a FriendlyNPC. Cannot enter idle state.");
+        }
+
+        if (NPC.target == null)
+        {
+            throw new System.Exception("Target is null. Cannot enter follow state.");
+        }
     }
 
-    public NPCState? Update(BaseNPC x)
-    {
-        if (npc.target == null) return null;
+    // remove this ctor type
+    private NPCFollowIdleState(NPCState? nextState, BaseNPC? npc = null) {}
 
-        float distance = Vector3.Distance(npc.transform.position, npc.target.position);
-        if (distance > npc.stopDistance && distance < npc.detectionDistance)
+    public override void Enter()
+    {
+        // nothing to do
+    }
+
+    public override INPCState? Update()
+    {
+        float distance = Vector3.Distance(this.NPC.transform.position, this.NPC.target.position);
+        if (distance > this.NPC.stopDistance && distance < this.NPC.detectionDistance)
         {
             // If the target is within detection distance, switch to follow state
-            return new NPCFollowState();
+            return new NPCFollowState(this.NPC);
         }
 
         // turn in the direction of the target
-        Vector3 direction = npc.target.position - npc.transform.position;
+        Vector3 direction = this.NPC.target.position - this.NPC.transform.position;
         direction.y = 0f; // Keep rotation flat
         if (direction.sqrMagnitude > 0.001f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            npc.transform.rotation = Quaternion.RotateTowards(
-                npc.transform.rotation,
+            this.NPC.transform.rotation = Quaternion.RotateTowards(
+                this.NPC.transform.rotation,
                 targetRotation,
-                npc.rotationSpeed * Time.deltaTime
+                this.NPC.rotationSpeed * Time.deltaTime
             );
         }
 
         return null;
     }
 
-    public void Exit(BaseNPC x)
+    public override void Exit()
     {
-        // Clean up if needed
+        // nothing to do
     }
 }

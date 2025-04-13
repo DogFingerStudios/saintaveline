@@ -40,13 +40,13 @@ public class CommandMenu : MonoBehaviour
 
         stayButton.onClick.AddListener(() =>
         {
-            currentNPC?.setState(new NPCIdleState());
+            currentNPC?.setState(new NPCIdleState(currentNPC));
             Close();
         });
 
         followButton.onClick.AddListener(() =>
         {
-            currentNPC?.setState(new NPCFollowState());
+            currentNPC?.setState(new NPCFollowState(currentNPC));
             Close();
         });
     }

@@ -4,36 +4,44 @@ using UnityEngine;
 
 public class NPCIdleState : NPCState
 {
-    private FriendlyNPC? npc;
-
-    public void Enter(BaseNPC baseNpc)
+    public NPCIdleState(BaseNPC baseNpc) : base(baseNpc)
     {
-        // TODO: this should probably have some good error checking
-        if (baseNpc is not FriendlyNPC friendlyNpc) return;
-        this.npc = friendlyNpc;
-        if (npc.target == null) return;
+        if (baseNpc is not FriendlyNPC)
+        {
+            throw new System.Exception("BaseNPC is not a FriendlyNPC. Cannot enter idle state.");
+        }
     }
 
-    public NPCState? Update(BaseNPC x)
+    // remove this ctor type
+    private NPCIdleState(NPCState? nextState, BaseNPC? npc = null) {}
+
+    public override void Enter()
     {
+        // nothing to do
+    }
+
+    public override INPCState? Update()
+    {
+        if (this.NPC.target == null) return null;
+        
         // turn in the direction of the target
-        Vector3 direction = npc.target.position - npc.transform.position;
+        Vector3 direction = this.NPC.target.position - this.NPC.transform.position;
         direction.y = 0f; // Keep rotation flat
         if (direction.sqrMagnitude > 0.001f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            npc.transform.rotation = Quaternion.RotateTowards(
-                npc.transform.rotation,
+            this.NPC.transform.rotation = Quaternion.RotateTowards(
+                this.NPC.transform.rotation,
                 targetRotation,
-                npc.rotationSpeed * Time.deltaTime
+                this.NPC.rotationSpeed * Time.deltaTime
             );
         }
 
         return null;
     }
 
-    public void Exit(BaseNPC x)
+    public override void Exit()
     {
-        // Clean up if needed
+        // nothing to do
     }
 }
