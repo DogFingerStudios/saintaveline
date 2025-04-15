@@ -1,18 +1,37 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour, IHasHealth
 {
-    public int health = 100; // Player's health
-    public int maxHealth = 100; // Maximum health
+    [SerializeField]
+    float _health = 100f;
 
-    public void TakeDamage(int damage)
+    public float Health 
     {
-        health -= damage;
-        if (health < 0)
-        {
-            health = 0;
-        }
+        get => _health;
+        set => _health = value;
+    }
+
+    [SerializeField]
+    float _maxHealth = 100f;
+    public float MaxHealth 
+    {
+        get => _maxHealth;
+        set => _maxHealth = value;
+    }
+
+    public float TakeDamage(float amount)
+    {
+        Health -= amount;
+        if (Health < 0) Health = 0;
+        return Health;
+    }
+
+    public float Heal(float amount)
+    {
+        Health += amount;
+        if (Health > MaxHealth) Health = MaxHealth;
+        return Health;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,7 +42,7 @@ public class PlayerStats : MonoBehaviour
 
     void Update()
     {
-        if (health <= 0)
+        if (Health <= 0)
         {
             SceneManager.LoadScene("MainMenu"); 
         }

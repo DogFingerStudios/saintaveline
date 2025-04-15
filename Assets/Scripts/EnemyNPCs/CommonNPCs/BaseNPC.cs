@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BaseNPC : MonoBehaviour
+public class BaseNPC : MonoBehaviour, IHasHealth
 {
     [SerializeField]
     [Tooltip("The rate at which the NPC rotates towards the target")]
@@ -19,30 +19,41 @@ public class BaseNPC : MonoBehaviour
     public float stopDistance = 1f;
 
     [SerializeField]
-    public float Health = 100f;
-    
+    float _health = 100f;
+
+    public float Health 
+    {
+        get => _health;
+        set => _health = value;
+    }
+
     [SerializeField]
-    public float MaxHealth = 100f;
+    float _maxHealth = 100f;
+    public float MaxHealth 
+    {
+        get => _maxHealth;
+        set => _maxHealth = value;
+    }
 
     public Transform target;
 
-    public float TakeDamage(float damage)
+    public void setState(NPCState state)
+    {
+        stateMachine.SetState(state);
+    }
+
+    float IHasHealth.TakeDamage(float damage)
     {
         Health -= damage;
         if (Health < 0) Health = 0;
         return Health;
     }
-    
-    public float Heal(float amount)
+
+    float IHasHealth.Heal(float amount)
     {
         Health += amount;
         if (Health > MaxHealth) Health = MaxHealth;
         return Health;
-    }
-
-    public void setState(NPCState state)
-    {
-        stateMachine.SetState(state);
     }
 
     protected NPCStateMachine stateMachine = new NPCStateMachine();

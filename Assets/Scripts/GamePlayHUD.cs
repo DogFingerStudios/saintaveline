@@ -22,7 +22,7 @@ public class GamePlayHUD : MonoBehaviour
         PlayerStats stats = player.GetComponent<PlayerStats>();
         if (stats != null)
         {
-            healthText.text = "Health: " + stats.health.ToString() + "/" + stats.maxHealth.ToString();
+            healthText.text = "Health: " + stats.Health.ToString() + "/" + stats.MaxHealth.ToString();
         }
         if (sonNPC == null) return;
         sonHealthText.text = "Son Health: " + sonNPC.Health.ToString() + "/" + sonNPC.MaxHealth.ToString();

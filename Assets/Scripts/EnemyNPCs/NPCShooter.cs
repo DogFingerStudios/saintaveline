@@ -65,13 +65,9 @@ public class NPCShooter : MonoBehaviour
             float distance = Vector3.Distance(firePoint.position, hit.point);
             int damage = Mathf.RoundToInt(defaultDamage * (1 - (distance / range)));
 
-            if (hit.collider.GetComponent<PlayerStats>() != null)
+            if (hit.collider.GetComponent<IHasHealth>() != null)
             {
-                hit.collider.GetComponent<PlayerStats>()?.TakeDamage(damage);
-            }
-            else if (hit.collider.GetComponent<FriendlyNPC>() != null)
-            {
-                hit.collider.GetComponent<FriendlyNPC>()?.TakeDamage(damage);
+                hit.collider.GetComponent<IHasHealth>().TakeDamage(damage);
             }
         }
         else
