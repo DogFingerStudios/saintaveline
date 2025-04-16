@@ -22,7 +22,7 @@ public class NPCIdleState : NPCState
 
     public override INPCState? Update()
     {
-        if (this.NPC.target == null) return null;
+        if (this.NPC == null || this.NPC.target == null) return null;
         
         // turn in the direction of the target
         Vector3 direction = this.NPC.target.position - this.NPC.transform.position;

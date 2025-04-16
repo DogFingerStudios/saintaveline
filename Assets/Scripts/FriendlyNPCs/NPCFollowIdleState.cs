@@ -6,12 +6,12 @@ public class NPCFollowIdleState : NPCState
 {
     public NPCFollowIdleState(BaseNPC baseNpc) : base(baseNpc)
     {
-        if (baseNpc is not FriendlyNPC)
+        if (this.NPC is not FriendlyNPC)
         {
             throw new System.Exception("BaseNPC is not a FriendlyNPC. Cannot enter idle state.");
         }
 
-        if (NPC.target == null)
+        if (this.NPC.target == null)
         {
             throw new System.Exception("Target is null. Cannot enter follow state.");
         }
@@ -27,6 +27,9 @@ public class NPCFollowIdleState : NPCState
 
     public override INPCState? Update()
     {
+        // TODO: logging?
+        if (this.NPC == null || this.NPC.target == null) return null;
+
         float distance = Vector3.Distance(this.NPC.transform.position, this.NPC.target.position);
         if (distance > this.NPC.stopDistance && distance < this.NPC.detectionDistance)
         {

@@ -25,7 +25,7 @@ public abstract class NPCState : INPCState
 
     public NPCState(BaseNPC? npc = null)
     {
-        _npc = npc;
+        if (npc != null) _npc = npc;
     }
 
     public NPCState(NPCState? nextState, BaseNPC? npc = null)
