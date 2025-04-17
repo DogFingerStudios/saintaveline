@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BaseNPC : MonoBehaviour, IHasHealth
 {
@@ -20,6 +21,22 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     [SerializeField]
     float _health = 100f;
+
+    [SerializeField]
+    EntityTraits _entityTraits = new EntityTraits();
+    public EntityTraits EntityTraits 
+    {
+        get => _entityTraits;
+        set => _entityTraits = value;
+    }
+
+    [SerializeField] // in case Dictionary ever becomes serialized
+    private Dictionary<GameObject, RelationshipTraits> _relationships = new();
+    public Dictionary<GameObject, RelationshipTraits> Relationships 
+    {
+        get => _relationships;
+        set => _relationships = value;
+    }
 
     public float Health 
     {

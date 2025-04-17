@@ -76,14 +76,8 @@ public class FPSMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            Debug.Log("Is grounded: " + controller.isGrounded);
-        }
-
         if (Input.GetButtonDown("Jump") && controller.isGrounded)
         {
-            Debug.Log("Jump!");
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }

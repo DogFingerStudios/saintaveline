@@ -9535,6 +9535,12 @@ MonoBehaviour:
   moveSpeed: 5.5
   detectionDistance: 15.5
   stopDistance: 3.5
+  _health: 100
+  _entityTraits:
+    Trusting: 1
+    Loving: 0.757
+    Courage: 0.287
+  _maxHealth: 100
   target: {fileID: 1830504925}
   commandMenu: {fileID: 1358450827}
 --- !u!1001 &1759826418
@@ -10221,6 +10227,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d280eb6b4932163489f9988f0ae41ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: 100
+  _maxHealth: 100
 --- !u!1 &1851857602 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4896059434030516683, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}

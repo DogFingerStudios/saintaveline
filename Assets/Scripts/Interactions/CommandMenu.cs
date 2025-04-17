@@ -46,7 +46,19 @@ public class CommandMenu : MonoBehaviour
 
         followButton.onClick.AddListener(() =>
         {
-            currentNPC?.setState(new NPCFollowState(currentNPC));
+            var entityTraits = currentNPC?.EntityTraits;
+            var relationshipTraits = currentNPC?.Relationships[GameObject.FindGameObjectWithTag("Player")];
+            if (DecisionProfile.Evaluate(1,1,entityTraits, relationshipTraits) == DecisionResult.Obey)
+            {
+                currentNPC?.setState(new NPCFollowState(currentNPC));
+            }
+            else
+            {
+                currentNPC?.setState(new NPCIdleState(currentNPC));
+            }
+
+        
+            // currentNPC?.setState(new NPCFollowState(currentNPC));
             Close();
         });
     }
