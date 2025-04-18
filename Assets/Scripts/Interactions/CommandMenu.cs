@@ -46,6 +46,9 @@ public class CommandMenu : MonoBehaviour
 
         followButton.onClick.AddListener(() =>
         {
+            Debug.Log("Follow button clicked");
+            currentNPC?.Panic();
+            
             var entityTraits = currentNPC?.EntityTraits;
             var relationshipTraits = currentNPC?.Relationships[GameObject.FindGameObjectWithTag("Player")];
             if (DecisionProfile.Evaluate(1,1,entityTraits, relationshipTraits) == DecisionResult.Obey)

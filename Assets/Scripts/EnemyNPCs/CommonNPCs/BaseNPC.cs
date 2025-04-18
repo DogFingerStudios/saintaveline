@@ -3,6 +3,13 @@ using System.Collections.Generic;
 
 public class BaseNPC : MonoBehaviour, IHasHealth
 {
+    private Animator _animator;
+    public Animator Animator
+    {
+        get => _animator;
+        set => _animator = value;
+    }
+
     [SerializeField]
     [Tooltip("The rate at which the NPC rotates towards the target")]
     public float rotationSpeed = 90f;
@@ -76,4 +83,17 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     protected NPCStateMachine stateMachine = new NPCStateMachine();
     public NPCStateMachine StateMachine => stateMachine;
 
+    protected virtual void Start()
+    {
+        _animator = GetComponent<Animator>();
+        if (_animator == null)
+        {
+            throw new System.Exception("Animator component not found on NPC.");
+        }
+    }
+
+    public void Panic()
+    {
+        Animator.SetTrigger("RefuseBlink");
+    }
 }

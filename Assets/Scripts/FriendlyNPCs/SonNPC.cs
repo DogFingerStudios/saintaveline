@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class SonNPC : FriendlyNPC
 {   
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         var playerObject = GameObject.FindGameObjectWithTag("Player");
         Relationships.Add(playerObject, new RelationshipTraits
         {
