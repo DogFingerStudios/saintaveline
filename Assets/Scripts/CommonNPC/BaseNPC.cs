@@ -1,8 +1,17 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class BaseNPC : MonoBehaviour, IHasHealth
 {
+    [SerializeField] 
+    EntityProfile _entityProfile;
+    public EntityProfile Profile
+    {
+        get => _entityProfile;
+        set => _entityProfile = value;
+    }
+
     private Animator _animator;
     public Animator Animator
     {
@@ -28,22 +37,6 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     [SerializeField]
     float _health = 100f;
-
-    [SerializeField]
-    EntityTraits _entityTraits = new EntityTraits();
-    public EntityTraits EntityTraits 
-    {
-        get => _entityTraits;
-        set => _entityTraits = value;
-    }
-
-    [SerializeField] // in case Dictionary ever becomes serialized
-    private Dictionary<GameObject, RelationshipTraits> _relationships = new();
-    public Dictionary<GameObject, RelationshipTraits> Relationships 
-    {
-        get => _relationships;
-        set => _relationships = value;
-    }
 
     public float Health 
     {
@@ -94,6 +87,17 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     public void Panic()
     {
-        Animator.SetTrigger("RefuseBlink");
+         StartCoroutine(BlinkTwiceCoroutine());
+    }
+
+    private IEnumerator BlinkTwiceCoroutine()
+    {
+        _animator.SetTrigger("RefuseBlink");
+        yield return new WaitForSeconds(0.4f); // Match animation clip duration
+        _animator.SetTrigger("RefuseBlink");
+        yield return new WaitForSeconds(0.4f);
+        
+        // Optional: force back to Idle (if needed)
+        _animator.Play("Idle");
     }
 }

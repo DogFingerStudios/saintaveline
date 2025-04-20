@@ -19,7 +19,7 @@ public static class DecisionProfile
     public static DecisionResult Evaluate(
         float safety,
         float utility,
-        EntityTraits traits,
+        PersonalityProfile traits,
         RelationshipTraits relationship)
     {
         // Adjust Safety: Less courage = more penalty from danger

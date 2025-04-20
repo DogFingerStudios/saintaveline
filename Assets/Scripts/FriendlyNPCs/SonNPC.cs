@@ -8,11 +8,11 @@ public class SonNPC : FriendlyNPC
         base.Start();
 
         var playerObject = GameObject.FindGameObjectWithTag("Player");
-        Relationships.Add(playerObject, new RelationshipTraits
+        Profile.Relationships.Add(playerObject, new RelationshipTraits
         {
-            TrustToward = 0.99f, // nearly full trust
-            Love = 0.87f,       // nearly full love
-            FearOf = 0.25f      // some fear
+            TrustToward = 0.99f,    // nearly full trust
+            Love = 0.87f,           // nearly full love
+            FearOf = 0.25f          // some fear
         });
 
         stateMachine.SetState(new NPCIdleState(this));
