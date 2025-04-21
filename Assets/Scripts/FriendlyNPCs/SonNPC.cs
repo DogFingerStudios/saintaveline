@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class SonNPC : FriendlyNPC
 {   
     protected override void Start()
@@ -16,10 +15,17 @@ public class SonNPC : FriendlyNPC
         });
 
         stateMachine.SetState(new NPCIdleState(this));
+        NPCShooter.OnGunFired += onGunFired;
     }
 
     private void Update()
     {
         stateMachine.Update();
+    }
+
+    private void onGunFired()
+    {
+        this.Profile.MentalState.Comfort -= (this.Profile.MentalState.Comfort * 0.1f);
+        this.Profile.MentalState.Comfort = Mathf.Clamp(this.Profile.MentalState.Comfort, -1f, 1f);
     }
 }

@@ -18,6 +18,8 @@ public class NPCShooter : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip[] gunshotSounds;
 
+    public static event Action OnGunFired;
+
     private float nextFireTime = 0f;
     private LineRenderer lineRenderer;
 
@@ -87,5 +89,6 @@ public class NPCShooter : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
 
         lineRenderer.enabled = false;
+        OnGunFired?.Invoke();
     }
 }
