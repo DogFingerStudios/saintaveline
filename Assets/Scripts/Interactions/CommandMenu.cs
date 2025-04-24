@@ -51,7 +51,7 @@ public class CommandMenu : MonoBehaviour
             
             var entityTraits = currentNPC?.Profile.Personality;
             var relationshipTraits = currentNPC?.Profile.Relationships[GameObject.FindGameObjectWithTag("Player")];
-            if (DecisionProfile.Evaluate(1,1,entityTraits, relationshipTraits) == DecisionResult.Obey)
+            if (DecisionProfile.Evaluate(1, 1, entityTraits, relationshipTraits) == DecisionResult.Obey)
             {
                 currentNPC?.setState(new NPCFollowState(currentNPC));
             }

@@ -18,11 +18,6 @@ public class SonNPC : FriendlyNPC
         NPCShooter.OnGunFired += onGunFired;
     }
 
-    private void Update()
-    {
-        stateMachine.Update();
-    }
-
     private void onGunFired()
     {
         this.Profile.MentalState.Comfort -= (this.Profile.MentalState.Comfort * 0.1f);

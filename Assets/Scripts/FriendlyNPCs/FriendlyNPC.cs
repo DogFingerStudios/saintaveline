@@ -25,3 +25,4 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
 #endregion
 
 }
+

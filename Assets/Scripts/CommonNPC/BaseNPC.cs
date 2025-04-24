@@ -100,4 +100,10 @@ public class BaseNPC : MonoBehaviour, IHasHealth
         // Optional: force back to Idle (if needed)
         _animator.Play("Idle");
     }
+
+    protected virtual void Update()
+    {
+        if (stateMachine == null) return;
+        stateMachine.Update();
+    }
 }
