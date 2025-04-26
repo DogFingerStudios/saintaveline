@@ -9,8 +9,9 @@ public class EnemyIdleState : NPCState
     private readonly EnemyNPC _enemyNPC;
 
     private float _timer = 0f;
-    private readonly float _scanInterval = 0.01f;
+    private readonly float _scanInterval = 0.25f;
     private readonly int _targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
+    private readonly int _obstacleMask = LayerMask.GetMask("Default");
     
     public EnemyIdleState(EnemyNPC enemyNPC) 
         : base(enemyNPC)
@@ -43,7 +44,7 @@ public class EnemyIdleState : NPCState
                 Vector3 direction = this.NPC.target.position - this.NPC.transform.position;
                 _currentTargetDirection = direction.normalized;
             }
-            else if (this.NPC.transform.forward != _originalDirection)
+            else if (_originalDirection != this.NPC.transform.forward.normalized)
             {
                 _currentTargetDirection = _originalDirection;
             }
@@ -78,7 +79,6 @@ public class EnemyIdleState : NPCState
         }
     }
 
-
     private Collider? doScan()
     {
         if (this.NPC == null || this.NPC.transform == null) return null;
@@ -90,7 +90,6 @@ public class EnemyIdleState : NPCState
 
         Collider[] candidates = Physics.OverlapBox(boxCenter, boxHalfExtents, this.NPC.transform.rotation, _targetMask);
 
-        // Collider[] targetsInViewRadius = Physics.OverlapSphere(this.NPC.transform.position, _viewDistance);
         foreach (Collider target in candidates)
         {
             if (target.transform == this.NPC.transform) continue;
@@ -99,25 +98,12 @@ public class EnemyIdleState : NPCState
             float angleToTarget = Vector3.Angle(this.NPC.transform.forward, dirToTarget);
             if (angleToTarget > (_enemyNPC.ViewAngle / 2f)) continue;
 
-            // // log the target name, the distance they are and the angle
-            float distanceToTarget = Vector3.Distance(this.NPC.transform.position, target.transform.position);
-            // float angleToTarget = Vector3.Angle(this.NPC.transform.forward, target.transform.position - this.NPC.transform.position);
-            // if 
-            Debug.Log($"Target: {target.name}, Distance: {distanceToTarget}, Angle: {angleToTarget}");
-            return target;
-
-            // Debug.Log("Target detected: " + target.name
-
-            // Vector3 dirToTarget = (target.transform.position - this.NPC.transform.position).normalized;
-            // if (Vector3.Angle(this.NPC.transform.forward, dirToTarget) < _viewAngle / 2f)
-            // {
-            //     float distanceToTarget = Vector3.Distance(this.NPC.transform.position, target.transform.position);
-            //     if (!Physics.Raycast(this.NPC.transform.position, dirToTarget, distanceToTarget))
-            //     {
-                    // Target is within view
-                    // Debug.Log("Target detected: " + target.name);
-                // }
-            // }
+            float distanceToTarget = Vector3.Distance(eyePosition, target.transform.position);
+            if (!Physics.Raycast(eyePosition, dirToTarget, distanceToTarget, _obstacleMask))
+            {
+                Debug.Log($"Target: {target.name}, Distance: {distanceToTarget}, Angle: {angleToTarget}");
+                return target;
+            }
         }
 
         return null;
