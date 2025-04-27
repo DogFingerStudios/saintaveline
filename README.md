@@ -35,8 +35,14 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 ## 🎯 **Prototype Goals**
 
 - ✅ Establish basic player movement (FPS + 3rd person toggle).
-- ✅ Build a small portion of the tower (Ground Floor + 9th Floor + Roof).
-- ✅ Implement basic AI (patrol, chase, attack).
+   - 🔹 <s>First Person</s>
+   - 🔹 Third Person
+   - 🔹 <s>1st/3rd Person Toggle</s>
+- ✅ <s>Build a small portion of the tower (Ground Floor + 9th Floor + Roof).</s>
+- ✅ Implement basic AI
+   - 🔹 Patrol
+   - 🔹 Chase
+   - 🔹 Attack
 - ✅ Create initial stealth and combat mechanics.
 - ✅ Set up family NPCs with basic interaction and survival dynamics:
   - 🔹 Friendly NPCs (e.g., SonNPC) use a custom C# state machine
