@@ -1,6 +1,7 @@
 #nullable enable
 
 using UnityEngine;
+using System.Linq;
 
 public class EnemyIdleState : NPCState
 {
@@ -13,6 +14,8 @@ public class EnemyIdleState : NPCState
     private readonly int _targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
     private readonly int _obstacleMask = LayerMask.GetMask("Default");
     
+    private EntityScanner _entityScanner;
+    
     public EnemyIdleState(EnemyNPC enemyNPC) 
         : base(enemyNPC)
     {
@@ -22,6 +25,14 @@ public class EnemyIdleState : NPCState
         }
 
         _enemyNPC = enemyNPC;
+
+        _entityScanner = new EntityScanner
+        {
+            ViewDistance = _enemyNPC.ViewDistance,
+            ViewAngle = _enemyNPC.ViewAngle,
+            SourceTransform = this.NPC.transform,
+            EyeOffset = _enemyNPC.EyeOffset
+        };
     }
 
     public override void Enter()
@@ -65,6 +76,12 @@ public class EnemyIdleState : NPCState
         // Nothing to do
     }
 
+    private Collider? doScan()
+    {
+        if (this.NPC == null || this.NPC.transform == null) return null;
+        return _entityScanner.doScan(1).FirstOrDefault();
+    }
+
     private void turnTowards(Vector3 direction)
     {
         direction.y = 0f; // Keep rotation flat
@@ -77,35 +94,5 @@ public class EnemyIdleState : NPCState
                 this.NPC.rotationSpeed * Time.deltaTime
             );
         }
-    }
-
-    private Collider? doScan()
-    {
-        if (this.NPC == null || this.NPC.transform == null) return null;
-
-        var eyePosition = this.NPC.transform.position + _enemyNPC.EyeOffset;
-
-        Vector3 boxCenter = this.NPC.transform.position + this.NPC.transform.forward * (_enemyNPC.ViewDistance / 2f);
-        Vector3 boxHalfExtents = new Vector3(_enemyNPC.ViewDistance / 2f, 20.5f, _enemyNPC.ViewDistance ); // Flatten vertically if needed
-
-        Collider[] candidates = Physics.OverlapBox(boxCenter, boxHalfExtents, this.NPC.transform.rotation, _targetMask);
-
-        foreach (Collider target in candidates)
-        {
-            if (target.transform == this.NPC.transform) continue;
-
-            Vector3 dirToTarget = (target.transform.position - eyePosition).normalized;
-            float angleToTarget = Vector3.Angle(this.NPC.transform.forward, dirToTarget);
-            if (angleToTarget > (_enemyNPC.ViewAngle / 2f)) continue;
-
-            float distanceToTarget = Vector3.Distance(eyePosition, target.transform.position);
-            if (!Physics.Raycast(eyePosition, dirToTarget, distanceToTarget, _obstacleMask))
-            {
-                Debug.Log($"Target: {target.name}, Distance: {distanceToTarget}, Angle: {angleToTarget}");
-                return target;
-            }
-        }
-
-        return null;
     }
 }

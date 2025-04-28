@@ -1,0 +1,66 @@
+using UnityEngine;
+using System.Collections.Generic;
+
+class EntityScanner
+{
+    private float _viewDistance;
+    public float ViewDistance
+    {
+        get => _viewDistance;
+        set => _viewDistance = value;
+    }
+
+    private float _viewAngle;
+    public float ViewAngle
+    {
+        get => _viewAngle;
+        set => _viewAngle = value;
+    }
+
+    private Transform _sourceTransform;
+    public Transform SourceTransform
+    {
+        get => _sourceTransform;
+        set => _sourceTransform = value;
+    }
+
+    private Vector3 _eyeOffset = new Vector3(0f, 1.5f, 0f);
+    public Vector3 EyeOffset
+    {
+        get => _eyeOffset;
+        set => _eyeOffset = value;
+    }
+    
+    private int _targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
+    private int _obstacleMask = LayerMask.GetMask("Default");
+
+    public IEnumerable<Collider> doScan(int maxObjects = 0)
+    {
+        var eyePosition = SourceTransform.position + this.EyeOffset;
+
+        Vector3 boxCenter = SourceTransform.position + (SourceTransform.forward * (ViewDistance / 2f));
+        Vector3 boxHalfExtents = new Vector3(ViewDistance / 2f, 20.5f, ViewDistance ); // Flatten vertically if needed
+
+        Collider[] candidates = Physics.OverlapBox(boxCenter, boxHalfExtents, SourceTransform.rotation, _targetMask);
+
+        int count = 0;
+        foreach (Collider target in candidates)
+        {   
+            if (target.transform == SourceTransform) continue;
+            
+            Vector3 dirToTarget = (target.transform.position - eyePosition).normalized;
+            float angleToTarget = Vector3.Angle(SourceTransform.forward, dirToTarget);
+            if (angleToTarget > (ViewAngle / 2f)) continue;
+
+            float distanceToTarget = Vector3.Distance(eyePosition, target.transform.position);
+            if (!Physics.Raycast(eyePosition, dirToTarget, distanceToTarget, _obstacleMask))
+            {
+                Debug.Log($"Target: {target.name}, Distance: {distanceToTarget}, Angle: {angleToTarget}");
+                yield return target;
+
+                count++;
+                if (maxObjects > 0 && count >= maxObjects) break;
+            }
+        }
+    }
+}
