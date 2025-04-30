@@ -31,8 +31,19 @@ class EntityScanner
         set => _eyeOffset = value;
     }
     
-    private int _targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
-    private int _obstacleMask = LayerMask.GetMask("Default");
+    private int _targetMask;
+    public int TargetMask
+    {
+        get => _targetMask;
+        set => _targetMask = value;
+    }
+
+    private int _obstacleMask;
+    public int ObstacleMask
+    {
+        get => _obstacleMask;
+        set => _obstacleMask = value;
+    }
 
     public IEnumerable<Collider> doScan(int maxObjects = 0)
     {
@@ -55,7 +66,6 @@ class EntityScanner
             float distanceToTarget = Vector3.Distance(eyePosition, target.transform.position);
             if (!Physics.Raycast(eyePosition, dirToTarget, distanceToTarget, _obstacleMask))
             {
-                Debug.Log($"Target: {target.name}, Distance: {distanceToTarget}, Angle: {angleToTarget}");
                 yield return target;
 
                 count++;

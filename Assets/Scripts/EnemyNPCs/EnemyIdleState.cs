@@ -30,15 +30,17 @@ public class EnemyIdleState : NPCState
         {
             ViewDistance = _enemyNPC.ViewDistance,
             ViewAngle = _enemyNPC.ViewAngle,
-            SourceTransform = this.NPC.transform,
-            EyeOffset = _enemyNPC.EyeOffset
+            SourceTransform = this.NPC!.transform,
+            EyeOffset = _enemyNPC.EyeOffset,
+            TargetMask = _targetMask,
+            ObstacleMask = _obstacleMask
         };
     }
 
     public override void Enter()
     {
         // get the current direction the NPC is facing
-        _originalDirection = this.NPC.transform.forward.normalized;
+        _originalDirection = this.NPC!.transform.forward.normalized;
     }
 
     public override INPCState? Update()
@@ -49,13 +51,13 @@ public class EnemyIdleState : NPCState
             var target = doScan();
             if (target != null)
             {
-                this.NPC.target = target.transform;
+                this.NPC!.target = target.transform;
 
                 // turn in the direction of the target
-                Vector3 direction = this.NPC.target.position - this.NPC.transform.position;
+                Vector3 direction = this.NPC!.target.position - this.NPC!.transform.position;
                 _currentTargetDirection = direction.normalized;
             }
-            else if (_originalDirection != this.NPC.transform.forward.normalized)
+            else if (_originalDirection != this.NPC!.transform.forward.normalized)
             {
                 _currentTargetDirection = _originalDirection;
             }
@@ -63,7 +65,7 @@ public class EnemyIdleState : NPCState
             _timer = 0f;
         }
 
-        if (_currentTargetDirection != this.NPC.transform.forward.normalized)
+        if (_currentTargetDirection != this.NPC!.transform.forward.normalized)
         {
             turnTowards(_currentTargetDirection);        
         }
@@ -78,7 +80,7 @@ public class EnemyIdleState : NPCState
 
     private Collider? doScan()
     {
-        if (this.NPC == null || this.NPC.transform == null) return null;
+        if (this.NPC == null || this.NPC!.transform == null) return null;
         return _entityScanner.doScan(1).FirstOrDefault();
     }
 
@@ -88,10 +90,10 @@ public class EnemyIdleState : NPCState
         if (direction.sqrMagnitude > 0.001f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(direction);
-            this.NPC.transform.rotation = Quaternion.RotateTowards(
-                this.NPC.transform.rotation,
+            this.NPC!.transform.rotation = Quaternion.RotateTowards(
+                this.NPC!.transform.rotation,
                 targetRotation,
-                this.NPC.rotationSpeed * Time.deltaTime
+                this.NPC!.rotationSpeed * Time.deltaTime
             );
         }
     }
