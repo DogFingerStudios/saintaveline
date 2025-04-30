@@ -79,10 +79,6 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     protected virtual void Start()
     {
         _animator = GetComponent<Animator>();
-        if (_animator == null)
-        {
-            throw new System.Exception("Animator component not found on NPC.");
-        }
     }
 
     public void Panic()
@@ -92,6 +88,11 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     private IEnumerator BlinkTwiceCoroutine()
     {
+        if (_animator == null)
+        {
+            yield break;
+        }
+
         _animator.SetTrigger("RefuseBlink");
         yield return new WaitForSeconds(0.4f); // Match animation clip duration
         _animator.SetTrigger("RefuseBlink");
