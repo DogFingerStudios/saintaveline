@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
+[NPCStateTag("EnemyPatrol")]
 public class EnemyPatrolState : NPCState
 {
     private NavMeshAgent _agent;

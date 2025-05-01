@@ -3,6 +3,7 @@
 using UnityEngine;
 using System.Linq;
 
+[NPCStateTag("EnemyIdle")]
 public class EnemyIdleState : NPCState
 {
     private Vector3 _originalDirection;
