@@ -39,17 +39,13 @@ public class EnemyIdleState : NPCState
             TargetMask = _targetMask,
             ObstacleMask = _obstacleMask
         };
+
+        _warningSound = Resources.Load<AudioClip>("Freeze");
     }
 
     public override void Enter()
     {
         _originalDirection = this.NPC!.transform.forward.normalized;
-
-        _warningSound = Resources.Load<AudioClip>("Freeze");
-        if (_warningSound == null)
-        {
-            Debug.LogWarning("Could not load 'Freeze' AudioClip. Ensure it's in a Resources folder.");
-        }
     }
 
     public override INPCState? Update()

@@ -1,24 +1,24 @@
+#nullable enable
+
 using UnityEngine;
 
 [NPCStateTag("EnemyAttack")]
 public class EnemyAttackState : NPCState
 {
    
-    public override void OnEnter()
+    public override void Enter()
     {
-        base.OnEnter();
         Debug.Log("Enemy is now in attack state.");
     }
 
-    public override void OnExit()
+    public override void Exit()
     {
-        base.OnExit();
         Debug.Log("Enemy has exited the attack state.");
     }
 
-    public override void Update()
+    public override INPCState? Update()
     {
-        base.Update();
         Debug.Log("Enemy is attacking.");
+        return null;
     }
 }

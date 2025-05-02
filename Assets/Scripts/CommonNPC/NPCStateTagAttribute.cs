@@ -1,3 +1,5 @@
+#nullable enable
+
 // The classes in this file allow new states to be tagged with a string and have that state
 // created via a string value in the NPC (think of a `_defaultState` string in the NPC class).
 // This method allows new classes to be created just by tagging them. There is also code in 

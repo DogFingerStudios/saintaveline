@@ -85,14 +85,6 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     {
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
-        if (_audioSource == null)
-        {
-            // TODO: Check AI's suggestions
-            _audioSource = gameObject.AddComponent<AudioSource>();
-            // AI: Optional: Configure AudioSource defaults
-            _audioSource.playOnAwake = false;
-            _audioSource.spatialBlend = 1f; // AI: 3D audio (optional, adjust as needed)
-        }
     }
 
     public void Panic()

@@ -511,8 +511,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 5
-  pauseDuration: 30
-  loopCount: 3
 --- !u!82 &67006559
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2209,6 +2207,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 355636726}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &436854751
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 92.271576
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.8000152
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 150.33813
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8018992134920938627, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_Name
+      value: NPCPatrolman
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
 --- !u!1 &438816988
 GameObject:
   m_ObjectHideFlags: 0
@@ -2441,6 +2496,10 @@ PrefabInstance:
     - target: {fileID: 8018992134920938627, guid: 94f70f9b31d9b104eac9625dbf1e0515, type: 3}
       propertyPath: m_Name
       value: PerimieterPatrolNPC1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8018992134920938627, guid: 94f70f9b31d9b104eac9625dbf1e0515, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10310,6 +10369,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PerimieterPatrolNPC1
       objectReference: {fileID: 0}
+    - target: {fileID: 8018992134920938627, guid: 94f70f9b31d9b104eac9625dbf1e0515, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11262,3 +11325,4 @@ SceneRoots:
   - {fileID: 250156069}
   - {fileID: 1165786314}
   - {fileID: 322283500}
+  - {fileID: 436854751}
