@@ -19,6 +19,7 @@ public class EnemyIdleState : NPCState
     private EntityScanner _entityScanner;
 
     private AudioClip _warningSound;
+    private AudioClip _willFindYouSound;
     
     public EnemyIdleState(EnemyNPC enemyNPC) 
         : base(enemyNPC)
@@ -40,7 +41,8 @@ public class EnemyIdleState : NPCState
             ObstacleMask = _obstacleMask
         };
 
-        _warningSound = Resources.Load<AudioClip>("Freeze");
+        _warningSound = Resources.Load<AudioClip>("Sounds/Freeze");
+        _willFindYouSound = Resources.Load<AudioClip>("Sounds/IWillFindYou");
     }
 
     public override void Enter()
@@ -77,6 +79,15 @@ public class EnemyIdleState : NPCState
             else if (_originalDirection != this.NPC!.transform.forward.normalized)
             {
                 _currentTargetDirection = _originalDirection;
+                if (_hasPlayedWarningSound && this.NPC!.AudioSource != null && _willFindYouSound != null)
+                {
+                    this.NPC!.AudioSource.PlayOneShot(_willFindYouSound);
+                    _hasPlayedWarningSound = false;
+                }
+                else if (!_hasPlayedWarningSound)
+                {
+                    Debug.LogWarning("Cannot play will find you sound: AudioSource or willFindYouSound is missing on NPC.");
+                }
             }
 
             _timer = 0f;
