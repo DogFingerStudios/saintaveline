@@ -14,8 +14,11 @@ public class EnemyIdleState : NPCState
     private readonly float _scanInterval = 0.25f;
     private readonly int _targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
     private readonly int _obstacleMask = LayerMask.GetMask("Default");
-    
+
+    bool _hasPlayedWarningSound = false;
     private EntityScanner _entityScanner;
+
+    private AudioClip _warningSound;
     
     public EnemyIdleState(EnemyNPC enemyNPC) 
         : base(enemyNPC)
@@ -40,8 +43,13 @@ public class EnemyIdleState : NPCState
 
     public override void Enter()
     {
-        // get the current direction the NPC is facing
         _originalDirection = this.NPC!.transform.forward.normalized;
+
+        _warningSound = Resources.Load<AudioClip>("Freeze");
+        if (_warningSound == null)
+        {
+            Debug.LogWarning("Could not load 'Freeze' AudioClip. Ensure it's in a Resources folder.");
+        }
     }
 
     public override INPCState? Update()
@@ -57,6 +65,18 @@ public class EnemyIdleState : NPCState
                 // turn in the direction of the target
                 Vector3 direction = this.NPC!.target.position - this.NPC!.transform.position;
                 _currentTargetDirection = direction.normalized;
+
+                // Play audio clip named "Freeze"
+                if (!_hasPlayedWarningSound && this.NPC!.AudioSource != null && _warningSound != null)
+                {
+                    this.NPC!.AudioSource.PlayOneShot(_warningSound);
+                    _hasPlayedWarningSound = true;
+                }
+                else if (!_hasPlayedWarningSound)
+                {
+                    Debug.LogWarning("Cannot play warning sound: AudioSource or warningSound is missing on NPC.");
+                }
+
             }
             else if (_originalDirection != this.NPC!.transform.forward.normalized)
             {

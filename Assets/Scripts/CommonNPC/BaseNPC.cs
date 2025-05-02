@@ -4,6 +4,11 @@ using System.Collections;
 
 public class BaseNPC : MonoBehaviour, IHasHealth
 {
+    [SerializeField]
+    [Tooltip("The AudioSource component for playing NPC sounds")]
+    private AudioSource _audioSource;
+    public AudioSource AudioSource { get => _audioSource; }
+
     [SerializeField] 
     EntityProfile _entityProfile;
     public EntityProfile Profile
@@ -79,6 +84,15 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     protected virtual void Start()
     {
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            // TODO: Check AI's suggestions
+            _audioSource = gameObject.AddComponent<AudioSource>();
+            // AI: Optional: Configure AudioSource defaults
+            _audioSource.playOnAwake = false;
+            _audioSource.spatialBlend = 1f; // AI: 3D audio (optional, adjust as needed)
+        }
     }
 
     public void Panic()
