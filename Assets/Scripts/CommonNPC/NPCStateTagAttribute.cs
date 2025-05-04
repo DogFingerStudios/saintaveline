@@ -18,7 +18,7 @@ public class NPCStateDropdownAttribute : PropertyAttribute { }
 [CustomPropertyDrawer(typeof(NPCStateDropdownAttribute))]
 public class NPCStateDropdownDrawer : PropertyDrawer
 {
-    private static string[] _tags = null;
+    private static string[] _tags = null!;
 
     private void EnsureTagsLoaded()
     {

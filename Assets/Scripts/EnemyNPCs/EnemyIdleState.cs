@@ -18,8 +18,8 @@ public class EnemyIdleState : NPCState
     bool _hasPlayedWarningSound = false;
     private EntityScanner _entityScanner;
 
-    private AudioClip _warningSound;
-    private AudioClip _willFindYouSound;
+    private AudioClip? _warningSound;
+    private AudioClip? _willFindYouSound;
     
     public EnemyIdleState(EnemyNPC enemyNPC) 
         : base(enemyNPC)
@@ -84,10 +84,6 @@ public class EnemyIdleState : NPCState
                     this.NPC!.AudioSource.PlayOneShot(_willFindYouSound);
                     _hasPlayedWarningSound = false;
                 }
-                else if (!_hasPlayedWarningSound)
-                {
-                    Debug.LogWarning("Cannot play will find you sound: AudioSource or willFindYouSound is missing on NPC.");
-                }
             }
 
             _timer = 0f;
@@ -103,7 +99,7 @@ public class EnemyIdleState : NPCState
 
     public override void Exit()
     {
-        // Nothing to do
+        // nothing to do
     }
 
     private Collider? doScan()

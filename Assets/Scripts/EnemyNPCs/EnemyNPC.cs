@@ -5,9 +5,9 @@ using UnityEngine;
 public class EnemyNPC : BaseNPC
 {
     [SerializeField, NPCStateDropdown] 
-    private string _defaultState;
+    private string _defaultState = "EnemyIdle";   
 
-    public Transform[] PatrolPoints;
+    public Transform[] PatrolPoints = new Transform[0];
     public float ArrivalThreshold = 0.5f;
 
     public float ViewDistance = 25f;
