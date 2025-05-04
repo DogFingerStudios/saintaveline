@@ -4,6 +4,7 @@ public class DoorInteraction : MonoBehaviour
 {
     public float interactionDistance = 3f;
     private Camera playerCamera;
+    public HealthBar healthBar;
     
     void Start()
     {
@@ -16,6 +17,16 @@ public class DoorInteraction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             TryInteractWithDoor();
+        }
+
+        if (Input.GetKeyDown(KeyCode.PageUp))
+        {
+            healthBar.SetHealth(healthBar.CurrentHealth + 5f);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.PageDown))
+        {
+            healthBar.SetHealth(healthBar.CurrentHealth - 5f);
         }
     }
 
