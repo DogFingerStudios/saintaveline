@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    [SerializeField] private GameObject _targetObject;
     [SerializeField] private Image _fillImage;
     [SerializeField] private float _maxHealth = 100f;
 
@@ -14,7 +15,20 @@ public class HealthBar : MonoBehaviour
 
     private void Awake()
     {
+        var iHasHealth = _targetObject.GetComponent<IHasHealth>();
+        if (iHasHealth == null)
+        {
+            throw new System.Exception("Target object does not implement IHasHealth interface.");
+        }
+        
+        iHasHealth.OnHealthChanged += OnHealthChanged;
         _currentHealth = _maxHealth;
+        UpdateBar();
+    }
+
+    private void OnHealthChanged(float health)
+    {
+        _currentHealth = health;
         UpdateBar();
     }
 

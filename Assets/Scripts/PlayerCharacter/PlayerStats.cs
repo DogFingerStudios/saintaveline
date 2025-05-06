@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,7 +6,6 @@ public class PlayerStats : MonoBehaviour, IHasHealth
 {
     [SerializeField]
     float _health = 100f;
-
     public float Health 
     {
         get => _health;
@@ -20,10 +20,13 @@ public class PlayerStats : MonoBehaviour, IHasHealth
         set => _maxHealth = value;
     }
 
+    public event Action<float> OnHealthChanged;
+
     public float TakeDamage(float amount)
     {
         Health -= amount;
         if (Health < 0) Health = 0;
+        this.OnHealthChanged?.Invoke(Health);
         return Health;
     }
 
@@ -31,6 +34,7 @@ public class PlayerStats : MonoBehaviour, IHasHealth
     {
         Health += amount;
         if (Health > MaxHealth) Health = MaxHealth;
+        this.OnHealthChanged?.Invoke(Health);
         return Health;
     }
 

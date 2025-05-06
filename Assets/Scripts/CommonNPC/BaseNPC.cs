@@ -1,5 +1,5 @@
 using UnityEngine;
-using System.Collections.Generic;
+using System;
 using System.Collections;
 
 public class BaseNPC : MonoBehaviour, IHasHealth
@@ -64,10 +64,13 @@ public class BaseNPC : MonoBehaviour, IHasHealth
         stateMachine.SetState(state);
     }
 
+    public event Action<float> OnHealthChanged;
+
     float IHasHealth.TakeDamage(float damage)
     {
         Health -= damage;
         if (Health < 0) Health = 0;
+        this.OnHealthChanged?.Invoke(Health);
         return Health;
     }
 
@@ -75,6 +78,7 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     {
         Health += amount;
         if (Health > MaxHealth) Health = MaxHealth;
+        this.OnHealthChanged?.Invoke(Health);
         return Health;
     }
 
