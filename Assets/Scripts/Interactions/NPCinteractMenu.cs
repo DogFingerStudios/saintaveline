@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CommandMenu : InteractMenuBase
+public class NPCInteractMenu : InteractMenuBase
 {
     public Button stayButton;
     public Button followButton;

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class FriendlyNPC : BaseNPC, Interactable
 {
-    public CommandMenu commandMenu;
+    public NPCInteractMenu menu;
 
 #region Interactable Interface Implementation
     public string HelpText => "Press [E] to interact";
@@ -20,7 +20,7 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
 
     public void Interact()
     {
-        commandMenu.Open(this);
+        menu.Open(this);
     }
 #endregion
 
