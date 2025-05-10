@@ -4119,6 +4119,7 @@ GameObject:
   - component: {fileID: 770735768}
   - component: {fileID: 770735767}
   - component: {fileID: 770735766}
+  - component: {fileID: 770735769}
   m_Layer: 5
   m_Name: ItemInteractMenu
   m_TagString: Untagged
@@ -4154,7 +4155,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 770735764}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137683fe0a4143846a468f2a844c412e, type: 3}
   m_Name: 
@@ -4202,6 +4203,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 770735764}
   m_CullTransparentMesh: 1
+--- !u!114 &770735769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 770735764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa9c05e26f1c78542a7d74718d51ea1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 770735764}
+  crossHair: {fileID: 184610867}
+  helpText: {fileID: 147772724}
+  kickButton: {fileID: 2038667754}
+  pickUpButton: {fileID: 1596045411}
 --- !u!4 &821251822 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1875161217629310844, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
@@ -8172,6 +8190,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5708703546923815168, guid: 3561d375b004832418eaf9271450e06f, type: 3}
+      propertyPath: _menu
+      value: 
+      objectReference: {fileID: 770735769}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
