@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8349d9b6a454414d94dda2f795fc2ac, type: 3}
   m_Name: RustyKnife
   m_EditorClassIdentifier: 
-  itemName: Rusty Knife
-  damageScore: 5
-  icon: {fileID: 0}
-  prefab: {fileID: 0}
+  ItemName: Rusty Knife
+  DamageScore: 6
+  Interactions:
+  - Pick Up
+  - Examine
