@@ -1,29 +1,30 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GamePlayHUD : MonoBehaviour
-{
+{    
     public GameObject player;
-    public TextMeshProUGUI healthText; 
+    public TextMeshProUGUI healthText;
+    private PlayerStats playerStats;
 
     public SonNPC sonNPC;
     public TextMeshProUGUI sonHealthText;
 
+
     void Start()
     {
-        
+        playerStats = player.GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (player == null || healthText == null) return;
-        PlayerStats stats = player.GetComponent<PlayerStats>();
-        if (stats != null)
+        if (playerStats != null)
         {
-            healthText.text = "Health: " + stats.Health.ToString() + "/" + stats.MaxHealth.ToString();
+            healthText.text = "Health: " + playerStats.Health.ToString() + "/" + playerStats.MaxHealth.ToString();
         }
+
         if (sonNPC == null) return;
         sonHealthText.text = "Son Health: " + sonNPC.Health.ToString() + "/" + sonNPC.MaxHealth.ToString();
     }
