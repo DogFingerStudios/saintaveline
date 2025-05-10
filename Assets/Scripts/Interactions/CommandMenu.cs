@@ -1,42 +1,27 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CommandMenu : MonoBehaviour
+public class CommandMenu : InteractMenuBase
 {
-    public GameObject panel;
     public Button stayButton;
     public Button followButton;
-
-    [Header("External Widgets")]
-    [Tooltip("These widgets are disabled when the menu is open")]
-    public GameObject crossHair;
-    public GameObject helpText;
-
     private FriendlyNPC currentNPC;
 
     public void Open(FriendlyNPC npc)
     {
+        base.Open();
         currentNPC = npc;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        panel.SetActive(true);
-        crossHair.SetActive(false);
-        helpText.SetActive(false);
     }
 
-    public void Close()
+    public override void Close()
     {
-        helpText.SetActive(true);
-        crossHair.SetActive(true);
-        panel.SetActive(false);
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        base.Close();
         currentNPC = null;
     }
 
-    void Start()
+    protected override void Start()
     {
-        panel.SetActive(true);
+        base.Start();
 
         stayButton.onClick.AddListener(() =>
         {
@@ -64,13 +49,5 @@ public class CommandMenu : MonoBehaviour
             // currentNPC?.setState(new NPCFollowState(currentNPC));
             Close();
         });
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Close();
-        }
     }
 }
