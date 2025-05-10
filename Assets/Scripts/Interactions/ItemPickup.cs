@@ -7,7 +7,7 @@ public class ItemPickup : MonoBehaviour, Interactable
     
 
     // print the damageScore in the HelpText
-    public string HelpText => $"Press [E] to pick up {_itemData.itemName}";
+    public string HelpText => $"Press [E] to interact with '{_itemData.itemName}'";
 
     public void Interact()
     {
