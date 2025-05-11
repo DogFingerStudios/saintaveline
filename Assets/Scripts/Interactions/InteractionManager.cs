@@ -25,7 +25,7 @@ public class InteractionManager : MonoBehaviour
         private set => _instance = value;
     }
 
-    public void OpenMenu(List<string> interactions)
+    public void OpenMenu(List<InteractionData> interactions)
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -40,14 +40,13 @@ public class InteractionManager : MonoBehaviour
             TextMeshProUGUI buttonText = buttonObj.GetComponentInChildren<TextMeshProUGUI>();
             if (buttonText != null)
             {
-                buttonText.text = interaction;
+                buttonText.text = interaction.description;
             }
 
             Button button = buttonObj.GetComponent<Button>();
             if (button != null)
             {
-                string capturedInteraction = interaction;
-                button.onClick.AddListener(() => OnInteractionClicked(capturedInteraction));
+                button.onClick.AddListener(() => OnInteractionClicked(interaction.key));
             }
         }
 
@@ -74,6 +73,7 @@ public class InteractionManager : MonoBehaviour
         _buttonPanel.SetActive(false);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        OnInteractionAction = null;
     }
 
     private void OnInteractionClicked(string action)

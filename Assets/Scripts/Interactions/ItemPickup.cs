@@ -11,7 +11,13 @@ public class ItemPickup : MonoBehaviour, Interactable
 
     public void Interact()
     {
+        InteractionManager.Instance.OnInteractionAction += this.DoInteraction;
         InteractionManager.Instance.OpenMenu(_itemData.Interactions);
+    }
+
+    private void DoInteraction(string action)
+    {
+        Debug.Log($"Action: {action}");
     }
 
     public void OnDefocus()
