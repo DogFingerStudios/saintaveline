@@ -59,9 +59,6 @@ public class NPCStateDropdownDrawer : PropertyDrawer
 }
 #else
 // AI: Dummy attribute so builds outside the editor don't fail
-using System;
-using UnityEngine;
-
 public class NPCStateDropdownAttribute : PropertyAttribute
 {
     // AI: No code needed here — just prevents missing symbol errors
