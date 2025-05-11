@@ -9,8 +9,11 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+
 
 // let's Unity know that this attribute is used for dropdowns in the inspector
 public class NPCStateDropdownAttribute : PropertyAttribute { }
@@ -54,7 +57,16 @@ public class NPCStateDropdownDrawer : PropertyDrawer
         property.stringValue = _tags[selectedIndex];
     }
 }
+#else
+// AI: Dummy attribute so builds outside the editor don't fail
+using System;
+using UnityEngine;
 
+public class NPCStateDropdownAttribute : PropertyAttribute
+{
+    // AI: No code needed here — just prevents missing symbol errors
+}
+#endif
 
 [AttributeUsage(AttributeTargets.Class)]
 public class NPCStateTagAttribute : Attribute
