@@ -1,28 +1,27 @@
 using UnityEngine;
 
+// This script is typically attached to an item in the game world to 
+// allow the player to interact with it.
 public class ItemPickup : MonoBehaviour, Interactable
 {
     [SerializeField] private ItemData _itemData;
     [SerializeField] private ItemInteractMenu _menu;
 
-    // print the damageScore in the HelpText
     public string HelpText => $"Press [E] to interact with '{_itemData.ItemName}'";
 
     public void Interact()
     {
-        InteractionManager.Instance.DoIt();
         InteractionManager.Instance.OpenMenu(_itemData.Interactions);
-        // _menu.Open();
     }
 
     public void OnDefocus()
     {
-        Debug.Log("Item is defocused!!");
+        // nothing to do
     }
 
     public void OnFocus()
     {
-        Debug.Log("Item is focused!!");
+        // nothing to do
     }
 
     void Start()

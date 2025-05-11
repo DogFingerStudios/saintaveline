@@ -2,13 +2,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro; 
 using System.Collections.Generic;
+using System;
 
+// This script is attached to the `InteractMenus` canvas in the Hierarchy. `InteractMenus` is the parent
+// of all the interact menus in the game. This class is responsible for opening and closing the interact
+// menu, acreating the buttons, and handling button clicks
 public class InteractionManager : MonoBehaviour
 {
     [SerializeField] private GameObject _buttonPrefab; 
     [SerializeField] private GameObject _buttonPanel;
-    public GameObject crossHair;
-    public GameObject helpText;
+    [SerializeField] private GameObject crossHair;
+    [SerializeField] private GameObject helpText;
+
+    // define a callback that callers can use to execute the action
+    // public delegate void InteractionAction(string action);
+    public event Action<string> OnInteractionAction;
 
     private static InteractionManager _instance;
     public static InteractionManager Instance
@@ -17,15 +25,8 @@ public class InteractionManager : MonoBehaviour
         private set => _instance = value;
     }
 
-    public void DoIt()
-    {
-        Debug.Log("DoIt called");
-    }
-
     public void OpenMenu(List<string> interactions)
     {
-        Debug.Log("OpenMenu called");
-        
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         
@@ -35,7 +36,6 @@ public class InteractionManager : MonoBehaviour
 
         foreach (var interaction in interactions)
         {
-            Debug.Log($"Interaction: {interaction}");
             GameObject buttonObj = Instantiate(_buttonPrefab, _buttonPanel.transform);
             TextMeshProUGUI buttonText = buttonObj.GetComponentInChildren<TextMeshProUGUI>();
             if (buttonText != null)
@@ -64,8 +64,6 @@ public class InteractionManager : MonoBehaviour
 
     private void CloseMenu()
     {
-        Debug.Log("CloseMenu called");
-        
         foreach (Transform child in _buttonPanel.transform)
         {
             Destroy(child.gameObject);
@@ -80,7 +78,7 @@ public class InteractionManager : MonoBehaviour
 
     private void OnInteractionClicked(string action)
     {
-        Debug.Log($"Clicked on interaction: {action}");
+        OnInteractionAction?.Invoke(action);
         this.CloseMenu();
     }
 
