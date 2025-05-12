@@ -49,21 +49,10 @@ public class InteractionManager : MonoBehaviour
                 buttonText.text = interaction.description;
             }
 
-            Button button = buttonObj.GetComponent<Button>();
-            if (button != null)
+            if (buttonObj.TryGetComponent<Button>(out var button))
             {
                 button.onClick.AddListener(() => OnInteractionClicked(interaction.key));
             }
-        }
-
-        // AI: Adjust the height of _buttonPanel to fit all buttons
-        RectTransform panelRectTransform = _buttonPanel.GetComponent<RectTransform>();
-        if (panelRectTransform != null)
-        {
-            float buttonHeight = _buttonPrefab.GetComponent<RectTransform>().sizeDelta.y;
-            float spacing = 10f; // Adjust spacing between buttons if needed
-            float totalHeight = interactions.Count * (buttonHeight + spacing) - spacing;
-            panelRectTransform.sizeDelta = new Vector2(panelRectTransform.sizeDelta.x, totalHeight);
         }
     }
 
