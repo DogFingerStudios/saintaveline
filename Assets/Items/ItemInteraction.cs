@@ -18,7 +18,7 @@ public class InteractionActionAttribute : Attribute
 public class ItemInteraction : MonoBehaviour, Interactable
 {
     [SerializeField] private ItemData _itemData;
-    [SerializeField] private ItemInteractMenu _menu;
+    // [SerializeField] private ItemInteractMenu _menu;
 
     public string HelpText => $"Press [E] to interact with '{_itemData.ItemName}'";
 
@@ -46,7 +46,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
             type = type.BaseType;
         }
-        
+
         Debug.LogWarning($"No action found for '{actionName}' in {this.GetType().Name}");
     }
 

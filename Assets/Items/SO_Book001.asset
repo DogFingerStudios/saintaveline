@@ -10,12 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8349d9b6a454414d94dda2f795fc2ac, type: 3}
-  m_Name: SO_RustKnife
+  m_Name: SO_Book001
   m_EditorClassIdentifier: 
-  ItemName: Rusty Knife
-  DamageScore: 6
-  prefab: {fileID: 1289100062823888, guid: 3561d375b004832418eaf9271450e06f, type: 3}
+  ItemName: Creepy Book
+  DamageScore: 9
+  prefab: {fileID: 0}
   Interactions:
+  - key: read
+    description: Read
   - key: take_equip
     description: Take (Equip)
   - key: take_store
