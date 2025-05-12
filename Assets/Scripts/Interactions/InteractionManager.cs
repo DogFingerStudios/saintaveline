@@ -27,6 +27,12 @@ public class InteractionManager : MonoBehaviour
 
     public void OpenMenu(List<InteractionData> interactions)
     {
+        // Check if the menu is already open to prevent repeated button spawning
+        if (_buttonPanel.activeInHierarchy) 
+        {
+            return;
+        }
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         
