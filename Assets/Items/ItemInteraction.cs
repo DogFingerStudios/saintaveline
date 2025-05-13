@@ -18,7 +18,7 @@ public class InteractionActionAttribute : Attribute
 public class ItemInteraction : MonoBehaviour, Interactable
 {
     [SerializeField] private ItemData _itemData;
-    // [SerializeField] private ItemInteractMenu _menu;
+    private EquippedItem _equippedItemScript;
 
     public string HelpText => $"Press [E] to interact with '{_itemData.ItemName}'";
 
@@ -53,7 +53,18 @@ public class ItemInteraction : MonoBehaviour, Interactable
     [InteractionAction("take_equip")]
     protected virtual void onTakeEquip()
     {
-        Debug.Log($"Action: {nameof(onTakeEquip)}");
+        // get the `EquippedItemPos` GameObject that is a child of the `Player` GameObject
+        // and set the position of the item to the position of the `EquippedItemPos` GameObject
+        
+        var player = GameObject.FindGameObjectWithTag("Player");
+        var equippedItemPos = player.GetComponent<EquippedItem>();
+        if (equippedItemPos == null)
+        {
+            Debug.LogWarning("EquippedItemPos not found in Player");
+            return;
+        }
+
+        _equippedItemScript.EquippedItemVar = this.gameObject;
     }
 
 
@@ -69,7 +80,18 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
     void Start()
     {
-        // nothing to do
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            Debug.LogWarning("Player not found");
+            return;
+        }
+        _equippedItemScript = player.GetComponent<EquippedItem>();
+        if (_equippedItemScript == null)
+        {
+            Debug.LogWarning("EquippedItem not found in Player");
+            return;
+        }
     }
 
     void Update()

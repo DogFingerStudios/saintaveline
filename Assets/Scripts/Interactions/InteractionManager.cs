@@ -62,6 +62,7 @@ public class InteractionManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        
         helpText.SetActive(true);
         crossHair.SetActive(true);
         
