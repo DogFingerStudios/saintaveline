@@ -10,7 +10,7 @@ public class FPSMovement : MonoBehaviour
 
     [Header("Mouse Look Settings")]
     public float mouseSensitivity = 2f; // Look sensitivity
-    public float maxLookAngle = 75f;    // Up/down clamp
+    public float maxLookAngle = 60f;    // Up/down clamp
 
     [Header("Physics")]
     public float gravity = -9.81f;
