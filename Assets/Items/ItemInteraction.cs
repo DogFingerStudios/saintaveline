@@ -64,7 +64,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
             return;
         }
 
-        _equippedItemScript.SetEquippedItem(this.gameObject);
+        _equippedItemScript.EquippedItemObject = this.gameObject;
     }
 
 

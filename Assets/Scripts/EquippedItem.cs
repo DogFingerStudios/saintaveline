@@ -8,25 +8,32 @@ public class EquippedItem : MonoBehaviour
 {
     [SerializeField] private Transform _equippedItemPos;
     private GameObject? _equippedItem;
-
-
-    // Set the equipped item, position and rotation
-    public void SetEquippedItem(GameObject itemToEquip)
+    public GameObject? EquippedItemObject
     {
-        _equippedItem = itemToEquip;
-        _equippedItem.transform.SetParent(_equippedItemPos);
-
-        // Once parented to the item position, set the local position and rotation to zero,
-        // so it matches the item pos transform.
-        _equippedItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-
-        // Do we want to disable physics while we equip the item?
-        // If item doesn't have physics, we don't need to do anything
-        if (_equippedItem.TryGetComponent<Rigidbody>(out var rb)) 
+        get => _equippedItem;
+        set
         {
-            rb.isKinematic = true;
+            if (!value) 
+            {
+                DropEquippedItem();
+                return;
+            }
+
+            _equippedItem = value;
+            _equippedItem.transform.SetParent(_equippedItemPos);
+
+            // Once parented to the item position, set the local position and rotation to zero,
+            // so it matches the item pos transform.
+            _equippedItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+
+            // Do we want to disable physics while we equip the item?
+            // If item doesn't have physics, we don't need to do anything
+            if (_equippedItem.TryGetComponent<Rigidbody>(out var rb)) 
+            {
+                rb.isKinematic = true;
+            }
         }
-    }    
+    }  
 
     public void DropEquippedItem() 
     {
@@ -45,8 +52,15 @@ public class EquippedItem : MonoBehaviour
         }
     }
 
-    // Perhaps we could listen for item drop action here? ;)
-    // ...
-    // ...
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            if (_equippedItem != null) 
+            {
+                DropEquippedItem();
+            }
+        }
+    }
 
 }
