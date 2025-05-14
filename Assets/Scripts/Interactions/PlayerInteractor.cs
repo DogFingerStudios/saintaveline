@@ -1,8 +1,10 @@
+#nullable enable
 using NUnit.Framework.Internal.Commands;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// this script is attached to the Main Camera which is a child of the Player object
 public class PlayerInteractor : MonoBehaviour
 {
     public float interactRange = 3f;
@@ -10,8 +12,10 @@ public class PlayerInteractor : MonoBehaviour
     public Color defaultColor = Color.white;
     public Color highlightColor = Color.green;
     public TextMeshProUGUI helpTextUI; 
+    public GameObject? FocusedObject = null;    
 
     private Interactable _currentFocus;
+
 
     private void Start()
     {
@@ -38,6 +42,7 @@ public class PlayerInteractor : MonoBehaviour
 
                     helpTextUI.text = interactable.HelpText; 
                     helpTextUI.gameObject.SetActive(true);
+                    FocusedObject = hit.collider.gameObject;
                 }
 
                 if (Input.GetKeyDown(KeyCode.E))
@@ -72,5 +77,6 @@ public class PlayerInteractor : MonoBehaviour
         helpTextUI.text = "";
         helpTextUI.gameObject.SetActive(false);
         crosshairImage.color = defaultColor;
+        FocusedObject = null;
     }
 }

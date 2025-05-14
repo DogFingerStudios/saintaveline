@@ -6,7 +6,9 @@ using UnityEngine;
 // items the player is holding should be placed in the world
 public class EquippedItem : MonoBehaviour
 {
-    [SerializeField] private Transform _equippedItemPos;
+    private PlayerInteractor? _interactor;
+    
+    [SerializeField] private Transform? _equippedItemPos;
     private GameObject? _equippedItem;
     public GameObject? EquippedItemObject
     {
@@ -51,12 +53,30 @@ public class EquippedItem : MonoBehaviour
             _equippedItem = null;
         }
     }
+    
+    void Awake()
+    {
+        _interactor = GetComponentInChildren<PlayerInteractor>();
+        if (_interactor == null) 
+        {
+            Debug.LogError("EquippedItem script requires a PlayerInteractor component on the same GameObject.");
+        }
+    }
 
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            if (_equippedItem != null) 
+            if (_interactor!.FocusedObject != null)
+            {
+                if (_equippedItem != null) 
+                {
+                    DropEquippedItem();
+                }
+
+                EquippedItemObject = _interactor.FocusedObject;
+            }
+            else if (_equippedItem != null) 
             {
                 DropEquippedItem();
             }
