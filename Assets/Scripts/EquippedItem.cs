@@ -2,8 +2,10 @@
 
 using UnityEngine;
 
-// this script is attached to the player character and defines where
-// items the player is holding should be placed in the world
+/// <summary>
+/// This script is attached to the root `Player` object and handles the mechanics
+/// of the equipped item (e.g. dropping, storing, weilding, etc.)
+/// </summary>
 public class EquippedItem : MonoBehaviour
 {
     private PlayerInteractor? _interactor;

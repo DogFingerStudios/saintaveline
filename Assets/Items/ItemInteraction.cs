@@ -13,8 +13,10 @@ public class InteractionActionAttribute : Attribute
     }
 }
 
-// This script is typically attached to an item in the game world to 
-// allow the player to interact with it.
+/// <summary>
+/// This script is attached to an item in the game world to
+/// allow the player to interact with it.
+/// </summary>
 public class ItemInteraction : MonoBehaviour, Interactable
 {
     [SerializeField] private ItemData _itemData;
