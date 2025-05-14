@@ -1,0 +1,1 @@
+Basically anything that isn't yours. Easily isolated in here.
