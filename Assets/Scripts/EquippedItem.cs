@@ -52,6 +52,7 @@ public class EquippedItem : MonoBehaviour
     {
         if (_equippedItem != null) 
         {
+            _itemInteraction!.onUnequipped();
             // If item has physics, re-enable them
             if (_equippedItem.TryGetComponent<Rigidbody>(out var rb)) 
             {
@@ -86,6 +87,7 @@ public class EquippedItem : MonoBehaviour
                 }
 
                 EquippedItemObject = _interactor.FocusedObject;
+                _itemInteraction!.onEquipped();
             }
             else if (_equippedItem != null) 
             {

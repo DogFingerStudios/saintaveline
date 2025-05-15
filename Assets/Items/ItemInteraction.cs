@@ -70,6 +70,16 @@ public class ItemInteraction : MonoBehaviour, Interactable
     }
 
 
+    public virtual void onEquipped()
+    {
+        // nothing to do
+    }
+
+    public virtual void onUnequipped()
+    {
+        // nothing to do
+    }
+
     public void OnDefocus()
     {
         // nothing to do

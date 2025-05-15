@@ -1,16 +1,59 @@
 using UnityEngine;
+using System.Collections;
 
 public class KnifeItemInteraction : ItemInteraction
 {
-     public KnifeItemInteraction()
-     {
-        // Default constructor
-        Debug.Log("Knife item interaction default constructor called");
-     }
-
+    private Vector3 _defaultLocalPosition;
+    private Coroutine? _attackCoroutine;
 
     public override void Attack()
     {
-        Debug.Log("PLayer attacked with knife");
+    
+        if (_attackCoroutine != null)
+        {
+            StopCoroutine(_attackCoroutine);
+        }
+
+        _attackCoroutine = StartCoroutine(AnimateAttack());
     }
+
+    // this is called AFTER the item is equipped
+    public override void onEquipped()
+    {
+        _defaultLocalPosition = this.gameObject.transform.localPosition;
+    }
+
+    private IEnumerator AnimateAttack()
+    {
+        float duration = 0.1f; // time to thrust
+        float returnDuration = 0.15f;
+        float elapsed = 0f;
+
+        Vector3 start = _defaultLocalPosition;
+        Vector3 target = _defaultLocalPosition + new Vector3(-0.3f, 0f, 0.0f); // forward thrust
+
+        // AI: Thrust forward
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            this.gameObject.transform.localPosition = Vector3.Lerp(start, target, t);
+            yield return null;
+        }
+
+        elapsed = 0f;
+
+        // AI: Return to default
+        while (elapsed < returnDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / returnDuration;
+            this.gameObject.transform.localPosition = Vector3.Lerp(target, start, t);
+            yield return null;
+        }
+
+        this.gameObject.transform.localPosition = _defaultLocalPosition;
+        _attackCoroutine = null;
+    }
+
 }
