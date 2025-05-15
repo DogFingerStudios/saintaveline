@@ -1,6 +1,7 @@
 using System;
 using System.Reflection;
 using UnityEngine;
+using System.Collections;
 
 [AttributeUsage(AttributeTargets.Method, Inherited = false)]
 public class InteractionActionAttribute : Attribute
@@ -69,12 +70,6 @@ public class ItemInteraction : MonoBehaviour, Interactable
         _equippedItemScript.EquippedItemObject = this.gameObject;
     }
 
-
-    public virtual void onEquipped()
-    {
-        // nothing to do
-    }
-
     public virtual void onUnequipped()
     {
         // nothing to do
@@ -106,12 +101,66 @@ public class ItemInteraction : MonoBehaviour, Interactable
         }
     }
 
-    void Update()
+    /// <summary>
+    /// Code in this region is used as a default attack for items. This 
+    /// has the player swing the item in a direction.
+    /// </summary>
+#region AttackCode
+
+    private Vector3 _defaultLocalPosition;
+    private Quaternion _defaultLocalRotation;
+    private Coroutine? _swingCoroutine;
+
+    public virtual void onEquipped()
     {
+        _defaultLocalPosition = transform.localPosition;
+        _defaultLocalRotation = transform.localRotation;
     }
-    
+
     public virtual void Attack()
     {
-         Debug.Log("Player is attacking with Item!!!");
+        if (_swingCoroutine != null)
+        {
+            StopCoroutine(_swingCoroutine);
+        }
+
+        _swingCoroutine = StartCoroutine(AnimateSwing());
     }
+
+    private IEnumerator AnimateSwing()
+    {
+        float duration = 0.25f;
+        float elapsed = 0f;
+
+        // AI: Define arc positions
+        Vector3 rightStart = _defaultLocalPosition + new Vector3(0.25f, -0.05f, -0.1f);
+        Vector3 leftEnd    = _defaultLocalPosition + new Vector3(-0.25f,  0.05f, -0.1f);
+
+        // AI: Correct rotation for sideways twist (no forward thrust)
+        Quaternion startRot = _defaultLocalRotation * Quaternion.Euler(0f, 45f, 15f);   // cocked back
+        Quaternion endRot   = _defaultLocalRotation * Quaternion.Euler(0f, -45f, -15f); // full swing
+
+        transform.localPosition = rightStart;
+        transform.localRotation = startRot;
+
+        yield return null;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+
+            transform.localPosition = Vector3.Lerp(rightStart, leftEnd, t);
+            transform.localRotation = Quaternion.Slerp(startRot, endRot, t);
+
+            yield return null;
+        }
+
+        transform.localPosition = _defaultLocalPosition;
+        transform.localRotation = _defaultLocalRotation;
+        _swingCoroutine = null;
+    }
+
+#endregion AttackCode
+  
 }

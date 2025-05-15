@@ -3,7 +3,7 @@ using System.Collections;
 
 public class KnifeItemInteraction : ItemInteraction
 {
-    private Vector3 _defaultLocalPosition;
+    private Vector3 _defaultLocalPosition2; 
     private Coroutine? _attackCoroutine;
 
     public override void Attack()
@@ -20,7 +20,7 @@ public class KnifeItemInteraction : ItemInteraction
     // this is called AFTER the item is equipped
     public override void onEquipped()
     {
-        _defaultLocalPosition = this.gameObject.transform.localPosition;
+        _defaultLocalPosition2 = this.gameObject.transform.localPosition;
     }
 
     private IEnumerator AnimateAttack()
@@ -29,8 +29,8 @@ public class KnifeItemInteraction : ItemInteraction
         float returnDuration = 0.15f;
         float elapsed = 0f;
 
-        Vector3 start = _defaultLocalPosition;
-        Vector3 target = _defaultLocalPosition + new Vector3(-0.3f, 0f, 0.0f); // forward thrust
+        Vector3 start = _defaultLocalPosition2;
+        Vector3 target = _defaultLocalPosition2 + new Vector3(-0.3f, 0f, 0.0f); // forward thrust
 
         // AI: Thrust forward
         while (elapsed < duration)
@@ -52,7 +52,7 @@ public class KnifeItemInteraction : ItemInteraction
             yield return null;
         }
 
-        this.gameObject.transform.localPosition = _defaultLocalPosition;
+        this.gameObject.transform.localPosition = _defaultLocalPosition2;
         _attackCoroutine = null;
     }
 
