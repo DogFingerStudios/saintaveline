@@ -11,6 +11,9 @@ public class EquippedItem : MonoBehaviour
     private PlayerInteractor? _interactor;
     
     [SerializeField] private Transform? _equippedItemPos;
+
+    private ItemInteraction? _itemInteraction = null;
+
     private GameObject? _equippedItem;
     public GameObject? EquippedItemObject
     {
@@ -36,8 +39,14 @@ public class EquippedItem : MonoBehaviour
             {
                 rb.isKinematic = true;
             }
+
+            _itemInteraction = _equippedItem.GetComponent<ItemInteraction>();
+            if (!_itemInteraction)
+            {
+                Debug.LogError($"Equipped item '{_equippedItem.name}' does not have an ItemInteraction component.");
+            }
         }
-    }  
+    } 
 
     public void DropEquippedItem() 
     {
@@ -81,6 +90,13 @@ public class EquippedItem : MonoBehaviour
             else if (_equippedItem != null) 
             {
                 DropEquippedItem();
+            }
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (_itemInteraction != null) 
+            {
+                _itemInteraction.Attack();
             }
         }
     }

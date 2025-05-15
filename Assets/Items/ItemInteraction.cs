@@ -98,6 +98,10 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
     void Update()
     {
-        // nothing to do
+    }
+    
+    public virtual void Attack()
+    {
+         Debug.Log("Player is attacking with Item!!!");
     }
 }
