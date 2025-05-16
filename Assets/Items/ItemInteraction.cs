@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Reflection;
 using UnityEngine;
@@ -20,15 +21,15 @@ public class InteractionActionAttribute : Attribute
 /// </summary>
 public class ItemInteraction : MonoBehaviour, Interactable
 {
-    [SerializeField] private ItemData _itemData;
-    private EquippedItem _equippedItemScript;
+    [SerializeField] private ItemData? _itemData;
+    private EquippedItem? _equippedItemScript;
 
-    public string HelpText => $"Press [E] to interact with '{_itemData.ItemName}'";
+    public string HelpText => $"Press [E] to interact with '{_itemData?.ItemName}'";
 
     public void Interact()
     {
         InteractionManager.Instance.OnInteractionAction += this.DoInteraction;
-        InteractionManager.Instance.OpenMenu(_itemData.Interactions);
+        InteractionManager.Instance.OpenMenu(_itemData?.Interactions);
     }
 
     private void DoInteraction(string actionName)
@@ -67,7 +68,10 @@ public class ItemInteraction : MonoBehaviour, Interactable
             return;
         }
 
-        _equippedItemScript.EquippedItemObject = this.gameObject;
+        if (_equippedItemScript != null)
+        {
+            _equippedItemScript.DropEquippedItem();
+        }
     }
 
     public virtual void onUnequipped()

@@ -53,7 +53,6 @@ public class EquippedItem : MonoBehaviour
         if (_equippedItem != null) 
         {
             _itemInteraction!.onUnequipped();
-            // If item has physics, re-enable them
             if (_equippedItem.TryGetComponent<Rigidbody>(out var rb)) 
             {
                 rb.angularVelocity = Vector3.zero;
@@ -65,6 +64,24 @@ public class EquippedItem : MonoBehaviour
             _equippedItem = null;
         }
     }
+
+    private void ThrowEquippedItem() 
+    {
+        if (_equippedItem != null) 
+        {
+            _itemInteraction!.onUnequipped();
+            if (_equippedItem.TryGetComponent<Rigidbody>(out var rb)) 
+            {
+                float _throwForce = 10f;
+                rb.isKinematic = false;
+                rb.AddForce(Camera.main.transform.forward * _throwForce, ForceMode.VelocityChange);
+            }
+
+            _equippedItem.transform.SetParent(null);
+            _equippedItem = null;
+        }
+    }
+    
     
     void Awake()
     {
@@ -100,6 +117,10 @@ public class EquippedItem : MonoBehaviour
             {
                 _itemInteraction.Attack();
             }
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            ThrowEquippedItem();
         }
     }
 

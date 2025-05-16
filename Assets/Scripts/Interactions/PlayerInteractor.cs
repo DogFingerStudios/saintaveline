@@ -8,18 +8,18 @@ using UnityEngine.UI;
 public class PlayerInteractor : MonoBehaviour
 {
     public float interactRange = 3f;
-    public Image crosshairImage;
+    public Image? crosshairImage;
     public Color defaultColor = Color.white;
     public Color highlightColor = Color.green;
-    public TextMeshProUGUI helpTextUI; 
+    public TextMeshProUGUI? helpTextUI; 
     public GameObject? FocusedObject = null;    
 
-    private Interactable _currentFocus;
+    private Interactable? _currentFocus;
 
 
     private void Start()
     {
-        helpTextUI.gameObject.SetActive(false);
+        helpTextUI?.gameObject.SetActive(false);
     }
 
     private void checkInteractions()
@@ -37,17 +37,25 @@ public class PlayerInteractor : MonoBehaviour
                 {
                     ClearFocus();
                     _currentFocus = interactable;
-                    _currentFocus.OnFocus();
-                    crosshairImage.color = highlightColor;
+                    _currentFocus!.OnFocus();
+                    
+                    if (crosshairImage != null)
+                    {
+                        crosshairImage.color = defaultColor;
+                    }
 
-                    helpTextUI.text = interactable.HelpText; 
-                    helpTextUI.gameObject.SetActive(true);
+                    if (helpTextUI != null)
+                    {
+                        helpTextUI.gameObject.SetActive(true);
+                        helpTextUI.text = interactable.HelpText;
+                    }
+
                     FocusedObject = hit.collider.gameObject;
                 }
 
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    _currentFocus.Interact();
+                    _currentFocus!.Interact();
                 }
             }
             else
@@ -70,13 +78,20 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (_currentFocus != null)
         {
-            _currentFocus.OnDefocus();
+            _currentFocus!.OnDefocus();
             _currentFocus = null;
         }
 
-        helpTextUI.text = "";
-        helpTextUI.gameObject.SetActive(false);
-        crosshairImage.color = defaultColor;
+        if (helpTextUI != null)
+        {
+            helpTextUI.text = "";
+            helpTextUI.gameObject.SetActive(false);
+        }
+
+        if (crosshairImage != null)
+        {
+            crosshairImage.color = defaultColor;
+        }
         FocusedObject = null;
     }
 }
