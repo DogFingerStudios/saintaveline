@@ -78,7 +78,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
     public virtual void onUnequipped()
     {
-        // nothing to do
+        _hitCollider.enabled = true;
     }
 
     public void OnDefocus()
@@ -113,7 +113,6 @@ public class ItemInteraction : MonoBehaviour, Interactable
             Debug.LogWarning("Collider not found on item");
             return;
         }
-        _hitCollider.enabled = false;
     }
 
     /// <summary>
@@ -132,6 +131,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
     {
         _defaultLocalPosition = transform.localPosition;
         _defaultLocalRotation = transform.localRotation;
+        _hitCollider.enabled = false;
     }
 
     public virtual void Attack()
@@ -146,7 +146,12 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
     private IEnumerator AnimateSwing()
     {
-        if (_hitCollider) _hitCollider.enabled = true;
+        if (_hitCollider)
+        {
+            _hitCollider.enabled = true;
+            _hitCollider.isTrigger = true;
+        }
+
         float duration = 0.25f;
         float elapsed = 0f;
 
@@ -174,7 +179,12 @@ public class ItemInteraction : MonoBehaviour, Interactable
             yield return null;
         }
 
-        if (_hitCollider) _hitCollider.enabled = false;
+        if (_hitCollider)
+        {
+            _hitCollider.enabled = false;
+            _hitCollider.isTrigger = false;
+        }
+
         transform.localPosition = _defaultLocalPosition;
         transform.localRotation = _defaultLocalRotation;
         _swingCoroutine = null;
@@ -186,7 +196,12 @@ public class ItemInteraction : MonoBehaviour, Interactable
     {
         if ((_itemData.TargetCollisionLayers & (1 << other.gameObject.layer)) == 0) return;
         if (_alreadyHit.Contains(other)) return;
-        Debug.Log($"Hit: {other.name}");
+        var ihashealth = other.GetComponent<IHasHealth>();
+        if (ihashealth != null)
+        {
+            ihashealth.TakeDamage(_itemData.DamageScore);
+            _alreadyHit.Add(other);
+        }
     }
 
 #endregion AttackCode
