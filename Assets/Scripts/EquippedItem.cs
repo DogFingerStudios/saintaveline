@@ -9,7 +9,7 @@ using UnityEngine;
 public class EquippedItem : MonoBehaviour
 {
     private PlayerInteractor? _interactor;
-    
+
     [SerializeField] private Transform? _equippedItemPos;
 
     private ItemInteraction? _itemInteraction = null;
@@ -20,7 +20,7 @@ public class EquippedItem : MonoBehaviour
         get => _equippedItem;
         set
         {
-            if (!value) 
+            if (!value)
             {
                 DropEquippedItem();
                 return;
@@ -35,7 +35,7 @@ public class EquippedItem : MonoBehaviour
 
             // Do we want to disable physics while we equip the item?
             // If item doesn't have physics, we don't need to do anything
-            if (_equippedItem.TryGetComponent<Rigidbody>(out var rb)) 
+            if (_equippedItem.TryGetComponent<Rigidbody>(out var rb))
             {
                 rb.isKinematic = true;
             }
@@ -46,47 +46,59 @@ public class EquippedItem : MonoBehaviour
                 Debug.LogError($"Equipped item '{_equippedItem.name}' does not have an ItemInteraction component.");
             }
         }
-    } 
+    }
 
-    public void DropEquippedItem() 
+    public void DropEquippedItem()
     {
-        if (_equippedItem != null) 
+        if (_equippedItem != null)
         {
             _itemInteraction!.onUnequipped();
-            if (_equippedItem.TryGetComponent<Rigidbody>(out var rb)) 
+            if (_equippedItem.TryGetComponent<Rigidbody>(out var rb))
             {
                 rb.angularVelocity = Vector3.zero;
                 rb.linearVelocity = Vector3.zero;
                 rb.isKinematic = false;
             }
 
-            _equippedItem.transform.SetParent(null);
-            _equippedItem = null;
+            ClearEquippedItemData();
         }
     }
 
-    private void ThrowEquippedItem() 
+    private void ThrowEquippedItem()
     {
-        if (_equippedItem != null) 
+        if (_equippedItem != null)
         {
             _itemInteraction!.onUnequipped();
-            if (_equippedItem.TryGetComponent<Rigidbody>(out var rb)) 
+            if (_equippedItem.TryGetComponent<Rigidbody>(out var rb))
             {
                 float _throwForce = 10f;
                 rb.isKinematic = false;
                 rb.AddForce(Camera.main.transform.forward * _throwForce, ForceMode.VelocityChange);
             }
 
+            ClearEquippedItemData();
+        }
+    }
+
+    private void ClearEquippedItemData()
+    {
+        if (_equippedItem != null)
+        {
             _equippedItem.transform.SetParent(null);
             _equippedItem = null;
         }
+
+        if (_itemInteraction != null)
+        {
+            _itemInteraction = null; // Make sure we can't send the Attack command after dropping an item
+        }
     }
-    
-    
+
+
     void Awake()
     {
         _interactor = GetComponentInChildren<PlayerInteractor>();
-        if (_interactor == null) 
+        if (_interactor == null)
         {
             Debug.LogError("EquippedItem script requires a PlayerInteractor component on the same GameObject.");
         }
@@ -94,11 +106,11 @@ public class EquippedItem : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             if (_interactor!.FocusedObject != null)
             {
-                if (_equippedItem != null) 
+                if (_equippedItem != null)
                 {
                     DropEquippedItem();
                 }
@@ -106,14 +118,14 @@ public class EquippedItem : MonoBehaviour
                 EquippedItemObject = _interactor.FocusedObject;
                 _itemInteraction!.onEquipped();
             }
-            else if (_equippedItem != null) 
+            else if (_equippedItem != null)
             {
                 DropEquippedItem();
             }
         }
         else if (Input.GetMouseButtonDown(0))
         {
-            if (_itemInteraction != null) 
+            if (_itemInteraction != null)
             {
                 _itemInteraction.Attack();
             }
