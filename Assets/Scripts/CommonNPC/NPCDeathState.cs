@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class NPCDeathState : NPCState
 {
+    public NPCDeathState(BaseNPC baseNpc) : base(baseNpc)
+    {
+        // nothing to do
+    }
+
     public override void Enter()
     {
         Debug.Log($"{this.NPC.name} has died.");
@@ -23,9 +28,17 @@ public class NPCDeathState : NPCState
         }
     }
 
+    private float _timer = 0f;
+    bool _destroyed = false;
     public override INPCState? Update()
     {
-        // Nothing to do in the death state
+        _timer += 1.0F * Time.deltaTime;
+        if (!_destroyed && _timer >= 5f)
+        {
+            _destroyed = true;
+            GameObject.Destroy(this.NPC.gameObject);
+        }
+
         return null;
     }
 
