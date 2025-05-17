@@ -2,6 +2,7 @@
 
 using UnityEngine;
 
+// this class is attached to root NPC objects
 public class EnemyNPC : BaseNPC
 {
     [SerializeField, NPCStateDropdown] 

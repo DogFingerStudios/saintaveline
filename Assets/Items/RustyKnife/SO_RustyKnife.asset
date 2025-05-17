@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: SO_RustyKnife
   m_EditorClassIdentifier: 
   ItemName: Rusty Knife
-  DamageScore: 6
+  DamageScore: 16
   prefab: {fileID: 1289100062823888, guid: 3561d375b004832418eaf9271450e06f, type: 3}
+  TargetCollisionLayers:
+    serializedVersion: 2
+    m_Bits: 0
   Interactions:
   - key: take_equip
     description: Take (Equip)

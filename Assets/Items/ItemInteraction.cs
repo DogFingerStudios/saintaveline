@@ -1,8 +1,10 @@
 #nullable enable
 using System;
 using System.Reflection;
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 
 [AttributeUsage(AttributeTargets.Method, Inherited = false)]
 public class InteractionActionAttribute : Attribute
@@ -76,7 +78,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
     public virtual void onUnequipped()
     {
-        // nothing to do
+        _hitCollider.enabled = true;
     }
 
     public void OnDefocus()
@@ -97,10 +99,18 @@ public class ItemInteraction : MonoBehaviour, Interactable
             Debug.LogWarning("Player not found");
             return;
         }
+
         _equippedItemScript = player.GetComponent<EquippedItem>();
         if (_equippedItemScript == null)
         {
             Debug.LogWarning("EquippedItem not found in Player");
+            return;
+        }
+
+        _hitCollider = GetComponent<Collider>();
+        if (_hitCollider == null)
+        {
+            Debug.LogWarning("Collider not found on item");
             return;
         }
     }
@@ -114,11 +124,14 @@ public class ItemInteraction : MonoBehaviour, Interactable
     private Vector3 _defaultLocalPosition;
     private Quaternion _defaultLocalRotation;
     private Coroutine? _swingCoroutine;
+    protected Collider? _hitCollider;
+    private readonly HashSet<Collider> _alreadyHit = new HashSet<Collider>();
 
     public virtual void onEquipped()
     {
         _defaultLocalPosition = transform.localPosition;
         _defaultLocalRotation = transform.localRotation;
+        _hitCollider.enabled = false;
     }
 
     public virtual void Attack()
@@ -133,6 +146,8 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
     private IEnumerator AnimateSwing()
     {
+        OnStartAttack();
+
         float duration = 0.25f;
         float elapsed = 0f;
 
@@ -160,9 +175,42 @@ public class ItemInteraction : MonoBehaviour, Interactable
             yield return null;
         }
 
+        OnEndAttack();
+
         transform.localPosition = _defaultLocalPosition;
         transform.localRotation = _defaultLocalRotation;
         _swingCoroutine = null;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((_itemData.TargetCollisionLayers & (1 << other.gameObject.layer)) == 0) return;
+        if (_alreadyHit.Contains(other)) return;
+        var ihashealth = other.GetComponent<IHasHealth>();
+        if (ihashealth != null)
+        {
+            ihashealth.TakeDamage(_itemData.DamageScore);
+            _alreadyHit.Add(other);
+        }
+    }
+
+    protected void OnStartAttack()
+    {
+        if (_hitCollider)
+        {
+            _hitCollider.enabled = true;
+            _hitCollider.isTrigger = true;
+        }
+    }
+
+    protected void OnEndAttack()
+    {
+        if (_hitCollider)
+        {
+            _hitCollider.enabled = false;
+            _hitCollider.isTrigger = false;
+        }
+        _alreadyHit.Clear();
     }
 
 #endregion AttackCode
