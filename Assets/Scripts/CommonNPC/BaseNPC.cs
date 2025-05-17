@@ -59,6 +59,9 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     public Transform target;
 
+    private UnityEngine.AI.NavMeshAgent? _navAgent = null;
+    private Rigidbody _rigidbody;
+
     public void setState(NPCState state)
     {
         stateMachine.SetState(state);
@@ -71,7 +74,26 @@ public class BaseNPC : MonoBehaviour, IHasHealth
         Health -= damage;
         if (Health < 0) Health = 0;
         this.OnHealthChanged?.Invoke(Health);
+        if (Health <= 0)
+        {
+            onDeath();
+        }
+        // else
+        // {
+        //     // Play hurt animation or sound
+        //     _animator.SetTrigger("Hurt");
+        // }
         return Health;
+    }
+
+    private void onDeath()
+    {
+        Debug.Log($"{this.name} has died.");
+        _navAgent.enabled = false;
+        _rigidbody.isKinematic = false;
+        _rigidbody.useGravity = true;
+        _rigidbody.constraints = RigidbodyConstraints.None; 
+        _rigidbody.AddTorque(Vector3.right * 5f, ForceMode.Impulse);
     }
 
     float IHasHealth.Heal(float amount)
@@ -89,6 +111,13 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     {
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _navAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+        if (_navAgent == null)
+        {
+            Debug.LogWarning("NavMeshAgent not found on NPC");
+            return;
+        }
     }
 
     public void Panic()
