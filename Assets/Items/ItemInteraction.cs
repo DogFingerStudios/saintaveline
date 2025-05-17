@@ -124,7 +124,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
     private Vector3 _defaultLocalPosition;
     private Quaternion _defaultLocalRotation;
     private Coroutine? _swingCoroutine;
-    private Collider? _hitCollider;
+    protected Collider? _hitCollider;
     private readonly HashSet<Collider> _alreadyHit = new HashSet<Collider>();
 
     public virtual void onEquipped()
@@ -146,11 +146,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
     private IEnumerator AnimateSwing()
     {
-        if (_hitCollider)
-        {
-            _hitCollider.enabled = true;
-            _hitCollider.isTrigger = true;
-        }
+        OnStartAttack();
 
         float duration = 0.25f;
         float elapsed = 0f;
@@ -179,17 +175,11 @@ public class ItemInteraction : MonoBehaviour, Interactable
             yield return null;
         }
 
-        if (_hitCollider)
-        {
-            _hitCollider.enabled = false;
-            _hitCollider.isTrigger = false;
-        }
+        OnEndAttack();
 
         transform.localPosition = _defaultLocalPosition;
         transform.localRotation = _defaultLocalRotation;
         _swingCoroutine = null;
-        _alreadyHit.Clear();
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -202,6 +192,25 @@ public class ItemInteraction : MonoBehaviour, Interactable
             ihashealth.TakeDamage(_itemData.DamageScore);
             _alreadyHit.Add(other);
         }
+    }
+
+    protected void OnStartAttack()
+    {
+        if (_hitCollider)
+        {
+            _hitCollider.enabled = true;
+            _hitCollider.isTrigger = true;
+        }
+    }
+
+    protected void OnEndAttack()
+    {
+        if (_hitCollider)
+        {
+            _hitCollider.enabled = false;
+            _hitCollider.isTrigger = false;
+        }
+        _alreadyHit.Clear();
     }
 
 #endregion AttackCode

@@ -22,10 +22,13 @@ public class KnifeItemInteraction : ItemInteraction
     public override void onEquipped()
     {
         _defaultLocalPosition2 = this.gameObject.transform.localPosition;
+        _hitCollider.enabled = false;
     }
 
     private IEnumerator AnimateAttack()
     {
+        OnStartAttack();
+
         float duration = 0.1f; // time to thrust
         float returnDuration = 0.15f;
         float elapsed = 0f;
@@ -52,6 +55,8 @@ public class KnifeItemInteraction : ItemInteraction
             this.gameObject.transform.localPosition = Vector3.Lerp(target, start, t);
             yield return null;
         }
+
+        OnEndAttack();
 
         this.gameObject.transform.localPosition = _defaultLocalPosition2;
         _attackCoroutine = null;
