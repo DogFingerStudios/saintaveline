@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class NPCDeathState : NPCState
 {
@@ -28,22 +29,56 @@ public class NPCDeathState : NPCState
         }
     }
 
-    private float _timer = 0f;
-    bool _destroyed = false;
+    public override void Exit()
+    {
+        // Nothing to do in the death state
+    }
+
+    private float _delayBeforeFade = 10f;   // AI: Seconds to wait before starting fade
+    private float _stateTimer = 0f;         // AI: Tracks time in this state
+    private bool _fadeStarted = false;      // AI: Ensures fade starts once
+    private float _fadeDuration = 2f;       // AI: Fade duration
+
     public override INPCState? Update()
     {
-        _timer += 1.0F * Time.deltaTime;
-        if (!_destroyed && _timer >= 5f)
+        _stateTimer += Time.deltaTime;                                 // AI: Accumulate time
+
+        if (!_fadeStarted && _stateTimer >= _delayBeforeFade)
         {
-            _destroyed = true;
-            GameObject.Destroy(this.NPC.gameObject);
+            _fadeStarted = true;                                      // AI: Prevent multiple starts
+            NPC.StartCoroutine(FadeOutAndDestroy());
         }
 
         return null;
     }
 
-    public override void Exit()
+    private IEnumerator FadeOutAndDestroy()
     {
-        // Nothing to do in the death state
+        var renderer = NPC.GetComponent<MeshRenderer>();
+        var material = renderer.material;
+        var originalColor = material.color;
+
+        material.SetOverrideTag("RenderType", "Transparent");
+        material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+        material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+        material.SetInt("_ZWrite", 0);
+        material.DisableKeyword("_ALPHATEST_ON");
+        material.EnableKeyword("_ALPHABLEND_ON");
+        material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+        material.renderQueue = 3000;
+
+        float elapsed = 0f;
+
+        while (elapsed < _fadeDuration)
+        {
+            elapsed += Time.deltaTime;                                  // AI: Accumulate fade time
+            float alpha = Mathf.Lerp(originalColor.a, 0f, elapsed / _fadeDuration);
+            var c = originalColor;
+            c.a = alpha;
+            material.color = c;
+            yield return null;
+        }
+
+        UnityEngine.Object.Destroy(NPC.gameObject);
     }
 }
