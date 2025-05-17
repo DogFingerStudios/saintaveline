@@ -6,6 +6,8 @@ public class FPSMovement : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 5f;       // Walking speed
     public float sprintSpeedFactor = 5f; // Sprint speed factor
+    public float crouchSpeedFactor = 0.5f; // Crouch speed factor
+    public bool isCrouching = false; // Is the player crouching?
     public float jumpHeight = 2f;      // Jump power
 
     [Header("Mouse Look Settings")]
@@ -20,11 +22,17 @@ public class FPSMovement : MonoBehaviour
     private Transform cameraTransform; 
     private float xRotation = 0f;
     private float cachedXRotation;
+    private float defaultHeight;
+    private Vector3 defaultCenter;
 
     void Start()
     {
         // Get the CharacterController
         controller = GetComponent<CharacterController>();
+
+        // Get the default height and center
+        defaultHeight = controller.height;
+        defaultCenter = controller.center;
 
         // Find the Camera (child in the hierarchy)
         cameraTransform = GetComponentInChildren<Camera>().transform;
@@ -47,10 +55,37 @@ public class FPSMovement : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
 
+        // Sprint speed factor
         var localMoveSpeed = moveSpeed;
         if (Input.GetKey(KeyCode.LeftShift))
         {
             localMoveSpeed *= sprintSpeedFactor;
+        }
+
+        // Crouch code
+        if (Input.GetKey(KeyCode.C))
+        {
+            localMoveSpeed *= crouchSpeedFactor;
+            isCrouching = true;
+            controller.height = 1f; // Adjust height for crouching
+            controller.center = new Vector3(0f, 0.5f, 0f); // Adjust center for crouching
+        }
+        else
+        {
+            if (isCrouching) // Only adjust if we were previously crouching
+            {
+                isCrouching = false;
+
+                // Calculate the difference in height
+                float heightDifference = defaultHeight - controller.height;
+
+                // Adjust the vertical position based on the height difference
+                transform.position += new Vector3(0f, heightDifference / 2f, 0f);
+
+                // Reset height and center
+                controller.height = defaultHeight;
+                controller.center = defaultCenter;
+            }
         }
 
         // Rotate the Player body left/right
