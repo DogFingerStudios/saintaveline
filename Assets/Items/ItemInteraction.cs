@@ -1,8 +1,10 @@
 #nullable enable
 using System;
 using System.Reflection;
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
 
 [AttributeUsage(AttributeTargets.Method, Inherited = false)]
 public class InteractionActionAttribute : Attribute
@@ -97,12 +99,21 @@ public class ItemInteraction : MonoBehaviour, Interactable
             Debug.LogWarning("Player not found");
             return;
         }
+
         _equippedItemScript = player.GetComponent<EquippedItem>();
         if (_equippedItemScript == null)
         {
             Debug.LogWarning("EquippedItem not found in Player");
             return;
         }
+
+        _hitCollider = GetComponent<Collider>();
+        if (_hitCollider == null)
+        {
+            Debug.LogWarning("Collider not found on item");
+            return;
+        }
+        _hitCollider.enabled = false;
     }
 
     /// <summary>
@@ -114,6 +125,8 @@ public class ItemInteraction : MonoBehaviour, Interactable
     private Vector3 _defaultLocalPosition;
     private Quaternion _defaultLocalRotation;
     private Coroutine? _swingCoroutine;
+    private Collider? _hitCollider;
+    private readonly HashSet<Collider> _alreadyHit = new HashSet<Collider>();
 
     public virtual void onEquipped()
     {
@@ -133,6 +146,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
     private IEnumerator AnimateSwing()
     {
+        if (_hitCollider) _hitCollider.enabled = true;
         float duration = 0.25f;
         float elapsed = 0f;
 
@@ -160,9 +174,19 @@ public class ItemInteraction : MonoBehaviour, Interactable
             yield return null;
         }
 
+        if (_hitCollider) _hitCollider.enabled = false;
         transform.localPosition = _defaultLocalPosition;
         transform.localRotation = _defaultLocalRotation;
         _swingCoroutine = null;
+        _alreadyHit.Clear();
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if ((_itemData.TargetCollisionLayers & (1 << other.gameObject.layer)) == 0) return;
+        if (_alreadyHit.Contains(other)) return;
+        Debug.Log($"Hit: {other.name}");
     }
 
 #endregion AttackCode

@@ -16,6 +16,8 @@ public class ItemData : ScriptableObject
     
     public GameObject prefab; 
     
+    public LayerMask TargetCollisionLayers; 
+
     public List<InteractionData> Interactions;
 }
 
