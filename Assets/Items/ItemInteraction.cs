@@ -185,7 +185,9 @@ public class ItemInteraction : MonoBehaviour, Interactable
     private void OnTriggerEnter(Collider other)
     {
         if ((_itemData.TargetCollisionLayers & (1 << other.gameObject.layer)) == 0) return;
+        if (this.gameObject.transform.root == other.gameObject.transform.root) return;
         if (_alreadyHit.Contains(other)) return;
+        
         var ihashealth = other.GetComponent<IHasHealth>();
         if (ihashealth != null)
         {
