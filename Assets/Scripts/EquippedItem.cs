@@ -94,6 +94,23 @@ public class EquippedItem : MonoBehaviour
         }
     }
 
+    public void EquipItem(GameObject item)
+    {
+        if (item == null)
+        {
+            Debug.LogError("EquippedItem: Attempted to equip a null item.");
+            return;
+        }
+
+        if (_equippedItem != null)
+        {
+            DropEquippedItem();
+        }
+
+        EquippedItemObject = item;
+        _itemInteraction!.onEquipped();
+    }
+
 
     void Awake()
     {
@@ -110,13 +127,7 @@ public class EquippedItem : MonoBehaviour
         {
             if (_interactor!.FocusedObject != null)
             {
-                if (_equippedItem != null)
-                {
-                    DropEquippedItem();
-                }
-
-                EquippedItemObject = _interactor.FocusedObject;
-                _itemInteraction!.onEquipped();
+                this.EquipItem(_interactor.FocusedObject);
             }
             else if (_equippedItem != null)
             {
