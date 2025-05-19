@@ -60,21 +60,6 @@ public class ItemInteraction : MonoBehaviour, Interactable
     protected virtual void onTakeEquip()
     {
         _equippedItemScript.EquipItem(this.gameObject);
-        // // get the `EquippedItemPos` GameObject that is a child of the `Player` GameObject
-        // // and set the position of the item to the position of the `EquippedItemPos` GameObject
-        
-        // var player = GameObject.FindGameObjectWithTag("Player");
-        // var equippedItemPos = player.GetComponent<EquippedItem>();
-        // if (equippedItemPos == null)
-        // {
-        //     Debug.LogWarning("EquippedItemPos not found in Player");
-        //     return;
-        // }
-
-        // if (_equippedItemScript != null)
-        // {
-        //     _equippedItemScript.DropEquippedItem();
-        // }
     }
 
     public virtual void onUnequipped()
