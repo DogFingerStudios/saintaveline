@@ -1,6 +1,6 @@
-using UnityEngine;
 using System;
 using System.Collections;
+using UnityEngine;
 
 public class BaseNPC : MonoBehaviour, IHasHealth
 {
@@ -9,7 +9,7 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     private AudioSource _audioSource;
     public AudioSource AudioSource { get => _audioSource; }
 
-    [SerializeField] 
+    [SerializeField]
     EntityProfile _entityProfile;
     public EntityProfile Profile
     {
@@ -43,7 +43,7 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     [SerializeField]
     float _health = 100f;
 
-    public float Health 
+    public float Health
     {
         get => _health;
         set => _health = value;
@@ -51,7 +51,7 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     [SerializeField]
     float _maxHealth = 100f;
-    public float MaxHealth 
+    public float MaxHealth
     {
         get => _maxHealth;
         set => _maxHealth = value;
@@ -66,20 +66,22 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     public event Action<float> OnHealthChanged;
 
-    float IHasHealth.TakeDamage(float damage)
+    public float TakeDamage(float damage)
     {
         Health -= damage;
-        if (Health < 0) Health = 0;
+
+        if (Health < 0)
+        {
+            Health = 0;
+        }
+
         this.OnHealthChanged?.Invoke(Health);
+
         if (Health <= 0)
         {
             onDeath();
         }
-        // else
-        // {
-        //     // Play hurt animation or sound
-        //     _animator.SetTrigger("Hurt");
-        // }
+
         return Health;
     }
 
@@ -92,8 +94,14 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     float IHasHealth.Heal(float amount)
     {
         Health += amount;
-        if (Health > MaxHealth) Health = MaxHealth;
+
+        if (Health > MaxHealth)
+        {
+            Health = MaxHealth;
+        }
+
         this.OnHealthChanged?.Invoke(Health);
+
         return Health;
     }
 
@@ -108,7 +116,7 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     public void Panic()
     {
-         StartCoroutine(BlinkTwiceCoroutine());
+        StartCoroutine(BlinkTwiceCoroutine());
     }
 
     private IEnumerator BlinkTwiceCoroutine()
@@ -122,14 +130,18 @@ public class BaseNPC : MonoBehaviour, IHasHealth
         yield return new WaitForSeconds(0.4f); // Match animation clip duration
         _animator.SetTrigger("RefuseBlink");
         yield return new WaitForSeconds(0.4f);
-        
+
         // Optional: force back to Idle (if needed)
         _animator.Play("Idle");
     }
 
     protected virtual void Update()
     {
-        if (stateMachine == null) return;
+        if (stateMachine == null)
+        {
+            return;
+        }
+
         stateMachine.Update();
     }
 }
