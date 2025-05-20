@@ -7,7 +7,7 @@ public class UnitTestExample : MonoBehaviour
 {
 
     /// <summary>
-    /// [Test] is a standard NUnity test attribute.
+    /// [Test] is a standard NUnit test attribute.
     /// </summary>
     [Test]
     [Category("Example Unit Tests")]
@@ -37,8 +37,7 @@ public class UnitTestExample : MonoBehaviour
         int a = 5;
         int b = 100;
 
-        // Wait for a frame (or more)
-        yield return new WaitForSecondsRealtime(1); // Wait for 1 second
+        yield return new WaitForSecondsRealtime(1);
 
         // Do the thing
         int result = a * (b + 100) - 400;
