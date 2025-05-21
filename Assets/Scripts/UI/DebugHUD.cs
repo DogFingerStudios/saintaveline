@@ -1,18 +1,21 @@
+#nullable enable
 using TMPro;
 using UnityEngine;
 
 public class DebugHUD : MonoBehaviour
 {
+    // UI Elements
     public GameObject hudPanel;
     public TextMeshProUGUI groundedText;
-    public CharacterController controller;
-    public GameObject enemyNPC;
-    private IHasHealth? enemyNPCHealth;
-
-    public SonNPC sonNPC;
     public TextMeshProUGUI sonNPCStateText;
     public TextMeshProUGUI sonNPCDistanceText;
     public TextMeshProUGUI enemyHealthText; 
+
+    // Objects of interest
+    public CharacterController controller;
+    public GameObject enemyNPC;
+    private IHasHealth enemyNPCHealth;
+    public SonNPC sonNPC;
 
     private bool isVisible = true;
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DebugInputManager : MonoBehaviour
 {
@@ -17,10 +18,15 @@ public class DebugInputManager : MonoBehaviour
         {
             iHasHealth.Heal(5f);
         }
-        
+
         if (Input.GetKeyDown(KeyCode.LeftBracket))
         {
             iHasHealth.TakeDamage(5f);
+        }
+        
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            SceneManager.LoadScene("Game"); 
         }
     }
 }
