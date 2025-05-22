@@ -33,12 +33,12 @@ public class LampInteractable : MonoBehaviour, Interactable
 
         if (Light.intensity == 0)
         {
-            DisableLightFlicker();
-            Light.intensity = 0;
+            EnableLightFlicker();            
         }
         else
         {
-            EnableLightFlicker();
+            DisableLightFlicker();
+            Light.intensity = 0;
         }
 
         AudioSource audioSource = GetComponent<AudioSource>();
