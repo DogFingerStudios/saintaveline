@@ -23,6 +23,11 @@ public class LampInteractable : MonoBehaviour, Interactable
     public float maxFlickerTime = 1f;
 
 
+    private void Awake()
+    {
+        Light.enabled = false;
+    }
+
     public void Interact()
     {
         if (Light == null)
@@ -31,14 +36,13 @@ public class LampInteractable : MonoBehaviour, Interactable
             return;
         }
 
-        if (Light.intensity == 0)
+        if (!Light.enabled)
         {
             EnableLightFlicker();            
         }
         else
         {
             DisableLightFlicker();
-            Light.intensity = 0;
         }
 
         AudioSource audioSource = GetComponent<AudioSource>();
@@ -62,11 +66,13 @@ public class LampInteractable : MonoBehaviour, Interactable
 
     private void EnableLightFlicker()
     {
+        Light.enabled = true;
         StartCoroutine(FlickerLight());
     }
 
     private void DisableLightFlicker()
     {
+        Light.enabled = false;
         StopAllCoroutines();
     }
 
