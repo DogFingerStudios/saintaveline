@@ -31,11 +31,10 @@ public class LampInteractable : MonoBehaviour, Interactable
             return;
         }
 
-        Light.intensity = Light.intensity == 0 ? 1 : 0;
-
         if (Light.intensity == 0)
         {
             DisableLightFlicker();
+            Light.intensity = 0;
         }
         else
         {
