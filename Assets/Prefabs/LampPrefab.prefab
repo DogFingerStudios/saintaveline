@@ -29,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2728324911169093722}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 261.206, y: 10.212825, z: 252.999}
-  m_LocalScale: {x: -2, y: 2, z: 2}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3371676900965869066}
@@ -102,7 +102,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd1fcec2fd31b34c94d734a3c1c3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Light: {fileID: 6928303452295604884}
   lampSwitchSound: {fileID: 8300000, guid: 89943cedd1ae98e4ebf6486a350b1c6e, type: 3}
+  minTurnOnDelay: 0
+  maxTurnOnDelay: 2
+  minIntensity: 1
+  maxIntensity: 1.5
+  lightChangeSpeed: 5
+  minFlickerTime: 0.1
+  maxFlickerTime: 0.5
 --- !u!82 &6379972830777638752
 AudioSource:
   m_ObjectHideFlags: 0
@@ -215,7 +223,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -263,20 +271,20 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 2
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.85, b: 0.7, a: 1}
   m_Intensity: 0
-  m_Range: 10
+  m_Range: 12
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
+    m_Bias: 0
+    m_NormalBias: 0.01
+    m_NearPlane: 0.5
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -306,7 +314,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
