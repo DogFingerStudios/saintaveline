@@ -66,7 +66,7 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     public event Action<float> OnHealthChanged;
 
-    float IHasHealth.TakeDamage(float damage)
+    public float TakeDamage(float damage)
     {
         Health -= damage;
         if (Health < 0) Health = 0;
