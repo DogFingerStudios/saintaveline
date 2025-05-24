@@ -24,7 +24,6 @@ public class DebugHUD : MonoBehaviour
         if (enemyNPC)
         {
             enemyNPCHealth = enemyNPC.GetComponent<IHasHealth>();
-            return;
         }
     }
 
