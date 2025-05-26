@@ -11,8 +11,10 @@ public class EnemyPursueState : NPCState
     // not visible, then the NPC could return to patrol state
     private float _detectionRange = 20f;
 
-    public EnemyPursueState(BaseNPC npc, Transform target) 
-        : base(npc)
+    /// <param name="npc">The NPC to which this state is attached.</param>
+    /// <param name="target">The target Transform that the NPC will pursue.</param>
+    public EnemyPursueState(NPCState nextState, BaseNPC npc, Transform target) 
+        : base(nextState, npc)
     {
         this.NPC.target = target;
         if (this.NPC is not EnemyNPC)
@@ -38,11 +40,11 @@ public class EnemyPursueState : NPCState
     public override INPCState? Update()
     {
         float distance = Vector3.Distance(this.NPC.transform.position, this.NPC.target.position);
-        if (distance < this.NPC.stopDistance)
+        if (distance < this.NPC.stopDistance) 
         {
-            // we're close enough to the target, stop moving
             _agent.isStopped = true;
             _agent.ResetPath();
+            return null;
         }
 
         if (distance <= _detectionRange)
@@ -52,7 +54,7 @@ public class EnemyPursueState : NPCState
         else
         {
             _agent.ResetPath();
-            return new EnemyIdleState((EnemyNPC)this.NPC);
+            return this.NextState; 
         }
 
         return null;
