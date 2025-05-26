@@ -1,5 +1,6 @@
 #nullable enable
 
+// TODO: do we really need/want this interface?
 public interface INPCState
 {
     void Enter();
