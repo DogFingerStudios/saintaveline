@@ -1,6 +1,8 @@
-using UnityEngine;
 using System;
 using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class BaseNPC : MonoBehaviour, IHasHealth
 {
@@ -57,6 +59,11 @@ public class BaseNPC : MonoBehaviour, IHasHealth
         set => _maxHealth = value;
     }
 
+    [Header("Debug Health Slider")]
+    private Transform _playerTransform;
+    public Slider HealthSlider;
+    public TextMeshProUGUI DistanceText;
+
     public Transform target;
 
     public void setState(NPCState state)
@@ -69,6 +76,8 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     public float TakeDamage(float damage)
     {
         Health -= damage;
+        UpdateHealthSlider();
+
         if (Health < 0) Health = 0;
         this.OnHealthChanged?.Invoke(Health);
         if (Health <= 0)
@@ -92,6 +101,8 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     float IHasHealth.Heal(float amount)
     {
         Health += amount;
+        UpdateHealthSlider();
+
         if (Health > MaxHealth) Health = MaxHealth;
         this.OnHealthChanged?.Invoke(Health);
         return Health;
@@ -104,6 +115,9 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     {
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
+        _playerTransform = GameObject.FindGameObjectWithTag("Player").transform; // I don't like this
+
+        SetUpHealthSlider();
     }
 
     public void Panic()
@@ -131,5 +145,32 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     {
         if (stateMachine == null) return;
         stateMachine.Update();
+    }
+
+    private void LateUpdate()
+    {
+        if (DistanceText != null)
+        {
+            float distance = Vector3.Distance(transform.position, _playerTransform.position);
+            DistanceText.text = $"{distance:F2} m";
+        }
+    }
+
+    private void SetUpHealthSlider()
+    {
+        if (HealthSlider == null)
+        {
+            Debug.LogError("HealthSlider not assigned on NPC: " + name);
+            return;
+        }
+
+        HealthSlider.minValue = 0;
+        HealthSlider.maxValue = MaxHealth;
+        HealthSlider.value = Health;
+    }
+
+    private void UpdateHealthSlider()
+    {
+        HealthSlider.value = Health;
     }
 }
