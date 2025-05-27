@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 1358857095831013244}
   - component: {fileID: 1230757540074980299}
   - component: {fileID: 5306263897499878715}
+  - component: {fileID: 2466390616220768613}
   m_Layer: 5
   m_Name: NPCDebugCanvas
   m_TagString: Untagged
@@ -161,7 +162,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &1230757540074980299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,6 +192,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09e33b8653ff0784a9feea12b4b9922f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2466390616220768613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4935543959334225805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9452cfa57cd6234c863bb57c0325fc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NPC: {fileID: 0}
+  HealthSlider: {fileID: 8168583561612138751}
+  DistanceText: {fileID: 809645481733004040}
 --- !u!1 &5126470157439293578
 GameObject:
   m_ObjectHideFlags: 0

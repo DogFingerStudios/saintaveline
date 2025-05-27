@@ -221,8 +221,6 @@ MonoBehaviour:
   stopDistance: 3.5
   _health: 100
   _maxHealth: 100
-  HealthSlider: {fileID: 2745997524974623513}
-  DistanceText: {fileID: 6664039980277979374}
   target: {fileID: 0}
   menu: {fileID: 0}
 --- !u!95 &7532216839783929934
@@ -450,6 +448,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2560983965479213082}
     m_Modifications:
+    - target: {fileID: 2466390616220768613, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
+      propertyPath: NPC
+      value: 
+      objectReference: {fileID: 3579123722393013533}
     - target: {fileID: 3316685370362913855, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -547,28 +549,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
---- !u!114 &2745997524974623513 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8168583561612138751, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
-  m_PrefabInstance: {fileID: 6289027614045258726}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6664039980277979374 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 809645481733004040, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
-  m_PrefabInstance: {fileID: 6289027614045258726}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &8737025671680567257 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3316685370362913855, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}

@@ -490,8 +490,6 @@ MonoBehaviour:
   stopDistance: 5
   _health: 100
   _maxHealth: 100
-  HealthSlider: {fileID: 9194204530685957809}
-  DistanceText: {fileID: 430291058108945734}
   target: {fileID: 0}
   _defaultState: EnemyIdle
   PatrolPoints: []
@@ -646,10 +644,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5311034482893019840}
     m_Modifications:
-    - target: {fileID: 1358857095831013244, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
-      objectReference: {fileID: 0}
+    - target: {fileID: 2466390616220768613, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
+      propertyPath: NPC
+      value: 
+      objectReference: {fileID: 4174098608106142634}
     - target: {fileID: 3316685370362913855, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -734,43 +732,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthSliderCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 9022831795014189244, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9022831795014189244, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
---- !u!114 &430291058108945734 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 809645481733004040, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
-  m_PrefabInstance: {fileID: 1064190051349319246}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &2361004353107077745 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3316685370362913855, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
   m_PrefabInstance: {fileID: 1064190051349319246}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9194204530685957809 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8168583561612138751, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
-  m_PrefabInstance: {fileID: 1064190051349319246}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
