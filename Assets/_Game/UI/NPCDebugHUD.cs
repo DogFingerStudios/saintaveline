@@ -2,15 +2,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// This script is attached to the prefab `NPCDebugCanvas` which should be attached directly under
+// a GameObject that has a script derived from `BaseNPC` attached to it. As of the this writing
+// there is only `EnemyNPC` and `FriendlyNPC`, but any script/class which derives from `BaseNPC`
+// should work
 public class NPCDebugHUD : MonoBehaviour
 {
-    public BaseNPC NPC;
-
-    [Header("Debug Health Slider")]
     private Transform _playerTransform;
+    private BaseNPC _thisNPC;
+
     public Slider HealthSlider;
     public TextMeshProUGUI DistanceText;
-
+    public TextMeshProUGUI StateText;
 
     private void Start()
     {
@@ -18,13 +21,12 @@ public class NPCDebugHUD : MonoBehaviour
         if (_playerTransform == null)
         {
             Debug.LogError("Player transform not found in the scene.");
-            return;
         }
 
-        if (NPC == null)
+        _thisNPC = transform.parent.GetComponent<BaseNPC>();
+        if (_thisNPC == null)
         {
-            Debug.LogError("NPC was null. Assign it in the inspector.");
-            return;
+            Debug.LogError("Parent GameObject does not have a `BaseNPC` compatible component attached.");        
         }
 
         SetUpHealthSlider();
@@ -39,15 +41,15 @@ public class NPCDebugHUD : MonoBehaviour
         }
 
         HealthSlider.minValue = 0;
-        HealthSlider.maxValue = NPC.MaxHealth;
-        HealthSlider.value = NPC.Health;
+        HealthSlider.maxValue = _thisNPC.MaxHealth;
+        HealthSlider.value = _thisNPC.Health;
     }
 
     private void LateUpdate()
     {
-        if (HealthSlider != null && NPC != null)
+        if (HealthSlider != null && _thisNPC != null)
         {
-            HealthSlider.value = NPC.Health;
+            HealthSlider.value = _thisNPC.Health;
         }
 
         if (DistanceText != null)
@@ -55,6 +57,14 @@ public class NPCDebugHUD : MonoBehaviour
             float distance = Vector3.Distance(transform.position, _playerTransform.position);
             DistanceText.text = $"{distance:F2} m";
         }
-    }
 
+        if (StateText != null && _thisNPC != null)
+        {
+            StateText.text = _thisNPC.StateMachine.CurrentState!.GetType().Name;
+        }
+        else
+        {
+            StateText.text = "<Unknown State>";
+        }
+    }
 }
