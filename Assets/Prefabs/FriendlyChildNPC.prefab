@@ -11,11 +11,8 @@ GameObject:
   - component: {fileID: 2560983965479213082}
   - component: {fileID: 709175182522422886}
   - component: {fileID: 4986937509534033226}
-  - component: {fileID: 451806012176524068}
   - component: {fileID: 3756950185822581458}
   - component: {fileID: 6891348782625597385}
-  - component: {fileID: 2479616268200902174}
-  - component: {fileID: 3579123722393013533}
   - component: {fileID: 7532216839783929934}
   m_Layer: 7
   m_Name: FriendlyChildNPC
@@ -95,29 +92,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &451806012176524068
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360472216782407304}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &3756950185822581458
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -167,62 +141,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!136 &2479616268200902174
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360472216782407304}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3579123722393013533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1360472216782407304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7fe1494ead26de4396127076aaff28f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _audioSource: {fileID: 0}
-  _entityProfile:
-    _personality:
-      Trusting: 0.69
-      Loving: 0.74
-      Courage: 0.05
-      Decisiveness: 0.16
-      Composure: -0.16
-    _mentalState:
-      Comfort: 0.3
-      BaseComfortRate: 0.1
-      Calmness: 0
-      BaseCalmRate: 0.1
-  rotationSpeed: 90
-  moveSpeed: 5.5
-  detectionDistance: 15.5
-  stopDistance: 3.5
-  _health: 100
-  _maxHealth: 100
-  target: {fileID: 0}
-  menu: {fileID: 0}
 --- !u!95 &7532216839783929934
 Animator:
   serializedVersion: 7
@@ -448,10 +366,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2560983965479213082}
     m_Modifications:
-    - target: {fileID: 2466390616220768613, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
-      propertyPath: NPC
-      value: 
-      objectReference: {fileID: 3579123722393013533}
     - target: {fileID: 3316685370362913855, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
