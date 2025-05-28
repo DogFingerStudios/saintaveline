@@ -14,6 +14,7 @@ public class MapLabeler : MonoBehaviour
     private GameObject _circleInstance;
     private Camera _mainCamera;
     private bool _labelModeActive;
+    private Vector3 _lastHitPoint;
     private Vector3 _savedPosition;
 
     private void Start()
@@ -46,10 +47,13 @@ public class MapLabeler : MonoBehaviour
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _groundLayerMask))
         {
-            // double the size of the circle
-            _circleInstance.transform.localScale = new Vector3(2f, 1.5f, 2f);
-            _circleInstance.transform.position = hitInfo.point;
-            _circleInstance.transform.position += Vector3.up * 0.01f;
+            if (Vector3.Distance(hitInfo.point, _lastHitPoint) > 0.02f)
+            {
+                _circleInstance.transform.localScale = new Vector3(2f, 1.5f, 2f);
+                _circleInstance.transform.position = hitInfo.point;
+                _circleInstance.transform.position += Vector3.up * 0.01f;
+                _lastHitPoint = hitInfo.point;
+            }
 
             if (Input.GetMouseButtonDown(0))
             {
