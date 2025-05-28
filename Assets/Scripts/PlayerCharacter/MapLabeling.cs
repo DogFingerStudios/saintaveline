@@ -46,12 +46,18 @@ public class MapLabeler : MonoBehaviour
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _groundLayerMask))
         {
+            // double the size of the circle
+            _circleInstance.transform.localScale = new Vector3(2f, 1.5f, 2f);
             _circleInstance.transform.position = hitInfo.point;
+            _circleInstance.transform.position += Vector3.up * 0.01f;
 
             if (Input.GetMouseButtonDown(0))
             {
                 _savedPosition = hitInfo.point;
-                Debug.Log("AI: Saved position = " + _savedPosition);
+                Debug.Log("Saved position = " + _savedPosition);
+                Destroy(_circleInstance);
+                _circleInstance = null;
+                _labelModeActive = false;
             }
         }
     }
