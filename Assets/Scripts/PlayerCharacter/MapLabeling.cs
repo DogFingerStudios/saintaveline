@@ -55,11 +55,13 @@ public class MapLabeler : MonoBehaviour
             }
             else if (_currentState == State.Labeling)
             {
-                CleanupDialog();
+                CleanupInstances();
             }
 
             _currentState = State.Idle;
             _crossHair.SetActive(true);
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 
@@ -79,10 +81,6 @@ public class MapLabeler : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 _savedPosition = hitInfo.point;
-
-                Destroy(_circleInstance);
-                _circleInstance = null;
-
                 _currentState = State.Labeling;
                 ShowLabelNameDialog();
             }
@@ -96,14 +94,39 @@ public class MapLabeler : MonoBehaviour
 
         _dialogInstance = Instantiate(_labelDialogPrefab, _uiCanvas.transform, worldPositionStays: false);
 
-        Button confirmBtn = _dialogInstance.transform.Find("ButtonContainer/ConfirmButton").GetComponent<Button>(); 
+        Button confirmBtn = _dialogInstance.transform.Find("ButtonContainer/ConfirmButton").GetComponent<Button>();
         confirmBtn.onClick.AddListener(() => ConfirmButtonClicked());
 
-        Button cancelBtn = _dialogInstance.transform.Find("ButtonContainer/CancelButton").GetComponent<Button>(); 
+        Button cancelBtn = _dialogInstance.transform.Find("ButtonContainer/CancelButton").GetComponent<Button>();
         cancelBtn.onClick.AddListener(() => CancelButtonClicked());
     }
 
-    private void CleanupDialog()
+    private void ConfirmButtonClicked()
+    {
+        var inputField = _dialogInstance.transform.Find("LabelInputField").GetComponent<TMP_InputField>();
+        string labelName = inputField.text.Trim();
+        if (string.IsNullOrEmpty(labelName)) return;
+
+        _currentState = State.Idle;
+        RestoreUI();
+        CleanupInstances();
+
+        // create a permanent merker at the saved position
+        var marker = Instantiate(_circlePrefab);
+        marker.transform.position = _savedPosition;
+        marker.transform.localScale = new Vector3(2f, 1.5f, 2f);
+        
+        Debug.Log($"Label '{labelName}' saved at position {_savedPosition}");
+    }
+
+    private void CancelButtonClicked()
+    {
+        _currentState = State.Idle;
+        RestoreUI();
+        CleanupInstances();
+    }
+
+    private void CleanupInstances()
     {
         if (_dialogInstance != null)
         {
@@ -116,27 +139,12 @@ public class MapLabeler : MonoBehaviour
             Destroy(_circleInstance);
             _circleInstance = null;
         }
-
-        _crossHair.SetActive(true);
     }
 
-    private void ConfirmButtonClicked()
+    private void RestoreUI()
     {
-        var inputField = _dialogInstance.transform.Find("LabelInputField").GetComponent<TMP_InputField>();
-        string labelName = inputField.text.Trim();
-        if (string.IsNullOrEmpty(labelName)) return;
-
-        Debug.Log($"Label '{labelName}' saved at position {_savedPosition}");
-
-        CleanupDialog();
-        _currentState = State.Idle;
         _crossHair.SetActive(true);
-    }
-
-    private void CancelButtonClicked()
-    {
-        CleanupDialog();
-        _currentState = State.Idle;
-        _crossHair.SetActive(true);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }
