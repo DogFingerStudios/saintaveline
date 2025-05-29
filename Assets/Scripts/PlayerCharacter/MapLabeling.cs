@@ -1,21 +1,30 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MapLabeler : MonoBehaviour
 {
+    private enum State
+    {
+        Idle,
+        MarkingMap,
+        Labeling
+    }
+
     [SerializeField] private GameObject _circlePrefab;
     [SerializeField] private LayerMask _groundLayerMask;
     [SerializeField] private GameObject _labelDialogPrefab;
     [SerializeField] private Canvas _uiCanvas;
+    [SerializeField] private GameObject _crossHair;
 
     private GameObject _circleInstance;
     private GameObject _dialogInstance;
 
     private Camera _mainCamera;
-    private bool _labelModeActive;
     private Vector3 _lastHitPoint;
     private Vector3 _savedPosition;
+    private State _currentState = State.Idle;
 
     private void Start()
     {
@@ -24,54 +33,38 @@ public class MapLabeler : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Comma))
+        if (_currentState == State.Idle && Input.GetKeyDown(KeyCode.Comma))
         {
-            _labelModeActive = !_labelModeActive;
+            _currentState = State.MarkingMap;
+            _crossHair.SetActive(false);
 
-            if (_labelModeActive)
-            {
-                _circleInstance = Instantiate(_circlePrefab);
-            }
-            else if (_circleInstance != null)
+            _circleInstance = Instantiate(_circlePrefab);
+        }
+
+        if (_currentState == State.MarkingMap)
+        {
+            HandleMarkingMap();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_currentState == State.MarkingMap)
             {
                 Destroy(_circleInstance);
                 _circleInstance = null;
             }
+            else if (_currentState == State.Labeling)
+            {
+                CleanupDialog();
+            }
+
+            _currentState = State.Idle;
+            _crossHair.SetActive(true);
         }
+    }
 
-        // if (Input.GetKeyDown(KeyCode.Period))
-        // {
-        //     ShowLabelNameDialog();
-        //     return;
-        // }
-
-        if (!_labelModeActive || _circleInstance == null)
-            {
-                return;
-            }
-
-        if (_labelModeActive
-            && (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)))
-        {
-            _labelModeActive = false;
-            if (_circleInstance != null)
-            {
-                Destroy(_circleInstance);
-                _circleInstance = null;
-            }
-
-            if (_dialogInstance != null)
-            {
-                Destroy(_dialogInstance);
-                _dialogInstance = null;
-            }
-
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-
-            return;
-        }
-
+    private void HandleMarkingMap()
+    {
         Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, _groundLayerMask))
         {
@@ -86,11 +79,12 @@ public class MapLabeler : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 _savedPosition = hitInfo.point;
+
+                Destroy(_circleInstance);
+                _circleInstance = null;
+
+                _currentState = State.Labeling;
                 ShowLabelNameDialog();
-                // Debug.Log("Saved position = " + _savedPosition);
-                // Destroy(_circleInstance);
-                // _circleInstance = null;
-                // _labelModeActive = false;
             }
         }
     }
@@ -101,42 +95,48 @@ public class MapLabeler : MonoBehaviour
         Cursor.visible = true;
 
         _dialogInstance = Instantiate(_labelDialogPrefab, _uiCanvas.transform, worldPositionStays: false);
-        
 
-        // InputField inputField = _dialogInstance.GetComponentInChildren<InputField>();
+        Button confirmBtn = _dialogInstance.transform.Find("ButtonContainer/ConfirmButton").GetComponent<Button>(); 
+        confirmBtn.onClick.AddListener(() => ConfirmButtonClicked());
 
-        // Button confirmBtn = _dialogInstance.transform.Find("ConfirmButton").GetComponent<Button>();
-        // confirmBtn.onClick.AddListener(() =>
-        // {
-        //     string name = inputField.text;
-        //     SaveLabel(_savedPosition, name);
-        //     CleanupDialog();
-        // });
-
-        // Button cancelBtn = _dialogInstance.transform.Find("CancelButton").GetComponent<Button>();
-        // cancelBtn.onClick.AddListener(() =>
-        // {
-        //     CleanupDialog();
-        // });
-    }
-
-    private void SaveLabel(Vector3 position, string name)
-    {
-        Debug.Log("AI: Label saved at " + position + " with name " + name);
+        Button cancelBtn = _dialogInstance.transform.Find("ButtonContainer/CancelButton").GetComponent<Button>(); 
+        cancelBtn.onClick.AddListener(() => CancelButtonClicked());
     }
 
     private void CleanupDialog()
     {
-        _labelModeActive = false;
         if (_dialogInstance != null)
         {
             Destroy(_dialogInstance);
             _dialogInstance = null;
         }
+
         if (_circleInstance != null)
         {
             Destroy(_circleInstance);
             _circleInstance = null;
         }
-    }    
+
+        _crossHair.SetActive(true);
+    }
+
+    private void ConfirmButtonClicked()
+    {
+        var inputField = _dialogInstance.transform.Find("LabelInputField").GetComponent<TMP_InputField>();
+        string labelName = inputField.text.Trim();
+        if (string.IsNullOrEmpty(labelName)) return;
+
+        Debug.Log($"Label '{labelName}' saved at position {_savedPosition}");
+
+        CleanupDialog();
+        _currentState = State.Idle;
+        _crossHair.SetActive(true);
+    }
+
+    private void CancelButtonClicked()
+    {
+        CleanupDialog();
+        _currentState = State.Idle;
+        _crossHair.SetActive(true);
+    }
 }
