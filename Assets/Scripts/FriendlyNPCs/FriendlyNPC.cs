@@ -102,6 +102,9 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
     {
         InteractionManager.Instance.OnLateInteractionAction += ResetCursor;
 
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         var dlgInstance = Instantiate(_mapLabelDialogPrefab, _uiCanvas.transform, worldPositionStays: false);
         Button confirmBtn = dlgInstance.transform.Find("ButtonContainer/ConfirmButton").GetComponent<Button>();
         confirmBtn.onClick.AddListener(() =>
