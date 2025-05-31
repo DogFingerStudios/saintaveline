@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// this script is attached to the `Player` character and contains the 
+// functionality to marking and naming points on the map
 public class MapLabeler : MonoBehaviour
 {
     private enum State
@@ -25,10 +27,17 @@ public class MapLabeler : MonoBehaviour
     private Vector3 _lastHitPoint;
     private Vector3 _savedPosition;
     private State _currentState = State.Idle;
+    private PlayerStats _playerStats;
 
     private void Start()
     {
         _mainCamera = Camera.main;
+        _playerStats = GetComponent<PlayerStats>();
+        if (_playerStats == null)
+        {
+            Debug.LogError("PlayerStats component not found on the player character.");
+            return;
+        }
     }
 
     private void Update()
@@ -115,8 +124,9 @@ public class MapLabeler : MonoBehaviour
         var marker = Instantiate(_circlePrefab);
         marker.transform.position = _savedPosition;
         marker.transform.localScale = new Vector3(2f, 1.5f, 2f);
-        
-        Debug.Log($"Label '{labelName}' saved at position {_savedPosition}");
+
+        _playerStats.LabeledPoints[labelName] = _savedPosition;
+        Debug.Log($"Label '{labelName}' saved at position {_savedPosition}");        
     }
 
     private void CancelButtonClicked()
