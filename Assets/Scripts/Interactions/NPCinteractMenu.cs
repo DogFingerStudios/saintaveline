@@ -18,6 +18,22 @@ public class NPCInteractMenu : InteractMenuBase
 
     public void Open(FriendlyNPC npc)
     {
+        _playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        if (_playerStats == null)
+        {
+            Debug.LogError("PlayerStats component not found on the player character.");
+            return;
+        }
+
+        if (_playerStats.LabeledPoints.Count == 0)
+        {
+            goToButton.interactable = false;
+        }
+        else
+        {
+            goToButton.interactable = true;
+        }
+
         base.Open();
         currentNPC = npc;
     }
@@ -30,13 +46,6 @@ public class NPCInteractMenu : InteractMenuBase
 
     protected override void Start()
     {
-        _playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
-        if (_playerStats == null)
-        {
-            Debug.LogError("PlayerStats component not found on the player character.");
-            return;
-        }
-
         base.Start();
 
         stayButton.onClick.AddListener(() =>
@@ -66,29 +75,21 @@ public class NPCInteractMenu : InteractMenuBase
         
         goToButton.onClick.AddListener(() =>
         {
-            Debug.Log("GoTo button clicked");
-
-            // helpText.SetActive(true);
-            // crossHair.SetActive(true);
             panel.SetActive(false);
-            // Cursor.visible = false;
-            // Cursor.lockState = CursorLockMode.Locked;
 
             _dialogInstance = Instantiate(_mapLabelDialogPrefab, _uiCanvas.transform, worldPositionStays: false);
             Button confirmBtn = _dialogInstance.transform.Find("ButtonContainer/ConfirmButton").GetComponent<Button>();
             confirmBtn.onClick.AddListener(() =>
             {
                 var labelDropdown = _dialogInstance.transform.Find("LabelDropdown").GetComponent<TMP_Dropdown>();
+                if (labelDropdown.value == 0) return;
+                
                 string labelName = labelDropdown.options[labelDropdown.value].text;
-                if (labelName == "Select a label") return;
                 var destination = _playerStats.LabeledPoints[labelName];
-                Debug.Log($"GoTo button clicked with label '{labelName}' at position {destination}");
+                currentNPC?.setState(new NPCGoToState(currentNPC, destination));
 
-                var agent = currentNPC!.GetComponent<NavMeshAgent>();
-                agent.SetDestination(destination);
-
-                Close();
                 Destroy(_dialogInstance);
+                Close();
             });
 
             Button cancelBtn = _dialogInstance.transform.Find("ButtonContainer/CancelButton").GetComponent<Button>();
