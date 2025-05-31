@@ -82,8 +82,9 @@ public class NPCInteractMenu : InteractMenuBase
             confirmBtn.onClick.AddListener(() =>
             {
                 var labelDropdown = _dialogInstance.transform.Find("LabelDropdown").GetComponent<TMP_Dropdown>();
+                if (labelDropdown.value == 0) return;
+                
                 string labelName = labelDropdown.options[labelDropdown.value].text;
-                if (labelName == "Select a label") return;
                 var destination = _playerStats.LabeledPoints[labelName];
                 currentNPC?.setState(new NPCGoToState(currentNPC, destination));
 
