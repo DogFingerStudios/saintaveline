@@ -1,7 +1,9 @@
 using UnityEngine;
 
+// This script is attached to the `SonNPC` object in the Hierarchy (there is no
+// prefab for this NPC).
 public class SonNPC : FriendlyNPC
-{   
+{
     protected override void Start()
     {
         base.Start();
