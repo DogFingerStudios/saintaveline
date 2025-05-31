@@ -9372,11 +9372,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa9c05e26f1c78542a7d74718d51ea1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panel: {fileID: 770735764}
-  crossHair: {fileID: 184610867}
-  helpText: {fileID: 221250201}
-  kickButton: {fileID: 2038667754}
-  pickUpButton: {fileID: 1596045411}
 --- !u!1001 &771715715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23854,7 +23849,9 @@ MonoBehaviour:
   _health: 100
   _maxHealth: 100
   target: {fileID: 1417590809}
-  menu: {fileID: 1358450827}
+  _mapLabelDialogPrefab: {fileID: 4309021723165264976, guid: 0fbe6e54d5a8f9c4cb034e89f5cf38ab, type: 3}
+  _uiCanvas: {fileID: 1711401046}
+  Interactions: []
 --- !u!95 &1747406718
 Animator:
   serializedVersion: 7
