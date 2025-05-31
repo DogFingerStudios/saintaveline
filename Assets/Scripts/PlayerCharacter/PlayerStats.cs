@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,6 +20,9 @@ public class PlayerStats : MonoBehaviour, IHasHealth
         get => _maxHealth;
         set => _maxHealth = value;
     }
+
+    private Dictionary<string, Vector3> _labeledPoints = new Dictionary<string, Vector3>();
+    public Dictionary<string, Vector3> LabeledPoints { get => _labeledPoints; set => _labeledPoints = value; }
 
     public event Action<float> OnHealthChanged;
 
