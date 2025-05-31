@@ -5,6 +5,7 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private GameObject _targetObject;
     [SerializeField] private Image _fillImage;
+    [SerializeField] private Slider _healthSlider;
 
     private float _maxHealth;
 
@@ -13,14 +14,18 @@ public class HealthBar : MonoBehaviour
 
     private void Awake()
     {
-        var iHasHealth = _targetObject.GetComponent<IHasHealth>();
-        if (iHasHealth == null)
+        if (!_targetObject.TryGetComponent<IHasHealth>(out var iHasHealth))
         {
             throw new System.Exception("Target object does not implement IHasHealth interface.");
         }
-        
+
         _maxHealth = iHasHealth.MaxHealth;
         iHasHealth.OnHealthChanged += UpdateBar;
+
+        _healthSlider.minValue = 0f;
+        _healthSlider.maxValue = _maxHealth;
+        _healthSlider.value = _maxHealth;
+
         UpdateBar(iHasHealth.Health);
     }
 
@@ -28,7 +33,7 @@ public class HealthBar : MonoBehaviour
     {
         float t = health / _maxHealth;
 
-        _fillImage.rectTransform.localScale = new Vector3(t, 1f, 1f);
+        _healthSlider.SetValueWithoutNotify(health);
         _fillImage.color = Color.Lerp(_zeroColor, _fullColor, t);
     }
 }
