@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// this script is attached to the `Player` character and contains the 
+// functionality to marking and naming points on the map
 public class MapLabeler : MonoBehaviour
 {
     private enum State

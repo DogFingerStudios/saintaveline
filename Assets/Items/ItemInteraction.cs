@@ -59,7 +59,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
     [InteractionAction("take_equip")]
     protected virtual void onTakeEquip()
     {
-        _equippedItemScript.EquipItem(this.gameObject);
+        _equippedItemScript?.EquipItem(this.gameObject);
     }
 
     public virtual void onUnequipped()

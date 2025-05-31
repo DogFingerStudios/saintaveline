@@ -15,7 +15,6 @@ public class InteractionManager : MonoBehaviour
     [SerializeField] private GameObject helpText;
 
     // define a callback that callers can use to execute the action
-    // public delegate void InteractionAction(string action);
     public event Action<string> OnInteractionAction;
 
     private static InteractionManager _instance;
