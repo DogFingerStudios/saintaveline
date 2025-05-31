@@ -9,6 +9,17 @@ public struct InteractionData
 {
     public string key;
     public string description;
+
+    // a lambda that returns a bool to determine if the interaction is available, defaulting
+    // to always available if not provided
+    public Func<bool> IsAvailable;
+
+    public InteractionData(string key, string description, Func<bool> isAvailable = null)
+    {
+        this.key = key;
+        this.description = description;
+        this.IsAvailable = isAvailable ?? (() => true); // Default to always available
+    }
 }
 
 // This script is attached to the `InteractMenus` canvas in the Hierarchy. `InteractMenus` is the parent
@@ -59,6 +70,12 @@ public class InteractionManager : MonoBehaviour
             if (buttonObj.TryGetComponent<Button>(out var button))
             {
                 button.onClick.AddListener(() => OnInteractionClicked(interaction.key));
+            }
+
+            if (interaction.IsAvailable != null && !interaction.IsAvailable())
+            {
+                buttonObj.GetComponent<Button>().interactable = false;
+                buttonText.color = Color.gray; 
             }
         }
     }

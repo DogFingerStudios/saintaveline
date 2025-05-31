@@ -18,9 +18,6 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
     protected override void Start()
     {
         base.Start();
-        Interactions.Add(new InteractionData { key = "stay", description = "Stay" });
-        Interactions.Add(new InteractionData { key = "follow", description = "Follow" });
-        Interactions.Add(new InteractionData { key = "goto", description = "Go To2" });
 
         _playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         if (_playerStats == null)
@@ -28,6 +25,10 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
             // TODO: error handling is shyte!
             Debug.LogError("PlayerStats component not found on the player character.");
         }
+
+        Interactions.Add(new InteractionData { key = "stay", description = "Stay" });
+        Interactions.Add(new InteractionData { key = "follow", description = "Follow" });
+        Interactions.Add(new InteractionData { key = "goto", description = "Go To", IsAvailable = () => _playerStats.LabeledPoints.Count > 0 });
     }
 
     #region Interactable Interface Implementation
