@@ -1,8 +1,8 @@
+using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; 
-using System.Collections.Generic;
-using System;
 
 [System.Serializable]
 public struct InteractionData
@@ -69,13 +69,19 @@ public class InteractionManager : MonoBehaviour
 
             if (buttonObj.TryGetComponent<Button>(out var button))
             {
-                button.onClick.AddListener(() => OnInteractionClicked(interaction.key));
+                // Add listener to the button, call OnInteractionClicked and lock the mouse cursor
+                button.onClick.AddListener(() =>
+                {
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                    OnInteractionClicked(interaction.key);
+                });
             }
 
             if (interaction.IsAvailable != null && !interaction.IsAvailable())
             {
                 buttonObj.GetComponent<Button>().interactable = false;
-                buttonText.color = Color.gray; 
+                buttonText.color = Color.gray;
             }
         }
     }
@@ -84,22 +90,24 @@ public class InteractionManager : MonoBehaviour
     {
         foreach (Transform child in _buttonPanel.transform)
         {
-            Destroy(child.gameObject);
+            // Only destroy the button objects, otherwise the panel frame and title are also deleted
+            if (child.TryGetComponent<Button>(out var _))
+            {
+                Destroy(child.gameObject);
+            }
         }
 
         helpText.SetActive(true);
         crossHair.SetActive(true);
         _buttonPanel.SetActive(false);
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
         OnInteractionAction = null;
     }
 
     private void OnInteractionClicked(string action)
     {
         OnInteractionAction?.Invoke(action);
-        this.CloseMenu();
+        CloseMenu();
         OnLateInteractionAction?.Invoke();
     }
 
@@ -119,6 +127,8 @@ public class InteractionManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
             CloseMenu();
         }
     }
