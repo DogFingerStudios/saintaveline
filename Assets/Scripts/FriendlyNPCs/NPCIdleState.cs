@@ -20,7 +20,7 @@ public class NPCIdleState : NPCState
         // nothing to do
     }
 
-    public override INPCState? Update()
+    public override NPCState? Update()
     {
         if (this.NPC == null || this.NPC.target == null) return null;
         

@@ -38,7 +38,7 @@ public class NPCFollowState : NPCState
         _agent.angularSpeed = this.NPC.rotationSpeed;
     }
 
-    public override INPCState? Update()
+    public override NPCState? Update()
     {
         if (_agent == null || this.NPC == null) return null;
 

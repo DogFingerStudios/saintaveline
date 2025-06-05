@@ -1,14 +1,6 @@
 #nullable enable
 
-// TODO: do we really need/want this interface?
-public interface INPCState
-{
-    void Enter();
-    void Exit();
-    INPCState? Update();
-}
-
-public abstract class NPCState : INPCState
+public abstract class NPCState
 {
     private NPCState? _nextState;
     public NPCState? NextState
@@ -37,5 +29,5 @@ public abstract class NPCState : INPCState
 
     public abstract void Enter();
     public abstract void Exit();
-    public abstract INPCState? Update();
+    public abstract NPCState? Update();
 }

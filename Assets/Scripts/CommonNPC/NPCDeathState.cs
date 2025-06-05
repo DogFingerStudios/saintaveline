@@ -39,7 +39,7 @@ public class NPCDeathState : NPCState
     private bool _fadeStarted = false;      // AI: Ensures fade starts once
     private float _fadeDuration = 2f;       // AI: Fade duration
 
-    public override INPCState? Update()
+    public override NPCState? Update()
     {
         _stateTimer += Time.deltaTime;                                 // AI: Accumulate time
 

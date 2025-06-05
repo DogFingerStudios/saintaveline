@@ -1,9 +1,9 @@
 public class NPCStateMachine
 {
-    private INPCState currentState;
-    public INPCState CurrentState => currentState;
+    private NPCState currentState;
+    public NPCState CurrentState => currentState;
 
-    public void SetState(INPCState newState)
+    public void SetState(NPCState newState)
     {
         currentState?.Exit();
         currentState = newState;
@@ -16,3 +16,4 @@ public class NPCStateMachine
         if (newstate != null) this.SetState(newstate);
     }
 }
+

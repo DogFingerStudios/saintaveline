@@ -50,7 +50,7 @@ public class EnemyIdleState : NPCState
         _originalDirection = this.NPC!.transform.forward.normalized;
     }
 
-    public override INPCState? Update()
+    public override NPCState? Update()
     {
         _timer += Time.deltaTime;
         if (_timer >= _scanInterval)

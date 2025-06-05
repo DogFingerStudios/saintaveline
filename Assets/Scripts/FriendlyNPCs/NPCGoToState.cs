@@ -36,7 +36,7 @@ public class NPCGoToState : NPCState
         _agent.SetDestination(_targetPosition);
     }
 
-    public override INPCState? Update()
+    public override NPCState? Update()
     {
         if (_agent == null || this.NPC == null || _targetPosition == null)
         {

@@ -25,7 +25,7 @@ public class NPCFollowIdleState : NPCState
         // nothing to do
     }
 
-    public override INPCState? Update()
+    public override NPCState? Update()
     {
         // TODO: logging?
         if (this.NPC == null || this.NPC.target == null) return null;

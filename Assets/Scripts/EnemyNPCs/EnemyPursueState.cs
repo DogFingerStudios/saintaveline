@@ -37,14 +37,14 @@ public class EnemyPursueState : NPCState
 
     }
 
-    public override INPCState? Update()
+    public override NPCState? Update()
     {
         float distance = Vector3.Distance(this.NPC.transform.position, this.NPC.target.position);
         if (distance < this.NPC.stopDistance) 
         {
             _agent.isStopped = true;
             _agent.ResetPath();
-            return null;
+            // return new EnemyAttackState(this.NPC);
         }
 
         if (distance <= _detectionRange)
