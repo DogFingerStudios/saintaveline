@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseNPC : MonoBehaviour, IHasHealth
@@ -55,7 +56,9 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     {
         get => _maxHealth;
         set => _maxHealth = value;
-    }    
+    }
+
+    public Stack<NPCState> StateStack = new Stack<NPCState>();
 
     public Transform target;
 
