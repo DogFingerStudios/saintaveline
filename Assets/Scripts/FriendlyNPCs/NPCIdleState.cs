@@ -2,6 +2,8 @@
 
 using UnityEngine;
 
+// The NPCIdleState never leaves here "voluntarily". The only time and NPC will leave
+// from this state is when it is told to by the player or it dies.
 public class NPCIdleState : NPCState
 {
     public NPCIdleState(BaseNPC baseNpc) : base(baseNpc)
@@ -20,7 +22,7 @@ public class NPCIdleState : NPCState
         // nothing to do
     }
 
-    public override NPCState? Update()
+    public override NPCStateReturnValue? Update()
     {
         if (this.NPC == null || this.NPC.target == null) return null;
         

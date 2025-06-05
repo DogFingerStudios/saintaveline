@@ -25,7 +25,7 @@ public class NPCFollowIdleState : NPCState
         // nothing to do
     }
 
-    public override NPCState? Update()
+    public override NPCStateReturnValue? Update()
     {
         // TODO: logging?
         if (this.NPC == null || this.NPC.target == null) return null;
@@ -34,7 +34,7 @@ public class NPCFollowIdleState : NPCState
         if (distance > this.NPC.stopDistance && distance < this.NPC.detectionDistance)
         {
             // If the target is within detection distance, switch to follow state
-            return new NPCFollowState(this.NPC);
+            return new NPCFollowState(this.NPC);// FIX ME
         }
 
         // turn in the direction of the target

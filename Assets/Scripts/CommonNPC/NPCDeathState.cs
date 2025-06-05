@@ -39,7 +39,7 @@ public class NPCDeathState : NPCState
     private bool _fadeStarted = false;      // AI: Ensures fade starts once
     private float _fadeDuration = 2f;       // AI: Fade duration
 
-    public override NPCState? Update()
+    public override NPCStateReturnValue? Update()
     {
         _stateTimer += Time.deltaTime;                                 // AI: Accumulate time
 
@@ -71,7 +71,7 @@ public class NPCDeathState : NPCState
 
         while (elapsed < _fadeDuration)
         {
-            elapsed += Time.deltaTime;                                  // AI: Accumulate fade time
+            elapsed += Time.deltaTime; // AI: Accumulate fade time
             float alpha = Mathf.Lerp(originalColor.a, 0f, elapsed / _fadeDuration);
             var c = originalColor;
             c.a = alpha;

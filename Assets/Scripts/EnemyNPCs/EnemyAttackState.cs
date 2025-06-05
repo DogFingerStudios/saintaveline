@@ -16,7 +16,7 @@ public class EnemyAttackState : NPCState
         Debug.Log("Enemy has exited the attack state.");
     }
 
-    public override NPCState? Update()
+    public override NPCStateReturnValue? Update()
     {
         Debug.Log("Enemy is attacking.");
         return null;

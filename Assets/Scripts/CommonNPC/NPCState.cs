@@ -1,14 +1,19 @@
 #nullable enable
 
+public class NPCStateReturnValue
+{
+    public enum ActionType
+    {
+        ChangeState,
+        PopState
+    } ActionType;
+
+    public ActionType Action;
+    public NPCState? NextState;
+}
+
 public abstract class NPCState
 {
-    private NPCState? _nextState;
-    public NPCState? NextState
-    {
-        get => _nextState;
-        set => _nextState = value;
-    }
-
     private BaseNPC? _npc;
     public BaseNPC? NPC 
     {
@@ -29,5 +34,5 @@ public abstract class NPCState
 
     public abstract void Enter();
     public abstract void Exit();
-    public abstract NPCState? Update();
+    public abstract NPCStateReturnValue? Update();
 }

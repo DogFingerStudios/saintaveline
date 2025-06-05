@@ -38,7 +38,7 @@ public class NPCFollowState : NPCState
         _agent.angularSpeed = this.NPC.rotationSpeed;
     }
 
-    public override NPCState? Update()
+    public override NPCStateReturnValue? Update()
     {
         if (_agent == null || this.NPC == null) return null;
 
@@ -48,7 +48,7 @@ public class NPCFollowState : NPCState
             // we're close enough to the target, stop moving
             _agent.isStopped = true;
             _agent.ResetPath();
-            return new NPCFollowIdleState(this.NPC);
+            return new NPCFollowIdleState(this.NPC);// FIX ME
         }
 
         if (distance < this.NPC.detectionDistance)
@@ -61,7 +61,7 @@ public class NPCFollowState : NPCState
             // the target is out of range, stop moving
             _agent.isStopped = true;
             _agent.ResetPath();
-            return new NPCFollowIdleState(this.NPC);
+            return new NPCFollowIdleState(this.NPC); // FIX ME
         }
 
         return null;

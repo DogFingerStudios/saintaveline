@@ -58,8 +58,6 @@ public class BaseNPC : MonoBehaviour, IHasHealth
         set => _maxHealth = value;
     }
 
-    public Stack<NPCState> StateStack = new Stack<NPCState>();
-
     public Transform target;
 
     public void setState(NPCState state)
