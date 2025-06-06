@@ -1,22 +1,25 @@
 #nullable enable
 
-// TODO: do we really need/want this interface?
-public interface INPCState
+public class NPCStateReturnValue
 {
-    void Enter();
-    void Exit();
-    INPCState? Update();
-}
-
-public abstract class NPCState : INPCState
-{
-    private NPCState? _nextState;
-    public NPCState? NextState
+    public enum ActionType
     {
-        get => _nextState;
-        set => _nextState = value;
+        ChangeState,
+        PopState
     }
 
+    public ActionType Action;
+    public NPCState? NextState;
+
+    public NPCStateReturnValue(ActionType action, NPCState? nextState = null)
+    {
+        Action = action;
+        NextState = nextState;
+    }
+}
+
+public abstract class NPCState
+{
     private BaseNPC? _npc;
     public BaseNPC? NPC 
     {
@@ -29,13 +32,7 @@ public abstract class NPCState : INPCState
         if (npc != null) _npc = npc;
     }
 
-    public NPCState(NPCState? nextState, BaseNPC? npc = null)
-    {
-        _nextState = nextState;
-        _npc = npc;
-    }
-
     public abstract void Enter();
     public abstract void Exit();
-    public abstract INPCState? Update();
+    public abstract NPCStateReturnValue? Update();
 }

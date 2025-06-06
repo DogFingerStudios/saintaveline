@@ -50,7 +50,7 @@ public class EnemyIdleState : NPCState
         _originalDirection = this.NPC!.transform.forward.normalized;
     }
 
-    public override INPCState? Update()
+    public override NPCStateReturnValue? Update()
     {
         _timer += Time.deltaTime;
         if (_timer >= _scanInterval)
@@ -70,7 +70,9 @@ public class EnemyIdleState : NPCState
                     this.NPC!.AudioSource.PlayOneShot(_warningSound);
                     _hasPlayedWarningSound = true;
 
-                    return new EnemyPursueState(this, this.NPC, target.transform);
+                    return new NPCStateReturnValue(
+                            NPCStateReturnValue.ActionType.ChangeState,
+                            new EnemyPursueState(this, this.NPC, target.transform));
                 }
                 else if (!_hasPlayedWarningSound)
                 {

@@ -36,7 +36,7 @@ public class NPCGoToState : NPCState
         _agent.SetDestination(_targetPosition);
     }
 
-    public override INPCState? Update()
+    public override NPCStateReturnValue? Update()
     {
         if (_agent == null || this.NPC == null || _targetPosition == null)
         {
@@ -49,7 +49,8 @@ public class NPCGoToState : NPCState
             // we're close enough to the target, stop moving
             _agent.isStopped = true;
             _agent.ResetPath();
-            return new NPCIdleState(this.NPC);
+
+            return new NPCStateReturnValue(NPCStateReturnValue.ActionType.ChangeState, new NPCIdleState(this.NPC));
         }
 
         return null; 

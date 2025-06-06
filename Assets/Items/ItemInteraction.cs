@@ -64,7 +64,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
     public virtual void onUnequipped()
     {
-        _hitCollider.enabled = true;
+        if (_hitCollider) _hitCollider.enabled = true;
     }
 
     public void OnDefocus()
@@ -117,7 +117,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
     {
         _defaultLocalPosition = transform.localPosition;
         _defaultLocalRotation = transform.localRotation;
-        _hitCollider.enabled = false;
+        if (_hitCollider) _hitCollider.enabled = false;
     }
 
     public virtual void Attack()
@@ -170,6 +170,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_itemData == null) return;
         if ((_itemData.TargetCollisionLayers & (1 << other.gameObject.layer)) == 0) return;
         if (this.gameObject.transform.root == other.gameObject.transform.root) return;
         if (_alreadyHit.Contains(other)) return;

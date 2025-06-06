@@ -1,3 +1,5 @@
+#nullable enable
+
 using UnityEngine;
 
 [NPCStateTag("EnemyPursue")]
@@ -13,19 +15,21 @@ public class EnemyPursueState : NPCState
 
     /// <param name="npc">The NPC to which this state is attached.</param>
     /// <param name="target">The target Transform that the NPC will pursue.</param>
-    public EnemyPursueState(NPCState nextState, BaseNPC npc, Transform target) 
-        : base(nextState, npc)
+    public EnemyPursueState(NPCState nextState, BaseNPC npc, Transform target)
+        : base(npc)
     {
-        this.NPC.target = target;
+        this.NPC!.target = target;
         if (this.NPC is not EnemyNPC)
         {
             throw new System.Exception("BaseNPC is not an EnemyNPC. Cannot enter pursue state.");
         }
+        
+        this.NPC.PushState(nextState);
     }
 
     public override void Enter()
     {
-        _agent = this.NPC.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        _agent = this.NPC!.GetComponent<UnityEngine.AI.NavMeshAgent>();
         if (_agent == null)
         {
             throw new System.Exception("NavMeshAgent component is missing on the NPC.");
@@ -37,14 +41,18 @@ public class EnemyPursueState : NPCState
 
     }
 
-    public override INPCState? Update()
+    public override NPCStateReturnValue? Update()
     {
-        float distance = Vector3.Distance(this.NPC.transform.position, this.NPC.target.position);
-        if (distance < this.NPC.stopDistance) 
+        if (_agent == null) return null;
+        
+        float distance = Vector3.Distance(this.NPC!.transform.position, this.NPC.target.position);
+        if (distance < this.NPC!.stopDistance)
         {
             _agent.isStopped = true;
             _agent.ResetPath();
-            return null;
+            return new NPCStateReturnValue(
+                NPCStateReturnValue.ActionType.ChangeState,
+                new EnemyAttackState(this.NPC));
         }
 
         if (distance <= _detectionRange)
@@ -53,8 +61,9 @@ public class EnemyPursueState : NPCState
         }
         else
         {
+            // target is out of ranger, go back to idle state which we pushed earlier
             _agent.ResetPath();
-            return this.NextState; 
+            return new NPCStateReturnValue(NPCStateReturnValue.ActionType.PopState);
         }
 
         return null;

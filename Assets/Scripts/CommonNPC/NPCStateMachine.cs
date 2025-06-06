@@ -1,18 +1,50 @@
+#nullable enable
+
+using System.Collections.Generic;
+
 public class NPCStateMachine
 {
-    private INPCState currentState;
-    public INPCState CurrentState => currentState;
+    private NPCState? currentState;
+    public NPCState? CurrentState => currentState;
 
-    public void SetState(INPCState newState)
+    public Stack<NPCState> StateStack = new();
+
+    public void SetState(NPCState newState)
     {
         currentState?.Exit();
         currentState = newState;
-        currentState?.Enter();
+        currentState!.Enter();
     }
 
     public void Update()
     {
-        var newstate = currentState?.Update();
-        if (newstate != null) this.SetState(newstate);
+        if (currentState == null) return;
+        NPCStateReturnValue? retval = currentState!.Update();
+        if (retval != null)
+        {
+            switch (retval!.Action)
+            {
+                default:
+                break;
+
+                case NPCStateReturnValue.ActionType.ChangeState:
+                    SetState(retval.NextState!);
+                break;
+
+                case NPCStateReturnValue.ActionType.PopState:
+                {
+                    if (StateStack.Count > 0)
+                    {
+                        SetState(StateStack.Pop());
+                    }
+                    else
+                    {
+                        currentState = null;
+                    }
+                }
+                break;
+            }
+        }
     }
 }
+

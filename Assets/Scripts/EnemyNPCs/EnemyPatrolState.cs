@@ -48,7 +48,7 @@ public class EnemyPatrolState : NPCState
         }
     }
 
-    public override INPCState? Update()
+    public override NPCStateReturnValue? Update()
     {
         if (!_agent.pathPending && _agent.remainingDistance < _enemyNPC.ArrivalThreshold)
         {

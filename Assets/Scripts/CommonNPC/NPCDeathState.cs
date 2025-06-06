@@ -1,3 +1,5 @@
+#nullable enable
+
 using UnityEngine;
 using System.Collections;
 
@@ -10,7 +12,7 @@ public class NPCDeathState : NPCState
 
     public override void Enter()
     {
-        Debug.Log($"{this.NPC.name} has died.");
+        Debug.Log($"{this.NPC!.name} has died.");
         Rigidbody rb = this.NPC!.GetComponent<Rigidbody>();
         if  (rb != null)
         {
@@ -39,14 +41,14 @@ public class NPCDeathState : NPCState
     private bool _fadeStarted = false;      // AI: Ensures fade starts once
     private float _fadeDuration = 2f;       // AI: Fade duration
 
-    public override INPCState? Update()
+    public override NPCStateReturnValue? Update()
     {
         _stateTimer += Time.deltaTime;                                 // AI: Accumulate time
 
         if (!_fadeStarted && _stateTimer >= _delayBeforeFade)
         {
             _fadeStarted = true;                                      // AI: Prevent multiple starts
-            NPC.StartCoroutine(FadeOutAndDestroy());
+            this.NPC!.StartCoroutine(FadeOutAndDestroy());
         }
 
         return null;
@@ -54,7 +56,7 @@ public class NPCDeathState : NPCState
 
     private IEnumerator FadeOutAndDestroy()
     {
-        var renderer = NPC.GetComponent<MeshRenderer>();
+        var renderer = this.NPC!.GetComponent<MeshRenderer>();
         var material = renderer.material;
         var originalColor = material.color;
 
@@ -71,7 +73,7 @@ public class NPCDeathState : NPCState
 
         while (elapsed < _fadeDuration)
         {
-            elapsed += Time.deltaTime;                                  // AI: Accumulate fade time
+            elapsed += Time.deltaTime; // AI: Accumulate fade time
             float alpha = Mathf.Lerp(originalColor.a, 0f, elapsed / _fadeDuration);
             var c = originalColor;
             c.a = alpha;
