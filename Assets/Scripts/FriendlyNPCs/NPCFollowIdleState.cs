@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class NPCFollowIdleState : NPCState
 {
-    public NPCFollowIdleState(BaseNPC baseNpc) : base(baseNpc)
+    public NPCFollowIdleState(BaseNPC baseNpc) 
+        : base(baseNpc)
     {
         if (this.NPC is not FriendlyNPC)
         {
@@ -33,8 +34,10 @@ public class NPCFollowIdleState : NPCState
         float distance = Vector3.Distance(this.NPC.transform.position, this.NPC.target.position);
         if (distance > this.NPC.stopDistance && distance < this.NPC.detectionDistance)
         {
-            // If the target is within detection distance, switch to follow state
-            return new NPCFollowState(this.NPC);// FIX ME
+            // if the target is within detection distance, switch to follow state
+            return new NPCStateReturnValue(
+                NPCStateReturnValue.ActionType.ChangeState, 
+                new NPCFollowState(this.NPC));
         }
 
         // turn in the direction of the target

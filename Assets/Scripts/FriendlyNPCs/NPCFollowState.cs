@@ -6,7 +6,8 @@ public class NPCFollowState : NPCState
 {
     private UnityEngine.AI.NavMeshAgent? _agent;
 
-    public NPCFollowState(BaseNPC baseNpc) : base(baseNpc)
+    public NPCFollowState(BaseNPC baseNpc) 
+        : base(baseNpc)
     {
         if (this.NPC is not FriendlyNPC)
         {
@@ -24,9 +25,6 @@ public class NPCFollowState : NPCState
             throw new System.Exception("NavMeshAgent component not found on NPC.");
         }
     }
-
-    // remove this ctor type
-    private NPCFollowState(NPCState? nextState, BaseNPC? npc = null) {}
 
     public override void Enter()
     {
@@ -48,7 +46,10 @@ public class NPCFollowState : NPCState
             // we're close enough to the target, stop moving
             _agent.isStopped = true;
             _agent.ResetPath();
-            return new NPCFollowIdleState(this.NPC);// FIX ME
+
+            return new NPCStateReturnValue(
+                NPCStateReturnValue.ActionType.ChangeState, 
+                new NPCFollowIdleState(this.NPC));
         }
 
         if (distance < this.NPC.detectionDistance)
@@ -61,7 +62,11 @@ public class NPCFollowState : NPCState
             // the target is out of range, stop moving
             _agent.isStopped = true;
             _agent.ResetPath();
-            return new NPCFollowIdleState(this.NPC); // FIX ME
+
+            return new NPCStateReturnValue(
+                NPCStateReturnValue.ActionType.ChangeState, 
+                new NPCFollowIdleState(this.NPC));
+
         }
 
         return null;
