@@ -15,7 +15,7 @@ public class EnemyPursueState : NPCState
 
     /// <param name="npc">The NPC to which this state is attached.</param>
     /// <param name="target">The target Transform that the NPC will pursue.</param>
-    public EnemyPursueState(NPCState nextState, BaseNPC npc, Transform target)
+    public EnemyPursueState(BaseNPC npc, Transform target)
         : base(npc)
     {
         this.NPC!.target = target;
@@ -23,8 +23,6 @@ public class EnemyPursueState : NPCState
         {
             throw new System.Exception("BaseNPC is not an EnemyNPC. Cannot enter pursue state.");
         }
-        
-        this.NPC.PushState(nextState);
     }
 
     public override void Enter()
@@ -50,6 +48,8 @@ public class EnemyPursueState : NPCState
         {
             _agent.isStopped = true;
             _agent.ResetPath();
+
+            this.NPC.PushState(this);
             return new NPCStateReturnValue(
                 NPCStateReturnValue.ActionType.ChangeState,
                 new EnemyAttackState(this.NPC));
@@ -61,9 +61,10 @@ public class EnemyPursueState : NPCState
         }
         else
         {
-            // target is out of ranger, go back to idle state which we pushed earlier
+            // target is out of range, go back to idle state which we pushed earlier
             _agent.ResetPath();
-            return new NPCStateReturnValue(NPCStateReturnValue.ActionType.PopState);
+            return new NPCStateReturnValue(
+                NPCStateReturnValue.ActionType.PopState);
         }
 
         return null;

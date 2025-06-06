@@ -70,9 +70,10 @@ public class EnemyIdleState : NPCState
                     this.NPC!.AudioSource.PlayOneShot(_warningSound);
                     _hasPlayedWarningSound = true;
 
+                    this.NPC.PushState(this);
                     return new NPCStateReturnValue(
                             NPCStateReturnValue.ActionType.ChangeState,
-                            new EnemyPursueState(this, this.NPC, target.transform));
+                            new EnemyPursueState(this.NPC, target.transform));
                 }
                 else if (!_hasPlayedWarningSound)
                 {

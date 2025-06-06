@@ -23,7 +23,13 @@ public class EnemyAttackState : NPCState
 
     public override NPCStateReturnValue? Update()
     {
-        Debug.Log("Enemy is attacking.");
+        float distance = Vector3.Distance(this.NPC!.transform.position, this.NPC.target.position);
+        if (distance > this.NPC!.stopDistance)
+        {
+            // target is out of range, go back to last state
+            return new NPCStateReturnValue(NPCStateReturnValue.ActionType.PopState);
+        }
+
         return null;
     }
 }
