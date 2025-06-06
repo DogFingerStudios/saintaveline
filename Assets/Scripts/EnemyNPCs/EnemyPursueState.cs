@@ -13,14 +13,16 @@ public class EnemyPursueState : NPCState
 
     /// <param name="npc">The NPC to which this state is attached.</param>
     /// <param name="target">The target Transform that the NPC will pursue.</param>
-    public EnemyPursueState(NPCState nextState, BaseNPC npc, Transform target) 
-        : base(nextState, npc)
+    public EnemyPursueState(NPCState nextState, BaseNPC npc, Transform target)
+        : base(npc)
     {
         this.NPC.target = target;
         if (this.NPC is not EnemyNPC)
         {
             throw new System.Exception("BaseNPC is not an EnemyNPC. Cannot enter pursue state.");
         }
+        
+        this.NPC.PushState(nextState);
     }
 
     public override void Enter()
@@ -40,11 +42,13 @@ public class EnemyPursueState : NPCState
     public override NPCStateReturnValue? Update()
     {
         float distance = Vector3.Distance(this.NPC.transform.position, this.NPC.target.position);
-        if (distance < this.NPC.stopDistance) 
+        if (distance < this.NPC.stopDistance)
         {
             _agent.isStopped = true;
             _agent.ResetPath();
-            // return new EnemyAttackState(this.NPC); // FIX ME!
+            return new NPCStateReturnValue(
+                NPCStateReturnValue.ActionType.ChangeState,
+                new EnemyAttackState(this.NPC));
         }
 
         if (distance <= _detectionRange)
@@ -53,8 +57,9 @@ public class EnemyPursueState : NPCState
         }
         else
         {
+            // target is out of ranger, go back to idle state which we pushed earlier
             _agent.ResetPath();
-            return new NPCStateReturnValue(NPCStateReturnValue.ReturnType.NextState); // FIX ME?
+            return new NPCStateReturnValue(NPCStateReturnValue.ActionType.PopState);
         }
 
         return null;

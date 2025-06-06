@@ -6,10 +6,16 @@ public class NPCStateReturnValue
     {
         ChangeState,
         PopState
-    } ActionType;
+    }
 
     public ActionType Action;
     public NPCState? NextState;
+
+    public NPCStateReturnValue(ActionType action, NPCState? nextState = null)
+    {
+        Action = action;
+        NextState = nextState;
+    }
 }
 
 public abstract class NPCState
@@ -24,12 +30,6 @@ public abstract class NPCState
     public NPCState(BaseNPC? npc = null)
     {
         if (npc != null) _npc = npc;
-    }
-
-    public NPCState(NPCState? nextState, BaseNPC? npc = null)
-    {
-        _nextState = nextState;
-        _npc = npc;
     }
 
     public abstract void Enter();

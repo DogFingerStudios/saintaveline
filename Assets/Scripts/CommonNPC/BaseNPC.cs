@@ -60,10 +60,28 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     public Transform target;
 
+#region State Management
     public void setState(NPCState state)
     {
         stateMachine.SetState(state);
     }
+
+    public void PushState(NPCState state)
+    {
+        stateMachine.StateStack.Push(state);
+    }
+
+    public NPCState? PopState()
+    {
+        if (stateMachine.StateStack.Count > 0)
+        {
+            return stateMachine.StateStack.Pop();
+        }
+
+        return null;
+    }
+#endregion
+
 
     public event Action<float> OnHealthChanged;
 

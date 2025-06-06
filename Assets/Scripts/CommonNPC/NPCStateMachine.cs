@@ -1,17 +1,19 @@
+#nullable enable
+
 using System.Collections.Generic;
 
 public class NPCStateMachine
 {
-    private NPCState currentState;
-    public NPCState CurrentState => currentState;
+    private NPCState? currentState;
+    public NPCState? CurrentState => currentState;
 
-    public Stack<NPCState> StateStack = new Stack<NPCState>();
+    public Stack<NPCState> StateStack = new();
 
     public void SetState(NPCState newState)
     {
         currentState?.Exit();
         currentState = newState;
-        currentState?.Enter();
+        currentState!.Enter();
     }
 
     public void Update()
@@ -20,16 +22,16 @@ public class NPCStateMachine
         NPCStateReturnValue? retval = currentState!.Update();
         if (retval != null)
         {
-            switch (retval!.Type1)
+            switch (retval!.Action)
             {
                 default:
                 break;
 
-                case NPCStateReturnValue.ReturnType.NextState:
+                case NPCStateReturnValue.ActionType.ChangeState:
                     SetState(retval.NextState!);
                 break;
 
-                case NPCStateReturnValue.ReturnType.ExitState:
+                case NPCStateReturnValue.ActionType.PopState:
                 {
                     if (StateStack.Count > 0)
                     {
@@ -37,7 +39,7 @@ public class NPCStateMachine
                     }
                     else
                     {
-                        currentState = null; // No more states to return to
+                        currentState = null;
                     }
                 }
                 break;

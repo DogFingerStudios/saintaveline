@@ -49,9 +49,8 @@ public class NPCGoToState : NPCState
             // we're close enough to the target, stop moving
             _agent.isStopped = true;
             _agent.ResetPath();
-            return new NPCStateReturnValue // FIXME
-            ()
-                new NPCIdleState(this.NPC);
+
+            return new NPCStateReturnValue(NPCStateReturnValue.ActionType.ChangeState, new NPCIdleState(this.NPC));
         }
 
         return null; 

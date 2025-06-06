@@ -71,7 +71,7 @@ public class EnemyIdleState : NPCState
                     _hasPlayedWarningSound = true;
 
                     return new NPCStateReturnValue(
-                            NPCStateReturnValue.ReturnType.NextState,
+                            NPCStateReturnValue.ActionType.ChangeState,
                             new EnemyPursueState(this, this.NPC, target.transform));
                 }
                 else if (!_hasPlayedWarningSound)
