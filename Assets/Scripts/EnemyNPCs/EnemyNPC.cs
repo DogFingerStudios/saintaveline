@@ -23,7 +23,7 @@ public class EnemyNPC : BaseNPC
         base.Start();
 
         var state = NPCStateFactory.CreateState(_defaultState, this);
-        this.stateMachine.SetState(state);
+        if (state != null) this.stateMachine.SetState(state);
 
         if (state is EnemyPatrolState patrolState)
         {

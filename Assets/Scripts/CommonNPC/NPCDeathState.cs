@@ -1,3 +1,5 @@
+#nullable enable
+
 using UnityEngine;
 using System.Collections;
 
@@ -10,7 +12,7 @@ public class NPCDeathState : NPCState
 
     public override void Enter()
     {
-        Debug.Log($"{this.NPC.name} has died.");
+        Debug.Log($"{this.NPC!.name} has died.");
         Rigidbody rb = this.NPC!.GetComponent<Rigidbody>();
         if  (rb != null)
         {
@@ -46,7 +48,7 @@ public class NPCDeathState : NPCState
         if (!_fadeStarted && _stateTimer >= _delayBeforeFade)
         {
             _fadeStarted = true;                                      // AI: Prevent multiple starts
-            NPC.StartCoroutine(FadeOutAndDestroy());
+            this.NPC!.StartCoroutine(FadeOutAndDestroy());
         }
 
         return null;
@@ -54,7 +56,7 @@ public class NPCDeathState : NPCState
 
     private IEnumerator FadeOutAndDestroy()
     {
-        var renderer = NPC.GetComponent<MeshRenderer>();
+        var renderer = this.NPC!.GetComponent<MeshRenderer>();
         var material = renderer.material;
         var originalColor = material.color;
 
