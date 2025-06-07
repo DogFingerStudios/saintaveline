@@ -45,20 +45,20 @@ class EntityScanner
         set => _obstacleMask = value;
     }
 
+    private Collider[] _candidates = new Collider[16]; // Adjust size as needed, e.x. 16 friendly NPCs in one space
+
+
     public IEnumerable<Collider> doScan(int maxObjects = 0)
     {
         var eyePosition = SourceTransform.position + this.EyeOffset;
 
-        //Vector3 boxCenter = SourceTransform.position + (SourceTransform.forward * (ViewDistance / 2f));
-        //Vector3 boxHalfExtents = new Vector3(ViewDistance / 2f, 20.5f, ViewDistance / 2f);
-        // Collider[] candidates = Physics.OverlapBox(boxCenter, boxHalfExtents, SourceTransform.rotation, _targetMask);
+        _candidates = null; // Reset candidates array
 
         // OverlapSphereNonAlloc will not allocate anything to memory, and a sphere is also quicker than a box
-        Collider[] candidates = new Collider[16]; // Adjust size as needed, e.x. 16 friendly NPCs in one space
-        int candidateCount = Physics.OverlapSphereNonAlloc(SourceTransform.position, ViewDistance / 2f, candidates, _targetMask);
+        int candidateCount = Physics.OverlapSphereNonAlloc(SourceTransform.position, ViewDistance / 2f, _candidates, _targetMask);
 
         int count = 0;
-        foreach (Collider target in candidates)
+        foreach (Collider target in _candidates)
         {
             if (target == null) continue;
             if (target.transform == SourceTransform) continue;
