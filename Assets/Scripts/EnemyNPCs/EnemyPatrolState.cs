@@ -31,7 +31,7 @@ public class EnemyPatrolState : NPCState
 
         _entityScanner = new EntityScanner
         {
-            ViewDistance = _enemyNPC.ViewDistance,
+            ViewDistance = _enemyNPC.DetectionDistance,
             ViewAngle = _enemyNPC.ViewAngle,
             SourceTransform = this.NPC.transform,
             EyeOffset = _enemyNPC.EyeOffset,

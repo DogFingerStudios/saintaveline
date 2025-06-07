@@ -12,10 +12,9 @@ public class EnemyNPC : BaseNPC
     public Transform[] PatrolPoints = new Transform[0];
     public float ArrivalThreshold = 0.5f;
 
-    public float ViewDistance = 25f;
     public float ViewAngle = 120f;
     public Vector3 EyeOffset = new(0f, 1.6f, 0f);
-
+    
     private EnemyPatrolState? _patrolState = null;
 
     protected override void Start()

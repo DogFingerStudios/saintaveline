@@ -11,7 +11,7 @@ public class EnemyPursueState : NPCState
     // little smarter -- for example, if the NPC cannot "see" the target, then the NPC could
     // go to the last position it saw the target, and if the target is not in range or
     // not visible, then the NPC could return to patrol state
-    private float _detectionRange = 20f;
+    private float _detectionRange;
 
     /// <param name="npc">The NPC to which this state is attached.</param>
     /// <param name="target">The target Transform that the NPC will pursue.</param>
@@ -32,6 +32,8 @@ public class EnemyPursueState : NPCState
         {
             throw new System.Exception("NavMeshAgent component is missing on the NPC.");
         }
+
+        _detectionRange = this.NPC.DetectionDistance;
     }
 
     public override void Exit()

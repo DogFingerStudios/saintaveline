@@ -6563,7 +6563,7 @@ MonoBehaviour:
       BaseCalmRate: 0.1
   rotationSpeed: 90
   moveSpeed: 3.5
-  detectionDistance: 5
+  DetectionDistance: 5
   stopDistance: 1
   _health: 100
   _maxHealth: 100
@@ -6575,7 +6575,6 @@ MonoBehaviour:
   - {fileID: 144458016}
   - {fileID: 1646202711}
   ArrivalThreshold: 0.5
-  ViewDistance: 25
   ViewAngle: 120
   EyeOffset: {x: 0, y: 1.6, z: 0}
 --- !u!1 &539036618
@@ -15150,7 +15149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: stopDistance
-      value: 5
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: DetectionDistance
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: detectionDistance
@@ -20400,7 +20403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1420598128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26897,7 +26900,7 @@ MonoBehaviour:
       BaseCalmRate: 0.1
   rotationSpeed: 90
   moveSpeed: 5.5
-  detectionDistance: 15.5
+  DetectionDistance: 5
   stopDistance: 3.5
   _health: 100
   _maxHealth: 100
@@ -29699,7 +29702,7 @@ MonoBehaviour:
       BaseCalmRate: 0.1
   rotationSpeed: 90
   moveSpeed: 3.5
-  detectionDistance: 5
+  DetectionDistance: 5
   stopDistance: 1
   _health: 100
   _maxHealth: 100
@@ -29711,7 +29714,6 @@ MonoBehaviour:
   - {fileID: 144458016}
   - {fileID: 1646202711}
   ArrivalThreshold: 0.5
-  ViewDistance: 25
   ViewAngle: 120
   EyeOffset: {x: 0, y: 1.6, z: 0}
 --- !u!1001 &1945258515

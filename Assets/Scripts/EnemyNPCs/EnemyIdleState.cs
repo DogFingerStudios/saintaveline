@@ -33,7 +33,7 @@ public class EnemyIdleState : NPCState
 
         _entityScanner = new EntityScanner
         {
-            ViewDistance = _enemyNPC.ViewDistance,
+            ViewDistance = _enemyNPC.DetectionDistance,
             ViewAngle = _enemyNPC.ViewAngle,
             SourceTransform = this.NPC!.transform,
             EyeOffset = _enemyNPC.EyeOffset,
@@ -79,7 +79,6 @@ public class EnemyIdleState : NPCState
                 {
                     Debug.LogWarning("Cannot play warning sound: AudioSource or warningSound is missing on NPC.");
                 }
-
             }
             else if (_originalDirection != this.NPC!.transform.forward.normalized)
             {

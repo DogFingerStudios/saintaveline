@@ -30,7 +30,7 @@ class EntityScanner
         get => _eyeOffset;
         set => _eyeOffset = value;
     }
-    
+
     private int _targetMask;
     public int TargetMask
     {
@@ -50,20 +50,23 @@ class EntityScanner
         var eyePosition = SourceTransform.position + this.EyeOffset;
 
         Vector3 boxCenter = SourceTransform.position + (SourceTransform.forward * (ViewDistance / 2f));
-        Vector3 boxHalfExtents = new Vector3(ViewDistance / 2f, 20.5f, ViewDistance ); // Flatten vertically if needed
+        Vector3 boxHalfExtents = new Vector3(ViewDistance / 2f, 20.5f, ViewDistance / 2f);
 
         Collider[] candidates = Physics.OverlapBox(boxCenter, boxHalfExtents, SourceTransform.rotation, _targetMask);
 
         int count = 0;
         foreach (Collider target in candidates)
-        {   
+        {
             if (target.transform == SourceTransform) continue;
-            
+
+            float distanceToTarget = Vector3.Distance(eyePosition, target.transform.position);
+            if (distanceToTarget > ViewDistance) continue;
+
             Vector3 dirToTarget = (target.transform.position - eyePosition).normalized;
             float angleToTarget = Vector3.Angle(SourceTransform.forward, dirToTarget);
             if (angleToTarget > (ViewAngle / 2f)) continue;
 
-            float distanceToTarget = Vector3.Distance(eyePosition, target.transform.position);
+            // float distanceToTarget = Vector3.Distance(eyePosition, target.transform.position);
             if (!Physics.Raycast(eyePosition, dirToTarget, distanceToTarget, _obstacleMask))
             {
                 yield return target;
