@@ -11,11 +11,11 @@ public class EnemyPursueState : NPCState
     // little smarter -- for example, if the NPC cannot "see" the target, then the NPC could
     // go to the last position it saw the target, and if the target is not in range or
     // not visible, then the NPC could return to patrol state
-    private float _detectionRange = 20f;
+    private float _detectionRange;
 
     /// <param name="npc">The NPC to which this state is attached.</param>
     /// <param name="target">The target Transform that the NPC will pursue.</param>
-    public EnemyPursueState(NPCState nextState, BaseNPC npc, Transform target)
+    public EnemyPursueState(BaseNPC npc, Transform target)
         : base(npc)
     {
         this.NPC!.target = target;
@@ -23,8 +23,6 @@ public class EnemyPursueState : NPCState
         {
             throw new System.Exception("BaseNPC is not an EnemyNPC. Cannot enter pursue state.");
         }
-        
-        this.NPC.PushState(nextState);
     }
 
     public override void Enter()
@@ -34,11 +32,13 @@ public class EnemyPursueState : NPCState
         {
             throw new System.Exception("NavMeshAgent component is missing on the NPC.");
         }
+
+        _detectionRange = this.NPC.DetectionDistance;
     }
 
     public override void Exit()
     {
-
+        // nothing to do
     }
 
     public override NPCStateReturnValue? Update()
@@ -50,6 +50,8 @@ public class EnemyPursueState : NPCState
         {
             _agent.isStopped = true;
             _agent.ResetPath();
+
+            this.NPC.PushState(this);
             return new NPCStateReturnValue(
                 NPCStateReturnValue.ActionType.ChangeState,
                 new EnemyAttackState(this.NPC));
@@ -61,9 +63,10 @@ public class EnemyPursueState : NPCState
         }
         else
         {
-            // target is out of ranger, go back to idle state which we pushed earlier
+            // target is out of range, go back to idle state which we pushed earlier
             _agent.ResetPath();
-            return new NPCStateReturnValue(NPCStateReturnValue.ActionType.PopState);
+            return new NPCStateReturnValue(
+                NPCStateReturnValue.ActionType.PopState);
         }
 
         return null;

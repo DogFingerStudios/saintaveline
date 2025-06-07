@@ -20,8 +20,11 @@ public class EnemyIdleState : NPCState
 
     private AudioClip? _warningSound;
     private AudioClip? _willFindYouSound;
-    
-    public EnemyIdleState(EnemyNPC enemyNPC) 
+
+    private Vector3? _defaultPosition = null;
+    private UnityEngine.AI.NavMeshAgent? _agent = null;
+
+    public EnemyIdleState(EnemyNPC enemyNPC)
         : base(enemyNPC)
     {
         if (this.NPC == null)
@@ -33,7 +36,7 @@ public class EnemyIdleState : NPCState
 
         _entityScanner = new EntityScanner
         {
-            ViewDistance = _enemyNPC.ViewDistance,
+            ViewDistance = _enemyNPC.DetectionDistance,
             ViewAngle = _enemyNPC.ViewAngle,
             SourceTransform = this.NPC!.transform,
             EyeOffset = _enemyNPC.EyeOffset,
@@ -43,11 +46,20 @@ public class EnemyIdleState : NPCState
 
         _warningSound = Resources.Load<AudioClip>("Sounds/Freeze");
         _willFindYouSound = Resources.Load<AudioClip>("Sounds/IWillFindYou");
+
+        if (_agent == null)
+        {
+            _agent = this.NPC!.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        }
     }
 
     public override void Enter()
     {
         _originalDirection = this.NPC!.transform.forward.normalized;
+        if (_defaultPosition == null)
+        {
+            _defaultPosition = this.NPC!.transform.position;
+        }
     }
 
     public override NPCStateReturnValue? Update()
@@ -70,15 +82,15 @@ public class EnemyIdleState : NPCState
                     this.NPC!.AudioSource.PlayOneShot(_warningSound);
                     _hasPlayedWarningSound = true;
 
+                    this.NPC.PushState(this);
                     return new NPCStateReturnValue(
                             NPCStateReturnValue.ActionType.ChangeState,
-                            new EnemyPursueState(this, this.NPC, target.transform));
+                            new EnemyPursueState(this.NPC, target.transform));
                 }
                 else if (!_hasPlayedWarningSound)
                 {
                     Debug.LogWarning("Cannot play warning sound: AudioSource or warningSound is missing on NPC.");
                 }
-
             }
             else if (_originalDirection != this.NPC!.transform.forward.normalized)
             {
@@ -97,13 +109,31 @@ public class EnemyIdleState : NPCState
         {
             turnTowards(_currentTargetDirection);        
         }
+
+        if (_agent != null)
+        {
+            var distanceToDefault = Vector3.Distance(this.NPC!.transform.position, _defaultPosition!.Value);
+            // TODO: should be a settable threshold?
+            if (distanceToDefault > 1f)
+            {
+                _agent.isStopped = false;
+                _agent.SetDestination(_defaultPosition.Value);
+            }
+            else
+            {
+                _agent.isStopped = true;
+                _agent.ResetPath();
+            }
+        }
         
         return null; 
     }
 
     public override void Exit()
     {
-        // nothing to do
+        if (_agent == null) return;
+        _agent.isStopped = true;
+        _agent.ResetPath();
     }
 
     private Collider? doScan()

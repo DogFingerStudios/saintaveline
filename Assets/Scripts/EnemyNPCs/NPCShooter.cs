@@ -25,7 +25,7 @@ public class NPCShooter : MonoBehaviour
 
     void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer = this.GetComponent<LineRenderer>();
         lineRenderer.enabled = false;
         lineRenderer.positionCount = 2;
         lineRenderer.startWidth = 0.05f;

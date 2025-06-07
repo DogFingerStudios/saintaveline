@@ -37,7 +37,7 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
     [SerializeField]
     [Tooltip("The distance at which the NPC will detect the target")]
-    public float detectionDistance = 5f;
+    public float DetectionDistance = 5f;
 
     [SerializeField]
     [Tooltip("The distance at which the NPC will stop moving towards the target")]

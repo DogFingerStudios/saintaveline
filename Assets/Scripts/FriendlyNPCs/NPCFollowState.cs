@@ -52,7 +52,7 @@ public class NPCFollowState : NPCState
                 new NPCFollowIdleState(this.NPC));
         }
 
-        if (distance < this.NPC.detectionDistance)
+        if (distance < this.NPC.DetectionDistance)
         {
             // we're chasing the target
             _agent.SetDestination(this.NPC.target.transform.position);
