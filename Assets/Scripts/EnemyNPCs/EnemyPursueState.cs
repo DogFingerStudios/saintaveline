@@ -38,7 +38,7 @@ public class EnemyPursueState : NPCState
 
     public override void Exit()
     {
-
+        // nothing to do
     }
 
     public override NPCStateReturnValue? Update()

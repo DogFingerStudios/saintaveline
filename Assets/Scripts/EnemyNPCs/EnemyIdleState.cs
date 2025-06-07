@@ -20,8 +20,11 @@ public class EnemyIdleState : NPCState
 
     private AudioClip? _warningSound;
     private AudioClip? _willFindYouSound;
-    
-    public EnemyIdleState(EnemyNPC enemyNPC) 
+
+    private Vector3? _defaultPosition = null;
+    private UnityEngine.AI.NavMeshAgent? _agent = null;
+
+    public EnemyIdleState(EnemyNPC enemyNPC)
         : base(enemyNPC)
     {
         if (this.NPC == null)
@@ -43,11 +46,20 @@ public class EnemyIdleState : NPCState
 
         _warningSound = Resources.Load<AudioClip>("Sounds/Freeze");
         _willFindYouSound = Resources.Load<AudioClip>("Sounds/IWillFindYou");
+
+        if (_agent == null)
+        {
+            _agent = this.NPC!.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        }
     }
 
     public override void Enter()
     {
         _originalDirection = this.NPC!.transform.forward.normalized;
+        if (_defaultPosition == null)
+        {
+            _defaultPosition = this.NPC!.transform.position;
+        }
     }
 
     public override NPCStateReturnValue? Update()
@@ -97,13 +109,31 @@ public class EnemyIdleState : NPCState
         {
             turnTowards(_currentTargetDirection);        
         }
+
+        if (_agent != null)
+        {
+            var distanceToDefault = Vector3.Distance(this.NPC!.transform.position, _defaultPosition!.Value);
+            // TODO: should be a settable threshold?
+            if (distanceToDefault > 1f)
+            {
+                _agent.isStopped = false;
+                _agent.SetDestination(_defaultPosition.Value);
+            }
+            else
+            {
+                _agent.isStopped = true;
+                _agent.ResetPath();
+            }
+        }
         
         return null; 
     }
 
     public override void Exit()
     {
-        // nothing to do
+        if (_agent == null) return;
+        _agent.isStopped = true;
+        _agent.ResetPath();
     }
 
     private Collider? doScan()
