@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class EnemyAttackState : NPCState
 {  
     public Transform _firePoint = new GameObject("FirePoint").transform;
-    public AudioClip[] gunshotSounds;
+    public AudioClip[] _gunshotSounds;
 
     public float fireRate = 1f;
     public float range = 50f;
@@ -23,17 +23,19 @@ public class EnemyAttackState : NPCState
     private float nextFireTime = 0f;
     private LineRenderer _lineRenderer;
 
-    public EnemyAttackState(BaseNPC? npc = null) 
+    public EnemyAttackState(BaseNPC npc) 
         : base(npc)
     {
+        if (this.NPC!.target == null)
+        {
+            throw new System.Exception("BaseNPC is not an EnemyNPC. Cannot enter attack state.");
+        }
+
         _firePoint.SetParent(this.NPC!.transform);
         _firePoint.localPosition = new Vector3(0.004f, 0.6019999f, 0.425f);
         _firePoint.localRotation = Quaternion.Euler(0f, 0f, 0f);
         _firePoint.localScale = new Vector3(1f, 0.5555556f, 1f);
-    }
 
-    public override void Enter()
-    {
         _lineRenderer = this.NPC!.GetComponent<LineRenderer>();
         _lineRenderer.enabled = false;
         _lineRenderer.positionCount = 2;
@@ -47,17 +49,28 @@ public class EnemyAttackState : NPCState
         rolloff.AddKey(30f, 0.3f); // 30% volume at 30 units
         rolloff.AddKey(50f, 0.15f);// almost silent at 50 units
 
-        _audioSource = this.NPC!.gameObject.AddComponent<AudioSource>();
+        _audioSource = this.NPC!.GetComponent<AudioSource>();
         _audioSource.spatialBlend = 1f; // 3D sound
         _audioSource.rolloffMode = AudioRolloffMode.Logarithmic; // More realistic falloff
         _audioSource.playOnAwake = false;
         _audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, rolloff);
         _audioSource.maxDistance = 50f; // Can tweak based on how far you want it heard
+
+        _gunshotSounds = new AudioClip[]
+        {
+            Resources.Load<AudioClip>("Sounds/gunshot1"),
+            Resources.Load<AudioClip>("Sounds/gunshot2")
+        };
+    }
+
+    public override void Enter()
+    {
+        // nothing to do
     }
 
     public override void Exit()
     {
-        Debug.Log("Enemy has exited the attack state.");
+        // nothing to do
     }
 
     public override NPCStateReturnValue? Update()
@@ -82,8 +95,8 @@ public class EnemyAttackState : NPCState
 
     void Shoot()
     {
-        Debug.Log("Enemy is from position: " + _firePoint.position);
-        if (Physics.Raycast(_firePoint.position, _firePoint.forward, out RaycastHit hit, range, targetMask))
+        var direction = this.NPC!.target.position - _firePoint.position;
+        if (Physics.Raycast(_firePoint.position, direction, out RaycastHit hit, range, targetMask))
         {
             this.NPC!.StartCoroutine(FireRayEffect(hit.point));
 
@@ -98,10 +111,10 @@ public class EnemyAttackState : NPCState
         }
         else
         {
-            this.NPC!.StartCoroutine(FireRayEffect(_firePoint.position + _firePoint.forward * range));
+            this.NPC!.StartCoroutine(FireRayEffect(_firePoint.position + direction * range));
         }
 
-        // _audioSource.PlayOneShot(gunshotSounds[UnityEngine.Random.Range(0, gunshotSounds.Length)]);
+        _audioSource.PlayOneShot(_gunshotSounds[UnityEngine.Random.Range(0, _gunshotSounds.Length)]);
     }
 
     IEnumerator FireRayEffect(Vector3 hitPoint)
