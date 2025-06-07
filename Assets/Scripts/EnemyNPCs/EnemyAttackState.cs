@@ -82,6 +82,19 @@ public class EnemyAttackState : NPCState
             return new NPCStateReturnValue(NPCStateReturnValue.ActionType.PopState);
         }
 
+        // turn in the direction of the target
+        Vector3 direction = this.NPC.target.position - this.NPC.transform.position;
+        direction.y = 0f; // Keep rotation flat
+        if (direction.sqrMagnitude > 0.001f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            this.NPC.transform.rotation = Quaternion.RotateTowards(
+                this.NPC.transform.rotation,
+                targetRotation,
+                this.NPC.rotationSpeed * Time.deltaTime
+            );
+        }
+
         if (Time.time >= nextFireTime)
         {
             Shoot();
