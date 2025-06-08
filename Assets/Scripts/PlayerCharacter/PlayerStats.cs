@@ -42,6 +42,8 @@ public class PlayerStats : MonoBehaviour, IHasHealth
         return Health;
     }
 
+    public bool IsAlive => Health > 0;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

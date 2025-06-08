@@ -9,12 +9,13 @@ public class EnemyPursueState : NPCState
     private AudioClip? _warningSound;
     private AudioClip? _willFindYouSound;
     
-
     // TODO: this is a poor man's way to stop chasing, eventually we will want to be a 
     // little smarter -- for example, if the NPC cannot "see" the target, then the NPC could
     // go to the last position it saw the target, and if the target is not in range or
     // not visible, then the NPC could return to patrol state
     private float _detectionRange;
+
+    private readonly IHasHealth? _targetHealth;
 
     /// <param name="npc">The NPC to which this state is attached.</param>
     /// <param name="target">The target Transform that the NPC will pursue.</param>
@@ -29,6 +30,12 @@ public class EnemyPursueState : NPCState
 
         _warningSound = Resources.Load<AudioClip>("Sounds/Freeze");
         _willFindYouSound = Resources.Load<AudioClip>("Sounds/IWillFindYou");
+
+        _targetHealth = this.NPC!.target!.GetComponent<IHasHealth>();
+        if (_targetHealth == null)
+        {
+            _targetHealth = this.NPC!.target!.parent!.GetComponentInChildren<IHasHealth>();
+        }
     }
 
     public override void Enter()
@@ -51,6 +58,16 @@ public class EnemyPursueState : NPCState
     public override NPCStateReturnValue? Update()
     {
         if (_agent == null) return null;
+        if (!_targetHealth!.IsAlive)
+        {
+            // target is dead, go back to idle state
+            this.NPC!.AudioSource.PlayOneShot(_willFindYouSound);
+            _agent.isStopped = true;
+            _agent.ResetPath();
+
+            return new NPCStateReturnValue(
+                NPCStateReturnValue.ActionType.PopState);
+        }
         
         float distance = Vector3.Distance(this.NPC!.transform.position, this.NPC.target.position);
         if (distance < this.NPC!.stopDistance)

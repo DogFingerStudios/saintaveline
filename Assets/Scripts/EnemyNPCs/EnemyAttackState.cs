@@ -22,8 +22,9 @@ public class EnemyAttackState : NPCState
 
     private float nextFireTime = 0f;
     private LineRenderer _lineRenderer;
+    private readonly IHasHealth? _targetHealth;
 
-    public EnemyAttackState(BaseNPC npc) 
+    public EnemyAttackState(BaseNPC npc)
         : base(npc)
     {
         if (this.NPC!.target == null)
@@ -61,6 +62,12 @@ public class EnemyAttackState : NPCState
             Resources.Load<AudioClip>("Sounds/gunshot1"),
             Resources.Load<AudioClip>("Sounds/gunshot2")
         };
+
+        _targetHealth = this.NPC!.target!.GetComponent<IHasHealth>();
+        if (_targetHealth == null)
+        {
+            _targetHealth = this.NPC!.target!.parent!.GetComponentInChildren<IHasHealth>();
+        }
     }
 
     public override void Enter()
@@ -76,7 +83,7 @@ public class EnemyAttackState : NPCState
     public override NPCStateReturnValue? Update()
     {
         float distance = Vector3.Distance(this.NPC!.transform.position, this.NPC.target.position);
-        if (distance > this.NPC!.stopDistance)
+        if (!_targetHealth!.IsAlive || distance > this.NPC!.stopDistance)
         {
             // target is out of range, go back to last state
             return new NPCStateReturnValue(NPCStateReturnValue.ActionType.PopState);
