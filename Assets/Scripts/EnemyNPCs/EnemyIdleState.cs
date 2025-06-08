@@ -18,9 +18,6 @@ public class EnemyIdleState : NPCState
     bool _hasPlayedWarningSound = false;
     private EntityScanner _entityScanner;
 
-    private AudioClip? _warningSound;
-    private AudioClip? _willFindYouSound;
-
     private Vector3? _defaultPosition = null;
     private UnityEngine.AI.NavMeshAgent? _agent = null;
 
@@ -43,9 +40,6 @@ public class EnemyIdleState : NPCState
             TargetMask = _targetMask,
             ObstacleMask = _obstacleMask
         };
-
-        _warningSound = Resources.Load<AudioClip>("Sounds/Freeze");
-        _willFindYouSound = Resources.Load<AudioClip>("Sounds/IWillFindYou");
 
         if (_agent == null)
         {
@@ -72,42 +66,13 @@ public class EnemyIdleState : NPCState
             {
                 this.NPC!.target = target.transform;
 
-                // turn in the direction of the target
-                Vector3 direction = this.NPC!.target.position - this.NPC!.transform.position;
-                _currentTargetDirection = direction.normalized;
-
-                // Play audio clip named "Freeze"
-                if (!_hasPlayedWarningSound && this.NPC!.AudioSource != null && _warningSound != null)
-                {
-                    this.NPC!.AudioSource.PlayOneShot(_warningSound);
-                    _hasPlayedWarningSound = true;
-
-                    this.NPC.PushState(this);
-                    return new NPCStateReturnValue(
-                            NPCStateReturnValue.ActionType.ChangeState,
-                            new EnemyPursueState(this.NPC, target.transform));
-                }
-                else if (!_hasPlayedWarningSound)
-                {
-                    Debug.LogWarning("Cannot play warning sound: AudioSource or warningSound is missing on NPC.");
-                }
-            }
-            else if (_originalDirection != this.NPC!.transform.forward.normalized)
-            {
-                _currentTargetDirection = _originalDirection;
-                if (_hasPlayedWarningSound && this.NPC!.AudioSource != null && _willFindYouSound != null)
-                {
-                    this.NPC!.AudioSource.PlayOneShot(_willFindYouSound);
-                    _hasPlayedWarningSound = false;
-                }
+                this.NPC.PushState(this);
+                return new NPCStateReturnValue(
+                        NPCStateReturnValue.ActionType.ChangeState,
+                        new EnemyPursueState(this.NPC, target.transform));
             }
 
             _timer = 0f;
-        }
-
-        if (_currentTargetDirection != this.NPC!.transform.forward.normalized)
-        {
-            turnTowards(_currentTargetDirection);        
         }
 
         if (_agent != null)
