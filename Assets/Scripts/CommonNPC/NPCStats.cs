@@ -7,6 +7,7 @@ public interface IHasHealth
 
     float TakeDamage(float amount);
     float Heal(float amount);
+    bool IsAlive { get; }
 
     event Action<float> OnHealthChanged;
 }

@@ -32,7 +32,15 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
     }
 
     #region Interactable Interface Implementation
-    public string HelpText => "Press [E] to interact";
+
+    public string HelpText 
+    {
+        get
+        {
+            if (!this.IsAlive) return $"{this.name} is dead";
+            return $"Press [E] to interact with {this.name}";
+        }
+    }
 
     public void OnFocus()
     {
@@ -46,6 +54,7 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
 
     public void Interact()
     {
+        if (!this.IsAlive) return;
         InteractionManager.Instance.OnInteractionAction += this.DoInteraction;
         InteractionManager.Instance.OpenMenu(Interactions);
     }

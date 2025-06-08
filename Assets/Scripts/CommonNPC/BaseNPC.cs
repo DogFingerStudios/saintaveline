@@ -82,8 +82,13 @@ public class BaseNPC : MonoBehaviour, IHasHealth
 
         return null;
     }
-#endregion
+    #endregion
 
+    private bool _isAlive = true;
+    public bool IsAlive
+    {
+        get => _isAlive;
+    }
 
     public event Action<float> OnHealthChanged;
 
@@ -107,6 +112,7 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     private void onDeath()
     {
         Debug.Log($"{this.name} has died.");
+        _isAlive = false;
         this.setState(new NPCDeathState(this));
     }
 
