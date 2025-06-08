@@ -7,7 +7,6 @@ using System.Linq;
 public class EnemyIdleState : NPCState
 {
     private Vector3 _originalDirection;
-    private Vector3 _currentTargetDirection;
     private readonly EnemyNPC _enemyNPC;
 
     private float _timer = 0f;
@@ -15,11 +14,14 @@ public class EnemyIdleState : NPCState
     private readonly int _targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
     private readonly int _obstacleMask = LayerMask.GetMask("Default");
 
-    bool _hasPlayedWarningSound = false;
     private EntityScanner _entityScanner;
 
     private Vector3? _defaultPosition = null;
     private UnityEngine.AI.NavMeshAgent? _agent = null;
+
+    private float _idleOscillationTime = 0f;
+    private readonly float _idleOscillationSpeed = 0.5f;
+    private readonly float _maxIdleAngle = 45f;
 
     public EnemyIdleState(EnemyNPC enemyNPC)
         : base(enemyNPC)
@@ -54,6 +56,8 @@ public class EnemyIdleState : NPCState
         {
             _defaultPosition = this.NPC!.transform.position;
         }
+
+        _idleOscillationTime = 0f;
     }
 
     public override NPCStateReturnValue? Update()
@@ -91,6 +95,12 @@ public class EnemyIdleState : NPCState
             }
         }
         
+        // AI: oscillate the NPC's direction for idle animation
+        _idleOscillationTime += Time.deltaTime;
+        float angle = Mathf.Sin(_idleOscillationTime * _idleOscillationSpeed) * _maxIdleAngle;
+        Vector3 targetDirection = Quaternion.Euler(0f, angle, 0f) * _originalDirection;
+        turnTowards(targetDirection);
+
         return null; 
     }
 
