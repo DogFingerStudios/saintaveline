@@ -14179,6 +14179,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9123190149648282301, guid: 3261043d505eeb44db7bb48689c98793, type: 3}
   m_PrefabInstance: {fileID: 552216852}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &919698022 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4322235360493693153, guid: 2e3b15140a2524bc59b7769082ab61ee, type: 3}
+  m_PrefabInstance: {fileID: 1565500971906527573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &923750603 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1873924035966357005, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
@@ -18136,9 +18141,29 @@ PrefabInstance:
       propertyPath: _defaultState
       value: EnemyPatrol
       objectReference: {fileID: 0}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: PatrolPoints.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: 'PatrolPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1962120492}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: 'PatrolPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2111971920}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: 'PatrolPoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1940442048}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: 'PatrolPoints.Array.data[3]'
+      value: 
+      objectReference: {fileID: 919698022}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 277.96786
+      value: 495.3
       objectReference: {fileID: 0}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -18146,7 +18171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 225.27611
+      value: 497
       objectReference: {fileID: 0}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -30162,6 +30187,11 @@ MonoBehaviour:
   ArrivalThreshold: 0.5
   ViewAngle: 120
   EyeOffset: {x: 0, y: 1.6, z: 0}
+--- !u!4 &1940442048 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7992409489127051128, guid: 2e3b15140a2524bc59b7769082ab61ee, type: 3}
+  m_PrefabInstance: {fileID: 1565500971906527573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1945258515
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30387,6 +30417,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5579119045364106524, guid: 0cd51b3be73a99b49ba521ea7b6f6055, type: 3}
   m_PrefabInstance: {fileID: 189206620}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1962120492 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2315515643589016134, guid: 2e3b15140a2524bc59b7769082ab61ee, type: 3}
+  m_PrefabInstance: {fileID: 1565500971906527573}
   m_PrefabAsset: {fileID: 0}
 --- !u!64 &1963394070
 MeshCollider:
@@ -31785,6 +31820,11 @@ MonoBehaviour:
   rotSpeed: 1
   doorBool: 0
   interactionDistance: 3
+--- !u!4 &2111971920 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4834061030496510795, guid: 2e3b15140a2524bc59b7769082ab61ee, type: 3}
+  m_PrefabInstance: {fileID: 1565500971906527573}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2125712705
 PrefabInstance:
   m_ObjectHideFlags: 0

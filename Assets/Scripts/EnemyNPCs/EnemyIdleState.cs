@@ -70,7 +70,7 @@ public class EnemyIdleState : NPCState
             {
                 this.NPC!.target = target.transform;
 
-                this.NPC.PushState(this);
+                this.NPC!.PushState(this);
                 return new NPCStateReturnValue(
                         NPCStateReturnValue.ActionType.ChangeState,
                         new EnemyPursueState(this.NPC, target.transform));
