@@ -6,6 +6,9 @@ using UnityEngine;
 public class EnemyPursueState : NPCState
 {
     private UnityEngine.AI.NavMeshAgent? _agent = null;
+    private AudioClip? _warningSound;
+    private AudioClip? _willFindYouSound;
+    
 
     // TODO: this is a poor man's way to stop chasing, eventually we will want to be a 
     // little smarter -- for example, if the NPC cannot "see" the target, then the NPC could
@@ -23,6 +26,9 @@ public class EnemyPursueState : NPCState
         {
             throw new System.Exception("BaseNPC is not an EnemyNPC. Cannot enter pursue state.");
         }
+
+        _warningSound = Resources.Load<AudioClip>("Sounds/Freeze");
+        _willFindYouSound = Resources.Load<AudioClip>("Sounds/IWillFindYou");
     }
 
     public override void Enter()
@@ -34,6 +40,7 @@ public class EnemyPursueState : NPCState
         }
 
         _detectionRange = this.NPC.DetectionDistance;
+        this.NPC!.AudioSource.PlayOneShot(_warningSound);
     }
 
     public override void Exit()
@@ -63,8 +70,11 @@ public class EnemyPursueState : NPCState
         }
         else
         {
-            // target is out of range, go back to idle state which we pushed earlier
+            this.NPC!.AudioSource.PlayOneShot(_willFindYouSound);
+            _agent.isStopped = true;
             _agent.ResetPath();
+
+            // target is out of range, go back to idle state which we pushed earlier
             return new NPCStateReturnValue(
                 NPCStateReturnValue.ActionType.PopState);
         }

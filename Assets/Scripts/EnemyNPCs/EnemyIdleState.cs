@@ -7,7 +7,6 @@ using System.Linq;
 public class EnemyIdleState : NPCState
 {
     private Vector3 _originalDirection;
-    private Vector3 _currentTargetDirection;
     private readonly EnemyNPC _enemyNPC;
 
     private float _timer = 0f;
@@ -15,14 +14,14 @@ public class EnemyIdleState : NPCState
     private readonly int _targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
     private readonly int _obstacleMask = LayerMask.GetMask("Default");
 
-    bool _hasPlayedWarningSound = false;
     private EntityScanner _entityScanner;
-
-    private AudioClip? _warningSound;
-    private AudioClip? _willFindYouSound;
 
     private Vector3? _defaultPosition = null;
     private UnityEngine.AI.NavMeshAgent? _agent = null;
+
+    private float _idleOscillationTime = 0f;
+    private readonly float _idleOscillationSpeed = 0.5f;
+    private readonly float _maxIdleAngle = 45f;
 
     public EnemyIdleState(EnemyNPC enemyNPC)
         : base(enemyNPC)
@@ -44,9 +43,6 @@ public class EnemyIdleState : NPCState
             ObstacleMask = _obstacleMask
         };
 
-        _warningSound = Resources.Load<AudioClip>("Sounds/Freeze");
-        _willFindYouSound = Resources.Load<AudioClip>("Sounds/IWillFindYou");
-
         if (_agent == null)
         {
             _agent = this.NPC!.GetComponent<UnityEngine.AI.NavMeshAgent>();
@@ -60,6 +56,8 @@ public class EnemyIdleState : NPCState
         {
             _defaultPosition = this.NPC!.transform.position;
         }
+
+        _idleOscillationTime = 0f;
     }
 
     public override NPCStateReturnValue? Update()
@@ -72,42 +70,13 @@ public class EnemyIdleState : NPCState
             {
                 this.NPC!.target = target.transform;
 
-                // turn in the direction of the target
-                Vector3 direction = this.NPC!.target.position - this.NPC!.transform.position;
-                _currentTargetDirection = direction.normalized;
-
-                // Play audio clip named "Freeze"
-                if (!_hasPlayedWarningSound && this.NPC!.AudioSource != null && _warningSound != null)
-                {
-                    this.NPC!.AudioSource.PlayOneShot(_warningSound);
-                    _hasPlayedWarningSound = true;
-
-                    this.NPC.PushState(this);
-                    return new NPCStateReturnValue(
-                            NPCStateReturnValue.ActionType.ChangeState,
-                            new EnemyPursueState(this.NPC, target.transform));
-                }
-                else if (!_hasPlayedWarningSound)
-                {
-                    Debug.LogWarning("Cannot play warning sound: AudioSource or warningSound is missing on NPC.");
-                }
-            }
-            else if (_originalDirection != this.NPC!.transform.forward.normalized)
-            {
-                _currentTargetDirection = _originalDirection;
-                if (_hasPlayedWarningSound && this.NPC!.AudioSource != null && _willFindYouSound != null)
-                {
-                    this.NPC!.AudioSource.PlayOneShot(_willFindYouSound);
-                    _hasPlayedWarningSound = false;
-                }
+                this.NPC!.PushState(this);
+                return new NPCStateReturnValue(
+                        NPCStateReturnValue.ActionType.ChangeState,
+                        new EnemyPursueState(this.NPC, target.transform));
             }
 
             _timer = 0f;
-        }
-
-        if (_currentTargetDirection != this.NPC!.transform.forward.normalized)
-        {
-            turnTowards(_currentTargetDirection);        
         }
 
         if (_agent != null)
@@ -126,6 +95,12 @@ public class EnemyIdleState : NPCState
             }
         }
         
+        // AI: oscillate the NPC's direction for idle animation
+        _idleOscillationTime += Time.deltaTime;
+        float angle = Mathf.Sin(_idleOscillationTime * _idleOscillationSpeed) * _maxIdleAngle;
+        Vector3 targetDirection = Quaternion.Euler(0f, angle, 0f) * _originalDirection;
+        turnTowards(targetDirection);
+
         return null; 
     }
 

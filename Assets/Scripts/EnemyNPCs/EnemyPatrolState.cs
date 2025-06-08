@@ -2,6 +2,7 @@
 
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 [NPCStateTag("EnemyPatrol")]
 public class EnemyPatrolState : NPCState
@@ -59,9 +60,13 @@ public class EnemyPatrolState : NPCState
         _timer += Time.deltaTime;
         if (_timer >= _scanInterval)
         {
-            foreach(var collider in _entityScanner.doScan())
+            var target = _entityScanner.doScan(1).FirstOrDefault();
+            if (target != null)
             {
-                Debug.Log($"Target detected: {collider.name}");
+                this.NPC!.PushState(this);
+                return new NPCStateReturnValue(
+                        NPCStateReturnValue.ActionType.ChangeState,
+                        new EnemyPursueState(this.NPC, target.transform));
             }
             _timer = 0f;
         }
