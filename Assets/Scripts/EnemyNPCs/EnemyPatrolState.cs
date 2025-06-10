@@ -63,10 +63,14 @@ public class EnemyPatrolState : NPCState
             var target = _entityScanner.doScan(1).FirstOrDefault();
             if (target != null)
             {
-                this.NPC!.PushState(this);
-                return new NPCStateReturnValue(
-                        NPCStateReturnValue.ActionType.ChangeState,
-                        new EnemyPursueState(this.NPC, target.transform));
+                var targetHealth = target.GetComponent<IHasHealth>();
+                if (targetHealth != null && targetHealth.IsAlive)
+                {
+                    this.NPC!.PushState(this);
+                    return new NPCStateReturnValue(
+                            NPCStateReturnValue.ActionType.ChangeState,
+                            new EnemyPursueState(this.NPC, target.transform));
+                }
             }
             _timer = 0f;
         }

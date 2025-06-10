@@ -84,11 +84,7 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     }
     #endregion
 
-    private bool _isAlive = true;
-    public bool IsAlive
-    {
-        get => _isAlive;
-    }
+    public bool IsAlive { get => Health > 0; }
 
     public event Action<float> OnHealthChanged;
 
@@ -100,6 +96,8 @@ public class BaseNPC : MonoBehaviour, IHasHealth
         if (Health <= 0)
         {
             onDeath();
+            bool foo = this.IsAlive;
+            Debug.Log($"{this.name} is dead: {foo}");
         }
         // else
         // {
@@ -112,7 +110,6 @@ public class BaseNPC : MonoBehaviour, IHasHealth
     private void onDeath()
     {
         Debug.Log($"{this.name} has died.");
-        _isAlive = false;
         this.setState(new NPCDeathState(this));
     }
 
