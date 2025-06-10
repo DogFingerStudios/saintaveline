@@ -44,6 +44,8 @@ public class EnemyPursueState : NPCState
         }
 
         _detectionRange = this.NPC.DetectionDistance;
+        this.NPC!.AudioSource.dopplerLevel = 0f;
+        this.NPC!.AudioSource.spatialBlend = 1f;
         this.NPC!.AudioSource.PlayOneShot(_warningSound);
     }
 
