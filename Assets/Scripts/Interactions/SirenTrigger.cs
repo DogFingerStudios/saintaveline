@@ -9,6 +9,8 @@ public class SirenTrigger : MonoBehaviour
     void Start()
     {
         siren = GetComponent<AudioSource>();
+        siren.dopplerLevel = 0f;
+        siren.spatialBlend = 1f;
         Invoke(nameof(PlaySiren), delay);
     }
 
