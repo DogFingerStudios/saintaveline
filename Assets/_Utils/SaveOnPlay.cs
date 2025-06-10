@@ -4,6 +4,8 @@ using UnityEditor.SceneManagement;
 [InitializeOnLoad]
 public static class SaveOnPlay
 {
+    private const bool _shouldSave = true; // Change this if we don't want to auto-save
+
     static SaveOnPlay()
     {
         EditorApplication.playModeStateChanged += PlayModeStateChanged;
@@ -14,7 +16,7 @@ public static class SaveOnPlay
         switch (change)
         {
             case PlayModeStateChange.ExitingEditMode:
-                EditorSceneManager.SaveOpenScenes();
+                if (_shouldSave) EditorSceneManager.SaveOpenScenes();
                 EditorApplication.playModeStateChanged -= PlayModeStateChanged;
             break;
         }
