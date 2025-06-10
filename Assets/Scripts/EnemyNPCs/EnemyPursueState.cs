@@ -58,7 +58,6 @@ public class EnemyPursueState : NPCState
         if (!_targetHealth!.IsAlive)
         {
             // target is dead, go back to idle state
-            this.NPC!.AudioSource.PlayOneShot(_willFindYouSound);
             _agent.isStopped = true;
             _agent.ResetPath();
 
