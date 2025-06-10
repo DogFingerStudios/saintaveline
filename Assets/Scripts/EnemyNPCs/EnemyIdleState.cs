@@ -68,12 +68,14 @@ public class EnemyIdleState : NPCState
             var target = doScan();
             if (target != null)
             {
-                this.NPC!.target = target.transform;
-
-                this.NPC!.PushState(this);
-                return new NPCStateReturnValue(
-                        NPCStateReturnValue.ActionType.ChangeState,
-                        new EnemyPursueState(this.NPC, target.transform));
+                var targetHealth = target.GetComponent<IHasHealth>();
+                if (targetHealth != null && targetHealth.IsAlive)
+                {
+                    this.NPC!.PushState(this);
+                    return new NPCStateReturnValue(
+                            NPCStateReturnValue.ActionType.ChangeState,
+                            new EnemyPursueState(this.NPC, target.transform));
+                }
             }
 
             _timer = 0f;
