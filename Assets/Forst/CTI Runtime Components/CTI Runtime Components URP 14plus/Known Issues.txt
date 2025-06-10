@@ -1,0 +1,10 @@
+
+## Known Issuse
+
+# Billboard shadows may flicker in builds
+Using Unity 2022.x textures may not be properly bound during the shadow caster passes when it comes to the billboards.
+This only occurs in builds (testen on Windows 11 using DX11 and Vulkan)!
+
+-> The only solution i have found so far: Duplicate the billboard shader multiple times and assign the different shaders to the different billboards (small, medium, bare, large).
+
+-> This is fixed at least in Unity 2022.3.20f1
