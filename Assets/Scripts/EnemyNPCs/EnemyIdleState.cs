@@ -10,7 +10,7 @@ public class EnemyIdleState : NPCState
     private readonly EnemyNPC _enemyNPC;
 
     private float _timer = 0f;
-    private readonly float _scanInterval = 0.25f;
+    private readonly float _scanInterval = 0.5f;
     private readonly int _targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
     private readonly int _obstacleMask = LayerMask.GetMask("Default");
 
