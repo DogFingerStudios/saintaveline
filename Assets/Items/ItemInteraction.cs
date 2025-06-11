@@ -24,6 +24,8 @@ public class InteractionActionAttribute : Attribute
 public class ItemInteraction : MonoBehaviour, Interactable
 {
     [SerializeField] private ItemData? _itemData;
+    public ItemData? ItemData { get => _itemData; }
+    
     private EquippedItem? _equippedItemScript;
 
     public string HelpText => $"Press [E] to interact with '{_itemData?.ItemName}'";

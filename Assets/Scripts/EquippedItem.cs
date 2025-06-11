@@ -29,21 +29,28 @@ public class EquippedItem : MonoBehaviour
             _equippedItem = value;
             _equippedItem.transform.SetParent(_equippedItemPos);
 
+            _itemInteraction = _equippedItem.GetComponent<ItemInteraction>();
+            if (!_itemInteraction)
+            {
+                throw new System.Exception($"EquippedItem: Item '{_equippedItem.name}' does not have an ItemInteraction component.");
+            }
+
+            var itemData = _itemInteraction!.ItemData;
+            if (itemData == null)
+            {
+                throw new System.Exception($"EquippedItem: Item '{_equippedItem.name}' does not have ItemData.");
+            }
+
             // Once parented to the item position, set the local position and rotation to zero,
             // so it matches the item pos transform.
-            _equippedItem.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+            _equippedItem.transform.localPosition = itemData.EquippedPosition;
+            _equippedItem.transform.localRotation = Quaternion.Euler(itemData.EquippedRotation);
 
             // Do we want to disable physics while we equip the item?
             // If item doesn't have physics, we don't need to do anything
             if (_equippedItem.TryGetComponent<Rigidbody>(out var rb))
             {
                 rb.isKinematic = true;
-            }
-
-            _itemInteraction = _equippedItem.GetComponent<ItemInteraction>();
-            if (!_itemInteraction)
-            {
-                Debug.LogError($"Equipped item '{_equippedItem.name}' does not have an ItemInteraction component.");
             }
         }
     }
