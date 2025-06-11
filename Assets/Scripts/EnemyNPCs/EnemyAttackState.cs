@@ -14,7 +14,6 @@ public class EnemyAttackState : NPCState
     public float range = 50f;
     public float damage = 10f;
     public float defaultDamage = 10f;
-    public LayerMask targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
 
     [Header("Audio")]
     [Tooltip("Audio clip to play when the gun is fired.")]
@@ -118,7 +117,7 @@ public class EnemyAttackState : NPCState
     void Shoot()
     {
         var direction = this.NPC!.target.position - _firePoint.position;
-        if (Physics.Raycast(_firePoint.position, direction, out RaycastHit hit, range, targetMask))
+        if (Physics.Raycast(_firePoint.position, direction, out RaycastHit hit, range))
         {
             this.NPC!.StartCoroutine(FireRayEffect(hit.point));
 
