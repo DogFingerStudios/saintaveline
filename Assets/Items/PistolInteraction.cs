@@ -28,7 +28,6 @@ public class PistolInteraction : ItemInteraction
 
     public override void Attack()
     {
-
         if (_attackCoroutine != null)
         {
             StopCoroutine(_attackCoroutine);
@@ -39,6 +38,8 @@ public class PistolInteraction : ItemInteraction
 
     private IEnumerator AnimateAttack()
     {
+        OnStartAttack();
+        
         float recoilDuration = _pistolItemData!.RecoilDuration;
         float holdDuration   = _pistolItemData!.HoldDuration;
         float returnDuration = _pistolItemData!.ReturnDuration;
