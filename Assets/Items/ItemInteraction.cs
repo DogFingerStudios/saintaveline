@@ -84,22 +84,19 @@ public class ItemInteraction : MonoBehaviour, Interactable
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
-            Debug.LogWarning("Player not found");
-            return;
+            throw new Exception("Player GameObject not found. Make sure the Player has the 'Player' tag.");
         }
 
         _equippedItemScript = player.GetComponent<EquippedItem>();
         if (_equippedItemScript == null)
         {
-            Debug.LogWarning("EquippedItem not found in Player");
-            return;
+            throw new Exception("EquippedItem script not found on Player. Make sure the Player has the EquippedItem component.");
         }
 
         _hitCollider = GetComponent<Collider>();
         if (_hitCollider == null)
         {
-            Debug.LogWarning("Collider not found on item");
-            return;
+            throw new Exception("Collider not found on ItemInteraction. Make sure the item has a Collider component.");
         }
     }
 
