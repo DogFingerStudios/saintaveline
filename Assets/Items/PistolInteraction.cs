@@ -7,12 +7,18 @@ public class PistolInteraction : ItemInteraction
     private Quaternion _defaultRotation;
     private Coroutine? _attackCoroutine;
     private PistolItemData? _pistolItemData;
+    private AudioSource? _audioSource;
 
     // this is called AFTER the item is equipped
     public override void onEquipped()
     {
         _defaultRotation = this.gameObject.transform.localRotation;
         if (_hitCollider) _hitCollider.enabled = false;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
 
         if (this.ItemData == null)
         {
@@ -24,6 +30,8 @@ public class PistolInteraction : ItemInteraction
         {
             throw new System.Exception($"PistolInteraction: Item '{this.ItemData!.ItemName}' is not a PistolItemData.");
         }
+                
+        _audioSource = Instantiate(_pistolItemData!.AudioSourcePrefab);
     }
 
     public override void Attack()
@@ -36,16 +44,22 @@ public class PistolInteraction : ItemInteraction
         _attackCoroutine = StartCoroutine(AnimateAttack());
     }
 
+    protected override void OnStartAttack()
+    {
+        base.OnStartAttack();
+        _audioSource!.PlayOneShot(_pistolItemData!.FireSound);
+    }
+
     private IEnumerator AnimateAttack()
     {
         OnStartAttack();
-        
+
         float recoilDuration = _pistolItemData!.RecoilDuration;
-        float holdDuration   = _pistolItemData!.HoldDuration;
+        float holdDuration = _pistolItemData!.HoldDuration;
         float returnDuration = _pistolItemData!.ReturnDuration;
 
         // capture your start & target rotations
-        Quaternion startRot  = _defaultRotation;
+        Quaternion startRot = _defaultRotation;
         // tilt back 20° around the local X axis (you can flip the sign or axis)
         Quaternion targetRot = _defaultRotation * Quaternion.Euler(-20f, 0f, 0f);
 
@@ -60,7 +74,7 @@ public class PistolInteraction : ItemInteraction
             yield return null;
         }
 
-        // ── Hold the recoil for a full second
+        // ── Hold the recoil 
         yield return new WaitForSeconds(holdDuration);
 
         // ← Return: rotate back to default

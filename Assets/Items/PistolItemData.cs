@@ -6,4 +6,7 @@ public class PistolItemData : ItemData
     public float RecoilDuration;
     public float HoldDuration;
     public float ReturnDuration;
+
+    public AudioSource AudioSourcePrefab;
+    public AudioClip FireSound;
 }

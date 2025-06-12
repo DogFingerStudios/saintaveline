@@ -79,7 +79,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
         // nothing to do
     }
 
-    void Start()
+    protected virtual void Start()
     {
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -182,7 +182,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
         }
     }
 
-    protected void OnStartAttack()
+    protected virtual void OnStartAttack()
     {
         if (_hitCollider)
         {
@@ -191,7 +191,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
         }
     }
 
-    protected void OnEndAttack()
+    protected virtual void OnEndAttack()
     {
         if (_hitCollider)
         {
