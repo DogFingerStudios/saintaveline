@@ -8,6 +8,8 @@ public class PistolInteraction : ItemInteraction
     private Coroutine? _attackCoroutine;
     private PistolItemData? _pistolItemData;
     private AudioSource? _audioSource;
+    private Camera? _mainCamera;
+    private LineRenderer _lineRenderer;
 
     // this is called AFTER the item is equipped
     public override void onEquipped()
@@ -30,8 +32,10 @@ public class PistolInteraction : ItemInteraction
         {
             throw new System.Exception($"PistolInteraction: Item '{this.ItemData!.ItemName}' is not a PistolItemData.");
         }
-                
+
         _audioSource = Instantiate(_pistolItemData!.AudioSourcePrefab);
+        _mainCamera = Camera.main;
+        _lineRenderer = this.gameObject.GetComponent<LineRenderer>();
     }
 
     public override void Attack()
@@ -47,6 +51,7 @@ public class PistolInteraction : ItemInteraction
     protected override void OnStartAttack()
     {
         base.OnStartAttack();
+        Shoot();
         _audioSource!.PlayOneShot(_pistolItemData!.FireSound);
     }
 
@@ -91,7 +96,7 @@ public class PistolInteraction : ItemInteraction
         transform.localRotation = _defaultRotation;
         OnEndAttack();
         _attackCoroutine = null;
-    }    
+    }
 
     // DO THIS LATER TODAY - BRINGING CODE FROM ENEMYATTACKSTATE INTO THIS SCRIPT
     // TO ALLOW THE PLAYER TO SHOOT -- WE STILL NEED TO ADD THE RAYCAST EFFECT
@@ -99,33 +104,48 @@ public class PistolInteraction : ItemInteraction
     // THE BULLET). WE HAVE ADDED A FIREPOINT TO THE SCRIPTABLE OBJECT, AND NOW
     // WE NEED TO CALCULATE THE "FORWARD" DIRECTION 
 
+    private Vector3 GetFireDirection()
+    {
+        Vector3 screenCenter = new Vector3(_mainCamera!.pixelWidth / 2f, _mainCamera.pixelHeight / 2f, 0f);
+        Ray ray = _mainCamera.ScreenPointToRay(screenCenter);
+        Vector3 targetPoint = ray.GetPoint(_pistolItemData!.FireRange);
+        return (targetPoint - _pistolItemData!.FirePoint).normalized;
+    }
+
     void Shoot()
     {
-        var direction = this.NPC!.target.position - _firePoint.position;
-        if (Physics.Raycast(_firePoint.position, direction, out RaycastHit hit, range))
-        {
-            this.NPC!.StartCoroutine(FireRayEffect(hit.point));
+        Vector3 direction = GetFireDirection();
 
-            // get the distance from the fire point to the hit point
-            float distance = Vector3.Distance(_firePoint.position, hit.point);
-            int damage = Mathf.RoundToInt(defaultDamage * (1 - (distance / range)));
-
-            if (hit.collider.GetComponent<IHasHealth>() != null)
-            {
-                hit.collider.GetComponent<IHasHealth>().TakeDamage(damage);
-            }
-        }
-        else
+        if (Physics.Raycast(_pistolItemData!.FirePoint, direction, out RaycastHit hit, _pistolItemData!.FireRange))
         {
-            this.NPC!.StartCoroutine(FireRayEffect(_firePoint.position + direction * range));
+            StartCoroutine(FireRayEffect(hit.point));
         }
 
-        _audioSource.PlayOneShot(_gunshotSounds[UnityEngine.Random.Range(0, _gunshotSounds.Length)]);
+    //     var direction = this.NPC!.target.position - _firePoint.position;
+        // if (Physics.Raycast(_firePoint.position, direction, out RaycastHit hit, range))
+        // {
+        //     this.NPC!.StartCoroutine(FireRayEffect(hit.point));
+
+        //     // get the distance from the fire point to the hit point
+        //     float distance = Vector3.Distance(_firePoint.position, hit.point);
+        //     int damage = Mathf.RoundToInt(defaultDamage * (1 - (distance / range)));
+
+        //     if (hit.collider.GetComponent<IHasHealth>() != null)
+        //     {
+        //         hit.collider.GetComponent<IHasHealth>().TakeDamage(damage);
+        //     }
+        // }
+        //     else
+        //     {
+        //         this.NPC!.StartCoroutine(FireRayEffect(_firePoint.position + direction * range));
+        //     }
+
+        //     _audioSource.PlayOneShot(_gunshotSounds[UnityEngine.Random.Range(0, _gunshotSounds.Length)]);
     }
 
     IEnumerator FireRayEffect(Vector3 hitPoint)
     {
-        _lineRenderer.SetPosition(0, _firePoint.position);
+        _lineRenderer.SetPosition(0, _pistolItemData!.FirePoint);
         _lineRenderer.SetPosition(1, hitPoint);
         _lineRenderer.enabled = true;
 

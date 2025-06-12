@@ -26,7 +26,6 @@ public class PlayerInteractor : MonoBehaviour
     {
         RaycastHit hit;
         Ray ray = new Ray(transform.position, transform.forward);
-        Debug.DrawRay(ray.origin, ray.direction * interactRange, Color.green);
 
         if (Physics.Raycast(ray, out hit, interactRange, ~0))
         {
