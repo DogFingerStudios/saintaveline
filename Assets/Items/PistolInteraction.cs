@@ -93,4 +93,45 @@ public class PistolInteraction : ItemInteraction
         _attackCoroutine = null;
     }    
 
+    // DO THIS LATER TODAY - BRINGING CODE FROM ENEMYATTACKSTATE INTO THIS SCRIPT
+    // TO ALLOW THE PLAYER TO SHOOT -- WE STILL NEED TO ADD THE RAYCAST EFFECT
+    // TO DETECT HITS AND APPLY DAMAGE, AND WE STILL NEED TO DRAW THE LINE (I.E
+    // THE BULLET). WE HAVE ADDED A FIREPOINT TO THE SCRIPTABLE OBJECT, AND NOW
+    // WE NEED TO CALCULATE THE "FORWARD" DIRECTION 
+
+    void Shoot()
+    {
+        var direction = this.NPC!.target.position - _firePoint.position;
+        if (Physics.Raycast(_firePoint.position, direction, out RaycastHit hit, range))
+        {
+            this.NPC!.StartCoroutine(FireRayEffect(hit.point));
+
+            // get the distance from the fire point to the hit point
+            float distance = Vector3.Distance(_firePoint.position, hit.point);
+            int damage = Mathf.RoundToInt(defaultDamage * (1 - (distance / range)));
+
+            if (hit.collider.GetComponent<IHasHealth>() != null)
+            {
+                hit.collider.GetComponent<IHasHealth>().TakeDamage(damage);
+            }
+        }
+        else
+        {
+            this.NPC!.StartCoroutine(FireRayEffect(_firePoint.position + direction * range));
+        }
+
+        _audioSource.PlayOneShot(_gunshotSounds[UnityEngine.Random.Range(0, _gunshotSounds.Length)]);
+    }
+
+    IEnumerator FireRayEffect(Vector3 hitPoint)
+    {
+        _lineRenderer.SetPosition(0, _firePoint.position);
+        _lineRenderer.SetPosition(1, hitPoint);
+        _lineRenderer.enabled = true;
+
+        yield return new WaitForSeconds(0.05f);
+
+        _lineRenderer.enabled = false;
+        // // OnGunFired?.Invoke();
+    }
 }
