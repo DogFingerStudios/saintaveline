@@ -11,6 +11,7 @@ public class PistolInteraction : ItemInteraction
     private Camera? _mainCamera;
     private LineRenderer _lineRenderer;
     private Transform? _firePoint;
+    private bool _canFire = true;
 
     // this is called AFTER the item is equipped
     public override void onEquipped()
@@ -49,10 +50,14 @@ public class PistolInteraction : ItemInteraction
         _lineRenderer.startWidth = 0.05f;
         _lineRenderer.endWidth = 0.05f;
         _lineRenderer.startColor = Color.black;
+        _lineRenderer.endColor = Color.black;
     }
 
     public override void Attack()
     {
+        if (!_canFire) return;
+        _canFire = false;
+
         if (_attackCoroutine != null)
         {
             StopCoroutine(_attackCoroutine);
@@ -106,6 +111,7 @@ public class PistolInteraction : ItemInteraction
         // snap exactly back, end attack
         transform.localRotation = _defaultRotation;
         OnEndAttack();
+        _canFire = true;
         _attackCoroutine = null;
     }
 
@@ -120,36 +126,20 @@ public class PistolInteraction : ItemInteraction
     void Shoot()
     {
         Vector3 direction = GetFireDirection();
-        StartCoroutine(FireRayEffect(_firePoint!.position + (direction * _pistolItemData!.FireRange)));
+        
         if (Physics.Raycast(_firePoint!.position, direction, out RaycastHit hit, _pistolItemData!.FireRange))
         {
-            // StartCoroutine(FireRayEffect(hit.point));
+            if (hit.collider.GetComponent<IHasHealth>() != null)
+            {
+                hit.collider.GetComponent<IHasHealth>().TakeDamage(_pistolItemData!.DamageScore);
+            }
+
+            StartCoroutine(FireRayEffect(hit.point));
         }
         else
         {
-            // StartCoroutine(FireRayEffect(_firePoint!.position + (direction * _pistolItemData.FireRange)));
+            StartCoroutine(FireRayEffect(_firePoint!.position + (direction * _pistolItemData.FireRange)));
         }
-
-    //     var direction = this.NPC!.target.position - _firePoint.position;
-        // if (Physics.Raycast(_firePoint.position, direction, out RaycastHit hit, range))
-        // {
-        //     this.NPC!.StartCoroutine(FireRayEffect(hit.point));
-
-        //     // get the distance from the fire point to the hit point
-        //     float distance = Vector3.Distance(_firePoint.position, hit.point);
-        //     int damage = Mathf.RoundToInt(defaultDamage * (1 - (distance / range)));
-
-        //     if (hit.collider.GetComponent<IHasHealth>() != null)
-        //     {
-        //         hit.collider.GetComponent<IHasHealth>().TakeDamage(damage);
-        //     }
-        // }
-        //     else
-        //     {
-        //         this.NPC!.StartCoroutine(FireRayEffect(_firePoint.position + direction * range));
-        //     }
-
-        //     _audioSource.PlayOneShot(_gunshotSounds[UnityEngine.Random.Range(0, _gunshotSounds.Length)]);
     }
 
     IEnumerator FireRayEffect(Vector3 hitPoint)
