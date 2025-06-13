@@ -37,17 +37,18 @@ public class PistolInteraction : ItemInteraction
         _audioSource = Instantiate(_pistolItemData!.AudioSourcePrefab);
         _mainCamera = Camera.main;
 
-        _lineRenderer = this.gameObject.GetComponent<LineRenderer>();
-        _lineRenderer.enabled = false;
-        _lineRenderer.positionCount = 2;
-        _lineRenderer.startWidth = 5.05f;
-        _lineRenderer.endWidth = 5.05f;
-
         _firePoint = new GameObject("FirePoint").transform;
         _firePoint.SetParent(this.transform);
         _firePoint.localPosition = _pistolItemData.FirePoint;
-        // _firePoint.localRotation = Quaternion.Euler(0f, 0f, 0f);
-        // _firePoint.localScale = new Vector3(1f, 0.5555556f, 1f);
+        _firePoint.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        _firePoint.localScale = new Vector3(1f, 0.5555556f, 1f);
+
+        _lineRenderer = this.gameObject.GetComponent<LineRenderer>();
+        _lineRenderer.enabled = false;
+        _lineRenderer.positionCount = 2;
+        _lineRenderer.startWidth = 0.05f;
+        _lineRenderer.endWidth = 0.05f;
+        _lineRenderer.startColor = Color.black;
     }
 
     public override void Attack()
@@ -75,9 +76,7 @@ public class PistolInteraction : ItemInteraction
         float holdDuration = _pistolItemData!.HoldDuration;
         float returnDuration = _pistolItemData!.ReturnDuration;
 
-        // capture your start & target rotations
         Quaternion startRot = _defaultRotation;
-        // tilt back 20° around the local X axis (you can flip the sign or axis)
         Quaternion targetRot = _defaultRotation * Quaternion.Euler(-20f, 0f, 0f);
 
         float elapsed = 0f;
@@ -110,33 +109,25 @@ public class PistolInteraction : ItemInteraction
         _attackCoroutine = null;
     }
 
-    // DO THIS LATER TODAY - BRINGING CODE FROM ENEMYATTACKSTATE INTO THIS SCRIPT
-    // TO ALLOW THE PLAYER TO SHOOT -- WE STILL NEED TO ADD THE RAYCAST EFFECT
-    // TO DETECT HITS AND APPLY DAMAGE, AND WE STILL NEED TO DRAW THE LINE (I.E
-    // THE BULLET). WE HAVE ADDED A FIREPOINT TO THE SCRIPTABLE OBJECT, AND NOW
-    // WE NEED TO CALCULATE THE "FORWARD" DIRECTION 
-
     private Vector3 GetFireDirection()
     {
         Vector3 screenCenter = new Vector3(_mainCamera!.pixelWidth / 2f, _mainCamera.pixelHeight / 2f, 0f);
         Ray ray = _mainCamera.ScreenPointToRay(screenCenter);
         Vector3 targetPoint = ray.GetPoint(_pistolItemData!.FireRange);
-        return (targetPoint - _pistolItemData!.FirePoint).normalized;
+        return (targetPoint - _firePoint!.position).normalized;
     }
 
     void Shoot()
     {
         Vector3 direction = GetFireDirection();
-        // StartCoroutine(FireRayEffect(_firePoint!.position + (direction * _pistolItemData!.FireRange)));
-        StartCoroutine(FireRayEffect(_firePoint!.position + (Vector3.forward * 100)));
-        return;
-        if (Physics.Raycast(_pistolItemData!.FirePoint, direction, out RaycastHit hit, _pistolItemData!.FireRange))
+        StartCoroutine(FireRayEffect(_firePoint!.position + (direction * _pistolItemData!.FireRange)));
+        if (Physics.Raycast(_firePoint!.position, direction, out RaycastHit hit, _pistolItemData!.FireRange))
         {
-            StartCoroutine(FireRayEffect(hit.point));
+            // StartCoroutine(FireRayEffect(hit.point));
         }
         else
         {
-            StartCoroutine(FireRayEffect(_firePoint!.position + (direction * _pistolItemData.FireRange)));
+            // StartCoroutine(FireRayEffect(_firePoint!.position + (direction * _pistolItemData.FireRange)));
         }
 
     //     var direction = this.NPC!.target.position - _firePoint.position;
