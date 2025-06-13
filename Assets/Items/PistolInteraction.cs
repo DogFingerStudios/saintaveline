@@ -10,6 +10,7 @@ public class PistolInteraction : ItemInteraction
     private AudioSource? _audioSource;
     private Camera? _mainCamera;
     private LineRenderer _lineRenderer;
+    private Transform? _firePoint;
 
     // this is called AFTER the item is equipped
     public override void onEquipped()
@@ -35,7 +36,18 @@ public class PistolInteraction : ItemInteraction
 
         _audioSource = Instantiate(_pistolItemData!.AudioSourcePrefab);
         _mainCamera = Camera.main;
+
         _lineRenderer = this.gameObject.GetComponent<LineRenderer>();
+        _lineRenderer.enabled = false;
+        _lineRenderer.positionCount = 2;
+        _lineRenderer.startWidth = 5.05f;
+        _lineRenderer.endWidth = 5.05f;
+
+        _firePoint = new GameObject("FirePoint").transform;
+        _firePoint.SetParent(this.transform);
+        _firePoint.localPosition = _pistolItemData.FirePoint;
+        // _firePoint.localRotation = Quaternion.Euler(0f, 0f, 0f);
+        // _firePoint.localScale = new Vector3(1f, 0.5555556f, 1f);
     }
 
     public override void Attack()
@@ -115,10 +127,16 @@ public class PistolInteraction : ItemInteraction
     void Shoot()
     {
         Vector3 direction = GetFireDirection();
-
+        // StartCoroutine(FireRayEffect(_firePoint!.position + (direction * _pistolItemData!.FireRange)));
+        StartCoroutine(FireRayEffect(_firePoint!.position + (Vector3.forward * 100)));
+        return;
         if (Physics.Raycast(_pistolItemData!.FirePoint, direction, out RaycastHit hit, _pistolItemData!.FireRange))
         {
             StartCoroutine(FireRayEffect(hit.point));
+        }
+        else
+        {
+            StartCoroutine(FireRayEffect(_firePoint!.position + (direction * _pistolItemData.FireRange)));
         }
 
     //     var direction = this.NPC!.target.position - _firePoint.position;
@@ -145,7 +163,7 @@ public class PistolInteraction : ItemInteraction
 
     IEnumerator FireRayEffect(Vector3 hitPoint)
     {
-        _lineRenderer.SetPosition(0, _pistolItemData!.FirePoint);
+        _lineRenderer.SetPosition(0, _firePoint!.position);
         _lineRenderer.SetPosition(1, hitPoint);
         _lineRenderer.enabled = true;
 
