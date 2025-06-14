@@ -5,28 +5,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IHearingSensor
+public class BaseNPC : CharacterEntity, IHearingSensor
 {
-    Vector3 Position { get; }
-    void HandleSound(SoundStimulus stim);
-}
-
-public class BaseNPC : MonoBehaviour, IHasHealth, IHearingSensor
-{
+    // TODO: Come back in here and clean up these ugly variable names
     [SerializeField]
     [Tooltip("The AudioSource component for playing NPC sounds")]
-    private AudioSource _audioSource;
+    private AudioSource _audioSource = null!;
     public AudioSource AudioSource { get => _audioSource; }
 
-    [SerializeField] 
-    EntityProfile _entityProfile;
+    [SerializeField]
+    EntityProfile _entityProfile = null!;
     public EntityProfile Profile
     {
         get => _entityProfile;
         set => _entityProfile = value;
     }
 
-    private Animator _animator;
+    private Animator _animator = null!;
     public Animator Animator
     {
         get => _animator;
@@ -49,24 +44,22 @@ public class BaseNPC : MonoBehaviour, IHasHealth, IHearingSensor
     [Tooltip("The distance at which the NPC will stop moving towards the target")]
     public float stopDistance = 1f;
 
-    [SerializeField]
-    float _health = 100f;
+    public Transform target = null!;
 
-    public float Health 
+
+#region Interactable Interface Implementation
+
+    public virtual string HelpText => $"{this.name}";
+    public virtual void OnFocus() { }
+    public virtual void OnDefocus() { }
+    public virtual void Interact(GameEntity? interactor = null) { }
+
+#endregion
+
+    public BaseNPC()
     {
-        get => _health;
-        set => _health = value;
     }
 
-    [SerializeField]
-    float _maxHealth = 100f;
-    public float MaxHealth 
-    {
-        get => _maxHealth;
-        set => _maxHealth = value;
-    }
-
-    public Transform target;
 
 #region State Management
     public void setState(NPCState state)
@@ -88,43 +81,18 @@ public class BaseNPC : MonoBehaviour, IHasHealth, IHearingSensor
 
         return null;
     }
-    #endregion
+#endregion
 
-    public bool IsAlive { get => Health > 0; }
-
-    public event Action<float> OnHealthChanged;
-
-    public float TakeDamage(float damage)
+    public override float TakeDamage(float damage)
     {
-        Health -= damage;
-        if (Health < 0) Health = 0;
-        this.OnHealthChanged?.Invoke(Health);
-        if (Health <= 0)
-        {
-            onDeath();
-            bool foo = this.IsAlive;
-            Debug.Log($"{this.name} is dead: {foo}");
-        }
-        // else
-        // {
-        //     // Play hurt animation or sound
-        //     _animator.SetTrigger("Hurt");
-        // }
+        base.TakeDamage(damage);
+        if (Health <= 0) onDeath();
         return Health;
     }
 
     private void onDeath()
     {
-        Debug.Log($"{this.name} has died.");
         this.setState(new NPCDeathState(this));
-    }
-
-    float IHasHealth.Heal(float amount)
-    {
-        Health += amount;
-        if (Health > MaxHealth) Health = MaxHealth;
-        this.OnHealthChanged?.Invoke(Health);
-        return Health;
     }
 
     protected NPCStateMachine stateMachine = new NPCStateMachine();

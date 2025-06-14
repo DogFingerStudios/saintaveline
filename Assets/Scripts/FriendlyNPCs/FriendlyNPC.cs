@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using System.Reflection;
 using System.Collections.Generic;
@@ -5,15 +7,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public abstract class FriendlyNPC : BaseNPC, Interactable
+public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
 {
     // TODO: these three fields should be refactored out of here
     [SerializeField] private GameObject _mapLabelDialogPrefab;
     [SerializeField] private Canvas _uiCanvas;
     private PlayerStats _playerStats;
 
-
-    public List<InteractionData> Interactions = new List<InteractionData>();
+    public List<InteractionData> Interactions { get; } = new List<InteractionData>();
 
     protected override void Start()
     {
@@ -22,18 +23,17 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
         _playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
         if (_playerStats == null)
         {
-            // TODO: error handling is shyte!
-            Debug.LogError("PlayerStats component not found on the player character.");
+            throw new Exception("PlayerStats component not found on Player");
         }
 
         Interactions.Add(new InteractionData { key = "stay", description = "Stay" });
         Interactions.Add(new InteractionData { key = "follow", description = "Follow" });
         Interactions.Add(new InteractionData { key = "goto", description = "Go To", IsAvailable = () => _playerStats.LabeledPoints.Count > 0 });
+        Interactions.Add(new InteractionData { key = "view_inventory", description = "View Inventory" });
     }
 
-    #region Interactable Interface Implementation
-
-    public string HelpText 
+#region Interactable Interface Implementation
+    public string HoverText 
     {
         get
         {
@@ -42,23 +42,16 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
         }
     }
 
-    public void OnFocus()
-    {
-        // Optional: highlight outline, play sound, etc.
-    }
+    public override void OnFocus() { }
+    public override void OnDefocus() { }
 
-    public void OnDefocus()
-    {
-        // Cleanup when not hovered
-    }
-
-    public void Interact()
+    public override void Interact(GameEntity? interactor = null)
     {
         if (!this.IsAlive) return;
         InteractionManager.Instance.OnInteractionAction += this.DoInteraction;
         InteractionManager.Instance.OpenMenu(Interactions);
     }
-    #endregion
+#endregion
 
     // TODO: this is copied from ItemInteraction.cs, should be refactored to a common base class
     private void DoInteraction(string actionName)
@@ -69,7 +62,7 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
             MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
             foreach (MethodInfo method in methods)
             {
-                InteractionActionAttribute attr = method.GetCustomAttribute<InteractionActionAttribute>();
+                ItemAction attr = method.GetCustomAttribute<ItemAction>();
                 if (attr != null && attr.ActionName == actionName)
                 {
                     method.Invoke(this, null);
@@ -80,16 +73,17 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
             type = type.BaseType;
         }
 
+        
         Debug.LogWarning($"No action found for '{actionName}' in {this.GetType().Name}");
     }
 
-    [InteractionAction("stay")]
+    [ItemAction("stay")]
     protected virtual void onStay()
     {
         this.setState(new NPCIdleState(this));
     }
 
-    [InteractionAction("follow")]
+    [ItemAction("follow")]
     protected virtual void onFollow()
     {
         this.Panic();
@@ -106,7 +100,7 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
         }
     }
 
-    [InteractionAction("goto")]
+    [ItemAction("goto")]
     protected virtual void onGoTo()
     {
         InteractionManager.Instance.OnLateInteractionAction += ResetCursor;
@@ -143,6 +137,12 @@ public abstract class FriendlyNPC : BaseNPC, Interactable
         var options = new List<string>(_playerStats.LabeledPoints.Keys);
         options.Insert(0, "Select a label");
         labelDropdown.AddOptions(options);
+    }
+
+    [ItemAction("view_inventory")]
+    protected virtual void onViewInventory()
+    {
+        InventoryUI.Instance.ShowInventory(this);
     }
 
     private void ResetCursor()

@@ -25,8 +25,13 @@ public class EnemyInvestigateState : NPCState
     public EnemyInvestigateState(EnemyNPC enemyNPC, Vector3 investigationPoint) 
         : base(enemyNPC)
     {
+        if (this.NPC == null)
+        {
+            throw new System.ArgumentNullException(nameof(this.NPC));
+        }
+
         _enemyNPC = enemyNPC;
-        _agent = this.NPC.GetComponent<NavMeshAgent>();
+        _agent = this.NPC!.GetComponent<NavMeshAgent>();
 
         _patrolPoints.Push(enemyNPC.transform.position);
         _patrolPoints.Push(investigationPoint);
@@ -35,7 +40,7 @@ public class EnemyInvestigateState : NPCState
         {
             ViewDistance = _enemyNPC.DetectionDistance,
             ViewAngle = _enemyNPC.ViewAngle,
-            SourceTransform = this.NPC.transform,
+            SourceTransform = this.NPC!.transform,
             EyeOffset = _enemyNPC.EyeOffset,
             TargetMask = _targetMask,
             ObstacleMask = _obstacleMask
@@ -74,13 +79,13 @@ public class EnemyInvestigateState : NPCState
             var target = _entityScanner.doScan(1).FirstOrDefault();
             if (target != null)
             {
-                var targetHealth = target.GetComponent<IHasHealth>();
+                var targetHealth = target.GetComponent<CharacterEntity>();
                 if (targetHealth != null && targetHealth.IsAlive)
                 {
                     // this.NPC!.PushState(this);
                     return new NPCStateReturnValue(
                             NPCStateReturnValue.ActionType.ChangeState,
-                            new EnemyPursueState(this.NPC, target.transform));
+                            new EnemyPursueState(this.NPC!, targetHealth));
                 }
             }
             _timer = 0f;

@@ -7,11 +7,11 @@ using UnityEngine;
 
 
 [AttributeUsage(AttributeTargets.Method, Inherited = false)]
-public class InteractionActionAttribute : Attribute
+public class ItemAction : Attribute
 {
     public string ActionName { get; }
 
-    public InteractionActionAttribute(string actionName)
+    public ItemAction(string actionName)
     {
         ActionName = actionName;
     }
@@ -19,21 +19,41 @@ public class InteractionActionAttribute : Attribute
 
 /// <summary>
 /// This script is attached to an item in the game world to
-/// allow the player to interact with it.
+/// allow entities to interact with it.
 /// </summary>
-public class ItemInteraction : MonoBehaviour, Interactable
+public class ItemEntity : GameEntity, ItemInteractable
 {
     [SerializeField] private ItemData? _itemData;
     public ItemData? ItemData { get => _itemData; }
     
-    private EquippedItem? _equippedItemScript;
-
-    public string HelpText => $"Press [E] to interact with '{_itemData?.ItemName}'";
-
-    public void Interact()
+    private GameEntity? _ownerEntity;
+    public GameEntity? OwnerEntity
     {
+        get => _ownerEntity;
+        set => _ownerEntity = value;
+    }
+    
+    private GameEntity? _interactorEntity;
+    private CharacterEntity? _playerEntity;
+
+    public List<InteractionData> Interactions { get; } = new List<InteractionData>();
+
+    public virtual string HoverText => $"Press [E] to interact with '{_itemData?.ItemName}'";
+
+    public virtual void Interact(GameEntity? interactor = null)
+    {
+        if (ItemData == null) return;
+        
         InteractionManager.Instance.OnInteractionAction += this.DoInteraction;
-        InteractionManager.Instance.OpenMenu(_itemData?.Interactions);
+        InteractionManager.Instance.OnMenuClosed += () =>
+        {
+            InteractionManager.Instance.OnInteractionAction -= this.DoInteraction;
+            InteractionManager.Instance.OnMenuClosed -= () => { };
+            _interactorEntity = null;
+        };
+        InteractionManager.Instance.OpenMenu(Interactions);
+
+        _interactorEntity = interactor;
     }
 
     private void DoInteraction(string actionName)
@@ -44,7 +64,7 @@ public class ItemInteraction : MonoBehaviour, Interactable
             MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
             foreach (MethodInfo method in methods)
             {
-                InteractionActionAttribute attr = method.GetCustomAttribute<InteractionActionAttribute>();
+                ItemAction attr = method.GetCustomAttribute<ItemAction>();
                 if (attr != null && attr.ActionName == actionName)
                 {
                     method.Invoke(this, null);
@@ -58,23 +78,12 @@ public class ItemInteraction : MonoBehaviour, Interactable
         Debug.LogWarning($"No action found for '{actionName}' in {this.GetType().Name}");
     }
 
-    [InteractionAction("take_equip")]
-    protected virtual void onTakeEquip()
-    {
-        _equippedItemScript?.EquipItem(this.gameObject);
-    }
-
-    public virtual void onUnequipped()
-    {
-        if (_hitCollider) _hitCollider.enabled = true;
-    }
-
-    public void OnDefocus()
+    public virtual void OnFocus()
     {
         // nothing to do
     }
 
-    public void OnFocus()
+    public virtual void OnDefocus()
     {
         // nothing to do
     }
@@ -87,17 +96,60 @@ public class ItemInteraction : MonoBehaviour, Interactable
             throw new Exception("Player GameObject not found. Make sure the Player has the 'Player' tag.");
         }
 
-        _equippedItemScript = player.GetComponent<EquippedItem>();
-        if (_equippedItemScript == null)
+        _playerEntity = player.GetComponent<CharacterEntity>();
+        if (_playerEntity == null)
         {
-            throw new Exception("EquippedItem script not found on Player. Make sure the Player has the EquippedItem component.");
+            throw new Exception("CharacterEntity script not found on Player. Make sure the Player has the CharacterEntity component.");
         }
 
         _hitCollider = GetComponent<Collider>();
         if (_hitCollider == null)
         {
-            throw new Exception("Collider not found on ItemInteraction. Make sure the item has a Collider component.");
+            throw new Exception("Collider not found on ItemEntity. Make sure the item has a Collider component.");
         }
+
+        _rigidbody = GetComponent<Rigidbody>();
+        if (_rigidbody == null)
+        {
+            //throw new Exception("Rigidbody not found on ItemEntity. Make sure the item has a Rigidbody component.");
+        }
+
+        if (_itemData != null && _itemData.Equippable)
+        {
+            Interactions.Add(new InteractionData { key = "take_equip", description = "Take/Equip" });
+        }
+
+        if (_itemData != null && _itemData.Storable)
+        {
+            Interactions.Add(new InteractionData { key = "store", description = "Store" });
+        }        
+    }
+
+    [ItemAction("take_equip")]
+    protected virtual void onTakeEquip()
+    {
+        _ownerEntity = _interactorEntity;
+        _playerEntity?.SetEquippedItem(this);
+    }
+
+    [ItemAction("store")]
+    protected virtual void onStore()
+    {
+        if (ItemData == null) return;
+        this.gameObject.SetActive(false);
+        _playerEntity?.AddItemToInventory(this);
+    }
+
+    public override float Heal(float amount)
+    {
+        // Items typically don't heal, so we can just return 0
+        return 0f;
+    }
+
+    public override float TakeDamage(float damage)
+    {
+        // Items typically don't take damage, so we can just return 0
+        return 0f;
     }
 
     /// <summary>
@@ -110,13 +162,44 @@ public class ItemInteraction : MonoBehaviour, Interactable
     private Quaternion _defaultLocalRotation;
     private Coroutine? _swingCoroutine;
     protected Collider? _hitCollider;
+    private Rigidbody? _rigidbody;
     private readonly HashSet<Collider> _alreadyHit = new HashSet<Collider>();
 
-    public virtual void onEquipped()
+    public virtual void OnEquipped()
     {
         _defaultLocalPosition = transform.localPosition;
         _defaultLocalRotation = transform.localRotation;
-        if (_hitCollider) _hitCollider.enabled = false;
+    }
+
+    public virtual void OnUnEquipped()
+    {
+        _ownerEntity = null;
+        _interactorEntity = null;
+    }
+
+    public void OnRemovePhysics()
+    {
+        _hitCollider!.enabled = false;
+        _rigidbody!.isKinematic = true;
+    }
+
+    public void OnRestorePhysics()
+    {
+        _hitCollider!.enabled = true;
+        _rigidbody!.isKinematic = false;
+    }
+
+    public void OnPickedUp(Transform equippedPoint)
+    {
+        transform.SetParent(equippedPoint);
+        transform.localPosition = _itemData!.EquippedPosition;
+        transform.localRotation = Quaternion.Euler(_itemData!.EquippedRotation);
+    }
+
+    public void OnDropped()
+    {
+        transform.SetParent(null);
+        this.gameObject.SetActive(true);
     }
 
     public virtual void Attack()
@@ -166,18 +249,19 @@ public class ItemInteraction : MonoBehaviour, Interactable
         transform.localRotation = _defaultLocalRotation;
         _swingCoroutine = null;
     }
-
+    
+    // used for collision detection when swinging the item
     private void OnTriggerEnter(Collider other)
     {
         if (_itemData == null) return;
         if ((_itemData.TargetCollisionLayers & (1 << other.gameObject.layer)) == 0) return;
         if (this.gameObject.transform.root == other.gameObject.transform.root) return;
         if (_alreadyHit.Contains(other)) return;
-        
-        var ihashealth = other.GetComponent<IHasHealth>();
-        if (ihashealth != null)
+
+        var entity = other.GetComponent<GameEntity>();
+        if (entity != null)
         {
-            ihashealth.TakeDamage(_itemData.DamageScore);
+            entity.TakeDamage(_itemData.DamageScore);
             _alreadyHit.Add(other);
         }
     }
