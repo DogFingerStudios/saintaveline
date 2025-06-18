@@ -70,7 +70,7 @@ public class EquippedItemController : MonoBehaviour
                 rb.isKinematic = false;
             }
 
-            ClearEquippedItemData();
+            clearEquippedItemData();
         }
     }
 
@@ -86,11 +86,11 @@ public class EquippedItemController : MonoBehaviour
                 rb.AddForce(Camera.main.transform.forward * _throwForce, ForceMode.VelocityChange);
             }
 
-            ClearEquippedItemData();
+            clearEquippedItemData();
         }
     }
 
-    private void ClearEquippedItemData()
+    private void clearEquippedItemData()
     {
         if (_equippedItem != null)
         {
