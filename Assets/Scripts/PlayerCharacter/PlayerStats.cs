@@ -48,7 +48,7 @@ public class PlayerStats : MonoBehaviour, IHasHealth
     {
         if (Health <= 0)
         {
-            SceneManager.LoadScene("MainMenu"); 
+            SceneManager.LoadScene("GameOver"); 
         }
     }
 }
