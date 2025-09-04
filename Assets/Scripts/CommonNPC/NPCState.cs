@@ -35,4 +35,9 @@ public abstract class NPCState
     public abstract void Enter();
     public abstract void Exit();
     public abstract NPCStateReturnValue? Update();
+
+    public virtual void HandleSound(SoundStimulus stim)
+    {
+        // do nothing
+    }
 }

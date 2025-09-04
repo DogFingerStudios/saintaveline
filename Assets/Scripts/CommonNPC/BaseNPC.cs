@@ -5,7 +5,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseNPC : MonoBehaviour, IHasHealth
+public interface IHearingSensor
+{
+    Vector3 Position { get; }
+    void HandleSound(SoundStimulus stim);
+}
+
+public class BaseNPC : MonoBehaviour, IHasHealth, IHearingSensor
 {
     [SerializeField]
     [Tooltip("The AudioSource component for playing NPC sounds")]
@@ -156,5 +162,23 @@ public class BaseNPC : MonoBehaviour, IHasHealth
         if (stateMachine == null) return;
         stateMachine.Update();
     }
-    
+
+    private void OnEnable()
+    {
+        StimulusBus.Register(this);
+        StimulusBus.OnSoundEmitted += HandleSound;
+    }
+
+    private void OnDisable()
+    {
+        StimulusBus.OnSoundEmitted -= HandleSound;
+        StimulusBus.Unregister(this);
+    }
+
+    public Vector3 Position => transform.position;
+    public virtual void HandleSound(SoundStimulus stim)
+    {
+        string objectName = this.name;
+        Debug.Log($"Object {objectName} heard a {stim.Kind} at {stim.Position}");
+    }
 }
