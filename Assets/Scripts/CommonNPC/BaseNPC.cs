@@ -5,13 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IHearingSensor
-{
-    Vector3 Position { get; }
-    void HandleSound(SoundStimulus stim);
-}
-
-public class BaseNPC : GameEntity, IHearingSensor
+public class BaseNPC : CharacterEntity, IHearingSensor
 {
     [SerializeField]
     [Tooltip("The AudioSource component for playing NPC sounds")]
