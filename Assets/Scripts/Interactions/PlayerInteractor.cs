@@ -24,7 +24,7 @@ public class PlayerInteractor : MonoBehaviour
 #endregion
 
     public GameObject? FocusedObject = null;    
-    private Interactable? _currentFocus;
+    private ItemInteractable? _currentFocus;
 
     private EquippedItemController? _equippedItemCtrl;
     private ItemEntity? _itemEntity = null;
@@ -46,7 +46,7 @@ public class PlayerInteractor : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, interactRange, ~0))
         {
-            Interactable interactable = hit.collider.GetComponent<Interactable>();
+            ItemInteractable interactable = hit.collider.GetComponent<ItemInteractable>();
             if (interactable != null)
             {
                 if (interactable != _currentFocus)

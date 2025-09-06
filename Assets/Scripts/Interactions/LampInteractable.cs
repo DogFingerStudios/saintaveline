@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class LampInteractable : MonoBehaviour, Interactable
+public class LampInteractable : MonoBehaviour, ItemInteractable
 {
     public Light Light;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DrawerInteractable : MonoBehaviour, Interactable
+public class DrawerInteractable : MonoBehaviour, ItemInteractable
 {
     public string HelpText
     {
