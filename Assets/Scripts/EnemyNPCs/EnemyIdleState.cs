@@ -88,7 +88,7 @@ public class EnemyIdleState : NPCState
             var target = doScan();
             if (target != null)
             {
-                var entity = target.GetComponent<GameEntity>();
+                var entity = target.GetComponent<CharacterEntity>();
                 if (entity != null && entity.IsAlive)
                 {
                     this.NPC!.PushState(this);

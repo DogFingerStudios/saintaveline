@@ -74,13 +74,13 @@ public class EnemyInvestigateState : NPCState
             var target = _entityScanner.doScan(1).FirstOrDefault();
             if (target != null)
             {
-                var targetHealth = target.GetComponent<IHasHealth>();
+                var targetHealth = target.GetComponent<CharacterEntity>();
                 if (targetHealth != null && targetHealth.IsAlive)
                 {
                     // this.NPC!.PushState(this);
                     return new NPCStateReturnValue(
                             NPCStateReturnValue.ActionType.ChangeState,
-                            new EnemyPursueState(this.NPC, target.transform));
+                            new EnemyPursueState(this.NPC, targetHealth));
                 }
             }
             _timer = 0f;
