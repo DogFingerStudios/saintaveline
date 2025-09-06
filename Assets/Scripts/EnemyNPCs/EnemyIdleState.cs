@@ -23,6 +23,9 @@ public class EnemyIdleState : NPCState
     private readonly float _idleOscillationSpeed = 0.5f;
     private readonly float _maxIdleAngle = 45f;
 
+    private NPCState? _nextState = null;
+    private bool _firstTime = true;
+
     public EnemyIdleState(EnemyNPC enemyNPC)
         : base(enemyNPC)
     {
@@ -51,10 +54,18 @@ public class EnemyIdleState : NPCState
 
     public override void Enter()
     {
-        _originalDirection = this.NPC!.transform.forward.normalized;
-        if (_defaultPosition == null)
+        if (_firstTime)
         {
-            _defaultPosition = this.NPC!.transform.position;
+            _originalDirection = this.NPC!.transform.forward.normalized;
+            if (_defaultPosition == null)
+            {
+                _defaultPosition = this.NPC!.transform.position;
+            }
+            _firstTime = false;
+        }
+        else
+        {
+            turnTowards(_originalDirection);
         }
 
         _idleOscillationTime = 0f;
@@ -62,6 +73,15 @@ public class EnemyIdleState : NPCState
 
     public override NPCStateReturnValue? Update()
     {
+        if (_nextState != null)
+        {
+            this.NPC!.PushState(this);
+            return new NPCStateReturnValue(
+                NPCStateReturnValue.ActionType.ChangeState,
+                _nextState
+            );
+        }
+
         _timer += Time.deltaTime;
         if (_timer >= _scanInterval)
         {
@@ -108,6 +128,7 @@ public class EnemyIdleState : NPCState
 
     public override void Exit()
     {
+        _nextState = null;
         if (_agent == null) return;
         _agent.isStopped = true;
         _agent.ResetPath();
@@ -130,6 +151,16 @@ public class EnemyIdleState : NPCState
                 targetRotation,
                 this.NPC!.rotationSpeed * Time.deltaTime
             );
+        }
+    }
+
+    public override void HandleSound(SoundStimulus stim)
+    {
+        base.HandleSound(stim);
+
+        if (stim.Kind == StimulusKind.Gunshot)
+        {
+            _nextState = new EnemyInvestigateState(_enemyNPC, stim.Position);
         }
     }
 }

@@ -1,9 +1,12 @@
 #nullable enable
+using System;
 using UnityEngine;
 using System.Collections;
 
 public class PistolInteraction : ItemEntity
 {
+    public static event Action<Vector3> OnGunFired;
+
     private Quaternion _defaultRotation;
     private Coroutine? _attackCoroutine;
     private PistolItemData? _pistolItemData;
@@ -152,6 +155,11 @@ public class PistolInteraction : ItemEntity
         yield return new WaitForSeconds(0.05f);
 
         _lineRenderer.enabled = false;
-        // // OnGunFired?.Invoke();
+        StimulusBus.Emit2(new SoundStimulus
+        {
+            Position = this.transform.position,
+            Kind = StimulusKind.Gunshot,
+            HearingRange = _pistolItemData!.AudioRange
+        });
     }
 }
