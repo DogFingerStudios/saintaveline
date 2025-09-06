@@ -19,6 +19,9 @@ public class EnemyPatrolState : NPCState
 
     private EntityScanner _entityScanner;
 
+    private NPCState? _nextState = null;
+    private bool _firstTime = true;
+
     public EnemyPatrolState(EnemyNPC enemyNPC) 
         : base(enemyNPC)
     {
@@ -51,6 +54,15 @@ public class EnemyPatrolState : NPCState
 
     public override NPCStateReturnValue? Update()
     {
+        if (_nextState != null)
+        {
+            this.NPC!.PushState(this);
+            return new NPCStateReturnValue(
+                NPCStateReturnValue.ActionType.ChangeState,
+                _nextState
+            );
+        }
+
         if (!_agent.pathPending && _agent.remainingDistance < _enemyNPC.ArrivalThreshold)
         {
             _currentIndex = (_currentIndex + 1) % _enemyNPC.PatrolPoints.Length;
@@ -80,6 +92,16 @@ public class EnemyPatrolState : NPCState
 
     public override void Exit()
     {
-        // nothing to do
+        _nextState = null;
+    }
+
+    public override void HandleSound(SoundStimulus stim)
+    {
+        base.HandleSound(stim);
+
+        if (stim.Kind == StimulusKind.Gunshot)
+        {
+            _nextState = new EnemyInvestigateState(_enemyNPC, stim.Position);
+        }
     }
 }

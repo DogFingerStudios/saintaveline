@@ -30,6 +30,16 @@ public class EnemyNPC : BaseNPC
         }
     }
 
+    public override void HandleSound(SoundStimulus stim)
+    {
+        base.HandleSound(stim);
+
+        if (stim.Kind == StimulusKind.Gunshot)
+        {
+            this.stateMachine.CurrentState?.HandleSound(stim);
+        }
+    }
+
     #region Unit Tests
 
     [Test]
