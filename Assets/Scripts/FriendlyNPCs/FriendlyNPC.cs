@@ -12,7 +12,7 @@ public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
     [SerializeField] private Canvas _uiCanvas;
     private PlayerStats _playerStats;
 
-    public List<InteractionData> Interactions = new List<InteractionData>();
+    public List<InteractionData> Interactions { get; } = new List<InteractionData>();
 
     protected override void Start()
     {

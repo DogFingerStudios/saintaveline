@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class DrawerInteractable : MonoBehaviour, ItemInteractable
+// public class DrawerInteractable : MonoBehaviour, ItemInteractable
+public class DrawerInteractable : ItemEntity
 {
     public string HoverText
     {

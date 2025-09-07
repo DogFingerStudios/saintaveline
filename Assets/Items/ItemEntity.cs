@@ -36,6 +36,13 @@ public class ItemEntity : GameEntity, ItemInteractable
     private GameEntity? _interactorEntity;
     private EquippedItemController? _equippedItemCtrl;
 
+    public List<InteractionData> Interactions { get;}= new List<InteractionData>();
+
+    public ItemEntity()
+    {
+
+    }
+
     public string HoverText => $"Press [E] to interact with '{_itemData?.ItemName}'";
 
     public void Interact(GameEntity? interactor = null)
@@ -47,7 +54,7 @@ public class ItemEntity : GameEntity, ItemInteractable
             InteractionManager.Instance.OnMenuClosed -= () => { };
             _interactorEntity = null;
         };
-        InteractionManager.Instance.OpenMenu(_itemData?.Interactions);
+        InteractionManager.Instance.OpenMenu(Interactions);
 
         _interactorEntity = interactor;
     }
@@ -119,6 +126,16 @@ public class ItemEntity : GameEntity, ItemInteractable
         {
             throw new Exception("Collider not found on ItemEntity. Make sure the item has a Collider component.");
         }
+
+        if (ItemData.Equippable)
+        {
+            Interactions.Add(new InteractionData { key = "take_equip", description = "Take/Equip" });
+        }
+
+        if (ItemData.Storable)
+        {
+            Interactions.Add(new InteractionData { key = "store", description = "Store" });
+        }        
     }
 
     public override float Heal(float amount)
