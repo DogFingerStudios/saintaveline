@@ -24,7 +24,7 @@ public class PlayerInteractor : MonoBehaviour
 #endregion
 
     public GameObject? FocusedObject = null;    
-    private ItemInteractable? _currentFocus;
+    private IInteractable? _currentFocus;
 
     private EquippedItemController? _equippedItemCtrl;
     private ItemEntity? _itemEntity = null;
@@ -46,7 +46,7 @@ public class PlayerInteractor : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, interactRange, ~0))
         {
-            ItemInteractable interactable = hit.collider.GetComponent<ItemInteractable>();
+            IInteractable interactable = hit.collider.GetComponent<IInteractable>();
             if (interactable != null)
             {
                 if (interactable != _currentFocus)
@@ -63,7 +63,7 @@ public class PlayerInteractor : MonoBehaviour
                     if (helpTextUI != null)
                     {
                         helpTextUI.gameObject.SetActive(true);
-                        helpTextUI.text = interactable.HelpText;
+                        helpTextUI.text = interactable.HoverText;
                     }
 
                     FocusedObject = hit.collider.gameObject;
@@ -72,7 +72,6 @@ public class PlayerInteractor : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))
                 {
                     _currentFocus!.Interact();
-
                 }
             }
             else

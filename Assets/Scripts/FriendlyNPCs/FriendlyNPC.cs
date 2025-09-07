@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public abstract class FriendlyNPC : BaseNPC, ItemInteractable
+public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
 {
     // TODO: these three fields should be refactored out of here
     [SerializeField] private GameObject _mapLabelDialogPrefab;
@@ -31,7 +31,7 @@ public abstract class FriendlyNPC : BaseNPC, ItemInteractable
     }
 
 #region Interactable Interface Implementation
-    public override string HelpText 
+    public string HoverText 
     {
         get
         {

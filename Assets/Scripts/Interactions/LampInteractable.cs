@@ -5,7 +5,7 @@ public class LampInteractable : MonoBehaviour, ItemInteractable
 {
     public Light Light;
 
-    public string HelpText
+    public string HoverText
     {
         get { return "Press [E] to toggle lamp"; }
     }

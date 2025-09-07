@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DrawerInteractable : MonoBehaviour, ItemInteractable
 {
-    public string HelpText
+    public string HoverText
     {
         get { return "Press [E] to open/close drawer"; }
     }

@@ -36,7 +36,7 @@ public class ItemEntity : GameEntity, ItemInteractable
     private GameEntity? _interactorEntity;
     private EquippedItemController? _equippedItemCtrl;
 
-    public string HelpText => $"Press [E] to interact with '{_itemData?.ItemName}'";
+    public string HoverText => $"Press [E] to interact with '{_itemData?.ItemName}'";
 
     public void Interact(GameEntity? interactor = null)
     {
