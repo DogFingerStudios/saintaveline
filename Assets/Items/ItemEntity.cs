@@ -36,17 +36,14 @@ public class ItemEntity : GameEntity, ItemInteractable
     private GameEntity? _interactorEntity;
     private EquippedItemController? _equippedItemCtrl;
 
-    public List<InteractionData> Interactions { get;}= new List<InteractionData>();
+    public List<InteractionData> Interactions { get;} = new List<InteractionData>();
 
-    public ItemEntity()
-    {
-
-    }
-
-    public string HoverText => $"Press [E] to interact with '{_itemData?.ItemName}'";
+    public string HoverText => $"Press [E] to interact!! with '{_itemData?.ItemName}'";
 
     public void Interact(GameEntity? interactor = null)
     {
+        if (ItemData == null) return;
+        
         InteractionManager.Instance.OnInteractionAction += this.DoInteraction;
         InteractionManager.Instance.OnMenuClosed += () =>
         {
@@ -127,12 +124,12 @@ public class ItemEntity : GameEntity, ItemInteractable
             throw new Exception("Collider not found on ItemEntity. Make sure the item has a Collider component.");
         }
 
-        if (ItemData.Equippable)
+        if (_itemData.Equippable)
         {
             Interactions.Add(new InteractionData { key = "take_equip", description = "Take/Equip" });
         }
 
-        if (ItemData.Storable)
+        if (_itemData.Storable)
         {
             Interactions.Add(new InteractionData { key = "store", description = "Store" });
         }        
