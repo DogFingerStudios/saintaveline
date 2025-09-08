@@ -2135,6 +2135,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bec677ef091fa94db3b5c72a886e6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  _itemData: {fileID: 0}
 --- !u!64 &136460580
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -2308,6 +2311,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd1fcec2fd31b34c94d734a3c1c3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  _itemData: {fileID: 0}
   Light: {fileID: 0}
   lampSwitchSound: {fileID: 8300000, guid: 89943cedd1ae98e4ebf6486a350b1c6e, type: 3}
   minTurnOnDelay: 0
@@ -3890,6 +3896,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd1fcec2fd31b34c94d734a3c1c3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  _itemData: {fileID: 0}
   Light: {fileID: 0}
   lampSwitchSound: {fileID: 8300000, guid: 89943cedd1ae98e4ebf6486a350b1c6e, type: 3}
   minTurnOnDelay: 0
@@ -4044,6 +4053,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bec677ef091fa94db3b5c72a886e6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  _itemData: {fileID: 0}
 --- !u!1 &312563517
 GameObject:
   m_ObjectHideFlags: 0
@@ -4263,6 +4275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bec677ef091fa94db3b5c72a886e6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  _itemData: {fileID: 0}
 --- !u!1 &322283499
 GameObject:
   m_ObjectHideFlags: 0
@@ -14267,6 +14282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd1fcec2fd31b34c94d734a3c1c3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  _itemData: {fileID: 0}
   Light: {fileID: 0}
   lampSwitchSound: {fileID: 8300000, guid: 89943cedd1ae98e4ebf6486a350b1c6e, type: 3}
   minTurnOnDelay: 0
@@ -15986,6 +16004,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd1fcec2fd31b34c94d734a3c1c3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  _itemData: {fileID: 0}
   Light: {fileID: 0}
   lampSwitchSound: {fileID: 8300000, guid: 89943cedd1ae98e4ebf6486a350b1c6e, type: 3}
   minTurnOnDelay: 0
@@ -21315,6 +21336,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7807829936736204002, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1417590829}
+    - targetCorrespondingSourceObject: {fileID: 7807829936736204002, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1417590839}
   m_SourcePrefab: {fileID: 100100000, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
 --- !u!4 &1417590809 stripped
 Transform:
@@ -21345,6 +21369,18 @@ MonoBehaviour:
   _labelDialogPrefab: {fileID: 6646257790910238232, guid: c31ebbba836ac2746b5898eef3e8d4c0, type: 3}
   _uiCanvas: {fileID: 611449828}
   _crossHair: {fileID: 184610867}
+--- !u!114 &1417590839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196729777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1be5843e0ab4f4d8d0428d14537689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1420169112
 GameObject:
   m_ObjectHideFlags: 0
@@ -25768,6 +25804,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd1fcec2fd31b34c94d734a3c1c3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  _itemData: {fileID: 0}
   Light: {fileID: 0}
   lampSwitchSound: {fileID: 0}
   minTurnOnDelay: 0
@@ -26492,6 +26531,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd1fcec2fd31b34c94d734a3c1c3690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  _itemData: {fileID: 0}
   Light: {fileID: 0}
   lampSwitchSound: {fileID: 0}
   minTurnOnDelay: 0
@@ -28065,7 +28107,6 @@ MonoBehaviour:
   target: {fileID: 1417590809}
   _mapLabelDialogPrefab: {fileID: 4309021723165264976, guid: 0fbe6e54d5a8f9c4cb034e89f5cf38ab, type: 3}
   _uiCanvas: {fileID: 1711401046}
-  Interactions: []
 --- !u!95 &1747406718
 Animator:
   serializedVersion: 7
@@ -31418,6 +31459,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bec677ef091fa94db3b5c72a886e6d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 100
+  MaxHealth: 100
+  _itemData: {fileID: 0}
 --- !u!1001 &1998405451
 PrefabInstance:
   m_ObjectHideFlags: 0

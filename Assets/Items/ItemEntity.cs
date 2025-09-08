@@ -35,10 +35,11 @@ public class ItemEntity : GameEntity, ItemInteractable
     
     private GameEntity? _interactorEntity;
     private EquippedItemController? _equippedItemCtrl;
+    private CharacterInventory? _playerInventory;
 
-    public List<InteractionData> Interactions { get;} = new List<InteractionData>();
+    public List<InteractionData> Interactions { get; } = new List<InteractionData>();
 
-    public string HoverText => $"Press [E] to interact!! with '{_itemData?.ItemName}'";
+    public string HoverText => $"Press [E] to interact with '{_itemData?.ItemName}'";
 
     public void Interact(GameEntity? interactor = null)
     {
@@ -78,15 +79,6 @@ public class ItemEntity : GameEntity, ItemInteractable
         Debug.LogWarning($"No action found for '{actionName}' in {this.GetType().Name}");
     }
 
-    [ItemAction("take_equip")]
-    protected virtual void onTakeEquip()
-    {
-        _ownerEntity = _interactorEntity;
-        // _ownerEntity.SetEquippedItem(this.gameObject);
-
-        _equippedItemCtrl?.SetEquippedItem(this.gameObject);
-    }
-
     public virtual void onUnequipped()
     {
         if (_hitCollider) _hitCollider.enabled = true;
@@ -118,21 +110,44 @@ public class ItemEntity : GameEntity, ItemInteractable
             throw new Exception("EquippedItem script not found on Player. Make sure the Player has the EquippedItem component.");
         }
 
+        _playerInventory = player.GetComponent<CharacterInventory>();
+        if (_playerInventory == null)
+        {
+            throw new Exception("CharacterInventory script not found on Player. Make sure the Player has the CharacterInventory component.");
+        }
+
         _hitCollider = GetComponent<Collider>();
         if (_hitCollider == null)
         {
             throw new Exception("Collider not found on ItemEntity. Make sure the item has a Collider component.");
         }
 
-        if (_itemData.Equippable)
+        if (_itemData != null && _itemData.Equippable)
         {
             Interactions.Add(new InteractionData { key = "take_equip", description = "Take/Equip" });
         }
 
-        if (_itemData.Storable)
+        if (_itemData != null && _itemData.Storable)
         {
             Interactions.Add(new InteractionData { key = "store", description = "Store" });
         }        
+    }
+
+    [ItemAction("take_equip")]
+    protected virtual void onTakeEquip()
+    {
+        _ownerEntity = _interactorEntity;
+        _equippedItemCtrl?.SetEquippedItem(this.gameObject);
+    }
+
+    [ItemAction("store")]
+    protected virtual void onStore()
+    {
+        if (_playerInventory == null) return;
+        if (ItemData == null) return;
+
+        this.gameObject.SetActive(false);
+        _playerInventory.Items.Add(this);
     }
 
     public override float Heal(float amount)

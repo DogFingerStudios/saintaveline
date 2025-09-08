@@ -12,6 +12,9 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     private AudioSource _audioSource;
     public AudioSource AudioSource { get => _audioSource; }
 
+    private CharacterInventory _inventory = new CharacterInventory();
+    public CharacterInventory Inventory { get => _inventory; set => _inventory = value; }
+
     [SerializeField] 
     EntityProfile _entityProfile;
     public EntityProfile Profile

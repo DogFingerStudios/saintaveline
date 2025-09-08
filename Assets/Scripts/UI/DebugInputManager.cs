@@ -22,10 +22,23 @@ public class DebugInputManager : MonoBehaviour
         {
             playerEntity.TakeDamage(5f);
         }
-        
+
         if (Input.GetKeyDown(KeyCode.F12))
         {
-            SceneManager.LoadScene("Game"); 
+            SceneManager.LoadScene("Game");
+        }
+
+        if (Input.GetKeyDown(KeyCode.F11))
+        {
+            var player = GameObject.FindGameObjectWithTag("Player");
+            var playerInventory = player.GetComponent<CharacterInventory>();
+            if (playerInventory == null) return;
+            
+            Debug.Log("Player Inventory Items:");
+            foreach (var item in playerInventory.Items)
+            {
+                Debug.Log($"Item: {item.name}");
+            }
         }
     }
 }
