@@ -147,7 +147,7 @@ public class ItemEntity : GameEntity, ItemInteractable
         if (ItemData == null) return;
 
         this.gameObject.SetActive(false);
-        _playerInventory.Items.Add(this);
+        _playerInventory.AddItem(this);
     }
 
     public override float Heal(float amount)
