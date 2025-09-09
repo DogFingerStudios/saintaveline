@@ -9,6 +9,7 @@ public class Bouncer : MonoBehaviour
 
     void Start()
     {
+        GetComponent<SpriteRenderer>().enabled = true;
         startPos = transform.position;
     }
 
