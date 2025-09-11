@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterEntity : GameEntity
 {
+    public List<ItemEntity> Inventory = new List<ItemEntity>();
+
     public override float Heal(float amount)
     {
         Health += amount;

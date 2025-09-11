@@ -122,6 +122,18 @@ public class PlayerInteractor : MonoBehaviour
                 _itemEntity = null;
             }
         }
+        else if (Input.GetKeyDown(KeyCode.F11))
+        {
+            if (InventoryUI.Instance.InventoryPanel.activeSelf) return;
+
+            var playerEntity = this.GetComponentInParent<CharacterEntity>();
+            if (playerEntity == null)
+            {
+                throw new System.Exception("PlayerInteractor: CharacterEntity script not found on Player object.");
+            }
+
+            InventoryUI.Instance.ShowInventory(playerEntity);
+        }
         else if (Input.GetMouseButtonDown(0))
         {
             if (_itemEntity != null)
@@ -132,7 +144,7 @@ public class PlayerInteractor : MonoBehaviour
         else if (Input.GetMouseButtonDown(1))
         {
             _equippedItemCtrl.ThrowEquippedItem();
-            _itemEntity = null; 
+            _itemEntity = null;
         }
     }
 }

@@ -35,7 +35,7 @@ public class ItemEntity : GameEntity, ItemInteractable
     
     private GameEntity? _interactorEntity;
     private EquippedItemController? _equippedItemCtrl;
-    private CharacterInventory? _playerInventory;
+    private CharacterEntity? _playerEntity;
 
     public List<InteractionData> Interactions { get; } = new List<InteractionData>();
 
@@ -110,10 +110,10 @@ public class ItemEntity : GameEntity, ItemInteractable
             throw new Exception("EquippedItem script not found on Player. Make sure the Player has the EquippedItem component.");
         }
 
-        _playerInventory = player.GetComponent<CharacterInventory>();
-        if (_playerInventory == null)
+        _playerEntity = player.GetComponent<CharacterEntity>();
+        if (_playerEntity == null)
         {
-            throw new Exception("CharacterInventory script not found on Player. Make sure the Player has the CharacterInventory component.");
+            throw new Exception("CharacterEntity script not found on Player. Make sure the Player has the CharacterEntity component.");
         }
 
         _hitCollider = GetComponent<Collider>();
@@ -143,11 +143,9 @@ public class ItemEntity : GameEntity, ItemInteractable
     [ItemAction("store")]
     protected virtual void onStore()
     {
-        if (_playerInventory == null) return;
         if (ItemData == null) return;
-
         this.gameObject.SetActive(false);
-        _playerInventory.AddItem(this);
+        _playerEntity?.Inventory.Add(this);
     }
 
     public override float Heal(float amount)

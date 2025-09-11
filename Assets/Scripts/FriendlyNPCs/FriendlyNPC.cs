@@ -28,6 +28,7 @@ public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
         Interactions.Add(new InteractionData { key = "stay", description = "Stay" });
         Interactions.Add(new InteractionData { key = "follow", description = "Follow" });
         Interactions.Add(new InteractionData { key = "goto", description = "Go To", IsAvailable = () => _playerStats.LabeledPoints.Count > 0 });
+        Interactions.Add(new InteractionData { key = "view_inventory", description = "View Inventory" });
     }
 
 #region Interactable Interface Implementation
@@ -71,6 +72,7 @@ public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
             type = type.BaseType;
         }
 
+        
         Debug.LogWarning($"No action found for '{actionName}' in {this.GetType().Name}");
     }
 
@@ -134,6 +136,12 @@ public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
         var options = new List<string>(_playerStats.LabeledPoints.Keys);
         options.Insert(0, "Select a label");
         labelDropdown.AddOptions(options);
+    }
+
+    [ItemAction("view_inventory")]
+    protected virtual void onViewInventory()
+    {
+        InventoryUI.Instance.ShowInventory(this);
     }
 
     private void ResetCursor()
