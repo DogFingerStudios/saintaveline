@@ -21900,6 +21900,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7807829936736204002, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1417590829}
+    - targetCorrespondingSourceObject: {fileID: 7807829936736204002, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1417590849}
   m_SourcePrefab: {fileID: 100100000, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
 --- !u!4 &1417590809 stripped
 Transform:
@@ -21930,6 +21933,19 @@ MonoBehaviour:
   _labelDialogPrefab: {fileID: 6646257790910238232, guid: c31ebbba836ac2746b5898eef3e8d4c0, type: 3}
   _uiCanvas: {fileID: 611449828}
   _crossHair: {fileID: 184610867}
+--- !u!114 &1417590849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196729777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f478baa8def12442a78d75b95d6d032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _crossHair: {fileID: 0}
 --- !u!1 &1420169112
 GameObject:
   m_ObjectHideFlags: 0
@@ -28793,6 +28809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   MaxHealth: 100
+  Inventory: []
   _audioSource: {fileID: 0}
   _entityProfile:
     _personality:

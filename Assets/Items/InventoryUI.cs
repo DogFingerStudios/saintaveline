@@ -5,7 +5,7 @@ using TMPro;
 
 public class InventoryUI : MonoBehaviour
 {
-    public static InventoryUI Instance { get; private set; }
+    public static InventoryUI Instance { get; private set; } = null;
 
     [SerializeField]
     private GameObject _inventoryPanel;
@@ -33,13 +33,13 @@ public class InventoryUI : MonoBehaviour
         _inventoryPanel.SetActive(false);
     }
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F11))
-        {
-            _inventoryPanel.SetActive(!_inventoryPanel.activeSelf);
-        }
-    }
+    //public void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.F11) || Input.GetKeyDown(KeyCode.Escape))
+    //    {
+    //        _inventoryPanel.SetActive(!_inventoryPanel.activeSelf);
+    //    }
+    //}
 
     public void ShowInventory(CharacterEntity entity)
     {
@@ -63,12 +63,17 @@ public class InventoryUI : MonoBehaviour
             Button button = newItem.GetComponent<Button>();
             if (button != null)
             {
-                // button.onClick.AddListener(() => OnItemSelected(itemName));
+                button.onClick.AddListener(() => OnItemSelected(item.ItemData.ItemName));
             }
 
             itemObjects.Add(newItem);
         }
 
         _inventoryPanel.SetActive(true);
+    }
+
+    private void OnItemSelected(string itemName)
+    {
+        Debug.Log("Selected item: " + itemName);
     }
 }
