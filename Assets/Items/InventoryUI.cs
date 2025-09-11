@@ -18,6 +18,8 @@ public class InventoryUI : MonoBehaviour
 
     private List<GameObject> itemObjects = new List<GameObject>(); // Track instantiated items
 
+    private InputManagerState? _inputState = null;
+
     public bool IsActive => _inventoryPanel.activeSelf;
 
     private void Awake()
@@ -34,16 +36,22 @@ public class InventoryUI : MonoBehaviour
         _inventoryPanel.SetActive(false);
     }
 
-    //public void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.F11) || Input.GetKeyDown(KeyCode.Escape))
-    //    {
-    //        _inventoryPanel.SetActive(!_inventoryPanel.activeSelf);
-    //    }
-    //}
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!InventoryUI.Instance.IsActive) return;
+
+            _inputState?.Dispose();
+            _inventoryPanel.SetActive(false);
+        }
+    }
 
     public void ShowInventory(CharacterEntity entity)
     {
+        _inputState = InputManager.Instance.PushState();
+        InputManager.Instance.SetState(false, CursorLockMode.None, true);
+
         foreach (GameObject item in itemObjects)
         {
             Destroy(item);
@@ -73,10 +81,10 @@ public class InventoryUI : MonoBehaviour
         _inventoryPanel.SetActive(true);
     }
 
-    public void SetActive(bool bActive)
-    {
-        _inventoryPanel.SetActive(bActive);
-    }
+    //public void SetActive(bool bActive)
+    //{
+    //    _inventoryPanel.SetActive(bActive);
+    //}
 
     private void OnItemSelected(string itemName)
     {

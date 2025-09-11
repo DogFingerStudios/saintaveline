@@ -125,12 +125,7 @@ public class PlayerInteractor : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.F11))
         {
-            InventoryUI.Instance.SetActive(!InventoryUI.Instance.IsActive);
-            if (!InventoryUI.Instance.IsActive)
-            {
-                _inputState?.Dispose();
-                return;
-            }
+            if (InventoryUI.Instance.IsActive) return;
 
             var playerEntity = this.GetComponentInParent<CharacterEntity>();
             if (playerEntity == null)
@@ -138,16 +133,26 @@ public class PlayerInteractor : MonoBehaviour
                 throw new System.Exception("PlayerInteractor: CharacterEntity script not found on Player object.");
             }
 
-            _inputState = InputManager.Instance.PushState();
-            InputManager.Instance.SetState(false, CursorLockMode.None, true);
             InventoryUI.Instance.ShowInventory(playerEntity);
-        }
-        else if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!InventoryUI.Instance.IsActive) return;
-            
-            _inputState?.Dispose();
-            InventoryUI.Instance.SetActive(false);
+
+            //InventoryUI.Instance.SetActive(!InventoryUI.Instance.IsActive);
+
+
+            //if (!InventoryUI.Instance.IsActive)
+            //{
+            //    _inputState?.Dispose();
+            //    return;
+            //}
+
+            //var playerEntity = this.GetComponentInParent<CharacterEntity>();
+            //if (playerEntity == null)
+            //{
+            //    throw new System.Exception("PlayerInteractor: CharacterEntity script not found on Player object.");
+            //}
+
+            //_inputState = InputManager.Instance.PushState();
+            //InputManager.Instance.SetState(false, CursorLockMode.None, true);
+            //InventoryUI.Instance.ShowInventory(playerEntity);
         }
         else if (Input.GetMouseButtonDown(0))
         {
