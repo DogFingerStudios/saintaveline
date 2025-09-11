@@ -1,6 +1,7 @@
+using System;
 using UnityEngine;
 
-public class InputManagerState
+public class InputManagerState : IDisposable
 {
     private InputManager _manager;
     private bool _crosshairActive = false;
@@ -9,13 +10,13 @@ public class InputManagerState
 
     public InputManagerState(InputManager manager)
     {
-        _crosshairActive = manager.CrossHair.activeSelf;
+        _manager = manager;
+        _crosshairActive = _manager.CrossHair.activeSelf;
         _cursorLockMode = Cursor.lockState;
         _cursorVisible = Cursor.visible;
     }
     
-    // define the dtor
-    ~InputManagerState()
+    public void Dispose()
     {
         _manager.CrossHair.SetActive(_crosshairActive);
         Cursor.lockState = _cursorLockMode;
@@ -58,5 +59,4 @@ public class InputManager : MonoBehaviour
         InputManagerState retval = new(this);
         return retval;
     }
-
 }

@@ -9,8 +9,7 @@ public class InventoryUI : MonoBehaviour
 
     [SerializeField]
     private GameObject _inventoryPanel;
-    public GameObject InventoryPanel { get => _inventoryPanel; }
-
+    
     [SerializeField]
     private Transform _contentPanel; // Reference to the Content object in ScrollView
 
@@ -18,6 +17,8 @@ public class InventoryUI : MonoBehaviour
     private GameObject _itemPrefab; // Reference to the item UI template (e.g., Button)
 
     private List<GameObject> itemObjects = new List<GameObject>(); // Track instantiated items
+
+    public bool IsActive => _inventoryPanel.activeSelf;
 
     private void Awake()
     {
@@ -70,6 +71,11 @@ public class InventoryUI : MonoBehaviour
         }
 
         _inventoryPanel.SetActive(true);
+    }
+
+    public void SetActive(bool bActive)
+    {
+        _inventoryPanel.SetActive(bActive);
     }
 
     private void OnItemSelected(string itemName)
