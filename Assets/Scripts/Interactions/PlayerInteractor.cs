@@ -123,7 +123,7 @@ public class PlayerInteractor : MonoBehaviour
                 _itemEntity = null;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.F11))
+        else if (Input.GetKeyDown(KeyCode.I))
         {
             if (InventoryUI.Instance.IsActive) return;
 
@@ -134,25 +134,6 @@ public class PlayerInteractor : MonoBehaviour
             }
 
             InventoryUI.Instance.ShowInventory(playerEntity);
-
-            //InventoryUI.Instance.SetActive(!InventoryUI.Instance.IsActive);
-
-
-            //if (!InventoryUI.Instance.IsActive)
-            //{
-            //    _inputState?.Dispose();
-            //    return;
-            //}
-
-            //var playerEntity = this.GetComponentInParent<CharacterEntity>();
-            //if (playerEntity == null)
-            //{
-            //    throw new System.Exception("PlayerInteractor: CharacterEntity script not found on Player object.");
-            //}
-
-            //_inputState = InputManager.Instance.PushState();
-            //InputManager.Instance.SetState(false, CursorLockMode.None, true);
-            //InventoryUI.Instance.ShowInventory(playerEntity);
         }
         else if (Input.GetMouseButtonDown(0))
         {
