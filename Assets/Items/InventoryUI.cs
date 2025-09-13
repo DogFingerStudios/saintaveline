@@ -2,10 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.UIElements;
+
+using Button = UnityEngine.UI.Button;
 
 public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance { get; private set; } = null;
+
+    [SerializeField]
+    private Button _closeButton;
 
     [SerializeField]
     private GameObject _inventoryPanel;
@@ -18,6 +24,8 @@ public class InventoryUI : MonoBehaviour
 
     private List<GameObject> itemObjects = new List<GameObject>(); // Track instantiated items
 
+    // used to preserve the state of the crosshair, cursor lock mode,
+    // and cursor visibility
     private InputManagerState? _inputState = null;
 
     public bool IsActive => _inventoryPanel.activeSelf;
@@ -34,6 +42,8 @@ public class InventoryUI : MonoBehaviour
         }
 
         _inventoryPanel.SetActive(false);
+
+        _closeButton.onClick.AddListener(() => CloseDialog());
     }
 
     public void Update()
@@ -41,9 +51,7 @@ public class InventoryUI : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (!InventoryUI.Instance.IsActive) return;
-
-            _inputState?.Dispose();
-            _inventoryPanel.SetActive(false);
+            CloseDialog();
         }
     }
 
@@ -89,5 +97,11 @@ public class InventoryUI : MonoBehaviour
     private void OnItemSelected(string itemName)
     {
         Debug.Log("Selected item: " + itemName);
+    }
+
+    private void CloseDialog()
+    {
+        _inputState?.Dispose();
+        _inventoryPanel.SetActive(false);
     }
 }

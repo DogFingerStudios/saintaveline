@@ -3,6 +3,7 @@ using NUnit.Framework.Internal.Commands;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// This script is attached to the Main Camera which is a child of the Player object.
@@ -17,7 +18,7 @@ public class PlayerInteractor : MonoBehaviour
 
 #region Interaction Interface Settings
     public float interactRange = 3f;
-    public Image? crosshairImage;
+    public UnityEngine.UI.Image? crosshairImage;
     public Color defaultColor = Color.white;
     public Color highlightColor = Color.green;
     public TextMeshProUGUI? helpTextUI;
@@ -122,6 +123,19 @@ public class PlayerInteractor : MonoBehaviour
                 _equippedItemCtrl.DropEquippedItem();
                 _itemEntity = null;
             }
+        }
+        else if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (FocusedObject == null) return;
+            var player = GameObject.FindGameObjectWithTag("Player");
+            if (player == null) return;
+            var playerEntity = player.GetComponent<CharacterEntity>();
+
+            var itemEntity = FocusedObject.GetComponent<ItemEntity>();
+            if (itemEntity == null) return;
+
+            FocusedObject.SetActive(false);
+            playerEntity!.Inventory.Add(itemEntity);
         }
         else if (Input.GetKeyDown(KeyCode.I))
         {
