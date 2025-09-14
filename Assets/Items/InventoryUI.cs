@@ -5,14 +5,19 @@ using TMPro;
 using UnityEngine.UIElements;
 
 using Button = UnityEngine.UI.Button;
+using Toggle = UnityEngine.UI.Toggle;
+using System;
 
+// This script is attached to the Inventory UI dialog prefab. 
 public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance { get; private set; } = null;
 
     [SerializeField] private Button _equipButton;
+    [SerializeField] private Button _dropButton;
     [SerializeField] private Button _useButton;
     [SerializeField] private Button _transferButton;
+    [SerializeField] private Dropdown _transferDropdown;
     [SerializeField] private Button _closeButton;
 
     [SerializeField]
@@ -32,6 +37,8 @@ public class InventoryUI : MonoBehaviour
 
     public bool IsActive => _inventoryDlg.activeSelf;
 
+    private int _selectedCount = 0;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -46,8 +53,17 @@ public class InventoryUI : MonoBehaviour
         _inventoryDlg.SetActive(false);
 
         _equipButton.onClick.AddListener(() => OnEquipButtonClicked());
+        _equipButton.interactable = false;
+
         _useButton.onClick.AddListener(() => OnUseButtonClicked());
+        _useButton.interactable = false;
+
+        _dropButton.onClick.AddListener(() => OnDropButtonClicked());
+        _dropButton.interactable = false;
+
         _transferButton.onClick.AddListener(() => OnTransferButtonClicked());
+        _transferButton.interactable = false;
+
         _closeButton.onClick.AddListener(() => CloseDialog());
     }
 
@@ -85,10 +101,18 @@ public class InventoryUI : MonoBehaviour
             var tag = newItem.GetComponent<InventoryItemEntityTag>();
             if (tag != null) tag.ItemEntity = item;
 
-            Button button = newItem.GetComponent<Button>();
-            if (button != null)
+            //Button button = newItem.GetComponent<Button>();
+            //if (button != null)
+            //{
+            //    button.onClick.AddListener(() => OnItemSelected(item.ItemData.ItemName));
+            //}
+
+            Toggle itemToggle = newItem.GetComponentInChildren<Toggle>();
+            if (itemToggle != null)
             {
-                button.onClick.AddListener(() => OnItemSelected(item.ItemData.ItemName));
+                itemToggle.isOn = false; 
+                itemToggle.onValueChanged.AddListener(isOn 
+                    => OnItemSelected(item.ItemData.ItemName, isOn));
             }
 
             itemObjects.Add(newItem);
@@ -97,24 +121,31 @@ public class InventoryUI : MonoBehaviour
         _inventoryDlg.SetActive(true);
     }
 
-    private void OnItemSelected(string itemName)
+    private void OnItemSelected(string itemName, bool isOn)
     {
+        _selectedCount += isOn ? 1 : - 1;
         Debug.Log("Selected item: " + itemName);
+        Debug.Log("Selected count: " + _selectedCount);
+        _equipButton.interactable = (_selectedCount == 1);
+        _useButton.interactable = (_selectedCount == 1);
+        _dropButton.interactable = (_selectedCount > 0);
+        _transferButton.interactable = (_selectedCount > 0);
     }
 
     private void OnEquipButtonClicked()
     {
-        // list all the items in the _contentPanel
-        foreach (Transform child in _contentPanel)
-        {
-            var tag = child.GetComponent<InventoryItemEntityTag>();
-            if (tag != null && tag.ItemEntity != null)
-            {
-                Debug.Log("Equip button clicked for item: " + tag.ItemEntity.ItemData.ItemName);
-                // Here you can add logic to equip the item
-                break; // Equip the first item found for demonstration
-            }
-        }
+        Debug.Log("Equip button clicked");
+        //// list all the items in the _contentPanel
+        //foreach (Transform child in _contentPanel)
+        //{
+        //    var tag = child.GetComponent<InventoryItemEntityTag>();
+        //    if (tag != null && tag.ItemEntity != null)
+        //    {
+        //        Debug.Log("Equip button clicked for item: " + tag.ItemEntity.ItemData.ItemName);
+        //        // Here you can add logic to equip the item
+        //        break; // Equip the first item found for demonstration
+        //    }
+        //}
     }
 
     private void OnUseButtonClicked()
@@ -125,6 +156,11 @@ public class InventoryUI : MonoBehaviour
     private void OnTransferButtonClicked()
     {
         Debug.Log("Transfer button clicked");
+    }
+
+    private void OnDropButtonClicked()
+    {
+        Debug.Log("Drop button clicked");
     }
 
     private void CloseDialog()
