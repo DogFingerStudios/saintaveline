@@ -10,11 +10,13 @@ public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance { get; private set; } = null;
 
-    [SerializeField]
-    private Button _closeButton;
+    [SerializeField] private Button _equipButton;
+    [SerializeField] private Button _useButton;
+    [SerializeField] private Button _transferButton;
+    [SerializeField] private Button _closeButton;
 
     [SerializeField]
-    private GameObject _inventoryPanel;
+    private GameObject _inventoryDlg;
     
     [SerializeField]
     private Transform _contentPanel; // Reference to the Content object in ScrollView
@@ -28,7 +30,7 @@ public class InventoryUI : MonoBehaviour
     // and cursor visibility
     private InputManagerState? _inputState = null;
 
-    public bool IsActive => _inventoryPanel.activeSelf;
+    public bool IsActive => _inventoryDlg.activeSelf;
 
     private void Awake()
     {
@@ -41,8 +43,11 @@ public class InventoryUI : MonoBehaviour
             Instance = this;
         }
 
-        _inventoryPanel.SetActive(false);
+        _inventoryDlg.SetActive(false);
 
+        _equipButton.onClick.AddListener(() => OnEquipButtonClicked());
+        _useButton.onClick.AddListener(() => OnUseButtonClicked());
+        _transferButton.onClick.AddListener(() => OnTransferButtonClicked());
         _closeButton.onClick.AddListener(() => CloseDialog());
     }
 
@@ -77,6 +82,9 @@ public class InventoryUI : MonoBehaviour
                 text.text = item.ItemData.ItemName;
             }
 
+            var tag = newItem.GetComponent<InventoryItemEntityTag>();
+            if (tag != null) tag.ItemEntity = item;
+
             Button button = newItem.GetComponent<Button>();
             if (button != null)
             {
@@ -86,22 +94,42 @@ public class InventoryUI : MonoBehaviour
             itemObjects.Add(newItem);
         }
 
-        _inventoryPanel.SetActive(true);
+        _inventoryDlg.SetActive(true);
     }
-
-    //public void SetActive(bool bActive)
-    //{
-    //    _inventoryPanel.SetActive(bActive);
-    //}
 
     private void OnItemSelected(string itemName)
     {
         Debug.Log("Selected item: " + itemName);
     }
 
+    private void OnEquipButtonClicked()
+    {
+        // list all the items in the _contentPanel
+        foreach (Transform child in _contentPanel)
+        {
+            var tag = child.GetComponent<InventoryItemEntityTag>();
+            if (tag != null && tag.ItemEntity != null)
+            {
+                Debug.Log("Equip button clicked for item: " + tag.ItemEntity.ItemData.ItemName);
+                // Here you can add logic to equip the item
+                break; // Equip the first item found for demonstration
+            }
+        }
+    }
+
+    private void OnUseButtonClicked()
+    {
+        Debug.Log("Use button clicked");
+    }
+
+    private void OnTransferButtonClicked()
+    {
+        Debug.Log("Transfer button clicked");
+    }
+
     private void CloseDialog()
     {
         _inputState?.Dispose();
-        _inventoryPanel.SetActive(false);
+        _inventoryDlg.SetActive(false);
     }
 }

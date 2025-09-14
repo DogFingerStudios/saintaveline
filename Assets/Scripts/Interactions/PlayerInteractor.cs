@@ -124,7 +124,7 @@ public class PlayerInteractor : MonoBehaviour
                 _itemEntity = null;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        else if (Input.GetKeyDown(KeyCode.Z))
         {
             if (FocusedObject == null) return;
             var player = GameObject.FindGameObjectWithTag("Player");
