@@ -1,12 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.UIElements;
-
+using UnityEngine;
 using Button = UnityEngine.UI.Button;
 using Toggle = UnityEngine.UI.Toggle;
-using System;
 
 // This script is attached to the Inventory UI dialog prefab. 
 public class InventoryUI : MonoBehaviour
@@ -17,12 +13,12 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Button _dropButton;
     [SerializeField] private Button _useButton;
     [SerializeField] private Button _transferButton;
-    [SerializeField] private Dropdown _transferDropdown;
+    [SerializeField] private TMP_Dropdown _transferDropdown;
     [SerializeField] private Button _closeButton;
 
     [SerializeField]
     private GameObject _inventoryDlg;
-    
+
     [SerializeField]
     private Transform _contentPanel; // Reference to the Content object in ScrollView
 
@@ -38,6 +34,7 @@ public class InventoryUI : MonoBehaviour
     public bool IsActive => _inventoryDlg.activeSelf;
 
     private int _selectedCount = 0;
+
 
     private void Awake()
     {
@@ -71,7 +68,8 @@ public class InventoryUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!InventoryUI.Instance.IsActive) return;
+            if (!InventoryUI.Instance.IsActive)
+                return;
             CloseDialog();
         }
     }
@@ -99,7 +97,8 @@ public class InventoryUI : MonoBehaviour
             }
 
             var tag = newItem.GetComponent<InventoryItemEntityTag>();
-            if (tag != null) tag.ItemEntity = item;
+            if (tag != null)
+                tag.ItemEntity = item;
 
             //Button button = newItem.GetComponent<Button>();
             //if (button != null)
@@ -110,8 +109,8 @@ public class InventoryUI : MonoBehaviour
             Toggle itemToggle = newItem.GetComponentInChildren<Toggle>();
             if (itemToggle != null)
             {
-                itemToggle.isOn = false; 
-                itemToggle.onValueChanged.AddListener(isOn 
+                itemToggle.isOn = false;
+                itemToggle.onValueChanged.AddListener(isOn
                     => OnItemSelected(item.ItemData.ItemName, isOn));
             }
 
@@ -123,7 +122,7 @@ public class InventoryUI : MonoBehaviour
 
     private void OnItemSelected(string itemName, bool isOn)
     {
-        _selectedCount += isOn ? 1 : - 1;
+        _selectedCount += isOn ? 1 : -1;
         Debug.Log("Selected item: " + itemName);
         Debug.Log("Selected count: " + _selectedCount);
         _equipButton.interactable = (_selectedCount == 1);
@@ -168,4 +167,5 @@ public class InventoryUI : MonoBehaviour
         _inputState?.Dispose();
         _inventoryDlg.SetActive(false);
     }
+
 }
