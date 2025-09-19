@@ -43,7 +43,7 @@ public class CharacterEntity : GameEntity
     {
         if (_inventory.Contains(item)) return;
 
-        if (_inventory.Count >= _maxInventorySize)
+        if (_inventory.Count >= MaxInventorySize)
         {
             BottomTypewriter.Instance.Enqueue("Inventory is full!");
             return;
