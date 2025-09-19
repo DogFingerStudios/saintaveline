@@ -1,11 +1,14 @@
+#nullable enable
+
 using System.Collections;
 using UnityEngine;
 
-public class LampInteractable : MonoBehaviour, Interactable
+// public class LampInteractable : MonoBehaviour, ItemInteractable
+public class LampInteractable : ItemEntity
 {
     public Light Light;
 
-    public string HelpText
+    public override string HoverText
     {
         get { return "Press [E] to toggle lamp"; }
     }
@@ -28,7 +31,7 @@ public class LampInteractable : MonoBehaviour, Interactable
         Light.enabled = false;
     }
 
-    public void Interact()
+    public override void Interact(GameEntity? interactor = null)
     {
         if (Light == null)
         {
@@ -52,12 +55,12 @@ public class LampInteractable : MonoBehaviour, Interactable
         }
     }
 
-    public void OnFocus()
+    public override void OnFocus()
     {
         // Debug.Log("Looking at lamp " + gameObject.name);
     }
 
-    public void OnDefocus()
+    public override void OnDefocus()
     {
         // Debug.Log("Defocused from lamp " + gameObject.name);
     }

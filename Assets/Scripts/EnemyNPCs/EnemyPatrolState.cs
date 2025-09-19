@@ -20,7 +20,6 @@ public class EnemyPatrolState : NPCState
     private EntityScanner _entityScanner;
 
     private NPCState? _nextState = null;
-    private bool _firstTime = true;
 
     public EnemyPatrolState(EnemyNPC enemyNPC) 
         : base(enemyNPC)
@@ -75,13 +74,13 @@ public class EnemyPatrolState : NPCState
             var target = _entityScanner.doScan(1).FirstOrDefault();
             if (target != null)
             {
-                var targetHealth = target.GetComponent<IHasHealth>();
-                if (targetHealth != null && targetHealth.IsAlive)
+                var targetEntity = target.GetComponent<GameEntity>();
+                if (targetEntity != null && targetEntity.IsAlive)
                 {
                     this.NPC!.PushState(this);
                     return new NPCStateReturnValue(
                             NPCStateReturnValue.ActionType.ChangeState,
-                            new EnemyPursueState(this.NPC, target.transform));
+                            new EnemyPursueState(this.NPC, targetEntity));
                 }
             }
             _timer = 0f;

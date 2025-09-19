@@ -3,9 +3,10 @@ using System;
 using UnityEngine;
 using System.Collections;
 
-public class PistolInteraction : ItemInteraction
+public class PistolInteraction : ItemEntity
 {
-    public static event Action<Vector3> OnGunFired;
+    // TODO: improve the way that NPCs "hear" gunshots
+    //public static event Action<Vector3> OnGunFired = null!;
 
     private Quaternion _defaultRotation;
     private Coroutine? _attackCoroutine;
@@ -17,7 +18,7 @@ public class PistolInteraction : ItemInteraction
     private bool _canFire = true;
 
     // this is called AFTER the item is equipped
-    public override void onEquipped()
+    public override void OnEquipped()
     {
         _defaultRotation = this.gameObject.transform.localRotation;
         if (_hitCollider) _hitCollider.enabled = false;
@@ -132,9 +133,10 @@ public class PistolInteraction : ItemInteraction
         
         if (Physics.Raycast(_firePoint!.position, direction, out RaycastHit hit, _pistolItemData!.FireRange))
         {
-            if (hit.collider.GetComponent<IHasHealth>() != null)
+            var entity = hit.collider.GetComponent<GameEntity>();
+            if (entity != null)
             {
-                hit.collider.GetComponent<IHasHealth>().TakeDamage(_pistolItemData!.DamageScore);
+                entity.TakeDamage(_pistolItemData!.DamageScore);
             }
 
             StartCoroutine(FireRayEffect(hit.point));

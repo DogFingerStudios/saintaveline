@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class KnifeItemInteraction : ItemInteraction
+public class KnifeItemInteraction : ItemEntity
 {
     private Vector3 _defaultLocalPosition2; 
     private Coroutine? _attackCoroutine;
@@ -19,7 +19,7 @@ public class KnifeItemInteraction : ItemInteraction
     }
 
     // this is called AFTER the item is equipped
-    public override void onEquipped()
+    public override void OnEquipped()
     {
         _defaultLocalPosition2 = this.gameObject.transform.localPosition;
         if (_hitCollider) _hitCollider.enabled = false;
