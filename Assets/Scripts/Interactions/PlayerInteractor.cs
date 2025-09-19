@@ -147,15 +147,12 @@ public class PlayerInteractor : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Z))
         {
             if (FocusedObject == null) return;
-            var player = GameObject.FindGameObjectWithTag("Player");
-            if (player == null) return;
-            var playerEntity = player.GetComponent<CharacterEntity>();
 
             var itemEntity = FocusedObject.GetComponent<ItemEntity>();
             if (itemEntity == null) return;
 
-            FocusedObject.SetActive(false);
-            playerEntity!.AddItemToInventory(itemEntity);
+            _playerEntity!.AddItemToInventory(itemEntity);
+            BottomTypewriter.Instance.Enqueue("Added item '" + itemEntity.ItemData!.ItemName + "' to inventory.");
         }
         else if (Input.GetKeyDown(KeyCode.I))
         {

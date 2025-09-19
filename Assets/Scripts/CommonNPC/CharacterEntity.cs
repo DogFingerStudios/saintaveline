@@ -1,6 +1,7 @@
 #nullable enable
 
 using NUnit.Framework.Interfaces;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,9 @@ public class CharacterEntity : GameEntity
 
     private List<ItemEntity> _inventory = new List<ItemEntity>();
     public IReadOnlyList<ItemEntity> Inventory => _inventory.AsReadOnly();
+
+    public UInt16 MaxInventorySize = 10;
+
 
     private ItemEntity? _equippedItem = null;
     public ItemEntity? EquippedItem { get => _equippedItem; }
@@ -38,6 +42,12 @@ public class CharacterEntity : GameEntity
     public void AddItemToInventory(ItemEntity item)
     {
         if (_inventory.Contains(item)) return;
+
+        if (_inventory.Count >= _maxInventorySize)
+        {
+            BottomTypewriter.Instance.Enqueue("Inventory is full!");
+            return;
+        }
 
         if (item == _equippedItem)
         {
