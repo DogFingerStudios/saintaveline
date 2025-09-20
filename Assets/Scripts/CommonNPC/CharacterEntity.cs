@@ -16,7 +16,8 @@ public class CharacterEntity : GameEntity
     private List<ItemEntity> _inventory = new List<ItemEntity>();
     public IReadOnlyList<ItemEntity> Inventory => _inventory.AsReadOnly();
 
-    public List<GameObject> InitialInventory = new List<GameObject>();
+    [SerializeField] private List<GameObject> _initialInventory = new List<GameObject>();
+    [SerializeField] private GameObject? _initialEquippedItem = null;
 
     public UInt16 MaxInventorySize = 10;
 
@@ -25,12 +26,20 @@ public class CharacterEntity : GameEntity
 
     public void Awake()
     {
-        foreach (var itemObj in InitialInventory)
+        foreach (var itemObj in _initialInventory)
         {
             GameObject newItem = Instantiate(itemObj);
             var item = newItem.GetComponent<ItemEntity>();
             item.Initialize();
             this.AddItemToInventory(item);
+        }
+
+        if (_initialEquippedItem != null)
+        {
+            GameObject newItem = Instantiate(_initialEquippedItem);
+            var item = newItem.GetComponent<ItemEntity>();
+            item.Initialize();
+            this.SetEquippedItem(item);
         }
     }
 

@@ -2534,7 +2534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: 0.000011444092
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -28593,12 +28593,11 @@ MonoBehaviour:
   Health: 100
   MaxHealth: 100
   EquippedItemPos: {fileID: 719853085}
-  InitialInventory:
+  _initialInventory:
   - {fileID: 7194513566672273187, guid: 82e2ad6bad5f94a479543b373f73109b, type: 3}
   - {fileID: 1002705123656268, guid: d86ca2f4159e6a942abd8dfc52b38395, type: 3}
   - {fileID: 3535473601529558972, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
-  - {fileID: 2225440571541060868, guid: 3d475f10d076c444d8584c1be775ba38, type: 3}
-  - {fileID: 27865462560791587, guid: 3561d375b004832418eaf9271450e06f, type: 3}
+  _initialEquippedItem: {fileID: 1002705123656268, guid: d86ca2f4159e6a942abd8dfc52b38395, type: 3}
   MaxInventorySize: 10
   _audioSource: {fileID: 0}
   _entityProfile:
