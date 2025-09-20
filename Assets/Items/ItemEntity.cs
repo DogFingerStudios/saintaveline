@@ -201,7 +201,7 @@ public class ItemEntity : GameEntity, ItemInteractable
         transform.localRotation = Quaternion.Euler(_itemData!.EquippedRotation);
     }
 
-    public void OnDropped()
+    public virtual void OnDropped()
     {
         transform.SetParent(null);
         this.gameObject.SetActive(true);
