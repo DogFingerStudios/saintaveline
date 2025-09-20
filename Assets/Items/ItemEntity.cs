@@ -88,7 +88,7 @@ public class ItemEntity : GameEntity, ItemInteractable
         // nothing to do
     }
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)

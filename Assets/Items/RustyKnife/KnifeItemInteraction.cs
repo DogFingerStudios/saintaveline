@@ -22,7 +22,7 @@ public class KnifeItemInteraction : ItemEntity
     public override void OnEquipped()
     {
         _defaultLocalPosition2 = this.gameObject.transform.localPosition;
-        if (_hitCollider) _hitCollider.enabled = false;
+        // if (_hitCollider) _hitCollider.enabled = false;
     }
 
     private IEnumerator AnimateAttack()

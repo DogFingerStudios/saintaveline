@@ -114,9 +114,13 @@ public class InventoryUI : MonoBehaviour
             }
 
             InventoryItemHelper helper = newItem.GetComponentInChildren<InventoryItemHelper>();
-            if (helper != null && helper.Thumbnail != null && item.ItemData.Thumbnail != null)
+            if (helper != null && helper.Thumbnail != null)
             {
-                helper.Thumbnail.sprite = item.ItemData.Thumbnail;
+                if (item.ItemData.Thumbnail != null)
+                {
+                    helper.Thumbnail.sprite = item.ItemData.Thumbnail;
+                }
+                
                 helper.ItemEntity = item;
             }
 
