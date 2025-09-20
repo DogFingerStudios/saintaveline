@@ -2534,7 +2534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000076293945
+      value: -0.000015258789
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2542,6 +2542,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_Options.m_Options.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[0].m_Text
+      value: Test Option 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Text
+      value: Test Option 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[0].m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[0].m_Color.g
+      value: 0.7166667
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[0].m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Color.g
+      value: 0.7166667
+      objectReference: {fileID: 0}
+    - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_Options.m_Options.Array.data[1].m_Color.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
@@ -21741,20 +21777,24 @@ PrefabInstance:
       value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 5236447535478370060, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
+      propertyPath: EquippedItemPos
+      value: 
+      objectReference: {fileID: 324129886}
+    - target: {fileID: 5236447535478370060, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: _equippedItemPos
       value: 
       objectReference: {fileID: 324129886}
     - target: {fileID: 5879038713463952829, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 562.39
+      value: 562.553
       objectReference: {fileID: 0}
     - target: {fileID: 5879038713463952829, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.26
+      value: 1.829
       objectReference: {fileID: 0}
     - target: {fileID: 5879038713463952829, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 525.2
+      value: 526.131
       objectReference: {fileID: 0}
     - target: {fileID: 5879038713463952829, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: m_LocalRotation.w
@@ -21796,7 +21836,8 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 141295902416680162, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -28808,7 +28849,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   MaxHealth: 100
-  _equippedItemPos: {fileID: 0}
+  EquippedItemPos: {fileID: 0}
+  MaxInventorySize: 10
   _audioSource: {fileID: 0}
   _entityProfile:
     _personality:

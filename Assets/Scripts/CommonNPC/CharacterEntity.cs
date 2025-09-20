@@ -12,13 +12,12 @@ using UnityEngine;
 // For NPCs, the class BaseNPC inherits from this class.
 public class CharacterEntity : GameEntity
 {
-    [SerializeField] private Transform _equippedItemPos;
+    [SerializeField] public Transform EquippedItemPos;
 
     private List<ItemEntity> _inventory = new List<ItemEntity>();
     public IReadOnlyList<ItemEntity> Inventory => _inventory.AsReadOnly();
 
     public UInt16 MaxInventorySize = 10;
-
 
     private ItemEntity? _equippedItem = null;
     public ItemEntity? EquippedItem { get => _equippedItem; }
@@ -56,7 +55,7 @@ public class CharacterEntity : GameEntity
         }
 
         item.OnRemovePhysics();
-        item.OnPickedUp(_equippedItemPos);
+        item.OnPickedUp(EquippedItemPos);
         item.gameObject.SetActive(false);
         _inventory.Add(item);
     }
@@ -77,7 +76,7 @@ public class CharacterEntity : GameEntity
 
         _equippedItem = item;
         _equippedItem.OnRemovePhysics();
-        _equippedItem.OnPickedUp(_equippedItemPos);
+        _equippedItem.OnPickedUp(EquippedItemPos);
         _equippedItem.OnEquipped();
 
         _inventory.Remove(_equippedItem);

@@ -7,6 +7,8 @@ using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
 using Toggle = UnityEngine.UI.Toggle;
 using Image = UnityEngine.UI.Image;
+using static UnityEngine.GraphicsBuffer;
+using System.Linq;
 
 // This script is attached to the Inventory UI dialog prefab. 
 public class InventoryUI : MonoBehaviour
@@ -39,7 +41,16 @@ public class InventoryUI : MonoBehaviour
 
     private int _selectedCount = 0;
 
+    private int _targetMask = 0;
+    private int _obstacleMask = 0;
+    
+    private readonly float _scanInterval = 1.0f;
+    private float _timer = 0f;
+
     private CharacterEntity? _owner = null;
+
+    private EntityScanner? _entityScanner = null;
+    private Dictionary<string, CharacterEntity> _transferTargets = new Dictionary<string, CharacterEntity>();
 
     private void Awake()
     {
@@ -67,6 +78,22 @@ public class InventoryUI : MonoBehaviour
         _transferButton.interactable = false;
 
         _closeButton.onClick.AddListener(() => CloseDialog());
+
+        var listItems = new List<string>();
+        foreach (var npc in GameObject.FindGameObjectsWithTag("FriendlyNPC"))
+        {
+            _transferTargets.Add(npc.name, npc.GetComponent<CharacterEntity>()!);
+            listItems.Add(npc.name);
+        }
+
+        // add the Player
+        _transferTargets.Add("Player", GameObject.FindGameObjectWithTag("Player")?.GetComponent<CharacterEntity>()!);
+        listItems.Add("Player");
+
+        _transferDropdown.AddOptions(listItems.OrderBy(x => x).ToList());
+
+        _targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
+        _obstacleMask = LayerMask.GetMask("Default");
     }
 
     public void Update()
@@ -75,6 +102,24 @@ public class InventoryUI : MonoBehaviour
         {
             if (!InventoryUI.Instance.IsActive) return;
             CloseDialog();
+        }
+
+        _timer += Time.deltaTime;
+        if (_timer >= _scanInterval)
+        {
+            updateNearbyNPCList();
+            _timer = 0f;
+        }
+    }
+
+    private void updateNearbyNPCList()
+    {
+        if (!IsActive || _owner == null) return;
+        Debug.Log("Scanning for nearby entities...");
+        foreach (var target in _entityScanner!.doScan())
+        {
+            var entity = target.GetComponent<CharacterEntity>();
+            Debug.Log("Found nearby entity: " + (entity != null ? entity.name : "null"));
         }
     }
 
@@ -126,8 +171,19 @@ public class InventoryUI : MonoBehaviour
             _itemObjects.Add(newItem);
         }
 
-        _selectedCount = 0;
         _owner = entity;
+
+        _entityScanner = new EntityScanner
+        {
+            ViewDistance = 1000f,
+            ViewAngle = 120,
+            SourceTransform = _owner?.transform,
+            EyeOffset = Vector3.zero, //_owner!.EquippedItemPos.position,
+            TargetMask = _targetMask,
+            ObstacleMask = _obstacleMask
+        };
+
+        _selectedCount = 0;
         _inventoryDlg.SetActive(true);
     }
 
@@ -170,7 +226,33 @@ public class InventoryUI : MonoBehaviour
 
     private void OnTransferButtonClicked()
     {
-        Debug.Log("Transfer button clicked");
+        // get the selected target NPC from `_transferDropdown`
+        string targetName = _transferDropdown.options[_transferDropdown.value].text;
+        if (!_transferTargets.ContainsKey(targetName))
+        {
+            throw new System.Exception("Transfer target not found: " + targetName);
+        }
+
+        ItemEntity? itemToTransfer = null;  
+        foreach (GameObject itemobj in _itemObjects)
+        {
+            Toggle itemToggle = itemobj.GetComponentInChildren<Toggle>();
+            if (itemToggle != null && itemToggle.isOn)
+            {
+                var tag = itemobj.GetComponent<InventoryItemHelper>();
+                if (tag != null && tag.ItemEntity != null && _owner != null)
+                {
+                    itemToTransfer = tag.ItemEntity;
+                    break;
+                }
+            }
+        }
+
+        if (itemToTransfer == null) return;
+
+        Debug.Log("Transferring item to " + targetName);
+        var entity = _transferTargets[targetName];
+        entity.AddItemToInventory(itemToTransfer);
     }
 
     private void OnDropButtonClicked()
@@ -194,6 +276,7 @@ public class InventoryUI : MonoBehaviour
 
     private void CloseDialog()
     {
+        _entityScanner = null;
         _inputState?.Dispose();
         _inventoryDlg.SetActive(false);
         _owner = null;

@@ -13,7 +13,7 @@ public sealed class BottomTypewriter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _text;
 
     [Header("Typing")]
-    [SerializeField] private float _charactersPerSecond = 40f;
+    [SerializeField] private float _charactersPerSecond = 50f;
     [SerializeField] private float _postMessageHoldSeconds = 1.0f;
     [SerializeField] private bool _useUnscaledTime = true;
 
