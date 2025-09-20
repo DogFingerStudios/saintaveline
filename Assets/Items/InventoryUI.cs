@@ -33,13 +33,6 @@ public class InventoryUI : MonoBehaviour
 
     public bool IsActive => _inventoryDlg.activeSelf;
 
-    // objects used to scan for nearby transfer targets
-    private int _targetMask = 0;
-    private int _obstacleMask = 0;
-    private EntityScanner? _entityScanner = null;
-    private readonly float _scanInterval = 1.0f;
-    private float _timer = 0f;
-
     private CharacterEntity? _owner = null;
 
     private int _selectedCount = 0;
@@ -85,9 +78,6 @@ public class InventoryUI : MonoBehaviour
         listItems.Add("Player");
 
         _transferDropdown.AddOptions(listItems.OrderBy(x => x).ToList());
-
-        _targetMask = LayerMask.GetMask("Player", "FriendlyNPC");
-        _obstacleMask = LayerMask.GetMask("Default");
     }
 
     public void Update()
@@ -96,24 +86,6 @@ public class InventoryUI : MonoBehaviour
         {
             if (!InventoryUI.Instance.IsActive) return;
             CloseDialog();
-        }
-
-        _timer += Time.deltaTime;
-        if (_timer >= _scanInterval)
-        {
-            updateNearbyNPCList();
-            _timer = 0f;
-        }
-    }
-
-    private void updateNearbyNPCList()
-    {
-        if (!IsActive || _owner == null) return;
-        Debug.Log("Scanning for nearby entities...");
-        foreach (var target in _entityScanner!.doScan())
-        {
-            var entity = target.GetComponent<CharacterEntity>();
-            Debug.Log("Found nearby entity: " + (entity != null ? entity.name : "null"));
         }
     }
 
@@ -166,17 +138,6 @@ public class InventoryUI : MonoBehaviour
         }
 
         _owner = entity;
-
-        _entityScanner = new EntityScanner
-        {
-            ViewDistance = 1000f,
-            ViewAngle = 120,
-            SourceTransform = _owner?.transform,
-            EyeOffset = Vector3.zero, //_owner!.EquippedItemPos.position,
-            TargetMask = _targetMask,
-            ObstacleMask = _obstacleMask
-        };
-
         _selectedCount = 0;
         _inventoryDlg.SetActive(true);
     }
@@ -295,7 +256,6 @@ public class InventoryUI : MonoBehaviour
 
     private void CloseDialog()
     {
-        _entityScanner = null;
         _inputState?.Dispose();
         _inventoryDlg.SetActive(false);
         _owner = null;
@@ -308,5 +268,4 @@ public class InventoryUI : MonoBehaviour
         _dropButton.interactable = (_selectedCount > 0);
         _transferButton.interactable = (_selectedCount > 0);
     }
-
 }
