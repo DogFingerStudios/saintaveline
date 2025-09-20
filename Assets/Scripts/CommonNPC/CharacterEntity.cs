@@ -13,14 +13,27 @@ using UnityEngine;
 public class CharacterEntity : GameEntity
 {
     [SerializeField] public Transform EquippedItemPos;
-    [SerializeField] private List<ItemEntity> _inventory = new List<ItemEntity>();
+    private List<ItemEntity> _inventory = new List<ItemEntity>();
     public IReadOnlyList<ItemEntity> Inventory => _inventory.AsReadOnly();
+
+    public List<GameObject> InitialInventory = new List<GameObject>();
 
     public UInt16 MaxInventorySize = 10;
 
     private ItemEntity? _equippedItem = null;
     public ItemEntity? EquippedItem { get => _equippedItem; }
-    
+
+    public void Awake()
+    {
+        foreach (var itemObj in InitialInventory)
+        {
+            GameObject newItem = Instantiate(itemObj);
+            var item = newItem.GetComponent<ItemEntity>();
+            item.Initialize();
+            this.AddItemToInventory(item);
+        }
+    }
+
     public override float Heal(float amount)
     {
         Health += amount;
@@ -40,7 +53,6 @@ public class CharacterEntity : GameEntity
     public void AddItemToInventory(ItemEntity item)
     {
         if (_inventory.Contains(item)) return;
-
         if (_inventory.Count >= MaxInventorySize)
         {
             BottomTypewriter.Instance.Enqueue("Inventory is full!");
