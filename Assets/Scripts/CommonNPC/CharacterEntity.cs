@@ -13,8 +13,7 @@ using UnityEngine;
 public class CharacterEntity : GameEntity
 {
     [SerializeField] public Transform EquippedItemPos;
-
-    private List<ItemEntity> _inventory = new List<ItemEntity>();
+    [SerializeField] private List<ItemEntity> _inventory = new List<ItemEntity>();
     public IReadOnlyList<ItemEntity> Inventory => _inventory.AsReadOnly();
 
     public UInt16 MaxInventorySize = 10;
