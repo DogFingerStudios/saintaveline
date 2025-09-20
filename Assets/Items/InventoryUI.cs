@@ -21,15 +21,9 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Button _transferButton;
     [SerializeField] private TMP_Dropdown _transferDropdown;
     [SerializeField] private Button _closeButton;
-
-    [SerializeField]
-    private GameObject _inventoryDlg;
-
-    [SerializeField]
-    private Transform _contentPanel; // Reference to the Content object in ScrollView
-
-    [SerializeField]
-    private GameObject _itemPrefab; // Reference to the item UI template (e.g., Button)
+    [SerializeField] private GameObject _inventoryDlg;
+    [SerializeField] private Transform _contentPanel;   // Reference to the Content object in ScrollView
+    [SerializeField] private GameObject _itemPrefab;    // Reference to the item UI template (e.g., Button)
 
     private List<GameObject> _itemObjects = new List<GameObject>(); // Track instantiated items
 
@@ -39,18 +33,18 @@ public class InventoryUI : MonoBehaviour
 
     public bool IsActive => _inventoryDlg.activeSelf;
 
-    private int _selectedCount = 0;
-
+    // objects used to scan for nearby transfer targets
     private int _targetMask = 0;
     private int _obstacleMask = 0;
-    
+    private EntityScanner? _entityScanner = null;
     private readonly float _scanInterval = 1.0f;
     private float _timer = 0f;
 
     private CharacterEntity? _owner = null;
 
-    private EntityScanner? _entityScanner = null;
+    private int _selectedCount = 0;
     private Dictionary<string, CharacterEntity> _transferTargets = new Dictionary<string, CharacterEntity>();
+    private float _maxTransferDistance = 7.5f;
 
     private void Awake()
     {
@@ -226,14 +220,13 @@ public class InventoryUI : MonoBehaviour
 
     private void OnTransferButtonClicked()
     {
-        // get the selected target NPC from `_transferDropdown`
         string targetName = _transferDropdown.options[_transferDropdown.value].text;
         if (!_transferTargets.ContainsKey(targetName))
         {
             throw new System.Exception("Transfer target not found: " + targetName);
         }
 
-        ItemEntity? itemToTransfer = null;  
+        List<ItemEntity> itemsToTransfer = new List<ItemEntity>();
         foreach (GameObject itemobj in _itemObjects)
         {
             Toggle itemToggle = itemobj.GetComponentInChildren<Toggle>();
@@ -242,17 +235,43 @@ public class InventoryUI : MonoBehaviour
                 var tag = itemobj.GetComponent<InventoryItemHelper>();
                 if (tag != null && tag.ItemEntity != null && _owner != null)
                 {
-                    itemToTransfer = tag.ItemEntity;
-                    break;
+                    itemsToTransfer.Add(tag.ItemEntity);
                 }
             }
         }
 
-        if (itemToTransfer == null) return;
+        if (itemsToTransfer.Count == 0) return;
 
-        Debug.Log("Transferring item to " + targetName);
         var entity = _transferTargets[targetName];
-        entity.AddItemToInventory(itemToTransfer);
+        if (entity == _owner)
+        {
+            CloseDialog();
+            BottomTypewriter.Instance.Enqueue("Cannot transfer item to self.");
+            return;
+        }
+
+        if (Vector3.Distance(_owner!.transform.position, entity!.transform.position) > _maxTransferDistance)
+        {
+            CloseDialog();
+            BottomTypewriter.Instance.Enqueue($"Cannot transfer item(s) to {targetName}: too far away.");
+            return;
+        }
+
+        foreach (var itemToTransfer in itemsToTransfer)
+        {
+            entity.AddItemToInventory(itemToTransfer);
+            _owner!.RemoveItemFromInventory(itemToTransfer);
+        }
+
+        CloseDialog();
+        if (itemsToTransfer.Count == 1)
+        {
+            BottomTypewriter.Instance.Enqueue($"Transferred '{itemsToTransfer[0].ItemData!.ItemName}' to {targetName}");
+        }
+        else
+        {
+            BottomTypewriter.Instance.Enqueue($"Transferred {itemsToTransfer.Count} items to {targetName}");
+        }
     }
 
     private void OnDropButtonClicked()

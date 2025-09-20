@@ -60,6 +60,12 @@ public class CharacterEntity : GameEntity
         _inventory.Add(item);
     }
 
+    // used when transferring items between characters
+    public void RemoveItemFromInventory(ItemEntity item)
+    {
+        _inventory.Remove(item);
+    }
+
     public ItemEntity? SetEquippedItem(ItemEntity item)
     {
         if (item.ItemData == null)
