@@ -12,17 +12,37 @@ using UnityEngine;
 // For NPCs, the class BaseNPC inherits from this class.
 public class CharacterEntity : GameEntity
 {
-    [SerializeField] private Transform _equippedItemPos;
-
+    [SerializeField] public Transform EquippedItemPos;
     private List<ItemEntity> _inventory = new List<ItemEntity>();
     public IReadOnlyList<ItemEntity> Inventory => _inventory.AsReadOnly();
 
-    public UInt16 MaxInventorySize = 10;
+    [SerializeField] private List<GameObject> _initialInventory = new List<GameObject>();
+    [SerializeField] private GameObject? _initialEquippedItem = null;
 
+    public UInt16 MaxInventorySize = 10;
 
     private ItemEntity? _equippedItem = null;
     public ItemEntity? EquippedItem { get => _equippedItem; }
-    
+
+    public void Awake()
+    {
+        foreach (var itemObj in _initialInventory)
+        {
+            GameObject newItem = Instantiate(itemObj);
+            var item = newItem.GetComponent<ItemEntity>();
+            item.Initialize();
+            this.AddItemToInventory(item);
+        }
+
+        if (_initialEquippedItem != null)
+        {
+            GameObject newItem = Instantiate(_initialEquippedItem);
+            var item = newItem.GetComponent<ItemEntity>();
+            item.Initialize();
+            this.SetEquippedItem(item);
+        }
+    }
+
     public override float Heal(float amount)
     {
         Health += amount;
@@ -42,7 +62,6 @@ public class CharacterEntity : GameEntity
     public void AddItemToInventory(ItemEntity item)
     {
         if (_inventory.Contains(item)) return;
-
         if (_inventory.Count >= MaxInventorySize)
         {
             BottomTypewriter.Instance.Enqueue("Inventory is full!");
@@ -56,9 +75,15 @@ public class CharacterEntity : GameEntity
         }
 
         item.OnRemovePhysics();
-        item.OnPickedUp(_equippedItemPos);
+        item.OnPickedUp(EquippedItemPos);
         item.gameObject.SetActive(false);
         _inventory.Add(item);
+    }
+
+    // used when transferring items between characters
+    public void RemoveItemFromInventory(ItemEntity item)
+    {
+        _inventory.Remove(item);
     }
 
     public ItemEntity? SetEquippedItem(ItemEntity item)
@@ -77,7 +102,7 @@ public class CharacterEntity : GameEntity
 
         _equippedItem = item;
         _equippedItem.OnRemovePhysics();
-        _equippedItem.OnPickedUp(_equippedItemPos);
+        _equippedItem.OnPickedUp(EquippedItemPos);
         _equippedItem.OnEquipped();
 
         _inventory.Remove(_equippedItem);

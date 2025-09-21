@@ -24,9 +24,9 @@ public class PistolInteraction : ItemEntity
         if (_hitCollider) _hitCollider.enabled = false;
     }
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
         if (this.ItemData == null)
         {

@@ -88,7 +88,12 @@ public class ItemEntity : GameEntity, ItemInteractable
         // nothing to do
     }
 
-    protected virtual void Start()
+    public void Initialize()
+    {
+        this.Awake();
+    }
+
+    protected virtual void Awake()
     {
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
@@ -196,7 +201,7 @@ public class ItemEntity : GameEntity, ItemInteractable
         transform.localRotation = Quaternion.Euler(_itemData!.EquippedRotation);
     }
 
-    public void OnDropped()
+    public virtual void OnDropped()
     {
         transform.SetParent(null);
         this.gameObject.SetActive(true);
