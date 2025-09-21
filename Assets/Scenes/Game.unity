@@ -2534,7 +2534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000015258789
+      value: 0.0000038146973
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -6497,6 +6497,10 @@ PrefabInstance:
       value: EnemyIdle
       objectReference: {fileID: 0}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: EquippedItemPos
+      value: 
+      objectReference: {fileID: 491015636}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: DetectionDistance
       value: 62.5
       objectReference: {fileID: 0}
@@ -6504,6 +6508,10 @@ PrefabInstance:
       propertyPath: detectionDistance
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: _initialEquippedItem
+      value: 
+      objectReference: {fileID: 2225440571541060868, guid: 3d475f10d076c444d8584c1be775ba38, type: 3}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 468.8
@@ -6568,6 +6576,11 @@ PrefabInstance:
 --- !u!4 &491015635 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+  m_PrefabInstance: {fileID: 491015634}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &491015636 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5746262284330423432, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
   m_PrefabInstance: {fileID: 491015634}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &495084679
@@ -15749,6 +15762,10 @@ PrefabInstance:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2026446534172248370, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2945420518909485697, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -15766,6 +15783,10 @@ PrefabInstance:
       value: EnemyIdle
       objectReference: {fileID: 0}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: EquippedItemPos
+      value: 
+      objectReference: {fileID: 987263189}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: DetectionDistance
       value: 62.5
       objectReference: {fileID: 0}
@@ -15773,6 +15794,10 @@ PrefabInstance:
       propertyPath: detectionDistance
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: _initialEquippedItem
+      value: 
+      objectReference: {fileID: 2225440571541060868, guid: 3d475f10d076c444d8584c1be775ba38, type: 3}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 510.38
@@ -15834,6 +15859,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+--- !u!4 &987263189 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5746262284330423432, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+  m_PrefabInstance: {fileID: 987263188}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &989187939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18691,6 +18721,14 @@ PrefabInstance:
       value: EnemyPatrol
       objectReference: {fileID: 0}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: EquippedItemPos
+      value: 
+      objectReference: {fileID: 1227204339}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: _initialEquippedItem
+      value: 
+      objectReference: {fileID: 2225440571541060868, guid: 3d475f10d076c444d8584c1be775ba38, type: 3}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: PatrolPoints.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -18770,6 +18808,11 @@ PrefabInstance:
 --- !u!4 &1227204338 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+  m_PrefabInstance: {fileID: 1227204337}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1227204339 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5746262284330423432, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
   m_PrefabInstance: {fileID: 1227204337}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1228404871
@@ -19938,6 +19981,14 @@ PrefabInstance:
       propertyPath: stopDistance
       value: 22.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: EquippedItemPos
+      value: 
+      objectReference: {fileID: 1309443980}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: _initialEquippedItem
+      value: 
+      objectReference: {fileID: 2225440571541060868, guid: 3d475f10d076c444d8584c1be775ba38, type: 3}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 517
@@ -19998,6 +20049,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1292355760}
   m_SourcePrefab: {fileID: 100100000, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+--- !u!4 &1309443980 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5746262284330423432, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+  m_PrefabInstance: {fileID: 1309443979}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1309578838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27222,6 +27278,14 @@ PrefabInstance:
       propertyPath: stopDistance
       value: 22.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: EquippedItemPos
+      value: 
+      objectReference: {fileID: 1669432247}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: _initialEquippedItem
+      value: 
+      objectReference: {fileID: 2225440571541060868, guid: 3d475f10d076c444d8584c1be775ba38, type: 3}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 468.39
@@ -27282,6 +27346,11 @@ PrefabInstance:
 --- !u!4 &1669432246 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+  m_PrefabInstance: {fileID: 1669432245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1669432247 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5746262284330423432, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
   m_PrefabInstance: {fileID: 1669432245}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1675504582
@@ -28609,7 +28678,7 @@ MonoBehaviour:
   - {fileID: 7194513566672273187, guid: 82e2ad6bad5f94a479543b373f73109b, type: 3}
   - {fileID: 1002705123656268, guid: d86ca2f4159e6a942abd8dfc52b38395, type: 3}
   - {fileID: 3535473601529558972, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
-  _initialEquippedItem: {fileID: 1002705123656268, guid: d86ca2f4159e6a942abd8dfc52b38395, type: 3}
+  _initialEquippedItem: {fileID: 0}
   MaxInventorySize: 10
   _audioSource: {fileID: 0}
   _entityProfile:
