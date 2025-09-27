@@ -40,9 +40,9 @@ public class GameTimeController : MonoBehaviour
     #region Public Properties
 
     [Header("--- TIME DETAILS")]
-    [Tooltip("How many real-life seconds should it take for 1 minute of in-game time to pass? Clamped to reasonable values.")]
-    [Range(0.05f, 60f)]
-    public float realSecondsPerGameMinute = 1;
+    [Tooltip("How many real seconds does a full day cycle take?")]
+    public float DayLengthInSeconds = 600f;
+    private float realSecondsPerGameMinute = 1;
     [Tooltip("What time of day should we begin? (24 hour)")]
     public ushort startingHour = 6;
     [Tooltip("How many hours are in 1 in-game day?")]
@@ -115,6 +115,8 @@ public class GameTimeController : MonoBehaviour
 
         InitListeners();
         Init();
+
+        realSecondsPerGameMinute = DayLengthInSeconds / 1440f; ;
 
         daylightHours = sunsetHour - sunriseHour;
         gameMinutesInDaylightHours = GetGameMinutesFromGameHours(daylightHours);
