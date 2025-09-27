@@ -100,28 +100,28 @@ MonoBehaviour:
   active: 1
   distance:
     m_OverrideState: 1
-    m_Value: 268
+    m_Value: 128
   baseHeight:
     m_OverrideState: 1
-    m_Value: 5
+    m_Value: 0
   maximumHeight:
     m_OverrideState: 1
-    m_Value: 100
+    m_Value: 40
   enableGround:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
   groundHeight:
     m_OverrideState: 0
     m_Value: 0
   density:
     m_OverrideState: 1
-    m_Value: 0.303
+    m_Value: 0.25
   attenuationDistance:
-    m_OverrideState: 0
-    m_Value: 128
-  enableAPVContribution:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 16
+  enableAPVContribution:
+    m_OverrideState: 0
+    m_Value: 0
   APVContributionWeight:
     m_OverrideState: 0
     m_Value: 1
@@ -129,11 +129,11 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   anisotropy:
-    m_OverrideState: 0
-    m_Value: 0.4
+    m_OverrideState: 1
+    m_Value: 0.6
   scattering:
     m_OverrideState: 1
-    m_Value: 0.264
+    m_Value: 0.2
   tint:
     m_OverrideState: 0
     m_Value: {r: 0.4292236, g: 0.8773585, b: 0.12829298, a: 1}
@@ -142,16 +142,16 @@ MonoBehaviour:
     m_Value: 1
   maxSteps:
     m_OverrideState: 1
-    m_Value: 120
+    m_Value: 128
   blurIterations:
-    m_OverrideState: 0
-    m_Value: 2
+    m_OverrideState: 1
+    m_Value: 1
   enabled:
     m_OverrideState: 1
     m_Value: 1
   renderPassEvent:
     m_OverrideState: 0
-    m_Value: 550
+    m_Value: 500
 --- !u!114 &-3034551162910960045
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -272,10 +272,10 @@ MonoBehaviour:
     m_Value: 3
   threshold:
     m_OverrideState: 1
-    m_Value: 0.6
+    m_Value: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.6
+    m_Value: 0.5
   scatter:
     m_OverrideState: 1
     m_Value: 0.5
