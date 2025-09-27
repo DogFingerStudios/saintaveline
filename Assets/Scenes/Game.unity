@@ -2410,7 +2410,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000011444092
+      value: 0.000045776367
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3335,52 +3335,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2795315529474567381, guid: bf4bafcdbe900844192625019487b5ef, type: 3}
---- !u!1 &262051613
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 262051615}
-  - component: {fileID: 262051614}
-  m_Layer: 0
-  m_Name: TerrainGroup_0
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &262051614
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262051613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ca34a6148db2d54493f84f379293f33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GroupID: 0
---- !u!4 &262051615
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 262051613}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1620, y: -63, z: -1660}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 823382371}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &267525966
 GameObject:
   m_ObjectHideFlags: 0
@@ -13277,11 +13231,11 @@ Transform:
   m_GameObject: {fileID: 823382370}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -596, y: -53, z: -636}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 262051615}
+  m_Father: {fileID: 1785627280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!154 &823382372
 TerrainCollider:
@@ -13314,10 +13268,10 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 2619dcbcbe4ce494daf9158ca648f7d0, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 2000
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_DetailObjectDistance: 485
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
   m_SplatMapDistance: 1000
@@ -28888,7 +28842,8 @@ Transform:
   m_LocalPosition: {x: -1024, y: -10, z: -1024}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 823382371}
   m_Father: {fileID: 1949006990}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1785647320
@@ -33133,11 +33088,10 @@ SceneRoots:
   - {fileID: 2069023978}
   - {fileID: 4549270097174047180}
   - {fileID: 683527052}
-  - {fileID: 1949006990}
   - {fileID: 1342548523}
   - {fileID: 1788140564}
   - {fileID: 169258218}
   - {fileID: 1499700084}
   - {fileID: 1954404678}
   - {fileID: 1231386068}
-  - {fileID: 262051615}
+  - {fileID: 1949006990}
