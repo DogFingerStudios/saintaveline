@@ -111,12 +111,12 @@ public class GameTimeController : MonoBehaviour
 
     private void Awake()
     {
+        realSecondsPerGameMinute = DayLengthInSeconds / 1440f;
+
         Instance = this;
 
         InitListeners();
         Init();
-
-        realSecondsPerGameMinute = DayLengthInSeconds / 1440f; ;
 
         daylightHours = sunsetHour - sunriseHour;
         gameMinutesInDaylightHours = GetGameMinutesFromGameHours(daylightHours);
