@@ -680,7 +680,6 @@ GameObject:
   - component: {fileID: 1939837893791073906}
   - component: {fileID: 5236447535478370060}
   - component: {fileID: 7063608046915703292}
-  - component: {fileID: 141295902416680162}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -954,8 +953,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d280eb6b4932163489f9988f0ae41ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
-  _maxHealth: 100
+  Health: 100
+  MaxHealth: 100
+  EquippedItemPos: {fileID: 0}
+  _initialInventory: []
+  _initialEquippedItem: {fileID: 0}
+  MaxInventorySize: 10
 --- !u!114 &7063608046915703292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -969,19 +972,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerObject: {fileID: 7807829936736204002}
---- !u!114 &141295902416680162
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7807829936736204002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d14aa99b6f9c2a442b65397f033b66b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _equippedItemPos: {fileID: 7976319880497320515}
 --- !u!1 &8048377322758562303
 GameObject:
   m_ObjectHideFlags: 0

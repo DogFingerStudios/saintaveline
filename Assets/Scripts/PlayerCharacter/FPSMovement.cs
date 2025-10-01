@@ -6,6 +6,7 @@ public class FPSMovement : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 5f;       // Walking speed
     public float sprintSpeedFactor = 5f; // Sprint speed factor
+    public float superSpringSpeedFactor = 10f; // Super sprint speed factor
     public float crouchSpeedFactor = 0.5f; // Crouch speed factor
     public bool isCrouching = false; // Is the player crouching?
     public float jumpHeight = 2f;      // Jump power
@@ -59,7 +60,16 @@ public class FPSMovement : MonoBehaviour
         var localMoveSpeed = moveSpeed;
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            localMoveSpeed *= sprintSpeedFactor;
+#if UNITY_EDITOR
+            if (Input.GetKey(KeyCode.Tab))
+            {
+                localMoveSpeed *= superSpringSpeedFactor;
+            }
+            else
+#endif
+            {
+                localMoveSpeed *= sprintSpeedFactor;
+            }
         }
 
         // Crouch code
