@@ -251,7 +251,6 @@ public class InventoryUI : MonoBehaviour
             _owner!.RemoveItemFromInventory(itemToTransfer);
         }
 
-        CloseDialog();
         if (itemsToTransfer.Count == 1)
         {
             BottomTypewriter.Instance.Enqueue($"Transferred '{itemsToTransfer[0].ItemData!.ItemName}' to {targetName}");
@@ -260,6 +259,8 @@ public class InventoryUI : MonoBehaviour
         {
             BottomTypewriter.Instance.Enqueue($"Transferred {itemsToTransfer.Count} items to {targetName}");
         }
+
+        CloseDialog();
     }
 
     private void OnDropButtonClicked()
