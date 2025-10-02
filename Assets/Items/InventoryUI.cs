@@ -264,7 +264,8 @@ public class InventoryUI : MonoBehaviour
 
     private void OnDropButtonClicked()
     {
-        if (_selectedCount != 1) return;
+        List<ItemEntity> droppedItems = new List<ItemEntity>();
+
         foreach (GameObject itemobj in _itemObjects)
         {
             Toggle itemToggle = itemobj.GetComponentInChildren<Toggle>();
@@ -274,11 +275,22 @@ public class InventoryUI : MonoBehaviour
                 if (tag != null && tag.ItemEntity != null && _owner != null)
                 {
                     _owner.DropItem(tag.ItemEntity);
-                    CloseDialog();
-                    return;
+                    droppedItems.Add(tag.ItemEntity);
                 }
             }
         }
+
+        if (droppedItems.Count == 1)
+        {
+            BottomTypewriter.Instance.Enqueue($"Dropped '{droppedItems[0].ItemData!.ItemName}'");
+        }
+        else
+        {
+            BottomTypewriter.Instance.Enqueue($"Dropped {droppedItems.Count} items");
+        }
+
+        CloseDialog();
+        return;
     }
 
     private void CloseDialog()
