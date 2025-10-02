@@ -100,9 +100,11 @@ public class InventoryUI : MonoBehaviour
         }
         _itemObjects.Clear();
 
-        foreach (ItemEntity item in entity.Inventory)
+        _owner = entity;
+
+        foreach (ItemEntity? item in entity.Inventory.Prepend(_owner!.EquippedItem))
         {
-            if (item.ItemData == null) continue;
+            if (item == null || item.ItemData == null) continue;
 
             GameObject newItem = Instantiate(_itemPrefab, _contentPanel);
             newItem.SetActive(true);
@@ -138,10 +140,18 @@ public class InventoryUI : MonoBehaviour
                 button.onClick.AddListener(() => OnItemClicked(newItem, item.ItemData.ItemName));
             }
 
+            if (item == _owner.EquippedItem)
+            {
+                var image = newItem.GetComponentInChildren<Image>();
+                if (image != null)
+                {
+                    image.color = new Color(0.8f, 0.8f, 1.0f, 1.0f);
+                }
+            }
+
             _itemObjects.Add(newItem);
         }
 
-        _owner = entity;
         _selectedCount = 0;
         _inventoryDlg.SetActive(true);
     }
