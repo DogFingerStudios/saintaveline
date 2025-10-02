@@ -92,8 +92,7 @@ public class InventoryUI : MonoBehaviour
 
     public void ShowInventory(CharacterEntity entity)
     {
-        _inputState = InputManager.Instance.PushState();
-        InputManager.Instance.SetState(false, CursorLockMode.None, true);
+        _inputState = InputManager.Instance.SetState(false, CursorLockMode.None, true);
 
         foreach (GameObject item in _itemObjects)
         {
