@@ -9,6 +9,7 @@ using Toggle = UnityEngine.UI.Toggle;
 using Image = UnityEngine.UI.Image;
 using static UnityEngine.GraphicsBuffer;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 // This script is attached to the Inventory UI dialog prefab. 
 public class InventoryUI : MonoBehaviour
@@ -91,8 +92,7 @@ public class InventoryUI : MonoBehaviour
 
     public void ShowInventory(CharacterEntity entity)
     {
-        _inputState = InputManager.Instance.PushState();
-        InputManager.Instance.SetState(false, CursorLockMode.None, true);
+        _inputState = InputManager.Instance.SetState(false, CursorLockMode.None, true);
 
         foreach (GameObject item in _itemObjects)
         {
@@ -100,9 +100,11 @@ public class InventoryUI : MonoBehaviour
         }
         _itemObjects.Clear();
 
-        foreach (ItemEntity item in entity.Inventory)
+        _owner = entity;
+
+        foreach (ItemEntity? item in entity.Inventory.Prepend(_owner!.EquippedItem))
         {
-            if (item.ItemData == null) continue;
+            if (item == null || item.ItemData == null) continue;
 
             GameObject newItem = Instantiate(_itemPrefab, _contentPanel);
             newItem.SetActive(true);
@@ -138,10 +140,18 @@ public class InventoryUI : MonoBehaviour
                 button.onClick.AddListener(() => OnItemClicked(newItem, item.ItemData.ItemName));
             }
 
+            if (item == _owner.EquippedItem)
+            {
+                var image = newItem.GetComponentInChildren<Image>();
+                if (image != null)
+                {
+                    image.color = new Color(0.8f, 0.8f, 1.0f, 1.0f);
+                }
+            }
+
             _itemObjects.Add(newItem);
         }
 
-        _owner = entity;
         _selectedCount = 0;
         _inventoryDlg.SetActive(true);
     }
@@ -170,7 +180,19 @@ public class InventoryUI : MonoBehaviour
                 var tag = itemobj.GetComponent<InventoryItemHelper>();
                 if (tag != null && tag.ItemEntity != null && _owner != null)
                 {
-                    _owner.SetEquippedItem(tag.ItemEntity);
+                    string msg;
+                    if (IsEquippedItemSelected())
+                    {
+                        _owner.AddItemToInventory(tag.ItemEntity);
+                        msg = $"Item '{tag.ItemEntity.ItemData!.ItemName}' unequipped.";
+                    }
+                    else
+                    {
+                        _owner.SetEquippedItem(tag.ItemEntity);
+                        msg = $"Item '{tag.ItemEntity.ItemData!.ItemName}' equipped.";
+                    }
+
+                    BottomTypewriter.Instance.Enqueue(msg);
                     CloseDialog();
                     return;
                 }
@@ -228,7 +250,6 @@ public class InventoryUI : MonoBehaviour
             _owner!.RemoveItemFromInventory(itemToTransfer);
         }
 
-        CloseDialog();
         if (itemsToTransfer.Count == 1)
         {
             BottomTypewriter.Instance.Enqueue($"Transferred '{itemsToTransfer[0].ItemData!.ItemName}' to {targetName}");
@@ -237,11 +258,14 @@ public class InventoryUI : MonoBehaviour
         {
             BottomTypewriter.Instance.Enqueue($"Transferred {itemsToTransfer.Count} items to {targetName}");
         }
+
+        CloseDialog();
     }
 
     private void OnDropButtonClicked()
     {
-        if (_selectedCount != 1) return;
+        List<ItemEntity> droppedItems = new List<ItemEntity>();
+
         foreach (GameObject itemobj in _itemObjects)
         {
             Toggle itemToggle = itemobj.GetComponentInChildren<Toggle>();
@@ -251,11 +275,22 @@ public class InventoryUI : MonoBehaviour
                 if (tag != null && tag.ItemEntity != null && _owner != null)
                 {
                     _owner.DropItem(tag.ItemEntity);
-                    CloseDialog();
-                    return;
+                    droppedItems.Add(tag.ItemEntity);
                 }
             }
         }
+
+        if (droppedItems.Count == 1)
+        {
+            BottomTypewriter.Instance.Enqueue($"Dropped '{droppedItems[0].ItemData!.ItemName}'");
+        }
+        else
+        {
+            BottomTypewriter.Instance.Enqueue($"Dropped {droppedItems.Count} items");
+        }
+
+        CloseDialog();
+        return;
     }
 
     private void CloseDialog()
@@ -271,5 +306,36 @@ public class InventoryUI : MonoBehaviour
         _useButton.interactable = (_selectedCount == 1);
         _dropButton.interactable = (_selectedCount > 0);
         _transferButton.interactable = (_selectedCount > 0);
+
+        if (IsEquippedItemSelected())
+        {
+            var text = _equipButton.GetComponentInChildren<TMP_Text>();
+            text!.text = "UnEquip";
+        }
+        else
+        {
+            var text = _equipButton.GetComponentInChildren<TMP_Text>();
+            text.text = "Equip";
+        }
+    }
+
+    private bool IsEquippedItemSelected()
+    {
+        if (_selectedCount == 1 && _itemObjects.Count > 0)
+        {
+            GameObject itemobj = _itemObjects[0];
+            Toggle itemToggle = itemobj.GetComponentInChildren<Toggle>();
+
+            if (itemToggle != null && itemToggle.isOn)
+            {
+                var tag = itemobj.GetComponent<InventoryItemHelper>();
+                if (tag != null && tag.ItemEntity == _owner!.EquippedItem)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
