@@ -9,6 +9,7 @@ using Toggle = UnityEngine.UI.Toggle;
 using Image = UnityEngine.UI.Image;
 using static UnityEngine.GraphicsBuffer;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 // This script is attached to the Inventory UI dialog prefab. 
 public class InventoryUI : MonoBehaviour
@@ -180,7 +181,19 @@ public class InventoryUI : MonoBehaviour
                 var tag = itemobj.GetComponent<InventoryItemHelper>();
                 if (tag != null && tag.ItemEntity != null && _owner != null)
                 {
-                    _owner.SetEquippedItem(tag.ItemEntity);
+                    string msg;
+                    if (IsEquippedItemSelected())
+                    {
+                        _owner.AddItemToInventory(tag.ItemEntity);
+                        msg = $"Item '{tag.ItemEntity.ItemData!.ItemName}' unequipped.";
+                    }
+                    else
+                    {
+                        _owner.SetEquippedItem(tag.ItemEntity);
+                        msg = $"Item '{tag.ItemEntity.ItemData!.ItemName}' equipped.";
+                    }
+
+                    BottomTypewriter.Instance.Enqueue(msg);
                     CloseDialog();
                     return;
                 }
@@ -281,5 +294,36 @@ public class InventoryUI : MonoBehaviour
         _useButton.interactable = (_selectedCount == 1);
         _dropButton.interactable = (_selectedCount > 0);
         _transferButton.interactable = (_selectedCount > 0);
+
+        if (IsEquippedItemSelected())
+        {
+            var text = _equipButton.GetComponentInChildren<TMP_Text>();
+            text!.text = "UnEquip";
+        }
+        else
+        {
+            var text = _equipButton.GetComponentInChildren<TMP_Text>();
+            text.text = "Equip";
+        }
+    }
+
+    private bool IsEquippedItemSelected()
+    {
+        if (_selectedCount == 1 && _itemObjects.Count > 0)
+        {
+            GameObject itemobj = _itemObjects[0];
+            Toggle itemToggle = itemobj.GetComponentInChildren<Toggle>();
+
+            if (itemToggle != null && itemToggle.isOn)
+            {
+                var tag = itemobj.GetComponent<InventoryItemHelper>();
+                if (tag != null && tag.ItemEntity == _owner!.EquippedItem)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
