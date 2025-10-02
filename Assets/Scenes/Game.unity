@@ -2461,7 +2461,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000076293945
+      value: -0.000045776367
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -13954,6 +13954,7 @@ GameObject:
   - component: {fileID: 823382371}
   - component: {fileID: 823382373}
   - component: {fileID: 823382372}
+  - component: {fileID: 823382374}
   m_Layer: 0
   m_Name: Terrain_0_0_bca4a179-2303-44e1-babb-294d5846bfee
   m_TagString: Untagged
@@ -14036,6 +14037,20 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!182 &823382374
+WindZone:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823382370}
+  m_Enabled: 1
+  m_Mode: 0
+  m_Radius: 20
+  m_WindMain: 1e+15
+  m_WindTurbulence: 1e+15
+  m_WindPulseMagnitude: 0.5
+  m_WindPulseFrequency: 0.01
 --- !u!1 &827528394
 GameObject:
   m_ObjectHideFlags: 0
@@ -35601,7 +35616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
       propertyPath: sunsetHour
@@ -35617,11 +35632,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
       propertyPath: DayLengthInSeconds
-      value: 1200
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
       propertyPath: dayCycleInRealSeconds
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+      propertyPath: horizonGradient.ctime0
+      value: 6746
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+      propertyPath: horizonGradient.ctime1
+      value: 19468
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+      propertyPath: horizonGradient.ctime2
+      value: 41634
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+      propertyPath: horizonGradient.ctime3
+      value: 55127
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+      propertyPath: horizonGradient.key0.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+      propertyPath: horizonGradient.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+      propertyPath: horizonGradient.key0.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+      propertyPath: horizonGradient.key4.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+      propertyPath: horizonGradient.key4.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+      propertyPath: horizonGradient.key4.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6014174761177854097, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
       propertyPath: realSecondsPerGameMinute
@@ -35641,7 +35696,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7098470662580613713, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
