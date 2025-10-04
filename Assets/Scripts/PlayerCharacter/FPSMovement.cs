@@ -100,12 +100,12 @@ public class FPSMovement : MonoBehaviour
             }
         }
 
-        // Rotate the Player body left/right
-        transform.Rotate(Vector3.up * mouseX);
-
         // Rotate the camera up/down
         if (!IsInDrivingMode)
         {
+            // Rotate the Player body left/right
+            transform.Rotate(Vector3.up * mouseX);
+
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -maxLookAngle, maxLookAngle);
             cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
