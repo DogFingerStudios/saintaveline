@@ -3,6 +3,7 @@
 
 using UnityEngine;
 
+[DefaultExecutionOrder(0)]
 [RequireComponent(typeof(Rigidbody))]
 public class BoatDriver : MonoBehaviour
 {
@@ -50,8 +51,12 @@ public class BoatDriver : MonoBehaviour
     private Vector3 _originalCamLocalPos;
     private Quaternion _originalCamLocalRot;
 
+    private FPSMovement? _fpsMovement;
+
     private void Awake()
     {
+        _fpsMovement = GameObject.FindGameObjectWithTag("Player")?.GetComponent<FPSMovement>();
+
         _rb = GetComponent<Rigidbody>();
 
         // AI: reasonable Rigidbody defaults for surface craft
@@ -93,7 +98,8 @@ public class BoatDriver : MonoBehaviour
             _steer = Mathf.MoveTowards(_steer, _steerTarget, _rudderResponse * Time.deltaTime);
 
             // AI: optional exit
-            if (Input.GetKeyDown(_enterExitKey))
+            //if (Input.GetKeyDown(_enterExitKey))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 EndPiloting();
             }
@@ -193,6 +199,7 @@ public class BoatDriver : MonoBehaviour
         _steer = 0f;
 
         _isPiloting = true;
+        _fpsMovement.IsInDrivingMode = true;
     }
 
     // AI: call to exit piloting and restore player
@@ -228,6 +235,8 @@ public class BoatDriver : MonoBehaviour
         _disabledMovementA = null;
         _disabledMovementB = null;
         _originalCameraParent = null;
+
+        _fpsMovement.IsInDrivingMode = false;
     }
 
     // AI: utility to find and disable a component by type name

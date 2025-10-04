@@ -26,6 +26,8 @@ public class FPSMovement : MonoBehaviour
     private float defaultHeight;
     private Vector3 defaultCenter;
 
+    public bool IsInDrivingMode = false;
+
     void Start()
     {
         // Get the CharacterController
@@ -102,9 +104,12 @@ public class FPSMovement : MonoBehaviour
         transform.Rotate(Vector3.up * mouseX);
 
         // Rotate the camera up/down
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -maxLookAngle, maxLookAngle);
-        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        if (!IsInDrivingMode)
+        {
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -maxLookAngle, maxLookAngle);
+            cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        }
 
         // 2. Movement
         float horizontal = Input.GetAxis("Horizontal"); // A/D
