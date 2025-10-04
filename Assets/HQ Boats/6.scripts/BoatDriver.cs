@@ -1,6 +1,7 @@
 // AI: BoatDriver.cs - throttle, rudder, and camera handoff for piloting a floating boat
 // AI: Unity 6000.0.43f1, ASCII only, braces on new lines, private fields use underscore.
 
+using System.Threading;
 using UnityEngine;
 
 [DefaultExecutionOrder(0)]
@@ -66,6 +67,11 @@ public class BoatDriver : MonoBehaviour
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
     }
 
+    private float _mouseSensitivity = 2f;
+    private float _maxLookAngle = 60f;
+    private float _xRotation = 0f;
+    private float _yRotation = 0f;
+
     private void Update()
     {
         if (_isPiloting)
@@ -113,11 +119,14 @@ public class BoatDriver : MonoBehaviour
                 _pilotCameraAnchor.position,
                 1f - Mathf.Exp(-_cameraLerp * Time.deltaTime)
             );
-            _playerCamera.transform.rotation = Quaternion.Slerp(
-                _playerCamera.transform.rotation,
-                _pilotCameraAnchor.rotation,
-                1f - Mathf.Exp(-_cameraLerp * Time.deltaTime)
-            );
+
+            float mouseX = Input.GetAxis("Mouse X") * _mouseSensitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * _mouseSensitivity;
+
+            _yRotation -= mouseX;
+            _xRotation -= mouseY;
+            _xRotation = Mathf.Clamp(_xRotation, -_maxLookAngle, _maxLookAngle);
+            _playerCamera.transform.localRotation = Quaternion.Euler(_xRotation, -_yRotation, 0f);
         }
 
         // AI: visual wheel turn
@@ -181,7 +190,7 @@ public class BoatDriver : MonoBehaviour
         _playerCamera = playerCamera;
 
         // AI: disable common movement scripts if present; extend if you use different names
-        _disabledMovementA = TryDisable<MonoBehaviour>(_playerRoot, "FPSMovement");
+        //_disabledMovementA = TryDisable<MonoBehaviour>(_playerRoot, "FPSMovement");
         _disabledMovementB = TryDisable<MonoBehaviour>(_playerRoot, "FirstPersonController");
 
         // AI: parent camera to keep it local to the boat while blending
