@@ -231,11 +231,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b945e15ea09c84992a9eef4d1fd3e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  realSecondsPerGameMinute: 0.25
-  startingHour: 6
+  DayLengthInSeconds: 1200
+  startingHour: 13
   hoursPerDay: 24
-  sunriseHour: 6
-  sunsetHour: 17
+  sunriseHour: 7
+  sunsetHour: 18
   daysInWeek: 7
   sun: {fileID: 8313434367401118092}
   sunLight: {fileID: 8037423479269486096}
@@ -457,18 +457,18 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   horizonGradient:
     serializedVersion: 2
-    key0: {r: 0.11921568, g: 0.14745095, b: 0.29803923, a: 1}
+    key0: {r: 0, g: 0, b: 0, a: 1}
     key1: {r: 0.39215687, g: 0.78431374, b: 1, a: 1}
     key2: {r: 0.39215687, g: 0.78431374, b: 1, a: 0}
     key3: {r: 1, g: 0.622549, b: 0.25, a: 0}
-    key4: {r: 0.11921568, g: 0.14745095, b: 0.29803923, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 16384
-    ctime2: 49151
-    ctime3: 58982
+    ctime0: 6746
+    ctime1: 19468
+    ctime2: 41634
+    ctime3: 55127
     ctime4: 65535
     ctime5: 0
     ctime6: 0
@@ -627,8 +627,8 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.3
-      value: 1
+      time: 0.24583131
+      value: 0.99575424
       inSlope: 0
       outSlope: 0
       tangentMode: 0
