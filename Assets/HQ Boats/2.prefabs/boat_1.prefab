@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4222727660332750}
   - component: {fileID: 33016483540346822}
   - component: {fileID: 23415182865997092}
+  - component: {fileID: 7628223375234069381}
+  - component: {fileID: 7684011549232616850}
   m_Layer: 0
   m_Name: steer_wheel
   m_TagString: Untagged
@@ -86,6 +88,45 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7628223375234069381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031542201060876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37de9c74d433a5745a0da291e4be6db5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _boat: {fileID: 1608317397246759995}
+  _useDistance: 3
+  _rayMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _useKey: 101
+--- !u!65 &7684011549232616850
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1031542201060876}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.4766767, y: 1.4754602, z: 0.27835405}
+  m_Center: {x: 0, y: 0, z: 0.004836872}
 --- !u!1 &1543479163862836
 GameObject:
   m_ObjectHideFlags: 0
@@ -101,6 +142,7 @@ GameObject:
   - component: {fileID: 5040274940202237117}
   - component: {fileID: 2180541068363412171}
   - component: {fileID: 4787048425931051947}
+  - component: {fileID: 1608317397246759995}
   m_Layer: 0
   m_Name: boat_1
   m_TagString: Untagged
@@ -128,6 +170,8 @@ Transform:
   - {fileID: 7963169221041705997}
   - {fileID: 2552192326597111900}
   - {fileID: 2123125536420781339}
+  - {fileID: 5286466912214130004}
+  - {fileID: 6915409545636124559}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &33921724754270868
@@ -275,6 +319,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10.225081, y: 0.35028982, z: 13.828272}
   m_Center: {x: 0.4265666, y: -2.6248553, z: -4.8276815}
+--- !u!114 &1608317397246759995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543479163862836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398401a4a4cd05e48b26d7d18e8cdfcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxThrust: 15000
+  _reverseThrustFactor: 0.4
+  _throttleChangeRate: 1.5
+  _propulsorPoint: {fileID: 5286466912214130004}
+  _rudderTorque: 6000
+  _rudderResponse: 3
+  _maxRudderVisual: 25
+  _steeringWheelVisual: {fileID: 4222727660332750}
+  _lateralWaterResistance: 1200
+  _longitudinalDrag: 180
+  _brakeDragMultiplier: 3
+  _pilotCameraAnchor: {fileID: 6915409545636124559}
+  _cameraLerp: 10
+  _enterExitKey: 101
+  _throttleForwardKey: 119
+  _throttleReverseKey: 115
+  _steerLeftKey: 97
+  _steerRightKey: 100
+  _brakeKey: 32
 --- !u!1 &1585518852509088
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,6 +671,68 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4253966930451744}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2547940617522952908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5286466912214130004}
+  m_Layer: 0
+  m_Name: PropulsorPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5286466912214130004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2547940617522952908}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.75, z: -10.333}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4253966930451744}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4040365266225622703
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6915409545636124559}
+  m_Layer: 0
+  m_Name: PilotCameraAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6915409545636124559
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4040365266225622703}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.08740755, y: -0, z: -0, w: 0.99617267}
+  m_LocalPosition: {x: 0, y: 1.6, z: 12.26}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4253966930451744}
+  m_LocalEulerAnglesHint: {x: 10.029, y: 0, z: 0}
 --- !u!1 &4504663321483400507
 GameObject:
   m_ObjectHideFlags: 0
