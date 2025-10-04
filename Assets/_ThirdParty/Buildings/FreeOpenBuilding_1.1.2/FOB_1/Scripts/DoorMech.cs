@@ -10,6 +10,7 @@ public class DoorMech : MonoBehaviour
     public float rotSpeed = 1f;
     public bool doorBool;
     public float interactionDistance = 3f;
+    public DoorMech? adjacentDoor;
 
 
     private void Awake()

@@ -1,3 +1,4 @@
+#nullable enable
 using UnityEngine;
 
 public class DoorInteraction : MonoBehaviour
@@ -26,28 +27,23 @@ public class DoorInteraction : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, interactionDistance))
         {
-            // Check if the object hit by the ray has the door script
-            // DoorMech targetDoor = hit.collider.GetComponent<DoorMech>();
-            DoorMech targetDoor = hit.collider.transform.parent != null ? hit.collider.transform.parent.GetComponent<DoorMech>() : null;
-            if (targetDoor != null)
+            DoorMech? targetDoor;
+
+            // For reasons I don't remember, in the `FOB_LOD` building we have to get
+            // the DoorMech component from the parent of the collider we hit. However,
+            // in other buildings, we can get it directly from the collider we hit.
+            if (((targetDoor = hit.transform.GetComponent<DoorMech>()) == null)
+                && (hit.collider.transform.parent != null))
             {
-                targetDoor.doorBool = !targetDoor.doorBool;
-                if (targetDoor.name == "DoorEntry_R_LOD")
-                {
-                    DoorMech leftDoor = GameObject.Find("DoorEntry_L_LOD").GetComponent<DoorMech>();
-                    if (leftDoor != null)
-                    {
-                        leftDoor.doorBool = targetDoor.doorBool;
-                    }
-                }
-                else if (targetDoor.name == "DoorEntry_L_LOD")
-                {
-                    DoorMech leftDoor = GameObject.Find("DoorEntry_R_LOD").GetComponent<DoorMech>();
-                    if (leftDoor != null)
-                    {
-                        leftDoor.doorBool = targetDoor.doorBool;
-                    }
-                }
+                targetDoor = hit.collider.transform.parent.GetComponent<DoorMech>();
+            }
+
+            if (targetDoor == null) return;
+
+            targetDoor.doorBool = !targetDoor.doorBool;
+            if (targetDoor.adjacentDoor != null)
+            {
+                targetDoor.adjacentDoor.doorBool = targetDoor.doorBool;
             }
         }
     }
