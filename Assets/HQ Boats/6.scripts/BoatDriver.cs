@@ -90,7 +90,7 @@ public class BoatDriver : MonoBehaviour
             {
                 localThrottle -= (int)_reverseThrottle;
             }
-            _throttleTarget = Mathf.Clamp(localThrottle, -100, 100);
+            _throttleTarget = Mathf.Clamp(localThrottle, -1, 1);
 
             int localSteer = 0;
             if (Input.GetKey(_steerLeftKey))
@@ -101,7 +101,7 @@ public class BoatDriver : MonoBehaviour
             {
                 localSteer += (int)_rightSteer;
             }
-            _steerTarget = Mathf.Clamp(localSteer, -100, 100);
+            _steerTarget = Mathf.Clamp(localSteer, -1, 1);
 
             // AI: smooth control
             _throttle = Mathf.MoveTowards(_throttle, _throttleTarget, _throttleChangeRate * Time.deltaTime);
