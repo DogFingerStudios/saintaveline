@@ -32,6 +32,11 @@ public class BoatPilotStation : MonoBehaviour
 
         if (Input.GetKeyDown(_useKey))
         {
+            if (_boat.IsCoolingDown())
+            {
+                return;
+            }
+            
             if (_boat.IsPiloting())
             {
                 _boat.EndPiloting();

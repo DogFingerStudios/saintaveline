@@ -130,7 +130,7 @@ public class BoatDriver : MonoBehaviour
             _steer = Mathf.MoveTowards(_steer, _steerTarget, _rudderResponse * Time.deltaTime);
 
             // AI: optional exit
-            if (Input.GetKeyDown(_enterExitKey))
+            if (Input.GetKeyDown(_enterExitKey) && !IsCoolingDown())
             {
                 EndPiloting();
             }
@@ -201,6 +201,11 @@ public class BoatDriver : MonoBehaviour
                 }
             }
         }
+
+        if (_coolDownClock > 0f)
+        {
+            _coolDownClock -= Time.deltaTime;
+        }
     }
 
     private void FixedUpdate()
@@ -245,10 +250,7 @@ public class BoatDriver : MonoBehaviour
     // AI: call this to begin piloting; provide player root and its camera
     public void BeginPiloting(Transform playerRoot, Camera playerCamera)
     {
-        if (_isPiloting)
-        {
-            return;
-        }
+        if (_isPiloting) return;
 
         _playerRoot = playerRoot;
         _playerCamera = playerCamera;
@@ -292,6 +294,7 @@ public class BoatDriver : MonoBehaviour
 
         _fpsMovement!.IsInDrivingMode = true;
         _footstepAudio!.IsEnabled = false;
+        this.StartCoolDown();
     }
 
     // AI: call to exit piloting and restore player
@@ -343,6 +346,7 @@ public class BoatDriver : MonoBehaviour
 
         _fpsMovement!.IsInDrivingMode = false;
         _footstepAudio!.IsEnabled = true;
+        this.StartCoolDown();
     }
 
     // AI: utility to find and disable a component by type name
@@ -381,4 +385,18 @@ public class BoatDriver : MonoBehaviour
     {
         return (_steer + 1f) * 0.5f;
     }
+
+    private const float _coolDownPeriod = 1f;
+    private float _coolDownClock = 0f;
+
+    private void StartCoolDown()
+    {
+        _coolDownClock = _coolDownPeriod;
+    }
+
+    public bool IsCoolingDown()
+    {
+        return _coolDownClock > 0f;
+    }
+
 }
