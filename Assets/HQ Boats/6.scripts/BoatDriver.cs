@@ -72,6 +72,7 @@ public class BoatDriver : MonoBehaviour
     
     private FPSMovement? _fpsMovement;
     private FootstepAudio? _footstepAudio;
+    private CharacterController? _characterController;
 
     private AudioSource _motorSound;
 
@@ -80,6 +81,7 @@ public class BoatDriver : MonoBehaviour
         var playerObject = GameObject.FindGameObjectWithTag("Player");
         _fpsMovement = playerObject.GetComponent<FPSMovement>();
         _footstepAudio = playerObject.GetComponent<FootstepAudio>();
+        _characterController = playerObject.GetComponent<CharacterController>();
 
         _rb = GetComponent<Rigidbody>();
         _motorSound = GetComponent<AudioSource>();
@@ -292,6 +294,7 @@ public class BoatDriver : MonoBehaviour
         _steer = 0f;
         _isPiloting = true;
 
+        _characterController!.enabled = false;
         _fpsMovement!.IsInDrivingMode = true;
         _footstepAudio!.IsEnabled = false;
         this.StartCoolDown();
@@ -344,6 +347,7 @@ public class BoatDriver : MonoBehaviour
             _motorSound.Stop();
         }
 
+        _characterController!.enabled = true;
         _fpsMovement!.IsInDrivingMode = false;
         _footstepAudio!.IsEnabled = true;
         this.StartCoolDown();
