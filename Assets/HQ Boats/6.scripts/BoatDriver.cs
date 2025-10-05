@@ -1,7 +1,9 @@
 // AI: BoatDriver.cs - throttle, rudder, and camera handoff for piloting a floating boat
 // AI: Unity 6000.0.43f1, ASCII only, braces on new lines, private fields use underscore.
+#nullable enable
 using System;
 using UnityEngine;
+
 [DefaultExecutionOrder(0)]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(AudioSource))]
@@ -53,6 +55,7 @@ public class BoatDriver : MonoBehaviour
     private float _throttle = 0f; // AI: -1..+1 smoothed
     private float _steerTarget = 0f; // AI: -1..+1
     private float _steer = 0f; // AI: -1..+1 smoothed
+
     private Transform _playerRoot = null;
     private MonoBehaviour _disabledMovementA = null; // AI: optional player movement component to disable
     private MonoBehaviour _disabledMovementB = null; // AI: optional secondary component
@@ -63,12 +66,18 @@ public class BoatDriver : MonoBehaviour
     private Transform _originalPlayerParent = null;
     private Vector3 _originalPlayerLocalPos;
     private Quaternion _originalPlayerLocalRot;
-    private FPSMovement _fpsMovement;
+    
+    private FPSMovement? _fpsMovement;
+    private FootstepAudio? _footstepAudio;
+
     private AudioSource _motorSound;
 
     private void Awake()
     {
-        _fpsMovement = GameObject.FindGameObjectWithTag("Player")?.GetComponent<FPSMovement>();
+        var playerObject = GameObject.FindGameObjectWithTag("Player");
+        _fpsMovement = playerObject.GetComponent<FPSMovement>();
+        _footstepAudio = playerObject.GetComponent<FootstepAudio>();
+
         _rb = GetComponent<Rigidbody>();
         _motorSound = GetComponent<AudioSource>();
         _motorSound.loop = true;
@@ -278,10 +287,8 @@ public class BoatDriver : MonoBehaviour
         _steer = 0f;
         _isPiloting = true;
 
-        if (_fpsMovement != null)
-        {
-            _fpsMovement.IsInDrivingMode = true;
-        }
+        _fpsMovement!.IsInDrivingMode = true;
+        _footstepAudio!.IsEnabled = false;
     }
 
     // AI: call to exit piloting and restore player
@@ -327,15 +334,13 @@ public class BoatDriver : MonoBehaviour
         _originalCameraParent = null;
         _originalPlayerParent = null;
 
-        if (_fpsMovement != null)
-        {
-            _fpsMovement.IsInDrivingMode = false;
-        }
-
         if (_motorSound != null && _motorSound.isPlaying)
         {
             _motorSound.Stop();
         }
+
+        _fpsMovement!.IsInDrivingMode = false;
+        _footstepAudio!.IsEnabled = true;
     }
 
     // AI: utility to find and disable a component by type name
