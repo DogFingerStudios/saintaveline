@@ -13,6 +13,10 @@ public class BoatDriver : MonoBehaviour
     [SerializeField] private float _reverseThrustFactor = 0.4f;    // AI: reverse is weaker
     [SerializeField] private float _throttleChangeRate = 1.5f;     // AI: units per second toward target
     [SerializeField] private Transform _propulsorPoint = null;     // AI: where thrust is applied (stern)
+    [SerializeField] private float _forwardThrottle = 1.0f;
+    [SerializeField] private float _reverseThrottle = 1.0f;
+    [SerializeField] private float _leftSteer = 1.0f;
+    [SerializeField] private float _rightSteer = 1.0f;
 
     [Header("Rudder / Turning")]
     [SerializeField] private float _rudderTorque = 6000f;          // AI: yaw torque scale
@@ -77,27 +81,27 @@ public class BoatDriver : MonoBehaviour
         if (_isPiloting)
         {
             // AI: read inputs
-            int t = 0;
+            int localThrottle = 0;
             if (Input.GetKey(_throttleForwardKey))
             {
-                t += 1;
+                localThrottle += (int)_forwardThrottle;
             }
             if (Input.GetKey(_throttleReverseKey))
             {
-                t -= 1;
+                localThrottle -= (int)_reverseThrottle;
             }
-            _throttleTarget = Mathf.Clamp(t, -1, 1);
+            _throttleTarget = Mathf.Clamp(localThrottle, -100, 100);
 
-            int s = 0;
+            int localSteer = 0;
             if (Input.GetKey(_steerLeftKey))
             {
-                s -= 1;
+                localSteer -= (int)_leftSteer;
             }
             if (Input.GetKey(_steerRightKey))
             {
-                s += 1;
+                localSteer += (int)_rightSteer;
             }
-            _steerTarget = Mathf.Clamp(s, -1, 1);
+            _steerTarget = Mathf.Clamp(localSteer, -100, 100);
 
             // AI: smooth control
             _throttle = Mathf.MoveTowards(_throttle, _throttleTarget, _throttleChangeRate * Time.deltaTime);
