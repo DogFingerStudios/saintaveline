@@ -47,6 +47,9 @@ public class BoatDriver : MonoBehaviour
     [SerializeField] private float _minPitch = 0.8f; // AI: low engine rumble at idle/low speed
     [SerializeField] private float _maxPitch = 1.5f; // AI: high rev at top speed
     [SerializeField] private float _maxSpeedForPitch = 20f; // AI: normalize pitch to this speed (m/s); adjust based on boat
+
+    [Header("Dismount Points")]
+    [SerializeField] private Transform _dismountPoint1;
    
     // AI: runtime state
     private Rigidbody _rb;
@@ -309,11 +312,10 @@ public class BoatDriver : MonoBehaviour
         }
 
         // AI: restore player parent and local transform
-        if (_playerRoot != null && _originalPlayerParent != null)
+        if (_playerRoot != null)
         {
             _playerRoot.SetParent(_originalPlayerParent);
-            _playerRoot.localPosition = _originalPlayerLocalPos;
-            _playerRoot.localRotation = _originalPlayerLocalRot;
+            _playerRoot.position = _dismountPoint1.position;
         }
 
         // AI: re-enable movement scripts
