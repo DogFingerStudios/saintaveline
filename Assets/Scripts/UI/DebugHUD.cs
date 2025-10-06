@@ -10,15 +10,17 @@ public class DebugHUD : MonoBehaviour
     public TextMeshProUGUI sonNPCStateText;
     public TextMeshProUGUI sonNPCDistanceText;
     public TextMeshProUGUI enemyHealthText;
+    public TextMeshProUGUI boatText;
 
     // Objects of interest
     public CharacterController controller;
     public GameObject enemyNPC;
     private GameEntity enemyNPCHealth;
     public SonNPC sonNPC;
+    public BoatWaterDetector boatDetector;
 
     private bool isVisible = true;
-
+    
     void Start()
     {
         if (enemyNPC)
@@ -50,6 +52,15 @@ public class DebugHUD : MonoBehaviour
             {
                 enemyHealthText.text = "Enemy Health: " + enemyNPCHealth.Health.ToString("F2");
             }
+
+            string boatLandTest = boatDetector.IsOverland ? "Overland" : "Not Overland";
+            string boatWaterTest = boatDetector.IsOnWater ? "On Water" : "Not On Water";
+            string boatBeachedTest = boatDetector.IsBeached ? "Beached" : "Not Beached";
+
+            boatText.text = $"Boat Land: {boatLandTest}\nBoat Water: {boatWaterTest}\nBoat Beached: {boatBeachedTest}";
+// Boat Water: 
+// Boat Grounded:
+//             boatText.text = $"Boat: {boatLandTest}{boatWaterTest}, {boatBeachedTest} (Coverage: {boatDetector.WaterCoverage01:F2})";
         }
     }
 }

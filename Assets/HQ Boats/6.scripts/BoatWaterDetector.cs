@@ -1,0 +1,158 @@
+// AI: BoatWaterDetector.cs - robust water vs land detection only (no disabling). Unity 6000.0.43f1
+// AI: ASCII only. Braces on new lines. Private fields use underscore.
+// AI: Two detection paths:
+// AI:   1) Collider mode: SphereCast down to find Water and Ground colliders (recommended if your water has a collider/trigger).
+// AI:   2) Height API mode: Sample a water height provider to compute submergence without colliders.
+
+using UnityEngine;
+
+public interface IWaterHeightProvider
+{
+    // AI: Return true if a water surface exists at worldPos.xz. Provide height and normal.
+    bool TryGetHeight(in Vector3 worldPos, out float height, out Vector3 normal);
+}
+
+public class BoatWaterDetector : MonoBehaviour
+{
+    [Header("Samples")]
+    [SerializeField] private Transform[] _samplePoints = null;      // AI: reuse your boat float points or keel points
+
+    [Header("Collider Mode")]
+    [SerializeField] private bool _useColliderMode = true;          // AI: true = cast vs colliders; false = use height provider
+    [SerializeField] private LayerMask _waterMask = 1 << 4;         // AI: assign your Water layer
+    [SerializeField] private LayerMask _groundMask = ~0;            // AI: assign Ground/Terrain layers
+    [SerializeField] private float _probeRadius = 0.25f;            // AI: sphere radius
+    [SerializeField] private float _probeDepth = 3.0f;              // AI: cast depth below each sample point
+
+    [Header("Height API Mode")]
+    [SerializeField] private MonoBehaviour _waterProviderSource = null; // AI: drag a component that implements IWaterHeightProvider
+    private IWaterHeightProvider _waterProvider;
+
+    [Header("Decision Thresholds")]
+    [SerializeField] private float _minWaterDepth = 0.20f;          // AI: meters of water needed under sample to count as water
+    [SerializeField] private float _requiredCoverage = 0.5f;        // AI: fraction of samples that must be in water
+    [SerializeField] private float _beachClearance = 0.15f;         // AI: ground within this distance means beached
+
+    // AI: Public readouts
+    public bool IsOnWater { get { return _isOnWater; } }
+    public bool IsOverland { get { return _isOverland; } }
+    public bool IsBeached { get { return _isBeached; } }
+    public float WaterCoverage01 { get { return _coverage01; } }    // AI: 0..1 fraction of samples in water
+    public float AvgWaterDepth { get { return _avgWaterDepth; } }   // AI: average depth under samples (m)
+    public float MinGroundClearance { get { return _minGroundClear; } } // AI: smallest ground distance (m)
+
+    private bool _isOnWater;
+    private bool _isOverland;
+    private bool _isBeached;
+    private float _coverage01;
+    private float _avgWaterDepth;
+    private float _minGroundClear;
+
+    private void Awake()
+    {
+        if (_waterProviderSource != null)
+        {
+            _waterProvider = _waterProviderSource as IWaterHeightProvider;
+            if (_waterProvider == null)
+            {
+                Debug.LogError("BoatWaterDetector: _waterProviderSource does not implement IWaterHeightProvider.");
+            }
+        }
+    }
+
+    private void Reset()
+    {
+        _waterMask = 1 << LayerMask.NameToLayer("Water");
+    }
+
+    private void LateUpdate()
+    {
+        if (_samplePoints == null || _samplePoints.Length == 0)
+        {
+            _isOnWater = false;
+            _isOverland = true;
+            _isBeached = false;
+            _coverage01 = 0f;
+            _avgWaterDepth = 0f;
+            _minGroundClear = float.PositiveInfinity;
+            return;
+        }
+
+        int waterHits = 0;
+        float depthSum = 0f;
+        float minGround = float.PositiveInfinity;
+
+        for (int i = 0; i < _samplePoints.Length; i++)
+        {
+            Transform p = _samplePoints[i];
+            if (p == null)
+            {
+                continue;
+            }
+
+            Vector3 origin = p.position + Vector3.up * 0.05f;
+            float waterDepth = 0f;
+            bool inWater = false;
+
+            if (_useColliderMode)
+            {
+                // AI: water by collider
+                if (Physics.SphereCast(origin, _probeRadius, Vector3.down, out RaycastHit waterHit, _probeDepth, _waterMask, QueryTriggerInteraction.Collide))
+                {
+                    waterDepth = waterHit.distance;
+                    if (waterDepth >= _minWaterDepth)
+                    {
+                        inWater = true;
+                    }
+                }
+
+                // AI: ground clearance
+                if (Physics.SphereCast(origin, _probeRadius, Vector3.down, out RaycastHit groundHit, _probeDepth, _groundMask, QueryTriggerInteraction.Ignore))
+                {
+                    float g = groundHit.distance;
+                    if (g < minGround)
+                    {
+                        minGround = g;
+                    }
+                }
+            }
+            else
+            {
+                // AI: water by height provider
+                if (_waterProvider != null && _waterProvider.TryGetHeight(origin, out float h, out _))
+                {
+                    waterDepth = h - origin.y;
+                    if (waterDepth >= _minWaterDepth)
+                    {
+                        inWater = true;
+                    }
+                }
+
+                // AI: ground clearance via raycast
+                if (Physics.SphereCast(origin, _probeRadius, Vector3.down, out RaycastHit groundHit2, _probeDepth, _groundMask, QueryTriggerInteraction.Ignore))
+                {
+                    float g = groundHit2.distance;
+                    if (g < minGround)
+                    {
+                        minGround = g;
+                    }
+                }
+            }
+
+            if (inWater)
+            {
+                waterHits++;
+                depthSum += waterDepth;
+            }
+        }
+
+        _coverage01 = Mathf.Clamp01((float)waterHits / Mathf.Max(1, _samplePoints.Length));
+        _avgWaterDepth = waterHits > 0 ? depthSum / waterHits : 0f;
+        _minGroundClear = float.IsPositiveInfinity(minGround) ? _probeDepth : minGround;
+
+        // AI: state classification
+        _isOnWater = (_coverage01 >= _requiredCoverage) && (_avgWaterDepth >= _minWaterDepth);
+        _isBeached = (_coverage01 > 0f) && (_minGroundClear <= _beachClearance);
+        _isOverland = (_coverage01 < 0.01f) && (_minGroundClear <= _probeDepth * 0.9f);
+    }
+}
