@@ -6,9 +6,9 @@
 
 ### Backstory
 
-**Saint Aveline** is a tense survival experience set on the island of Saint Aveline, in the fictional world [Yanorr](https://github.com/DogFingerStudios/Yanorra). Saint Aveline is a small island in the nation of Duvessa where a civil has been raging for years. Until now, the island has been relatively untouched by the war, but that changes when a militant faction known as the **Sombra-Qhari Guerrillas** invades the island, forcing the local population to flee or fight for their lives.
+**Saint Aveline** is a tense survival experience set in the world of [Yanorra](https://github.com/DogFingerStudios/Yanorra). On the island of Saint Aveline—once a quiet refuge off Duvessa’s coast—war has arrived. As the mainland burns in civil conflict between the authoritarian **Dornish Order** and the insurgent **Sombra-Qhari Guerrillas**, the island’s fragile peace collapses overnight.
 
-Players take on the role of a father trying to escape the island with his wife, son and the grandfather. The family must navigate through athe war-torn streets, avoiding enemy patrols, managing limited resources, and making difficult decisions that will impact their survival.
+Players take the role of a father struggling to escape the siege with his wife, children, and elderly father. Trapped amid the occupation, the family must navigate shattered streets, scarce resources, and impossible moral choices. Every decision carries weight—each mistake could cost a life.
 
 ### Key Features:
 - First-Person ↔ Third-Person toggle
@@ -49,7 +49,6 @@ Players take on the role of a father trying to escape the island with his wife, 
   - 🔹 Friendly NPCs (e.g., SonNPC) use a custom C# state machine
   - 🔹 States for POC: **Idle** (rotates to face player) and **Follow** (tracks player via NavMeshAgent)
 - ✅ Establish basic ending conditions (reach the roof or kill all guards).
-
 
 ---
 
