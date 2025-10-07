@@ -1,13 +1,14 @@
-
-# 🏠 Home: Survival Horror (Prototype 001)
-
-A third-person and first-person survival horror prototype set in **Qusqui-Paris**, a fictional WWII-era city that blends French and Andean cultures. Players must guide their family through a siege inside a towering apartment complex, navigating between stealth, survival, and sacrifice.
+# 🏠 Saint Aveline: Survival Horror
 
 ---
 
 ## 🎮 Game Summary
 
-**Home** is a tense survival experience set in an apartment named named **Torre-Casa de Runa**, under siege by the militant **Sombra-Qhari Guerrillas**. Players take on the role of a father trying to escape the tower with his family or eliminate all enemies before they’re overwhelmed.
+### Backstory
+
+**Saint Aveline** is a tense survival experience set on the island of Saint Aveline, in the fictional world [Yanorr](https://github.com/DogFingerStudios/Yanorra). Saint Aveline is a small island in the nation of Duvessa where a civil has been raging for years. Until now, the island has been relatively untouched by the war, but that changes when a militant faction known as the **Sombra-Qhari Guerrillas** invades the island, forcing the local population to flee or fight for their lives.
+
+Players take on the role of a father trying to escape the island with his wife, son and the grandfather. The family must navigate through athe war-torn streets, avoiding enemy patrols, managing limited resources, and making difficult decisions that will impact their survival.
 
 ### Key Features:
 - First-Person ↔ Third-Person toggle
@@ -37,7 +38,7 @@ A third-person and first-person survival horror prototype set in **Qusqui-Paris*
 - ✅ Establish basic player movement (FPS + 3rd person toggle).
    - 🔹 <s>First Person</s>
    - 🔹 Third Person
-   - 🔹 <s>1st/3rd Person Toggle</s>
+   - 🔹 1st/3rd Person Toggle
 - ✅ <s>Build a small portion of the tower (Ground Floor + 9th Floor + Roof).</s>
 - ✅ Implement basic AI
    - 🔹 Patrol
