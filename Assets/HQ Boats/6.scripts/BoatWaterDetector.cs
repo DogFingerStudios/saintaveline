@@ -65,6 +65,7 @@ public class BoatWaterDetector : MonoBehaviour
         _waterMask = 1 << LayerMask.NameToLayer("Water");
     }
 
+    [SerializeField] private float _waterLevel = 0f;
     private void LateUpdate()
     {
         if (_samplePoints == null || _samplePoints.Length == 0)
@@ -118,25 +119,13 @@ public class BoatWaterDetector : MonoBehaviour
             }
             else
             {
-                // AI: water by height provider
-                if (_waterProvider != null && _waterProvider.TryGetHeight(origin, out float h, out _))
+                if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 500, _groundMask))
                 {
-                    waterDepth = h - origin.y;
-                    if (waterDepth >= _minWaterDepth)
-                    {
-                        inWater = true;
-                    }
+                    waterDepth = hit.distance;
+                    if (waterDepth < minGround) minGround = waterDepth;
                 }
 
-                // AI: ground clearance via raycast
-                if (Physics.SphereCast(origin, _probeRadius, Vector3.down, out RaycastHit groundHit2, _probeDepth, _groundMask, QueryTriggerInteraction.Ignore))
-                {
-                    float g = groundHit2.distance;
-                    if (g < minGround)
-                    {
-                        minGround = g;
-                    }
-                }
+                inWater = minGround > 5f;
             }
 
             if (inWater)
@@ -150,7 +139,6 @@ public class BoatWaterDetector : MonoBehaviour
         _avgWaterDepth = waterHits > 0 ? depthSum / waterHits : 0f;
         _minGroundClear = float.IsPositiveInfinity(minGround) ? _probeDepth : minGround;
 
-        // AI: state classification
         _isOnWater = (_coverage01 >= _requiredCoverage) && (_avgWaterDepth >= _minWaterDepth);
         _isBeached = (_coverage01 > 0f) && (_minGroundClear <= _beachClearance);
         _isOverland = (_coverage01 < 0.01f) && (_minGroundClear <= _probeDepth * 0.9f);

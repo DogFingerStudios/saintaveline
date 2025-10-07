@@ -5929,6 +5929,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1507636620937791836, guid: 7097ba7ba649e1f41bba232312bdcbd8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2031763263}
+    - targetCorrespondingSourceObject: {fileID: 1507636620937791836, guid: 7097ba7ba649e1f41bba232312bdcbd8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2031763266}
   m_SourcePrefab: {fileID: 100100000, guid: 7097ba7ba649e1f41bba232312bdcbd8, type: 3}
 --- !u!4 &670296404 stripped
 Transform:
@@ -8085,7 +8088,7 @@ GameObject:
   - component: {fileID: 823382372}
   - component: {fileID: 823382374}
   m_Layer: 0
-  m_Name: Terrain_0_0_bca4a179-2303-44e1-babb-294d5846bfee
+  m_Name: Terrain0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8697,6 +8700,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 923805722}
+  - component: {fileID: 923805723}
   m_Layer: 0
   m_Name: WaterRoot
   m_TagString: Untagged
@@ -8721,6 +8725,19 @@ Transform:
   - {fileID: 926368150}
   m_Father: {fileID: 1949006990}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &923805723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923805721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 618c690f1d6daa24c80b54a1e72bbcc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waterLevelY: 0
 --- !u!1001 &926368149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10624,7 +10641,7 @@ MonoBehaviour:
   - {fileID: 1587885005}
   - {fileID: 1238217998}
   - {fileID: 1565983836}
-  _useColliderMode: 1
+  _useColliderMode: 0
   _waterMask:
     serializedVersion: 2
     m_Bits: 16
@@ -10633,7 +10650,7 @@ MonoBehaviour:
     m_Bits: 495
   _probeRadius: 0.25
   _probeDepth: 3
-  _waterProviderSource: {fileID: 0}
+  _waterProviderSource: {fileID: 2031763266}
   _minWaterDepth: 0.2
   _requiredCoverage: 0.5
   _beachClearance: 0.15
@@ -20513,6 +20530,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4357120802854823438, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4357120802854823438, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
       propertyPath: dayDuration
       value: 1500
       objectReference: {fileID: 0}
@@ -20557,8 +20578,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8782791397282730456, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8782791397282730456, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
       propertyPath: m_Intensity
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20592,10 +20617,23 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 50, y: 0, z: 49.999996}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2031763266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2031763260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 618c690f1d6daa24c80b54a1e72bbcc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _waterLevelY: 0
 --- !u!1001 &2046236285
 PrefabInstance:
   m_ObjectHideFlags: 0

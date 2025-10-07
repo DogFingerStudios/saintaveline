@@ -57,10 +57,13 @@ public class DebugHUD : MonoBehaviour
             string boatWaterTest = boatDetector.IsOnWater ? "On Water" : "Not On Water";
             string boatBeachedTest = boatDetector.IsBeached ? "Beached" : "Not Beached";
 
-            boatText.text = $"Boat Land: {boatLandTest}\nBoat Water: {boatWaterTest}\nBoat Beached: {boatBeachedTest}";
-// Boat Water: 
-// Boat Grounded:
-//             boatText.text = $"Boat: {boatLandTest}{boatWaterTest}, {boatBeachedTest} (Coverage: {boatDetector.WaterCoverage01:F2})";
+            boatText.text = $@"Boat Land: {boatLandTest}
+Boat Water: {boatWaterTest}
+Boat Beached: {boatBeachedTest}
+AvgWaterDepth: {boatDetector.AvgWaterDepth}
+WaterCoverage01: {boatDetector.WaterCoverage01}
+MinGroundClearance: {boatDetector.MinGroundClearance}
+";
         }
     }
 }
