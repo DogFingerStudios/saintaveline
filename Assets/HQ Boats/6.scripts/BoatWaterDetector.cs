@@ -30,7 +30,7 @@ public class BoatWaterDetector : MonoBehaviour
 
     [Header("Decision Thresholds")]
     [SerializeField] private float _minWaterDepth = 0.20f;          // AI: meters of water needed under sample to count as water
-    [SerializeField] private float _requiredCoverage = 0.5f;        // AI: fraction of samples that must be in water
+    [SerializeField] private float _requiredCoverage = 0.65f;        // AI: fraction of samples that must be in water
     [SerializeField] private float _beachClearance = 0.15f;         // AI: ground within this distance means beached
 
     // AI: Public readouts
@@ -95,38 +95,13 @@ public class BoatWaterDetector : MonoBehaviour
             float waterDepth = 0f;
             bool inWater = false;
 
-            if (_useColliderMode)
+            if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 500, _groundMask))
             {
-                // AI: water by collider
-                if (Physics.SphereCast(origin, _probeRadius, Vector3.down, out RaycastHit waterHit, _probeDepth, _waterMask, QueryTriggerInteraction.Collide))
-                {
-                    waterDepth = waterHit.distance;
-                    if (waterDepth >= _minWaterDepth)
-                    {
-                        inWater = true;
-                    }
-                }
-
-                // AI: ground clearance
-                if (Physics.SphereCast(origin, _probeRadius, Vector3.down, out RaycastHit groundHit, _probeDepth, _groundMask, QueryTriggerInteraction.Ignore))
-                {
-                    float g = groundHit.distance;
-                    if (g < minGround)
-                    {
-                        minGround = g;
-                    }
-                }
+                waterDepth = hit.distance;
+                if (waterDepth < minGround) minGround = waterDepth;
             }
-            else
-            {
-                if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 500, _groundMask))
-                {
-                    waterDepth = hit.distance;
-                    if (waterDepth < minGround) minGround = waterDepth;
-                }
 
-                inWater = minGround > 5f;
-            }
+            inWater = minGround > 0.45f; // TODO: do not HARD CODE this
 
             if (inWater)
             {
@@ -135,12 +110,19 @@ public class BoatWaterDetector : MonoBehaviour
             }
         }
 
+        // the percentage of sample points that are in water
         _coverage01 = Mathf.Clamp01((float)waterHits / Mathf.Max(1, _samplePoints.Length));
-        _avgWaterDepth = waterHits > 0 ? depthSum / waterHits : 0f;
-        _minGroundClear = float.IsPositiveInfinity(minGround) ? _probeDepth : minGround;
 
+        _avgWaterDepth = waterHits > 0 ? depthSum / waterHits : 0f;
+        // _minGroundClear = float.IsPositiveInfinity(minGround) ? _probeDepth : minGround;
+
+        // to be considered "on water", the boat must have at least `_requiredCoverage` of its samples in water
+        // (where `_requiredCoverage` is a fraction of points) and the average water depth `_minWaterDepth`.
         _isOnWater = (_coverage01 >= _requiredCoverage) && (_avgWaterDepth >= _minWaterDepth);
-        _isBeached = (_coverage01 > 0f) && (_minGroundClear <= _beachClearance);
-        _isOverland = (_coverage01 < 0.01f) && (_minGroundClear <= _probeDepth * 0.9f);
+
+        _isBeached = (_coverage01 > 0f) && (_coverage01 < 1f); // && (_minGroundClear <= _beachClearance);
+
+        // _isOverland = (_coverage01 < 0.01f) && (_minGroundClear <= _probeDepth * 0.9f);
+        _isOverland = (_coverage01 < 0.01f);
     }
 }
