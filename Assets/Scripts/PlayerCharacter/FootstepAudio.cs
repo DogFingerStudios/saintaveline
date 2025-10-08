@@ -13,7 +13,7 @@ public class FootstepAudio : MonoBehaviour
     private float stepTimer;
     private Vector3 lastPosition;
 
-    public bool IsEnabled { get; set; }
+    public bool IsEnabled { get; set; } = true;
 
     void Start()
     {
