@@ -6,12 +6,6 @@
 
 using UnityEngine;
 
-public interface IWaterHeightProvider
-{
-    // AI: Return true if a water surface exists at worldPos.xz. Provide height and normal.
-    bool TryGetHeight(in Vector3 worldPos, out float height, out Vector3 normal);
-}
-
 public class BoatWaterDetector : MonoBehaviour
 {
     [Header("Samples")]
@@ -24,14 +18,14 @@ public class BoatWaterDetector : MonoBehaviour
     [SerializeField] private float _probeRadius = 0.25f;            // AI: sphere radius
     [SerializeField] private float _probeDepth = 3.0f;              // AI: cast depth below each sample point
 
-    [Header("Height API Mode")]
-    [SerializeField] private MonoBehaviour _waterProviderSource = null; // AI: drag a component that implements IWaterHeightProvider
-    private IWaterHeightProvider _waterProvider;
-
     [Header("Decision Thresholds")]
+    [SerializeField] private float _waterLevel = 0f;
     [SerializeField] private float _minWaterDepth = 0.20f;          // AI: meters of water needed under sample to count as water
     [SerializeField] private float _requiredCoverage = 0.65f;        // AI: fraction of samples that must be in water
     [SerializeField] private float _beachClearance = 0.15f;         // AI: ground within this distance means beached
+
+    [Header("Water Transform")]
+    [SerializeField] private Transform _waterTransform;
 
     // AI: Public readouts
     public bool IsOnWater { get { return _isOnWater; } }
@@ -48,25 +42,8 @@ public class BoatWaterDetector : MonoBehaviour
     private float _avgWaterDepth;
     private float _minGroundClear;
 
-    private void Awake()
-    {
-        if (_waterProviderSource != null)
-        {
-            _waterProvider = _waterProviderSource as IWaterHeightProvider;
-            if (_waterProvider == null)
-            {
-                Debug.LogError("BoatWaterDetector: _waterProviderSource does not implement IWaterHeightProvider.");
-            }
-        }
-    }
 
-    private void Reset()
-    {
-        _waterMask = 1 << LayerMask.NameToLayer("Water");
-    }
-
-    [SerializeField] private float _waterLevel = 0f;
-    private void LateUpdate()
+    private void Update()
     {
         if (_samplePoints == null || _samplePoints.Length == 0)
         {
@@ -93,15 +70,17 @@ public class BoatWaterDetector : MonoBehaviour
 
             Vector3 origin = p.position + Vector3.up * 0.05f;
             float waterDepth = 0f;
-            bool inWater = false;
+            bool inWater;
 
             if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 500, _groundMask))
             {
                 waterDepth = hit.distance;
-                if (waterDepth < minGround) minGround = waterDepth;
+                if (waterDepth < minGround)
+                    minGround = waterDepth;
             }
 
-            inWater = minGround > 0.45f; // TODO: do not HARD CODE this
+            // MATT: Water level should be the water transform Y
+            inWater = minGround > _waterTransform.position.y; // TODO: do not HARD CODE this
 
             if (inWater)
             {
