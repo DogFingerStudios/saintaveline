@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 5040274940202237117}
   - component: {fileID: 1608317397246759995}
   - component: {fileID: 4038604888677351285}
+  - component: {fileID: 7763147946202283169}
   m_Layer: 0
   m_Name: boat_1
   m_TagString: Untagged
@@ -277,7 +278,7 @@ Rigidbody:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_ImplicitCom: 0
+  m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -301,11 +302,11 @@ MonoBehaviour:
   - {fileID: 7963169221041705997}
   - {fileID: 2552192326597111900}
   - {fileID: 2123125536420781339}
-  _waterLevel: -4.8
-  _floatForce: 10
-  _damping: 0.1
-  _waveAmplitude: 0.2
-  _waveFrequency: 0.5
+  _waterLevel: -4
+  _floatForce: 5
+  _damping: 0
+  _waveAmplitude: 0.05
+  _waveFrequency: 2
 --- !u!114 &1608317397246759995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,6 +319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398401a4a4cd05e48b26d7d18e8cdfcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WaterDetector: {fileID: 7763147946202283169}
   _maxThrust: 50000
   _reverseThrustFactor: 0.4
   _throttleChangeRate: 3
@@ -443,6 +445,37 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7763147946202283169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543479163862836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1f6273de08d462d962929d4c6ff4b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _samplePoints:
+  - {fileID: 6213490522459820563}
+  - {fileID: 7963169221041705997}
+  - {fileID: 2552192326597111900}
+  - {fileID: 2123125536420781339}
+  _useColliderMode: 0
+  _waterMask:
+    serializedVersion: 2
+    m_Bits: 16
+  _groundMask:
+    serializedVersion: 2
+    m_Bits: 1
+  _probeRadius: 0.25
+  _probeDepth: 3
+  _waterLevel: 0
+  _minWaterDepth: 0.2
+  _requiredCoverage: 0.5
+  _beachClearance: 0.15
+  _waterTransform: {fileID: 0}
 --- !u!1 &1585518852509088
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +778,7 @@ GameObject:
   m_Layer: 0
   m_Name: FloatPointRR
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -758,7 +791,7 @@ Transform:
   m_GameObject: {fileID: 1172144478941363842}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.783, y: -3.28, z: -14.318}
+  m_LocalPosition: {x: 4, y: -3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -812,7 +845,7 @@ GameObject:
   m_Layer: 0
   m_Name: FloatPointFL
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -825,7 +858,7 @@ Transform:
   m_GameObject: {fileID: 2089449023871031201}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.36, y: -3.65, z: 8.48}
+  m_LocalPosition: {x: -3, y: -3, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -888,7 +921,7 @@ Transform:
   m_GameObject: {fileID: 3245678293168222839}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.11, y: -0.702, z: 1.58}
+  m_LocalPosition: {x: -0.11, y: -0.51, z: 1.58}
   m_LocalScale: {x: 7.2570124, y: 2.2183, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -958,7 +991,7 @@ GameObject:
   m_Layer: 0
   m_Name: FloatPointRL
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -971,7 +1004,7 @@ Transform:
   m_GameObject: {fileID: 4504663321483400507}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.246, y: -3.28, z: -14.318}
+  m_LocalPosition: {x: -4, y: -3, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1232,7 +1265,7 @@ GameObject:
   m_Layer: 0
   m_Name: FloatPointFR
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1245,7 +1278,7 @@ Transform:
   m_GameObject: {fileID: 7789702520674248832}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.14, y: -3.95, z: 7.85}
+  m_LocalPosition: {x: 3, y: -3, z: 7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
