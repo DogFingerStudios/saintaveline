@@ -13,6 +13,8 @@ public class FootstepAudio : MonoBehaviour
     private float stepTimer;
     private Vector3 lastPosition;
 
+    public bool IsEnabled { get; set; } = true;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -22,6 +24,8 @@ public class FootstepAudio : MonoBehaviour
 
     void Update()
     {
+        if (!IsEnabled) return;
+
         Vector3 move = transform.position - lastPosition;
         move.y = 0f;
 

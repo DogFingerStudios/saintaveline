@@ -10,15 +10,17 @@ public class DebugHUD : MonoBehaviour
     public TextMeshProUGUI sonNPCStateText;
     public TextMeshProUGUI sonNPCDistanceText;
     public TextMeshProUGUI enemyHealthText;
+    public TextMeshProUGUI boatText;
 
     // Objects of interest
     public CharacterController controller;
     public GameObject enemyNPC;
     private GameEntity enemyNPCHealth;
     public SonNPC sonNPC;
+    public BoatWaterDetector boatDetector;
 
     private bool isVisible = true;
-
+    
     void Start()
     {
         if (enemyNPC)
@@ -50,6 +52,36 @@ public class DebugHUD : MonoBehaviour
             {
                 enemyHealthText.text = "Enemy Health: " + enemyNPCHealth.Health.ToString("F2");
             }
+
+            string boatLandTest = boatDetector.IsOverland ? "Overland" : "Not Overland";
+            string boatWaterTest = boatDetector.IsOnWater ? "On Water" : "Not On Water";
+            string boatBeachedTest = boatDetector.IsBeached ? "Beached" : "Not Beached";
+
+            boatText.text = $@"Boat Land: {boatLandTest}
+Boat Water: {boatWaterTest}
+Boat Beached: {boatBeachedTest}
+AvgWaterDepth: {boatDetector.AvgWaterDepth}
+WaterCoverage01: {boatDetector.WaterCoverage01}
+MinGroundClearance: {boatDetector.MinGroundClearance}
+WaterHits: {boatDetector.WaterHits}
+SamplePoints:
+{SamplePointsString()}
+";
         }
     }
+
+    string SamplePointsString()
+    {
+        if (boatDetector.SamplePoints == null) return string.Empty;
+        string s = "";
+        for (int i = 0; i < boatDetector.SamplePoints.Length; i++)
+        {
+            if (boatDetector.SamplePoints[i] != null)
+            {
+                s += boatDetector.SamplePoints[i].name + ":" + boatDetector.SamplePoints[i].position.ToString("F2") + "\n";
+            }
+        }
+        return s;
+    }
+
 }
