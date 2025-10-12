@@ -19,6 +19,8 @@ public class BoatFloat : MonoBehaviour
 
     private void FixedUpdate()
     {
+        _rb.AddForce(Physics.gravity, ForceMode.Acceleration);
+
         foreach (Transform point in _floatPoints)
         {
             Vector3 pos = point.position;
