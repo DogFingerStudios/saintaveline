@@ -8448,11 +8448,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 39799cf03cd78bd4b96ed2f556aa8af9, type: 3}
   m_PrefabInstance: {fileID: 887960669}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &888143743 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6213490522459820563, guid: 67983a0d7ec8d4f6ab99828aa636a80f, type: 3}
-  m_PrefabInstance: {fileID: 1228538185}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &897691373
 GameObject:
   m_ObjectHideFlags: 0
@@ -8493,8 +8488,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1061, y: -573}
-  m_SizeDelta: {x: 200, y: 866}
+  m_AnchoredPosition: {x: -588, y: -262}
+  m_SizeDelta: {x: 202.4896, y: 501.2705}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &897691375
 MonoBehaviour:
@@ -8737,7 +8732,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618c690f1d6daa24c80b54a1e72bbcc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waterLevelY: 0
 --- !u!1001 &926368149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10619,42 +10613,17 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!1 &1101761713 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1543479163862836, guid: 67983a0d7ec8d4f6ab99828aa636a80f, type: 3}
+--- !u!114 &1101761722 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7763147946202283169, guid: 67983a0d7ec8d4f6ab99828aa636a80f, type: 3}
   m_PrefabInstance: {fileID: 1228538185}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1101761721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1101761713}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc1f6273de08d462d962929d4c6ff4b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _samplePoints:
-  - {fileID: 888143743}
-  - {fileID: 1587885005}
-  - {fileID: 1238217998}
-  - {fileID: 1565983836}
-  _useColliderMode: 0
-  _waterMask:
-    serializedVersion: 2
-    m_Bits: 16
-  _groundMask:
-    serializedVersion: 2
-    m_Bits: 495
-  _probeRadius: 0.25
-  _probeDepth: 3
-  _waterProviderSource: {fileID: 2031763266}
-  _minWaterDepth: 0.2
-  _requiredCoverage: 0.5
-  _beachClearance: 0.15
-  _waterLevel: 0
 --- !u!1001 &1103996079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11903,17 +11872,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6677898585567321049, guid: 67983a0d7ec8d4f6ab99828aa636a80f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.51
-      objectReference: {fileID: 0}
+    - target: {fileID: 7763147946202283169, guid: 67983a0d7ec8d4f6ab99828aa636a80f, type: 3}
+      propertyPath: _waterTransform
+      value: 
+      objectReference: {fileID: 670296404}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1543479163862836, guid: 67983a0d7ec8d4f6ab99828aa636a80f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1101761721}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67983a0d7ec8d4f6ab99828aa636a80f, type: 3}
 --- !u!1 &1229615830
 GameObject:
@@ -11991,11 +11957,6 @@ Transform:
   - {fileID: 357396236}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1238217998 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2552192326597111900, guid: 67983a0d7ec8d4f6ab99828aa636a80f, type: 3}
-  m_PrefabInstance: {fileID: 1228538185}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1240184641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14023,7 +13984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -14098,7 +14059,7 @@ MonoBehaviour:
   controller: {fileID: 1417590819}
   enemyNPC: {fileID: 0}
   sonNPC: {fileID: 1747406711}
-  boatDetector: {fileID: 1101761721}
+  boatDetector: {fileID: 1101761722}
 --- !u!1001 &1426184433
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15344,11 +15305,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f3878ef94022a6f459f18f2e12cd6813, type: 3}
   m_PrefabInstance: {fileID: 1240184641}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1565983836 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2123125536420781339, guid: 67983a0d7ec8d4f6ab99828aa636a80f, type: 3}
-  m_PrefabInstance: {fileID: 1228538185}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1577543577
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15451,11 +15407,6 @@ RectTransform:
   m_AnchoredPosition: {x: -495.03918, y: 2.260376}
   m_SizeDelta: {x: 230.8276, y: 95.4791}
   m_Pivot: {x: 0, y: 0.5}
---- !u!4 &1587885005 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7963169221041705997, guid: 67983a0d7ec8d4f6ab99828aa636a80f, type: 3}
-  m_PrefabInstance: {fileID: 1228538185}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1591508176
 GameObject:
   m_ObjectHideFlags: 0
@@ -20634,7 +20585,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618c690f1d6daa24c80b54a1e72bbcc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waterLevelY: 0
 --- !u!1001 &2046236285
 PrefabInstance:
   m_ObjectHideFlags: 0

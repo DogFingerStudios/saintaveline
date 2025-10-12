@@ -63,7 +63,25 @@ Boat Beached: {boatBeachedTest}
 AvgWaterDepth: {boatDetector.AvgWaterDepth}
 WaterCoverage01: {boatDetector.WaterCoverage01}
 MinGroundClearance: {boatDetector.MinGroundClearance}
+WaterHits: {boatDetector.WaterHits}
+SamplePoints:
+{SamplePointsString()}
 ";
         }
     }
+
+    string SamplePointsString()
+    {
+        if (boatDetector.SamplePoints == null) return string.Empty;
+        string s = "";
+        for (int i = 0; i < boatDetector.SamplePoints.Length; i++)
+        {
+            if (boatDetector.SamplePoints[i] != null)
+            {
+                s += boatDetector.SamplePoints[i].name + ":" + boatDetector.SamplePoints[i].position.ToString("F2") + "\n";
+            }
+        }
+        return s;
+    }
+
 }

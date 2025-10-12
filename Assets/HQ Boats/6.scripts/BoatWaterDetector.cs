@@ -1,8 +1,11 @@
-// AI: BoatWaterDetector.cs - robust water vs land detection only (no disabling). Unity 6000.0.43f1
-// AI: ASCII only. Braces on new lines. Private fields use underscore.
-// AI: Two detection paths:
-// AI:   1) Collider mode: SphereCast down to find Water and Ground colliders (recommended if your water has a collider/trigger).
-// AI:   2) Height API mode: Sample a water height provider to compute submergence without colliders.
+// The boat code in general is a rough AI slop, but we need to move on.
+// Ideally this script would be merged with BoatFloa (it could use the
+// same sample points, but not necessarily). The water detection should 
+// detect three states: (a) a point under water, (b) a point over land,
+// (c) a point over land. There should be better beached mechanics, such
+// that when the boat is beached it can still be driveable (but very 
+// slowly). Also, it would be good to add other mechanics such as sinking,
+// jumping ramps, etc. But for now this is good enough.
 
 using UnityEngine;
 
@@ -10,6 +13,7 @@ public class BoatWaterDetector : MonoBehaviour
 {
     [Header("Samples")]
     [SerializeField] private Transform[] _samplePoints = null;      // AI: reuse your boat float points or keel points
+    public Transform[] SamplePoints { get { return _samplePoints; } }
 
     [Header("Collider Mode")]
     [SerializeField] private bool _useColliderMode = true;          // AI: true = cast vs colliders; false = use height provider
@@ -42,6 +46,7 @@ public class BoatWaterDetector : MonoBehaviour
     private float _avgWaterDepth;
     private float _minGroundClear;
 
+   public int WaterHits;
 
     private void Update()
     {
@@ -60,6 +65,15 @@ public class BoatWaterDetector : MonoBehaviour
         float depthSum = 0f;
         float minGround = float.PositiveInfinity;
 
+        // The code inside this loop is mostly shit. It's some of the most shameful shit
+        // I have ever written. And let it be known that this is by no means a reflection
+        // of @[Not Sure] or @Matthew -- this is entirely on me. You would think that 
+        // after the 40+ years I've been writing code that I wouldn't write shit like this,
+        // but here were are. I only hope that @[Tomorrow Addy] can redeem himself and 
+        // come back to this and write something better. We shall. Time will tell.
+        //
+        // Yours in Christ,
+        // @[Today Addy]
         for (int i = 0; i < _samplePoints.Length; i++)
         {
             Transform p = _samplePoints[i];
@@ -75,12 +89,11 @@ public class BoatWaterDetector : MonoBehaviour
             if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 500, _groundMask))
             {
                 waterDepth = hit.distance;
-                if (waterDepth < minGround)
-                    minGround = waterDepth;
+                if (waterDepth < minGround) minGround = waterDepth;
             }
 
-            // MATT: Water level should be the water transform Y
-            inWater = minGround > _waterTransform.position.y; // TODO: do not HARD CODE this
+            // inWater = minGround > _waterTransform.position.y; 
+            inWater = p.position.y < _waterTransform.position.y;
 
             if (inWater)
             {
@@ -88,6 +101,8 @@ public class BoatWaterDetector : MonoBehaviour
                 depthSum += waterDepth;
             }
         }
+
+        WaterHits = waterHits;
 
         // the percentage of sample points that are in water
         _coverage01 = Mathf.Clamp01((float)waterHits / Mathf.Max(1, _samplePoints.Length));
