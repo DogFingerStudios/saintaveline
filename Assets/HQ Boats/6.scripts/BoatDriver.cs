@@ -9,6 +9,9 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class BoatDriver : MonoBehaviour
 {
+    [Header("References")]
+    public BoatWaterDetector WaterDetector;
+
     [Header("Engine")]
     [SerializeField] private float _maxThrust = 50000f; // AI: Newtons at full ahead
     [SerializeField] private float _reverseThrustFactor = 0.4f; // AI: reverse is weaker
@@ -221,26 +224,32 @@ public class BoatDriver : MonoBehaviour
         // AI: compute thrust
         float thrust = _throttle >= 0f ? _throttle * _maxThrust : _throttle * _maxThrust * _reverseThrustFactor;
         Vector3 thrustDir = transform.forward;
-        Vector3 thrustPos = _propulsorPoint != null ? _propulsorPoint.position : transform.position;
-        _rb.AddForceAtPosition(thrustDir * thrust, thrustPos, ForceMode.Force);
+        //Vector3 thrustPos = _propulsorPoint != null ? _propulsorPoint.position : transform.position;
+        //_rb.AddForceAtPosition(thrustDir * thrust, thrustPos, ForceMode.Force);        
 
         // AI: rudder torque scales with forward speed to avoid spinning in place
         Vector3 vLocal = transform.InverseTransformDirection(_rb.linearVelocity);
         float speedFactor = Mathf.Clamp01(Mathf.Abs(vLocal.z) / 2f); // AI: scale onset around 2 m/s
-        float yawTorque = _steer * _rudderTorque * (0.3f + 0.7f * speedFactor);
-        _rb.AddTorque(Vector3.up * yawTorque, ForceMode.Force);
+        float yawTorque = _steer * _rudderTorque * (0.3f + 0.7f * speedFactor);        
 
         // AI: quadratic-like water resistance
         // AI: lateral (sideways) resistance
         Vector3 lateralLocal = new Vector3(vLocal.x, 0f, 0f);
         Vector3 lateralWorld = transform.TransformDirection(lateralLocal);
-        Vector3 lateralDrag = -lateralWorld * _lateralWaterResistance * Mathf.Abs(vLocal.x);
-        _rb.AddForce(lateralDrag, ForceMode.Force);
+        Vector3 lateralDrag = -lateralWorld * _lateralWaterResistance * Mathf.Abs(vLocal.x);        
 
         // AI: longitudinal drag
         Vector3 longWorld = transform.forward * vLocal.z;
         Vector3 longDrag = -longWorld * _longitudinalDrag * Mathf.Abs(vLocal.z);
-        _rb.AddForce(longDrag, ForceMode.Force);
+
+        // Apply forces
+        if (WaterDetector.IsOnWater)
+        {
+            _rb.AddForce(thrustDir * thrust, ForceMode.Force);
+            _rb.AddTorque(Vector3.up * yawTorque, ForceMode.Force);
+            _rb.AddForce(lateralDrag, ForceMode.Force);
+            _rb.AddForce(longDrag, ForceMode.Force);
+        }
 
         // AI: brake drag
         if (Input.GetKey(_brakeKey))
