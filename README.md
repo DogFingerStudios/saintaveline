@@ -18,15 +18,6 @@ Players take the role of a family patriarch struggling to escape the siege with 
 
 Follow the development through live streams at [YouTube](https://www.youtube.com/@AddyGoesLive).
 
-## Key Features:
-- First-Person ↔ Third-Person toggle
-- Permadeath survival mechanics
-- Basic stealth, combat, and detection systems
-- Player-controlled NPC family members
-- Randomized NPC spawns and AI pursuit
-
----
-
 ## 🧪 Technologies Used
 
 | Tool / Engine | Purpose |
@@ -38,7 +29,15 @@ Follow the development through live streams at [YouTube](https://www.youtube.com
 | **Unity UI Toolkit** | Modern menus and HUD overlays |
 | **Git** | Version control |
 
----
+
+## ✨ Key Features
+
+- First-Person ↔ Third-Person toggle
+- Permadeath survival mechanics
+- Basic stealth, combat, and detection systems
+- Player-controlled NPC family members
+- Randomized NPC spawns and AI pursuit
+
 
 ## 🎯 **Prototype Goals**
 
@@ -159,5 +158,6 @@ Follow the development through live streams at [YouTube](https://www.youtube.com
    - Combat feedback
 
 2. Adjust difficulty and AI based on feedback
+   - Polish controls and camera transitions
 
 
