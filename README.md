@@ -8,21 +8,22 @@
 
 ## 🎮 Game Backstory
 
-**Saint Aveline** is a tense survival experience set in the world of [Yanorra](https://github.com/DogFingerStudios/Yanorra). On the island of Saint Aveline—once a quiet refuge off Duvessa’s coast—war has arrived. As the mainland burns in civil conflict between the authoritarian **Dornish Order** and the insurgent **Sombra-Qhari Guerrillas**, the island’s fragile peace collapses overnight.
+**Saint Aveline** is a tense survival horror game set in the world of [Yanorra](https://github.com/DogFingerStudios/Yanorra). 
 
-Players take the role of a father struggling to escape the siege with his wife, children, and elderly father. Trapped amid the occupation, the family must navigate shattered streets, scarce resources, and impossible moral choices. Every decision carries weight—each mistake could cost a life.
+On the small island of Saint Aveline, once a quiet refuge off the coast of the nation of Duvessa, war has arrived. As the mainland burns in civil conflict between the authoritarian **Dornish Order** and the insurgent **Sombra-Qhari Guerrillas**, the island’s fragile peace collapses overnight.
+
+Players take the role of a family patriarch struggling to escape the siege with his wife, children, and elderly father. Trapped amid the occupation, the player must navigate shattered streets, scarce resources, and impossible moral choices while protecting the family. Every decision carries weight, and each mistake could cost a life.
 
 ## Devlog
 
-Follow the development journey on through my live streams at [YouTube](https://www.youtube.com/@AddyGoesLive).
+Follow the development through live streams at [YouTube](https://www.youtube.com/@AddyGoesLive).
 
 ## Key Features:
 - First-Person ↔ Third-Person toggle
 - Permadeath survival mechanics
 - Basic stealth, combat, and detection systems
+- Player-controlled NPC family members
 - Randomized NPC spawns and AI pursuit
-- Dynamic terrain and procedural building logic
-- WWII-inspired aesthetic with Andean mythological overtones
 
 ---
 
@@ -30,7 +31,7 @@ Follow the development journey on through my live streams at [YouTube](https://w
 
 | Tool / Engine | Purpose |
 |---------------|---------|
-| **Unity 6000.0.43f1** | Game engine |
+| **Unity 6000** | Game engine |
 | **C#** | Core gameplay logic and systems |
 | **NavMesh Components** | AI pathfinding and navigation |
 | **TextMeshPro** | UI and HUD systems |
