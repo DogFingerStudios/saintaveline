@@ -6,17 +6,17 @@
 
 </center>
 
----
-
-## 🎮 Game Summary
-
-### Backstory
+## 🎮 Game Backstory
 
 **Saint Aveline** is a tense survival experience set in the world of [Yanorra](https://github.com/DogFingerStudios/Yanorra). On the island of Saint Aveline—once a quiet refuge off Duvessa’s coast—war has arrived. As the mainland burns in civil conflict between the authoritarian **Dornish Order** and the insurgent **Sombra-Qhari Guerrillas**, the island’s fragile peace collapses overnight.
 
 Players take the role of a father struggling to escape the siege with his wife, children, and elderly father. Trapped amid the occupation, the family must navigate shattered streets, scarce resources, and impossible moral choices. Every decision carries weight—each mistake could cost a life.
 
-### Key Features:
+## Devlog
+
+Follow the development journey on through my live streams at [YouTube](https://www.youtube.com/@AddyGoesLive).
+
+## Key Features:
 - First-Person ↔ Third-Person toggle
 - Permadeath survival mechanics
 - Basic stealth, combat, and detection systems
