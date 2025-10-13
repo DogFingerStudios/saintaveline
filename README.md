@@ -14,7 +14,7 @@ On the small island of Saint Aveline, once a quiet refuge off the coast of the n
 
 Players take the role of a family patriarch struggling to escape the siege with his wife, children, and elderly father. Trapped amid the occupation, the player must navigate shattered streets, scarce resources, and impossible moral choices while protecting the family. Every decision carries weight, and each mistake could cost a life.
 
-## Devlog
+## 🎬 🎥 🔴 Devlog
 
 Follow the development through live streams at [YouTube](https://www.youtube.com/@AddyGoesLive).
 
