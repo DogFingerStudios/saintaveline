@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8349d9b6a454414d94dda2f795fc2ac, type: 3}
+  m_Name: SO_Phone1
+  m_EditorClassIdentifier: 
+  ItemName: Cell Phone
+  DamageScore: 10
+  prefab: {fileID: 3535473601529558972, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
+  TargetCollisionLayers:
+    serializedVersion: 2
+    m_Bits: 384
+  EquippedPosition: {x: 0, y: 0, z: 0}
+  EquippedRotation: {x: 0, y: 0, z: 0}
+  Interactions:
+  - key: take_equip
+    description: Pick up the damn phone
+  Equippable: 1
+  Storable: 1
+  Thumbnail: {fileID: 21300000, guid: eba12ebd6a2a1e84f9afa557dbe20c1b, type: 3}
