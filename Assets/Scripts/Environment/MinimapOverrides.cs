@@ -10,11 +10,13 @@ public class MinimapFogOverride : MonoBehaviour
 
     private bool _sunWasEnabled;
     private bool _fogWasEnabled;
+    private float _initialCameraY;
 
     public void Awake()
     {
         RenderPipelineManager.beginCameraRendering += OnBeginCameraRendering;
         RenderPipelineManager.endCameraRendering += OnEndCameraRendering;
+        _initialCameraY = transform.position.y;
     }
 
     private void OnDestroy()
@@ -23,12 +25,25 @@ public class MinimapFogOverride : MonoBehaviour
         RenderPipelineManager.endCameraRendering -= OnEndCameraRendering;
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Equals) && _initialCameraY < 8000)
+        {
+            _initialCameraY += 100;
+        }
+        else if (Input.GetKey(KeyCode.Minus) && _initialCameraY > 50)
+        {
+            _initialCameraY -= 100;
+        }
+    }
+
     private void LateUpdate()
     {
         if (_followTarget != null)
         {
             Vector3 newPosition = _followTarget.position;
-            newPosition.y = transform.position.y;
+            //newPosition.y = transform.position.y;
+            newPosition.y = _initialCameraY;
             transform.position = newPosition;
         }
     }
