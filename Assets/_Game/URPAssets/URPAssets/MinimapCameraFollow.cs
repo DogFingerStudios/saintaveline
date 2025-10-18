@@ -6,11 +6,8 @@ public class MinimapCameraFollow : MonoBehaviour
     [SerializeField] private Camera _camera;
 
     private float _minSize = 10f;
-    private float _maxSize = 5000f;
-
-    private void Awake()
-    {
-    }
+    private float _maxSize = 500f;
+    private float _zoomSpeed = 10f;
 
     void Update()
     {
@@ -20,13 +17,11 @@ public class MinimapCameraFollow : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Minus) && _camera.orthographicSize < _maxSize)
         {
-            //newPosition += new Vector3(0, 100, 0);
-            _camera.orthographicSize += 7.5f;
+            _camera.orthographicSize += _zoomSpeed;
         }
         else if (Input.GetKeyDown(KeyCode.Equals) && _camera.orthographicSize > _minSize)
         {
-            //newPosition -= new Vector3(0, 100, 0);
-            _camera.orthographicSize -= 7.5f;
+            _camera.orthographicSize -= _zoomSpeed;
         }
 
         //Vector3 newRotation = this.transform.eulerAngles;
