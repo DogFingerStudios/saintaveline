@@ -24,7 +24,7 @@ public class CharacterEntity : GameEntity
     private ItemEntity? _equippedItem = null;
     public ItemEntity? EquippedItem { get => _equippedItem; }
 
-    public void Awake()
+    public virtual void Awake()
     {
         foreach (var itemObj in _initialInventory)
         {
