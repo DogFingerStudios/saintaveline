@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Goal
 {
-    private GoalSO Data;
+    private readonly GoalSO Data;
     public T TypedData<T>() => (T)(object)Data;
 
     // public setter allows for the player to assign the goal/task to someone else,
@@ -39,7 +39,7 @@ public class ArriveAtGoal : Goal
 {
     public Vector3      Location => Data.Location;
     public float        ArrivedDistance => Data.ArrivedDistance;
-    public Transform    ChracterTransform => Host.transform;
+    public Transform    ChracterTransform => Host!.transform;
 
     private ArriveAtGoalSO Data => this.TypedData<ArriveAtGoalSO>();
 
@@ -72,28 +72,24 @@ public class CollectItemGoal : Goal
     {
         // nothing to do
     }
-
-    //public void ItemCollected(string itemName)
-    //{
-    //    if (itemName == ItemName)
-    //    {
-    //        _quantityCollected++;
-    //        if (_quantityCollected >= QuantityNeeded)
-    //        {
-    //            base.Complete();
-    //        }
-    //    }
-    //}
 }
 
 public class Objective
 {
-    public string       Name;
-    public string       Description;
-    public Stack<Goal>  Goals;
+    readonly ObjectiveSO         Data;
+
+    public string       Name => Data.Name;
+    public string       Description => Data.Description;
+
+    public Stack<Goal>  Goals = new();
     public Goal?        CurrentGoal;
 
-    public event Action OnObjectiveCompleted;
+    public event Action OnObjectiveCompleted = null!;
+
+    public Objective(ObjectiveSO obj)
+    {
+        Data = obj;
+    }
 
     public void ManualAwake()
     {
@@ -141,7 +137,7 @@ public class Objective
 public class ObjectiveSystem
 {
     private static readonly Lazy<ObjectiveSystem> _instance =
-        new Lazy<ObjectiveSystem>(() => new ObjectiveSystem());
+        new (() => new ObjectiveSystem());
 
     public static ObjectiveSystem Instance => _instance.Value;
 
@@ -168,7 +164,7 @@ public class ObjectiveSystem
 public class ObjectiveFactory
 {
     private static readonly Lazy<ObjectiveFactory> _instance =
-        new Lazy<ObjectiveFactory>(() => new ObjectiveFactory());
+        new (() => new ObjectiveFactory());
 
     public static ObjectiveFactory Instance => _instance.Value;
 
@@ -186,12 +182,7 @@ public class ObjectiveFactory
     // host - the character entity that will be undertaking the objective
     public Objective CreateObjectiveFromSO(ObjectiveSO objectiveSO, CharacterEntity host)
     {
-        Objective objective = new()
-        {
-            Name = objectiveSO.Name,
-            Description = objectiveSO.Description,
-            Goals = new Stack<Goal>()
-        };
+        Objective objective = new(objectiveSO);
 
         foreach (GoalSO goalSO in objectiveSO.Goals)
         {
