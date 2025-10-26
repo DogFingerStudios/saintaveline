@@ -1,13 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.Events;
 
+[DefaultExecutionOrder(-100)]
 public sealed class BottomTypewriter : MonoBehaviour
 {
-    public static BottomTypewriter Instance { get; private set; }
-
     [Header("References")]
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private TextMeshProUGUI _text;
@@ -31,15 +31,13 @@ public sealed class BottomTypewriter : MonoBehaviour
     private bool _isTyping;
     private bool _wasEscPressedOnceDuringCurrentMessage;
 
+    private static readonly Lazy<BottomTypewriter> _instance =
+        new(() => new BottomTypewriter());
+
+    public static BottomTypewriter Instance => _instance.Value;
+
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-
         if (_canvasGroup == null)
         {
             _canvasGroup = GetComponent<CanvasGroup>();

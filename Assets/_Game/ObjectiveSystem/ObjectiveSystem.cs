@@ -102,7 +102,9 @@ public class ObjectiveSystem
         CurrentObjective = null;
     }
 
-    public void ManualAwake()
+    private RunOnce? _runonce;
+
+    public void ManualAwake(MonoBehaviour mb)
     {
         if (CurrentObjective == null) return;
 
@@ -111,12 +113,27 @@ public class ObjectiveSystem
 
         if (!CurrentObjective.StartMessage.Equals(string.Empty))
         {
-            BottomTypewriter.Instance.Enqueue(CurrentObjective.StartMessage);
+            _runonce = new RunOnce()
+            {
+                Func = () =>
+                {
+                    Debug.Log("Before calling DelayRun");
+                    DelayRun.Do(mb, () =>
+                    {
+                        Debug.Log("Begin Initializing: " + CurrentObjective.StartMessage);
+                        BottomTypewriter.Instance.Enqueue(CurrentObjective.StartMessage);
+                        Debug.Log("Done Initializing: " + CurrentObjective.StartMessage);
+
+                    }, 5);
+                    Debug.Log("After calling DelayRun");
+                }
+            };
         }
     }
 
-    public void ManualUpdate()
+    public void ManualUpdate(MonoBehaviour mb)
     {
+        _runonce.Run();
         CurrentObjective?.ManualUpdate();
     }
 }

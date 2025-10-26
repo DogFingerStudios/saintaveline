@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
 public class ObjectiveManager : MonoBehaviour
 {
     [SerializeField] private ObjectiveSO InitialObjective;
@@ -16,11 +17,11 @@ public class ObjectiveManager : MonoBehaviour
         _objectiveSystem.CurrentObjective = 
             ObjectiveFactory.Instance.CreateObjectiveFromSO(InitialObjective, entity);
         
-        _objectiveSystem.ManualAwake();
+        _objectiveSystem.ManualAwake(this);
     }
 
     void Update()
     {
-        _objectiveSystem.ManualUpdate();
+        _objectiveSystem.ManualUpdate(this);
     }
 }
