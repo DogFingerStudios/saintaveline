@@ -1,19 +1,13 @@
 using UnityEngine;
 
-public enum GoalType
-{
-    ArriveAtLocation,
-    CollectItem,
-    //DefeatEnemy,
-    //InteractWithObject
-}
-
 [CreateAssetMenu(fileName = "NewGoal", menuName = "Game/Goals/Goal")]
 public class GoalSO : ScriptableObject
 {
     public string Name;
     [TextArea] public string Description;
-    public GoalType Type;
+    public string StartMessage;
+    public string SuccessMessage;
+    public string FailureMessage;
 }
 
 [CreateAssetMenu(fileName = "NewArriveAtGoal", menuName = "Game/Goals/ArriveAtGoal")]
