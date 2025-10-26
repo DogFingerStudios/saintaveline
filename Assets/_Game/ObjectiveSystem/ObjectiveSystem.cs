@@ -104,7 +104,7 @@ public class ObjectiveSystem
 
     private RunOnce? _runonce;
 
-    public void ManualAwake(MonoBehaviour mb)
+    public void ManualAwake()
     {
         if (CurrentObjective == null) return;
 
@@ -119,12 +119,18 @@ public class ObjectiveSystem
                 Func = () =>
                 {
                     BottomTypewriter.Instance.Enqueue(CurrentObjective.StartMessage);
+
+                    if (CurrentObjective.CurrentGoal != null &&
+                        !CurrentObjective.CurrentGoal.StartMessage.Equals(string.Empty))
+                    {
+                        BottomTypewriter.Instance.Enqueue(CurrentObjective.CurrentGoal.StartMessage);
+                    }
                 }
             };
         }
     }
 
-    public void ManualUpdate(MonoBehaviour mb)
+    public void ManualUpdate()
     {
         _runonce?.Run();
         CurrentObjective?.ManualUpdate();

@@ -17,11 +17,11 @@ public class ObjectiveManager : MonoBehaviour
         _objectiveSystem.CurrentObjective =
             ObjectiveFactory.Instance.CreateObjectiveFromSO(InitialObjective, entity);
 
-        _objectiveSystem.ManualAwake(this);
+        _objectiveSystem.ManualAwake();
     }
 
     void Update()
     {
-        _objectiveSystem.ManualUpdate(this);
+        _objectiveSystem.ManualUpdate();
     }
 }
