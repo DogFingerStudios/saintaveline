@@ -14,9 +14,9 @@ public class ObjectiveManager : MonoBehaviour
         var player = GameObject.FindWithTag("Player");
         var entity = player.GetComponent<CharacterEntity>();
 
-        _objectiveSystem.CurrentObjective = 
+        _objectiveSystem.CurrentObjective =
             ObjectiveFactory.Instance.CreateObjectiveFromSO(InitialObjective, entity);
-        
+
         _objectiveSystem.ManualAwake(this);
     }
 

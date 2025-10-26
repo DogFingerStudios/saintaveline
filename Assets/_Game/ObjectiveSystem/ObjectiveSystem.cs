@@ -115,17 +115,10 @@ public class ObjectiveSystem
         {
             _runonce = new RunOnce()
             {
+                PreCalls = 1,
                 Func = () =>
                 {
-                    Debug.Log("Before calling DelayRun");
-                    DelayRun.Do(mb, () =>
-                    {
-                        Debug.Log("Begin Initializing: " + CurrentObjective.StartMessage);
-                        BottomTypewriter.Instance.Enqueue(CurrentObjective.StartMessage);
-                        Debug.Log("Done Initializing: " + CurrentObjective.StartMessage);
-
-                    }, 5);
-                    Debug.Log("After calling DelayRun");
+                    BottomTypewriter.Instance.Enqueue(CurrentObjective.StartMessage);
                 }
             };
         }
@@ -133,7 +126,7 @@ public class ObjectiveSystem
 
     public void ManualUpdate(MonoBehaviour mb)
     {
-        _runonce.Run();
+        _runonce?.Run();
         CurrentObjective?.ManualUpdate();
     }
 }
