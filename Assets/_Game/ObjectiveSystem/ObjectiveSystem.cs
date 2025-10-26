@@ -9,7 +9,10 @@ public class Objective
     readonly ObjectiveSO         Data;
 
     public string       Name => Data.Name;
-    public string       Description => Data.Description;
+    public string Description => Data.Description;
+    public string StartMessage => Data.StartMessage;
+    public string SuccessMessage => Data.SuccessMessage;
+    public string FailureMessage => Data.FailureMessage;
 
     public Stack<Goal>  Goals = new();
     public Goal?        CurrentGoal;
@@ -41,15 +44,24 @@ public class Objective
             throw new Exception("CurrentGoal is null in GoalCompletedHandler.");
         }
 
-        string msg = $"Completed goal '{CurrentGoal?.Name}'";
+        if (!CurrentGoal.SuccessMessage.Equals(string.Empty))
+        {
+            BottomTypewriter.Instance.Enqueue(CurrentGoal.SuccessMessage);
+        }
+
+        string msg = $"Goal '{CurrentGoal.Name}' completed";
         Debug.Log(msg);
-        BottomTypewriter.Instance.Enqueue(msg);
 
         Goals.Pop();
         if (Goals.Count > 0)
         {
             CurrentGoal = Goals.Peek();
             CurrentGoal.OnCompleted += GoalCompletedHandler;
+
+            if (!CurrentGoal.StartMessage.Equals(string.Empty))
+            {
+                BottomTypewriter.Instance.Enqueue(CurrentGoal.StartMessage);
+            }
         }
         else
         {
@@ -79,6 +91,11 @@ public class ObjectiveSystem
 
     void ObjectiveCompleteHandler()
     {
+        if (CurrentObjective == null)
+        {
+            throw new Exception("CurrentObjective is null in ObjectiveCompleteHandler.");
+        }
+
         string msg = $"Completed objective '{CurrentObjective?.Name}'";
         Debug.Log(msg);
         BottomTypewriter.Instance.Enqueue(msg);
@@ -87,8 +104,15 @@ public class ObjectiveSystem
 
     public void ManualAwake()
     {
-        CurrentObjective!.OnObjectiveCompleted += ObjectiveCompleteHandler;
-        CurrentObjective?.ManualAwake();
+        if (CurrentObjective == null) return;
+
+        CurrentObjective.OnObjectiveCompleted += ObjectiveCompleteHandler;
+        CurrentObjective.ManualAwake();
+
+        if (!CurrentObjective.StartMessage.Equals(string.Empty))
+        {
+            BottomTypewriter.Instance.Enqueue(CurrentObjective.StartMessage);
+        }
     }
 
     public void ManualUpdate()
@@ -103,16 +127,6 @@ public class ObjectiveFactory
         new (() => new ObjectiveFactory());
 
     public static ObjectiveFactory Instance => _instance.Value;
-
-    public Goal CreateGoalFromSO(ArriveAtGoalSO arrivalGoalSO, CharacterEntity host)
-    {
-        return new ArriveAtGoal(arrivalGoalSO) { Host = host };
-    }
-
-    public Goal CreateGoalFromSO(CollectItemGoalSO collectItemSO, CharacterEntity host)
-    {
-        return new CollectItemGoal(collectItemSO) { Host = host };
-    }
 
     // objectiveSO - the scriptable object defining the objective
     // host - the character entity that will be undertaking the objective
