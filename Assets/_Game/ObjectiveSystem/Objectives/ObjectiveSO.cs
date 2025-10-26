@@ -6,5 +6,5 @@ public class  ObjectiveSO : ScriptableObject
 {
     public string Name;
     [TextArea] public string Description;
-    public Stack<GoalSO> Goals;
+    public List<GoalSO> Goals;
 }

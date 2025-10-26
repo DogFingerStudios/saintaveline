@@ -111,6 +111,10 @@ public class Objective
             throw new Exception("CurrentGoal is null in GoalCompletedHandler.");
         }
 
+        string msg = $"Completed goal '{CurrentGoal?.Name}'";
+        Debug.Log(msg);
+        BottomTypewriter.Instance.Enqueue(msg);
+
         Goals.Pop();
         if (Goals.Count > 0)
         {
@@ -145,7 +149,9 @@ public class ObjectiveSystem
 
     void ObjectiveCompleteHandler()
     {
-        Debug.Log(CurrentObjective?.Name + " completed!");
+        string msg = $"Completed objective '{CurrentObjective?.Name}'";
+        Debug.Log(msg);
+        BottomTypewriter.Instance.Enqueue(msg);
         CurrentObjective = null;
     }
 
