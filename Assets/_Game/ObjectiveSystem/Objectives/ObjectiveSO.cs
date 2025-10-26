@@ -7,4 +7,8 @@ public class  ObjectiveSO : ScriptableObject
     public string Name;
     [TextArea] public string Description;
     public List<GoalSO> Goals;
+    
+    public string StartMessage;
+    public string SuccessMessage;
+    public string FailureMessage; 
 }

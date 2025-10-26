@@ -23,6 +23,9 @@ public class Goal
 
     public string Name => Data.Name;
     public string Description => Data.Description;
+    public string StartMessage => Data.StartMessage;
+    public string SuccessMessage => Data.SuccessMessage;
+    public string FailureMessage => Data.FailureMessage;
 
     public event Action? OnCompleted;
 
