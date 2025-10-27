@@ -138,7 +138,9 @@ public class ObjectiveSystem
     public void ManualUpdate()
     {
         _runonce?.Run();
-        CurrentObjective?.ManualUpdate();
+        if (CurrentObjective == null) return;
+
+        CurrentObjective.ManualUpdate();
     }
 }
 

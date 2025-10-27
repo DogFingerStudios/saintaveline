@@ -26,8 +26,9 @@ public class LampInteractable : ItemEntity
     public float maxFlickerTime = 1f;
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         Light.enabled = false;
     }
 

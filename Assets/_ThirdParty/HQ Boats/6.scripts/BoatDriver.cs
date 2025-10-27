@@ -16,7 +16,7 @@ public class BoatDriver : MonoBehaviour
     [SerializeField] private float _maxThrust = 50000f; // AI: Newtons at full ahead
     [SerializeField] private float _reverseThrustFactor = 0.4f; // AI: reverse is weaker
     [SerializeField] private float _throttleChangeRate = 3f; // AI: units per second toward target
-    [SerializeField] private Transform _propulsorPoint = null; // AI: where thrust is applied (stern)
+    //[SerializeField] private Transform _propulsorPoint = null!; // AI: where thrust is applied (stern)
     [SerializeField] private float _forwardThrottle = 1.0f;
     [SerializeField] private float _reverseThrottle = 1.0f;
     [SerializeField] private float _leftSteer = 1.0f;
@@ -26,7 +26,7 @@ public class BoatDriver : MonoBehaviour
     [SerializeField] private float _rudderTorque = 25000f; // AI: yaw torque scale
     [SerializeField] private float _rudderResponse = 5.0f; // AI: steer smoothing rate
     [SerializeField] private float _maxRudderVisual = 25f; // AI: deg, optional visual wheel/helm
-    [SerializeField] private Transform _steeringWheelVisual = null;
+    [SerializeField] private Transform _steeringWheelVisual = null!;
 
     [Header("Hydrodynamic Drag")]
     [SerializeField] private float _lateralWaterResistance = 600f; // AI: fights side slip (quadratic-ish)
@@ -34,8 +34,8 @@ public class BoatDriver : MonoBehaviour
     [SerializeField] private float _brakeDragMultiplier = 3.0f; // AI: extra drag when Space is held
 
     [Header("Pilot Handoff")]
-    [SerializeField] private Transform _pilotCameraAnchor = null; // AI: camera mount while piloting
-    [SerializeField] private Transform _pilotSeat = null; // AI: where player sits while piloting
+    [SerializeField] private Transform _pilotCameraAnchor = null!; // AI: camera mount while piloting
+    [SerializeField] private Transform _pilotSeat = null!; // AI: where player sits while piloting
     [SerializeField] private float _cameraLerp = 10f; // AI: how fast camera snaps to anchor
 
     [Header("Input Map (WASD)")]
@@ -62,14 +62,14 @@ public class BoatDriver : MonoBehaviour
     private float _steerTarget = 0f; // AI: -1..+1
     private float _steer = 0f; // AI: -1..+1 smoothed
 
-    private Transform _playerRoot = null;
-    private MonoBehaviour _disabledMovementA = null; // AI: optional player movement component to disable
-    private MonoBehaviour _disabledMovementB = null; // AI: optional secondary component
-    private Camera _playerCamera = null;
-    private Transform _originalCameraParent = null;
+    private Transform _playerRoot = null!;
+    private MonoBehaviour? _disabledMovementA = null!; // AI: optional player movement component to disable
+    private MonoBehaviour? _disabledMovementB = null!; // AI: optional secondary component
+    private Camera _playerCamera = null!;
+    private Transform _originalCameraParent = null!;
     private Vector3 _originalCamLocalPos;
     private Quaternion _originalCamLocalRot;
-    private Transform _originalPlayerParent = null;
+    private Transform _originalPlayerParent = null!;
     private Vector3 _originalPlayerLocalPos;
     private Quaternion _originalPlayerLocalRot;
     
@@ -344,12 +344,12 @@ public class BoatDriver : MonoBehaviour
             _disabledMovementB.enabled = true;
         }
 
-        _playerRoot = null;
-        _playerCamera = null;
+        //_playerRoot = null;
+        //_playerCamera = null;
         _disabledMovementA = null;
         _disabledMovementB = null;
-        _originalCameraParent = null;
-        _originalPlayerParent = null;
+        //_originalCameraParent = null;
+        //_originalPlayerParent = null;
 
         if (_motorSound != null && _motorSound.isPlaying)
         {
@@ -363,7 +363,8 @@ public class BoatDriver : MonoBehaviour
     }
 
     // AI: utility to find and disable a component by type name
-    private T TryDisable<T>(Transform root, string typeName) where T : MonoBehaviour
+    private T? TryDisable<T>(Transform root, string typeName) 
+        where T : MonoBehaviour
     {
         if (root == null)
         {
@@ -380,6 +381,7 @@ public class BoatDriver : MonoBehaviour
                 return c;
             }
         }
+
         return null;
     }
 

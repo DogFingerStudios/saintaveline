@@ -16,17 +16,17 @@ public class BoatWaterDetector : MonoBehaviour
     public Transform[] SamplePoints { get { return _samplePoints; } }
 
     [Header("Collider Mode")]
-    [SerializeField] private bool _useColliderMode = true;          // AI: true = cast vs colliders; false = use height provider
-    [SerializeField] private LayerMask _waterMask = 1 << 4;         // AI: assign your Water layer
+    //[SerializeField] private bool _useColliderMode = true;          // AI: true = cast vs colliders; false = use height provider
+    //[SerializeField] private LayerMask _waterMask = 1 << 4;         // AI: assign your Water layer
     [SerializeField] private LayerMask _groundMask = ~0;            // AI: assign Ground/Terrain layers
-    [SerializeField] private float _probeRadius = 0.25f;            // AI: sphere radius
-    [SerializeField] private float _probeDepth = 3.0f;              // AI: cast depth below each sample point
+    //[SerializeField] private float _probeRadius = 0.25f;            // AI: sphere radius
+    //[SerializeField] private float _probeDepth = 3.0f;              // AI: cast depth below each sample point
 
     [Header("Decision Thresholds")]
-    [SerializeField] private float _waterLevel = 0f;
+    //[SerializeField] private float _waterLevel = 0f;
     [SerializeField] private float _minWaterDepth = 0.20f;          // AI: meters of water needed under sample to count as water
     [SerializeField] private float _requiredCoverage = 0.65f;        // AI: fraction of samples that must be in water
-    [SerializeField] private float _beachClearance = 0.15f;         // AI: ground within this distance means beached
+    //[SerializeField] private float _beachClearance = 0.15f;         // AI: ground within this distance means beached
 
     [Header("Water Transform")]
     [SerializeField] private Transform _waterTransform;
