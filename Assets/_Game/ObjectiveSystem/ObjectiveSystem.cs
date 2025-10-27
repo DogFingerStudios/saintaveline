@@ -148,26 +148,25 @@ public class ObjectiveFactory
     // host - the character entity that will be undertaking the objective
     public Objective CreateObjectiveFromSO(ObjectiveSO objectiveSO, CharacterEntity host)
     {
-        var obSOCopy = UnityEngine.Object.Instantiate(objectiveSO);
-        Objective objective = new(obSOCopy);
+        Objective objective = new(objectiveSO.Copy());
 
-        foreach (GoalSO goalSO in obSOCopy.Goals)
+        foreach (GoalSO goalSO in objectiveSO.Goals)
         {
             Debug.Log($"Creating goal from SO: {goalSO.name}");
             Goal goal = goalSO switch
             {
                 ArriveAtGoalSO arriveAtGoalSO
-                    => new ArriveAtGoal(ScriptableObject.Instantiate(arriveAtGoalSO)) { Host = host },
+                    => new ArriveAtGoal(arriveAtGoalSO.Copy()) { Host = host },
 
                 CollectItemGoalSO collectItemGoalSO
-                    => new CollectItemGoal(ScriptableObject.Instantiate(collectItemGoalSO)) { Host = host },
+                    => new CollectItemGoal(collectItemGoalSO.Copy()) { Host = host },
 
                 _ => throw new Exception("Unknown GoalSO type.")
             };
 
             objective.Goals.Add(goal);
         }
-        
+
         return objective;
     }
 }
