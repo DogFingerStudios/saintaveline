@@ -6,16 +6,16 @@ using UnityEngine;
 
 public class Objective
 {
-    readonly ObjectiveSO         Data;
+    readonly ObjectiveSO Data;
 
-    public string       Name => Data.Name;
+    public string Name => Data.Name;
     public string Description => Data.Description;
     public string StartMessage => Data.StartMessage;
     public string SuccessMessage => Data.SuccessMessage;
     public string FailureMessage => Data.FailureMessage;
 
-    public List<Goal>  Goals = new();
-    public Goal?        CurrentGoal;
+    public List<Goal> Goals = new();
+    public Goal? CurrentGoal;
 
     public event Action OnObjectiveCompleted = null!;
 
@@ -75,7 +75,7 @@ public class Objective
         {
             throw new Exception("CurrentGoal is null in Objective Update.");
         }
-        
+
         CurrentGoal.ManualUpdate();
     }
 }
@@ -83,7 +83,7 @@ public class Objective
 public class ObjectiveSystem
 {
     private static readonly Lazy<ObjectiveSystem> _instance =
-        new (() => new ObjectiveSystem());
+        new(() => new ObjectiveSystem());
 
     public static ObjectiveSystem Instance => _instance.Value;
 
@@ -111,7 +111,8 @@ public class ObjectiveSystem
 
     public void ManualAwake()
     {
-        if (CurrentObjective == null) return;
+        if (CurrentObjective == null)
+            return;
 
         CurrentObjective.OnObjectiveCompleted += ObjectiveCompleteHandler;
         CurrentObjective.ManualAwake();
@@ -138,7 +139,8 @@ public class ObjectiveSystem
     public void ManualUpdate()
     {
         _runonce?.Run();
-        if (CurrentObjective == null) return;
+        if (CurrentObjective == null)
+            return;
 
         CurrentObjective.ManualUpdate();
     }
@@ -147,7 +149,7 @@ public class ObjectiveSystem
 public class ObjectiveFactory
 {
     private static readonly Lazy<ObjectiveFactory> _instance =
-        new (() => new ObjectiveFactory());
+        new(() => new ObjectiveFactory());
 
     public static ObjectiveFactory Instance => _instance.Value;
 
