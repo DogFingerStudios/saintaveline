@@ -1,16 +1,5 @@
 #nullable enable
 using System;
-using UnityEngine;
-
-[CreateAssetMenu(fileName = "NewGoal", menuName = "Game/Goals/Goal")]
-public class GoalSO : ScriptableObject
-{
-    public string Name;
-    [TextArea] public string Description;
-    public string StartMessage;
-    public string SuccessMessage;
-    public string FailureMessage;
-}
 
 public class Goal
 {
