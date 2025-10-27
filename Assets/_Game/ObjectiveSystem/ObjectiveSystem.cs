@@ -96,9 +96,14 @@ public class ObjectiveSystem
             throw new Exception("CurrentObjective is null in ObjectiveCompleteHandler.");
         }
 
-        string msg = $"Completed objective '{CurrentObjective?.Name}'";
+        string msg = $"Completed objective '{CurrentObjective.Name}'";
         Debug.Log(msg);
-        BottomTypewriter.Instance.Enqueue(msg);
+
+        if (!CurrentObjective.SuccessMessage.Equals(string.Empty))
+        {
+            BottomTypewriter.Instance.Enqueue(CurrentObjective.SuccessMessage);
+        }
+
         CurrentObjective = null;
     }
 
