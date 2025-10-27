@@ -14,7 +14,7 @@ public class Objective
     public string SuccessMessage => Data.SuccessMessage;
     public string FailureMessage => Data.FailureMessage;
 
-    public Stack<Goal>  Goals = new();
+    public List<Goal>  Goals = new();
     public Goal?        CurrentGoal;
 
     public event Action OnObjectiveCompleted = null!;
@@ -28,7 +28,7 @@ public class Objective
     {
         if (Goals.Count > 0)
         {
-            CurrentGoal = Goals.Peek();
+            CurrentGoal = Goals[0];
             CurrentGoal.OnCompleted += GoalCompletedHandler;
         }
         else
@@ -52,10 +52,10 @@ public class Objective
         string msg = $"Goal '{CurrentGoal.Name}' completed";
         Debug.Log(msg);
 
-        Goals.Pop();
+        Goals.RemoveAt(0);
         if (Goals.Count > 0)
         {
-            CurrentGoal = Goals.Peek();
+            CurrentGoal = Goals[0];
             CurrentGoal.OnCompleted += GoalCompletedHandler;
 
             if (!CurrentGoal.StartMessage.Equals(string.Empty))
@@ -148,24 +148,26 @@ public class ObjectiveFactory
     // host - the character entity that will be undertaking the objective
     public Objective CreateObjectiveFromSO(ObjectiveSO objectiveSO, CharacterEntity host)
     {
-        Objective objective = new(objectiveSO);
+        var obSOCopy = UnityEngine.Object.Instantiate(objectiveSO);
+        Objective objective = new(obSOCopy);
 
-        foreach (GoalSO goalSO in objectiveSO.Goals)
+        foreach (GoalSO goalSO in obSOCopy.Goals)
         {
+            Debug.Log($"Creating goal from SO: {goalSO.name}");
             Goal goal = goalSO switch
             {
-                ArriveAtGoalSO arriveAtGoalSO 
-                    => new ArriveAtGoal(arriveAtGoalSO) { Host = host },
+                ArriveAtGoalSO arriveAtGoalSO
+                    => new ArriveAtGoal(ScriptableObject.Instantiate(arriveAtGoalSO)) { Host = host },
 
-                CollectItemGoalSO collectItemGoalSO 
-                    => new CollectItemGoal(collectItemGoalSO) { Host = host },
+                CollectItemGoalSO collectItemGoalSO
+                    => new CollectItemGoal(ScriptableObject.Instantiate(collectItemGoalSO)) { Host = host },
 
                 _ => throw new Exception("Unknown GoalSO type.")
             };
 
-            objective.Goals.Push(goal);
+            objective.Goals.Add(goal);
         }
-
+        
         return objective;
     }
 }
