@@ -152,7 +152,6 @@ public class ObjectiveFactory
 
         foreach (GoalSO goalSO in objectiveSO.Goals)
         {
-            Debug.Log($"Creating goal from SO: {goalSO.name}");
             Goal goal = goalSO switch
             {
                 ArriveAtGoalSO arriveAtGoalSO
