@@ -10,5 +10,5 @@ public class GoalSO : ScriptableObject
     public string SuccessMessage;
     public string FailureMessage;
 
-    public Sprite? MinimapIcon = null;
+    public GameObject? MinimapIcon = null;
 }
