@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ObjectiveManager : MonoBehaviour
 {
+    [SerializeField] private GameObject Minimap;
     [SerializeField] private ObjectiveSO InitialObjective;
 
     private ObjectiveSystem _objectiveSystem = ObjectiveSystem.Instance;
@@ -22,6 +23,6 @@ public class ObjectiveManager : MonoBehaviour
 
     void Update()
     {
-        _objectiveSystem.ManualUpdate();
+        _objectiveSystem.ManualUpdate(this);
     }
 }

@@ -135,7 +135,7 @@ public class ObjectiveSystem
         }
     }
 
-    public void ManualUpdate()
+    public void ManualUpdate(MonoBehaviour mb)
     {
         _runonce?.Run();
         if (CurrentObjective == null) return;
