@@ -1,16 +1,15 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 
 public class ObjectiveManager : MonoBehaviour
 {
-    [SerializeField] private GameObject Minimap;
-    [SerializeField] private ObjectiveSO InitialObjective;
+    //[SerializeField] private GameObject Minimap;
+    [SerializeField] private RectTransform MinimapUIObject;
+    [SerializeField] private ObjectiveSO InitialObjective;    
 
     // we assume that the minimap camera is a child of the minimap object
-    private Camera _minimapCamera;
+    [SerializeField] private Camera MinimapCamera;
 
     //private ObjectiveSystem _objectiveSystem = ObjectiveSystem.Instance;
     private Objective? CurrentObjective;
@@ -24,18 +23,16 @@ public class ObjectiveManager : MonoBehaviour
         if (goaldata == null) return;
 
         _activeGoalIcon = Instantiate(goaldata.MinimapIcon, goaldata.Location, goaldata.MinimapIcon.transform.rotation);
-        //_activeGoalIcon.transform.localScale *= 10;
-        //_activeGoalIcon.layer = LayerMask.GetMask("MinimapLayer");
+        _activeGoalIcon.GetComponent<GoalIconController>().SetData(MinimapCamera, MinimapUIObject);
 
         Debug.Log("The size of the _activeGoalIcon is" + _activeGoalIcon.transform.localScale);
     }
 
     public void Awake()
     {
-        _minimapCamera = Minimap.GetComponentInChildren<Camera>();
-        if (_minimapCamera == null)
+        if (MinimapCamera == null)
         {
-            throw new Exception("Minimap camera not found as child of Minimap GameObject.");
+            throw new Exception("Minimap camera not assigned.");
         }
 
         var player = GameObject.FindWithTag("Player");
@@ -79,7 +76,7 @@ public class ObjectiveManager : MonoBehaviour
 
         var goaldata = CurrentObjective?.CurrentGoal?.TypedData<ArriveAtGoalSO>();
         Vector3 newPosition = goaldata.Location;
-        newPosition.y = _minimapCamera.transform.position.y - 10;
+        newPosition.y = MinimapCamera.transform.position.y - 10;
         _activeGoalIcon.transform.position = newPosition;
     }
 
