@@ -58,12 +58,7 @@ public class GoalIconController : MonoBehaviour
             // If the icon is outside the minimap radius, clamp it
             if (distanceFromCenter > _minimapTransformRadius)
             {
-                _goalIconMinimapInstance.SetActive(true);
                 minimapPos = minimapPos.normalized * _minimapTransformRadius;
-            }
-            else
-            {
-                _goalIconMinimapInstance.SetActive(false);
             }
 
             _minimapGoalIconRect.anchoredPosition = minimapPos;

@@ -23,9 +23,8 @@ public class ObjectiveManager : MonoBehaviour
         if (goaldata == null) return;
 
         _activeGoalIcon = Instantiate(goaldata.MinimapIcon, goaldata.Location, goaldata.MinimapIcon.transform.rotation);
+        if (_activeGoalIcon.TryGetComponent<Renderer>(out var renderer)) renderer.enabled = false;
         _activeGoalIcon.GetComponent<GoalIconController>().SetData(MinimapCamera, MinimapUIObject);
-
-        Debug.Log("The size of the _activeGoalIcon is" + _activeGoalIcon.transform.localScale);
     }
 
     public void Awake()
