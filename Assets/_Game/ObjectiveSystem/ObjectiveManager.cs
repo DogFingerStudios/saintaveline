@@ -43,7 +43,7 @@ public class ObjectiveManager : MonoBehaviour
         if (CurrentObjective == null) return;
 
         CurrentObjective.OnObjectiveCompleted += ObjectiveCompleteHandler;
-        CurrentObjective.ManualAwake();
+        CurrentObjective.StartObjective();
 
         if (!CurrentObjective.StartMessage.Equals(string.Empty))
         {

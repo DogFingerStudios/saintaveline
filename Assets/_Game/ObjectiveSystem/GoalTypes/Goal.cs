@@ -24,9 +24,17 @@ public class Goal
         Data = data;
     }
 
-    public void Complete()
+    protected void Complete()
     {
         OnCompleted?.Invoke();
+    }
+
+    public virtual void Start()
+    {
+        if (!this.StartMessage.Equals(string.Empty))
+        {
+            BottomTypewriter.Instance.Enqueue(this.StartMessage);
+        }
     }
 
     public virtual void ManualUpdate()

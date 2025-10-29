@@ -1,3 +1,5 @@
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +14,9 @@ public class Objective
     public string SuccessMessage => Data.SuccessMessage;
     public string FailureMessage => Data.FailureMessage;
 
+    public List<Objective> Prerequisites = new();
+    public Objective? Next;
+
     public List<Goal> Goals = new();
     public Goal? CurrentGoal;
 
@@ -22,7 +27,7 @@ public class Objective
         Data = obj;
     }
 
-    public void ManualAwake()
+    public void StartObjective()
     {
         if (Goals.Count > 0)
         {
@@ -53,18 +58,24 @@ public class Objective
         Goals.RemoveAt(0);
         if (Goals.Count > 0)
         {
-            CurrentGoal = Goals[0];
-            CurrentGoal.OnCompleted += GoalCompletedHandler;
-
-            if (!CurrentGoal.StartMessage.Equals(string.Empty))
-            {
-                BottomTypewriter.Instance.Enqueue(CurrentGoal.StartMessage);
-            }
+            this.StartGoal(Goals[0]);
         }
         else
         {
             OnObjectiveCompleted?.Invoke();
         }
+    }
+
+    public void StartGoal(Goal? goal)
+    {
+        if (goal == null)
+        {
+            throw new Exception("Goal is null in StartGoal.");
+        }
+
+        CurrentGoal = goal;
+        CurrentGoal.OnCompleted += GoalCompletedHandler;
+        CurrentGoal.Start();
     }
 
     public void ManualUpdate()
