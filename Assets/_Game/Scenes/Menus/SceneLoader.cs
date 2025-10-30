@@ -3,9 +3,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Scripting;
 
+[Preserve]
 public class SceneLoader : MonoBehaviour
 {
-    [Preserve]
+    [UsedImplicitly]
     public void LoadScene(string sceneName)
     {
         Debug.Log("<color=green>Loading scene: " + sceneName + "</color>");
@@ -24,7 +25,6 @@ public class SceneLoader : MonoBehaviour
         Debug.Log("<color=blue>Holy hell wtf</color>");
     }
 
-    [UsedImplicitly]
     public void ReloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
