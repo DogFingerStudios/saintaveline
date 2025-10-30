@@ -1,10 +1,6 @@
 #nullable enable
-using NUnit.Framework.Internal.Commands;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEditor.Progress;
 
 /// <summary>
 /// This script is attached to the Main Camera which is a child of the Player object.
