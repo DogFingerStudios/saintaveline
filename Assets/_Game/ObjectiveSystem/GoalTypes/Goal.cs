@@ -30,6 +30,9 @@ public class Goal
 
     protected void Complete()
     {
+        // TODO: is the `Goal` being deleted at the end of the Goal or at
+        // the end of the Mission?
+        MinimapIconObject?.SetActive(false);
         OnCompleted?.Invoke();
     }
 
