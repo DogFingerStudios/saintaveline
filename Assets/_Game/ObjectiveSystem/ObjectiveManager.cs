@@ -66,12 +66,6 @@ public class ObjectiveManager : MonoBehaviour
         if (CurrentObjective == null) return;
 
         CurrentObjective.ManualUpdate();
-
-        // THIS IS NOT PRODUCTION QUALITY CODE
-        //var goaldata = CurrentObjective?.CurrentGoal?.TypedData<ArriveAtGoalSO>();
-        //Vector3 newPosition = goaldata.Location;
-        //newPosition.y = MinimapCamera.transform.position.y - 10;
-        //_activeGoalIcon.transform.position = newPosition;
     }
 
     void ObjectiveCompleteHandler()

@@ -84,7 +84,10 @@ public class Objective
         Goals.RemoveAt(0);
         if (Goals.Count > 0)
         {
-            //this.StartGoal(Goals[0]);
+            CurrentGoal = Goals[0];
+            CurrentGoal.OnStarted += GoalStartedHandler;
+            CurrentGoal.OnCompleted += GoalCompletedHandler;
+            CurrentGoal.Start();
         }
         else
         {
