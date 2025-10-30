@@ -7,6 +7,7 @@ using UnityEngine;
 public class Objective
 {
     readonly ObjectiveSO Data;
+    readonly ObjectiveConfig RuntimeConfig;
 
     public string Name => Data.Name;
     public string Description => Data.Description;
@@ -22,9 +23,10 @@ public class Objective
 
     public event Action OnObjectiveCompleted = null!;
 
-    public Objective(ObjectiveSO obj)
+    public Objective(ObjectiveSO obj, ObjectiveConfig runtimeConfig)
     {
         Data = obj;
+        RuntimeConfig = runtimeConfig;
     }
 
     public void StartObjective()
@@ -32,12 +34,36 @@ public class Objective
         if (Goals.Count > 0)
         {
             CurrentGoal = Goals[0];
+            CurrentGoal.OnStarted += GoalStartedHandler;
             CurrentGoal.OnCompleted += GoalCompletedHandler;
+
+            if (!StartMessage.Equals(string.Empty))
+            {
+                BottomTypewriter.Instance.Enqueue(StartMessage);
+            }
+
+            CurrentGoal.Start();
         }
         else
         {
             throw new Exception("Objective must have at least one goal.");
         }
+    }
+
+    void GoalStartedHandler()
+    {
+        if (CurrentGoal == null)
+        {
+            throw new Exception("CurrentGoal is null in GoalStartedHandler.");
+        }
+
+        var goalIconObject = CurrentGoal.MinimapIconObject;
+        if (goalIconObject == null) return;
+
+        if (goalIconObject.TryGetComponent<Renderer>(out var renderer)) renderer.enabled = false;
+
+        goalIconObject.GetComponent<GoalIconController>()
+            .SetData(RuntimeConfig.MinimapCamera, RuntimeConfig.MinimapParent);
     }
 
     void GoalCompletedHandler()
@@ -58,24 +84,12 @@ public class Objective
         Goals.RemoveAt(0);
         if (Goals.Count > 0)
         {
-            this.StartGoal(Goals[0]);
+            //this.StartGoal(Goals[0]);
         }
         else
         {
             OnObjectiveCompleted?.Invoke();
         }
-    }
-
-    public void StartGoal(Goal? goal)
-    {
-        if (goal == null)
-        {
-            throw new Exception("Goal is null in StartGoal.");
-        }
-
-        CurrentGoal = goal;
-        CurrentGoal.OnCompleted += GoalCompletedHandler;
-        CurrentGoal.Start();
     }
 
     public void ManualUpdate()

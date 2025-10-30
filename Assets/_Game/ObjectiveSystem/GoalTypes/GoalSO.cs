@@ -10,5 +10,6 @@ public class GoalSO : ScriptableObject
     public string SuccessMessage;
     public string FailureMessage;
 
+    public Vector3 Location;
     public GameObject? MinimapIcon = null;
 }

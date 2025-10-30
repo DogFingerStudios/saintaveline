@@ -1,5 +1,6 @@
 #nullable enable
 using System;
+using UnityEngine;
 
 public class Goal
 {
@@ -17,7 +18,10 @@ public class Goal
     public string SuccessMessage => Data.SuccessMessage;
     public string FailureMessage => Data.FailureMessage;
 
+    public event Action? OnStarted;
     public event Action? OnCompleted;
+
+    public GameObject? MinimapIconObject { get; private set; }
 
     public Goal(GoalSO data)
     {
@@ -31,10 +35,17 @@ public class Goal
 
     public virtual void Start()
     {
+        if (Data.MinimapIcon != null)
+        {
+            MinimapIconObject = UnityEngine.Object.Instantiate(Data.MinimapIcon, Data.Location, Data.MinimapIcon.transform.rotation);
+        }
+
         if (!this.StartMessage.Equals(string.Empty))
         {
             BottomTypewriter.Instance.Enqueue(this.StartMessage);
         }
+
+        OnStarted?.Invoke();
     }
 
     public virtual void ManualUpdate()

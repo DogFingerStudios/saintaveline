@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class ArriveAtGoal : Goal
 {
-    public Vector3 Location => Data.Location;
     public float ArrivedDistance => Data.ArrivedDistance;
     public Transform ChracterTransform => Host!.transform;
 
@@ -16,7 +15,7 @@ public class ArriveAtGoal : Goal
 
     public override void ManualUpdate()
     {
-        if (Vector3.Distance(ChracterTransform.position, Location) <= ArrivedDistance)
+        if (Vector3.Distance(ChracterTransform.position, Data.Location) <= ArrivedDistance)
         {
             base.Complete();
         }
