@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewObjective", menuName = "Game/Objective")]
-public class  ObjectiveSO : ScriptableObject
+[CreateAssetMenu(fileName = "NewMission", menuName = "Game/Mission")]
+public class  MissionSO : ScriptableObject
 {
     public string Name;
     [TextArea] public string Description;

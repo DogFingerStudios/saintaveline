@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public struct ObjectiveConfig
+public struct MissionConfig
 {
     public CharacterEntity Host;
     public Camera MinimapCamera;
@@ -9,18 +9,18 @@ public struct ObjectiveConfig
     
 }
 
-public class ObjectiveFactory
+public class MissionFactory
 {
-    private static readonly Lazy<ObjectiveFactory> _instance =
-        new(() => new ObjectiveFactory());
+    private static readonly Lazy<MissionFactory> _instance =
+        new(() => new MissionFactory());
 
-    public static ObjectiveFactory Instance => _instance.Value;
+    public static MissionFactory Instance => _instance.Value;
 
     // objectiveSO - the scriptable object defining the objective
     // host - the character entity that will be undertaking the objective
-    public Objective CreateObjectiveFromSO(ObjectiveSO objectiveSO, ObjectiveConfig config)
+    public Mission CreateMissionFromSO(MissionSO objectiveSO, MissionConfig config)
     {
-        Objective objective = new(objectiveSO.Copy(), config);
+        Mission objective = new(objectiveSO.Copy(), config);
 
         foreach (GoalSO goalSO in objectiveSO.Goals)
         {

@@ -4,10 +4,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Objective
+public class Mission
 {
-    readonly ObjectiveSO Data;
-    readonly ObjectiveConfig RuntimeConfig;
+    readonly MissionSO Data;
+    readonly MissionConfig RuntimeConfig;
 
     public string Name => Data.Name;
     public string Description => Data.Description;
@@ -15,21 +15,21 @@ public class Objective
     public string SuccessMessage => Data.SuccessMessage;
     public string FailureMessage => Data.FailureMessage;
 
-    public List<Objective> Prerequisites = new();
-    public Objective? Next;
+    public List<Mission> Prerequisites = new();
+    public Mission? Next;
 
     public List<Goal> Goals = new();
     public Goal? CurrentGoal;
 
-    public event Action OnObjectiveCompleted = null!;
+    public event Action OnMissionCompleted = null!;
 
-    public Objective(ObjectiveSO obj, ObjectiveConfig runtimeConfig)
+    public Mission(MissionSO obj, MissionConfig runtimeConfig)
     {
         Data = obj;
         RuntimeConfig = runtimeConfig;
     }
 
-    public void StartObjective()
+    public void StartMission()
     {
         if (Goals.Count > 0)
         {
@@ -46,7 +46,7 @@ public class Objective
         }
         else
         {
-            throw new Exception("Objective must have at least one goal.");
+            throw new Exception("Mission must have at least one goal.");
         }
     }
 
@@ -91,7 +91,7 @@ public class Objective
         }
         else
         {
-            OnObjectiveCompleted?.Invoke();
+            OnMissionCompleted?.Invoke();
         }
     }
 
@@ -99,7 +99,7 @@ public class Objective
     {
         if (CurrentGoal == null)
         {
-            throw new Exception("CurrentGoal is null in Objective Update.");
+            throw new Exception("CurrentGoal is null in Mission Update.");
         }
 
         CurrentGoal.ManualUpdate();
