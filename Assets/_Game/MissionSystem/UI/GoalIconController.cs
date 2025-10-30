@@ -9,6 +9,12 @@ public class GoalIconController : MonoBehaviour
     [Tooltip("Offset radius for the minimap icon from the edge of the minimap.")]
     public float MinimapRadiusOffset = 0f;
 
+    [Header("Color Pulsating Effect Settings")]
+    [SerializeField] private Color _pulseColor = Color.white * 0.99f; // AI: Close to white for pulse effect
+    [SerializeField] private float _pulseSpeed = 5f; // AI: Speed of the pulsating animation
+    private Color _originalColor;
+    private Image _goalIconImage;
+
     private Camera _minimapCamera;
     private RectTransform _minimapParent;
     private SpriteRenderer _goalIconInstance;
@@ -16,13 +22,6 @@ public class GoalIconController : MonoBehaviour
     private GameObject _goalIconMinimapInstance;
     private RectTransform _minimapGoalIconRect;
     private float _minimapTransformRadius;
-
-    // AI: Pulsating effect variables
-    private Color _originalColor;
-    private Color _pulseColor = Color.white * 0.99f; // AI: Close to white for pulse effect
-    private float _pulseSpeed = 5f; // AI: Speed of the pulsating animation
-    private Image _goalIconImage;
-
 
     public void SetData(Camera minimapCamera, RectTransform minimapParent)
     {
@@ -54,10 +53,16 @@ public class GoalIconController : MonoBehaviour
         // Update the position of the minimap icon to stay within bounds of the minimap radius
         if (_goalIconMinimapInstance == null) return;
 
-        // AI: Apply pulsating effect to the icon color
-        float pulseValue = (Mathf.Sin(Time.time * _pulseSpeed) + 1f) / 2f; // AI: Oscillates between 0 and 1
-        Color currentColor = Color.Lerp(_originalColor, _pulseColor, pulseValue);
-        _goalIconImage.color = currentColor;
+        if (_pulseSpeed > 0f)
+        {
+            // float pulseValue = (Time.time * _pulseSpeed) % 1f;
+            // Color currentColor = Color.Lerp(_originalColor, _pulseColor, pulseValue);
+            // _goalIconImage.color = currentColor;
+
+            float pulseValue = (Mathf.Sin(Time.time * _pulseSpeed) + 1f) / 2f; // AI: Oscillates between 0 and 1
+            Color currentColor = Color.Lerp(_originalColor, _pulseColor, pulseValue);
+            _goalIconImage.color = currentColor;
+        }
 
         Vector3 viewportPos = _minimapCamera.WorldToViewportPoint(transform.position);
 

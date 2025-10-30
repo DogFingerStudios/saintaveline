@@ -6,7 +6,6 @@ public struct MissionConfig
     public CharacterEntity Host;
     public Camera MinimapCamera;
     public RectTransform MinimapParent;
-    
 }
 
 public class MissionFactory
