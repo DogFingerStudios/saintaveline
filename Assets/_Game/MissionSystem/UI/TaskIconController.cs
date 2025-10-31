@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GoalIconController : MonoBehaviour
+public class TaskIconController : MonoBehaviour
 {
     [Tooltip("The UI version of this sprite to be used on the minimap.")]
-    public GameObject GoalIconPrefab;
+    public GameObject TaskIconPrefab;
 
     [Tooltip("Offset radius for the minimap icon from the edge of the minimap.")]
     public float MinimapRadiusOffset = 0f;
@@ -13,13 +13,13 @@ public class GoalIconController : MonoBehaviour
     [SerializeField] private Color _pulseColor = Color.white * 0.99f; // AI: Close to white for pulse effect
     [SerializeField] private float _pulseSpeed = 5f; // AI: Speed of the pulsating animation
     private Color _originalColor;
-    private Image _goalIconImage;
+    private Image _taskIconImage;
 
     private Camera _minimapCamera;
     private RectTransform _minimapParent;
-    private SpriteRenderer _goalIconInstance;
+    private SpriteRenderer _taskIconInstance;
 
-    private GameObject _goalIconMinimapInstance;
+    private GameObject _taskIconMinimapInstance;
     private RectTransform _minimapGoalIconRect;
     private float _minimapTransformRadius;
 
@@ -32,36 +32,36 @@ public class GoalIconController : MonoBehaviour
         _minimapTransformRadius = _minimapParent.rect.width / 2f;
         _minimapTransformRadius += MinimapRadiusOffset;
 
-        // Grab the world space goal icon
-        _goalIconInstance = GetComponent<SpriteRenderer>();
+        // Grab the world space task icon
+        _taskIconInstance = GetComponent<SpriteRenderer>();
 
         // Spawn the constrained minimap icon
-        _goalIconMinimapInstance = Instantiate(GoalIconPrefab, _minimapParent.position, Quaternion.identity, _minimapParent);
-        _goalIconImage = _goalIconMinimapInstance.GetComponent<Image>();
-        _goalIconImage.sprite = _goalIconInstance.sprite;
-        _goalIconImage.color = _goalIconInstance.color;
+        _taskIconMinimapInstance = Instantiate(TaskIconPrefab, _minimapParent.position, Quaternion.identity, _minimapParent);
+        _taskIconImage = _taskIconMinimapInstance.GetComponent<Image>();
+        _taskIconImage.sprite = _taskIconInstance.sprite;
+        _taskIconImage.color = _taskIconInstance.color;
         
         // AI: Store the original color for pulsating effect
-        _originalColor = _goalIconInstance.color;
+        _originalColor = _taskIconInstance.color;
 
         // Get the RectTransform for positioning
-        _minimapGoalIconRect = _goalIconMinimapInstance.GetComponent<RectTransform>();
+        _minimapGoalIconRect = _taskIconMinimapInstance.GetComponent<RectTransform>();
     }
 
     private void LateUpdate()
     {
         // Update the position of the minimap icon to stay within bounds of the minimap radius
-        if (_goalIconMinimapInstance == null) return;
+        if (_taskIconMinimapInstance == null) return;
 
         if (_pulseSpeed > 0f)
         {
             // float pulseValue = (Time.time * _pulseSpeed) % 1f;
             // Color currentColor = Color.Lerp(_originalColor, _pulseColor, pulseValue);
-            // _goalIconImage.color = currentColor;
+            // _taskIconImage.color = currentColor;
 
             float pulseValue = (Mathf.Sin(Time.time * _pulseSpeed) + 1f) / 2f; // AI: Oscillates between 0 and 1
             Color currentColor = Color.Lerp(_originalColor, _pulseColor, pulseValue);
-            _goalIconImage.color = currentColor;
+            _taskIconImage.color = currentColor;
         }
 
         Vector3 viewportPos = _minimapCamera.WorldToViewportPoint(transform.position);
@@ -87,9 +87,9 @@ public class GoalIconController : MonoBehaviour
     void OnDisable()
     {
         // Destroy the constrained minimap icon
-        if (_goalIconMinimapInstance != null)
+        if (_taskIconMinimapInstance != null)
         {
-            Destroy(_goalIconMinimapInstance);
+            Destroy(_taskIconMinimapInstance);
         }
     }
 

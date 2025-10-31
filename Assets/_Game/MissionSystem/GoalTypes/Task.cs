@@ -2,12 +2,12 @@
 using System;
 using UnityEngine;
 
-public class Goal
+public class Task
 {
-    private readonly GoalSO Data;
+    private readonly TaskSO Data;
     public T TypedData<T>() => (T)(object)Data;
 
-    // public setter allows for the player to assign the goal/task to someone else,
+    // public setter allows for the player to assign the task to someone else,
     // though we'll probably eventually want a setter function, as there may be
     // things to do when assigning a new host (like updating UI, etc).
     public CharacterEntity? Host { get; set; }
@@ -18,12 +18,12 @@ public class Goal
     public string SuccessMessage => Data.SuccessMessage;
     public string FailureMessage => Data.FailureMessage;
 
-    public Action<Goal>? OnGoalStarted;
-    public event Action<Goal>? OnGoalCompleted;
+    public Action<Task>? OnTaskStarted;
+    public event Action<Task>? OnTaskCompleted;
 
     public GameObject? MinimapIconObject { get; private set; }
 
-    public Goal(GoalSO data) => this.Data = data;
+    public Task(TaskSO data) => this.Data = data;
 
     protected void Complete()
     {
@@ -34,7 +34,7 @@ public class Goal
             BottomTypewriter.Instance.Enqueue(this.SuccessMessage);
         }
 
-        OnGoalCompleted?.Invoke(this);
+        OnTaskCompleted?.Invoke(this);
     }
 
     public virtual void Start()
@@ -49,7 +49,7 @@ public class Goal
             BottomTypewriter.Instance.Enqueue(this.StartMessage);
         }
 
-        OnGoalStarted?.Invoke(this);
+        OnTaskStarted?.Invoke(this);
     }
 
     public virtual void ManualUpdate()

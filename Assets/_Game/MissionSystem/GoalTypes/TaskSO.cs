@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewGoal", menuName = "Game/Goals/Goal")]
-public class GoalSO : ScriptableObject
+public class TaskSO : ScriptableObject
 {
     public string Name;
     [TextArea] public string Description;

@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class ArriveAtGoal : Goal
+public class ArriveAtTask : Task
 {
     public float ArrivedDistance => Data.ArrivedDistance;
     public Transform ChracterTransform => Host!.transform;
 
-    private ArriveAtGoalSO Data => this.TypedData<ArriveAtGoalSO>();
+    private ArriveAtTaskSO Data => this.TypedData<ArriveAtTaskSO>();
 
-    public ArriveAtGoal(ArriveAtGoalSO data)
+    public ArriveAtTask(ArriveAtTaskSO data)
         : base(data)
     {
         // nothing to do

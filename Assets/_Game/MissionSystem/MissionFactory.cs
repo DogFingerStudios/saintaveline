@@ -21,12 +21,12 @@ public class MissionFactory
     {
         Mission objective = new(objectiveSO.Copy(), config);
 
-        foreach (GoalSO goalSO in objectiveSO.Goals)
+        foreach (TaskSO taskSO in objectiveSO.Tasks)
         {
-            Goal goal = goalSO switch
+            Task task = taskSO switch
             {
-                ArriveAtGoalSO arriveAtGoalSO
-                    => new ArriveAtGoal(arriveAtGoalSO.Copy()) { Host = config.Host },
+                ArriveAtTaskSO arriveAtGoalSO
+                    => new ArriveAtTask(arriveAtGoalSO.Copy()) { Host = config.Host },
 
                 CollectItemGoalSO collectItemGoalSO
                     => new CollectItemGoal(collectItemGoalSO.Copy()) { Host = config.Host },
@@ -34,7 +34,7 @@ public class MissionFactory
                 _ => throw new Exception("Unknown GoalSO type.")
             };
 
-            objective.Goals.Add(goal);
+            objective.Tasks.Add(task);
         }
 
         return objective;

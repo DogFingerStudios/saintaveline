@@ -1,4 +1,4 @@
-﻿public class CollectItemGoal : Goal
+﻿public class CollectItemGoal : Task
 {
     public string ItemName => Data.ItemName;
     public int QuantityNeeded => Data.QuantityNeeded;

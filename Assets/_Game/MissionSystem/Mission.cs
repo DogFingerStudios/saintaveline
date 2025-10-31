@@ -15,28 +15,28 @@ public class Mission
     public string SuccessMessage => Data.SuccessMessage;
     public string FailureMessage => Data.FailureMessage;    
 
-    public List<Goal> Goals = new();
+    public List<Task> Tasks = new();
 
     public event Action OnMissionCompleted = null!;
-    readonly GoalHandlerBase _goalHandler = null!;
+    readonly TaskHandlerBase _taskHandler = null!;
 
     public Mission(MissionSO obj, MissionConfig runtimeConfig)
     {
         Data = obj;
         RuntimeConfig = runtimeConfig;
 
-        if (Data.ConcurrentGoals)
+        if (Data.ConcurrentTasks)
         {
-            _goalHandler = new GoalHandlerAsync() { Goals = Goals };
+            _taskHandler = new TaskHandlerAsync() { Tasks = Tasks };
         }
         else
         {
-            _goalHandler = new GoalHandlerSerial() { Goals = Goals };
+            _taskHandler = new TaskHandlerSerial() { Tasks = Tasks };
         }
 
-        _goalHandler.OnGoalStarted += GoalStartedHandler;
-        _goalHandler.OnGoalCompleted += GoalCompletedHandler;
-        _goalHandler.OnAllGoalsCompleted += AllGoalsCompletedHandler;
+        _taskHandler.OnTaskStarted += TaskStartedHandler;
+        _taskHandler.OnTaskCompleted += TaskCompletedHandler;
+        _taskHandler.OnAllTasksCompleted += AllTasksCompletedHandler;
     }
 
     public void StartMission()
@@ -46,26 +46,26 @@ public class Mission
             BottomTypewriter.Instance.Enqueue(StartMessage);
         }
         
-        _goalHandler.StartMission();
+        _taskHandler.StartMission();
     }
 
-    void GoalStartedHandler(Goal goal)
+    void TaskStartedHandler(Task task)
     {
-        var goalIconObject = goal.MinimapIconObject;
-        if (goalIconObject == null) return;
+        var taskIconObject = task.MinimapIconObject;
+        if (taskIconObject == null) return;
 
-        if (goalIconObject.TryGetComponent<Renderer>(out var renderer)) renderer.enabled = false;
+        if (taskIconObject.TryGetComponent<Renderer>(out var renderer)) renderer.enabled = false;
 
-        goalIconObject.GetComponent<GoalIconController>()
+        taskIconObject.GetComponent<TaskIconController>()
             .SetData(RuntimeConfig.MinimapCamera, RuntimeConfig.MinimapParent);
     }
 
-    void GoalCompletedHandler(Goal goal)
+    void TaskCompletedHandler(Task task)
     {
-        goal.MinimapIconObject?.SetActive(false);
+        task.MinimapIconObject?.SetActive(false);
     }
 
-    void AllGoalsCompletedHandler()
+    void AllTasksCompletedHandler()
     {
         if (!SuccessMessage.Equals(string.Empty))
         {
@@ -75,6 +75,6 @@ public class Mission
 
     public void ManualUpdate()
     {
-        _goalHandler.ManualUpdate();
+        _taskHandler.ManualUpdate();
     }
 }

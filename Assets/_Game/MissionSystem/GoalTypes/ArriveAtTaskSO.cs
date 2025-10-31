@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewArriveAtGoal", menuName = "Game/Goals/ArriveAtGoal")]
-public class ArriveAtGoalSO : GoalSO
+public class ArriveAtTaskSO : TaskSO
 {
     public float ArrivedDistance = 2.0f;
 }

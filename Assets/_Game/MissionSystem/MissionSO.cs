@@ -6,8 +6,8 @@ public class MissionSO : ScriptableObject
 {
     public string Name;
     [TextArea] public string Description;
-    public List<GoalSO> Goals;
-    public bool ConcurrentGoals = false;
+    public List<TaskSO> Tasks;
+    public bool ConcurrentTasks = false;
     
     public string StartMessage;
     public string SuccessMessage;
