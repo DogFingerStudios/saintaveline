@@ -30,44 +30,28 @@ public abstract class GoalHandlerBase
     public abstract void ManualUpdate();
 }
 
-public class GoalHandlerSerial : GoalHandlerBase
+public class GoalHandlerAsync : GoalHandlerBase
 {
-    int _currentGoalIndex = 0;
-    Goal? _currentGoal = null;
+    List<Goal> _inProcessGoals = new();
 
     public override void StartMission()
     {
-        if (Goals.Count == 0)
+        foreach (var goal in Goals)
         {
-            throw new System.Exception("Mission must have at least one goal.");
+            _inProcessGoals.Add(goal);
+            goal.OnGoalStarted += base.NotifyGoalStarted;
+            goal.OnGoalCompleted += GoalCompletedHandler;
+            goal.Start();
         }
-
-        _currentGoal = Goals[_currentGoalIndex];
-        _currentGoal.OnGoalStarted += base.NotifyGoalStarted;
-        _currentGoal.OnGoalCompleted += GoalCompletedHandler;
-        _currentGoal.Start();
     }
 
-    // this gets invoked from the concrete Goal implementation which 
-    // determines when the goal is completed
     void GoalCompletedHandler(Goal goal)
     {
-        if (goal != Goals[_currentGoalIndex])
-        {
-            throw new System.Exception("Completed goal does not match the current goal.");
-        }
-
         NotifyGoalCompleted(goal);
 
-        _currentGoalIndex++;
-        if (_currentGoalIndex < Goals.Count)
-        {
-            _currentGoal = Goals[_currentGoalIndex];
-            _currentGoal.OnGoalStarted += base.NotifyGoalStarted;
-            _currentGoal.OnGoalCompleted += GoalCompletedHandler;
-            _currentGoal.Start();
-        }
-        else
+        _inProcessGoals.Remove(goal);
+
+        if (_inProcessGoals.Count == 0)
         {
             NotifyAllGoalsCompleted();
         }
@@ -75,19 +59,9 @@ public class GoalHandlerSerial : GoalHandlerBase
 
     public override void ManualUpdate()
     {
-        _currentGoal!.ManualUpdate();
-    }
-}
-
-public class GoalHandlerAsync : GoalHandlerBase
-{
-    public override void StartMission()
-    {
-        // Initialization logic for async goal handling
-    }
-
-    public override void ManualUpdate()
-    {
-        // Update logic for async goal handling
+        foreach (var goal in _inProcessGoals)
+        {
+            goal.ManualUpdate();
+        }
     }
 }
