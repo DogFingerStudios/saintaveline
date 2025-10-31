@@ -47,3 +47,25 @@
 
 ## Feature 3: Enemy NPC Interactions
 
+---
+
+## Feature 4: Missions and Tasks
+
+### Test Case 4.1: Serial Missions
+- **Data**: Mission A, Task 1, Task 2
+
+- **Input:** Complete Task 1 of Mission A
+- **Expected Result:** Task 1 complete message shows, TaskIcon disappears, Task 2 becomes available
+- **Input:** Complete Task 2 of Mission A
+- **Expected Result:** Task 2 complete message shows, TaskIcon disappears, Mission A complete message shows
+
+### Test Case 4.2: Parallel Missions
+- **Data**: Mission B, Task 1, Task 2
+- **Input:** Start Mission B
+- **Expected Result:** Both Task 1 and Task 2 become available
+
+- **Input:** Complete Task 1 of Mission B
+- **Expected Result:** Task 1 complete message shows, Task 1 TaskIcon disappears
+
+- **Input:** Complete Task 2 of Mission B
+- **Expected Result:** Task 2 complete message shows, Task 2 TaskIcon disappears, Mission B complete message shows

@@ -18,20 +18,20 @@ public class TaskHandlerAsync : TaskHandlerBase
     void GoalCompletedHandler(Task task)
     {
         NotifyTaskCompleted(task);
-
         _inProcessTasks.Remove(task);
-
-        if (_inProcessTasks.Count == 0)
-        {
-            NotifyAllTasksCompleted();
-        }
     }
 
     public override void ManualUpdate()
     {
-        foreach (var task in _inProcessTasks)
+        for (int i = _inProcessTasks.Count - 1; i >= 0; i--)
         {
+            var task = _inProcessTasks[i];
             task.ManualUpdate();
+        }
+
+        if (_inProcessTasks.Count == 0)
+        {
+            NotifyAllTasksCompleted();
         }
     }
 }
