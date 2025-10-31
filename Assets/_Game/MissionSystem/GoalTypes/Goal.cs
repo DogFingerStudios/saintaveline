@@ -18,22 +18,23 @@ public class Goal
     public string SuccessMessage => Data.SuccessMessage;
     public string FailureMessage => Data.FailureMessage;
 
-    public event Action? OnStarted;
-    public event Action? OnCompleted;
+    public Action<Goal>? OnGoalStarted;
+    public event Action<Goal>? OnGoalCompleted;
 
     public GameObject? MinimapIconObject { get; private set; }
 
-    public Goal(GoalSO data)
-    {
-        Data = data;
-    }
+    public Goal(GoalSO data) => this.Data = data;
 
     protected void Complete()
     {
-        // TODO: is the `Goal` being deleted at the end of the Goal or at
-        // the end of the Mission?
         MinimapIconObject?.SetActive(false);
-        OnCompleted?.Invoke();
+
+        if (!this.SuccessMessage.Equals(string.Empty))
+        {
+            BottomTypewriter.Instance.Enqueue(this.SuccessMessage);
+        }
+
+        OnGoalCompleted?.Invoke(this);
     }
 
     public virtual void Start()
@@ -48,7 +49,7 @@ public class Goal
             BottomTypewriter.Instance.Enqueue(this.StartMessage);
         }
 
-        OnStarted?.Invoke();
+        OnGoalStarted?.Invoke(this);
     }
 
     public virtual void ManualUpdate()

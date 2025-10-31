@@ -1,11 +1,25 @@
+#nullable enable
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 public abstract class GoalHandlerBase
 {
     public List<Goal> Goals = new();
     
-    public event System.Action OnAllGoalsCompleted = null!;
+    public event Action<Goal>? OnGoalStarted;
+    public event Action<Goal>? OnGoalCompleted;
+
+    public event Action OnAllGoalsCompleted = null!;
+
+    public void NotifyGoalStarted(Goal goal)
+    {
+        OnGoalStarted?.Invoke(goal);
+    }
+
+    public void NotifyGoalCompleted(Goal goal)
+    {
+        OnGoalCompleted?.Invoke(goal);
+    }
 
     public void NotifyAllGoalsCompleted()
     {
@@ -13,11 +27,13 @@ public abstract class GoalHandlerBase
     }
 
     public abstract void StartMission();
+    public abstract void ManualUpdate();
 }
 
 public class GoalHandlerSerial : GoalHandlerBase
 {
-    Goal? _currentGoal;
+    int _currentGoalIndex = 0;
+    Goal? _currentGoal = null;
 
     public override void StartMission()
     {
@@ -26,32 +42,40 @@ public class GoalHandlerSerial : GoalHandlerBase
             throw new System.Exception("Mission must have at least one goal.");
         }
 
-        _currentGoal = Goals[0];
-        _currentGoal.OnStarted += GoalStartedHandler;
-        _currentGoal.OnCompleted += GoalCompletedHandler;
+        _currentGoal = Goals[_currentGoalIndex];
+        _currentGoal.OnGoalStarted += base.NotifyGoalStarted;
+        _currentGoal.OnGoalCompleted += GoalCompletedHandler;
         _currentGoal.Start();
     }
 
-    void GoalStartedHandler()
+    // this gets invoked from the concrete Goal implementation which 
+    // determines when the goal is completed
+    void GoalCompletedHandler(Goal goal)
     {
-        // Handle goal started event
+        if (goal != Goals[_currentGoalIndex])
+        {
+            throw new System.Exception("Completed goal does not match the current goal.");
+        }
+
+        NotifyGoalCompleted(goal);
+
+        _currentGoalIndex++;
+        if (_currentGoalIndex < Goals.Count)
+        {
+            _currentGoal = Goals[_currentGoalIndex];
+            _currentGoal.OnGoalStarted += base.NotifyGoalStarted;
+            _currentGoal.OnGoalCompleted += GoalCompletedHandler;
+            _currentGoal.Start();
+        }
+        else
+        {
+            NotifyAllGoalsCompleted();
+        }
     }
 
-    void GoalCompletedHandler()
+    public override void ManualUpdate()
     {
-        // int currentIndex = Goals.IndexOf(_currentGoal!);
-        // if (currentIndex + 1 < Goals.Count)
-        // {
-        //     _currentGoal = Goals[currentIndex + 1];
-        //     _currentGoal.OnStarted += GoalStartedHandler;
-        //     _currentGoal.OnCompleted += GoalCompletedHandler;
-
-        //     _currentGoal.Start();
-        // }
-        // else
-        // {
-        //     NotifyAllGoalsCompleted();
-        // }
+        _currentGoal!.ManualUpdate();
     }
 }
 
@@ -60,5 +84,10 @@ public class GoalHandlerAsync : GoalHandlerBase
     public override void StartMission()
     {
         // Initialization logic for async goal handling
+    }
+
+    public override void ManualUpdate()
+    {
+        // Update logic for async goal handling
     }
 }

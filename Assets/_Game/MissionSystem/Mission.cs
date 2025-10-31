@@ -16,7 +16,6 @@ public class Mission
     public string FailureMessage => Data.FailureMessage;    
 
     public List<Goal> Goals = new();
-    public Goal? CurrentGoal;
 
     public event Action OnMissionCompleted = null!;
     readonly GoalHandlerBase _goalHandler = null!;
@@ -34,6 +33,10 @@ public class Mission
         {
             _goalHandler = new GoalHandlerSerial() { Goals = Goals };
         }
+
+        _goalHandler.OnGoalStarted += GoalStartedHandler;
+        _goalHandler.OnGoalCompleted += GoalCompletedHandler;
+        _goalHandler.OnAllGoalsCompleted += AllGoalsCompletedHandler;
     }
 
     public void StartMission()
@@ -46,14 +49,9 @@ public class Mission
         _goalHandler.StartMission();
     }
 
-    void GoalStartedHandler()
+    void GoalStartedHandler(Goal goal)
     {
-        if (CurrentGoal == null)
-        {
-            throw new Exception("CurrentGoal is null in GoalStartedHandler.");
-        }
-
-        var goalIconObject = CurrentGoal.MinimapIconObject;
+        var goalIconObject = goal.MinimapIconObject;
         if (goalIconObject == null) return;
 
         if (goalIconObject.TryGetComponent<Renderer>(out var renderer)) renderer.enabled = false;
@@ -62,42 +60,24 @@ public class Mission
             .SetData(RuntimeConfig.MinimapCamera, RuntimeConfig.MinimapParent);
     }
 
-    void GoalCompletedHandler()
+    void GoalCompletedHandler(Goal goal)
     {
-        if (CurrentGoal == null)
+        goal.MinimapIconObject?.SetActive(false);
+    }
+
+    void AllGoalsCompletedHandler()
+    {
+        if (!SuccessMessage.Equals(string.Empty))
         {
-            throw new Exception("CurrentGoal is null in GoalCompletedHandler.");
+            BottomTypewriter.Instance.Enqueue(SuccessMessage);
         }
 
-        if (!CurrentGoal.SuccessMessage.Equals(string.Empty))
-        {
-            BottomTypewriter.Instance.Enqueue(CurrentGoal.SuccessMessage);
-        }
-
-        string msg = $"Goal '{CurrentGoal.Name}' completed";
-        Debug.Log(msg);
-
-        Goals.RemoveAt(0);
-        if (Goals.Count > 0)
-        {
-            CurrentGoal = Goals[0];
-            CurrentGoal.OnStarted += GoalStartedHandler;
-            CurrentGoal.OnCompleted += GoalCompletedHandler;
-            CurrentGoal.Start();
-        }
-        else
-        {
-            OnMissionCompleted?.Invoke();
-        }
+        Debug.Log($"Mission '{Name}' completed");
+        OnMissionCompleted?.Invoke();
     }
 
     public void ManualUpdate()
     {
-        if (CurrentGoal == null)
-        {
-            throw new Exception("CurrentGoal is null in Mission Update.");
-        }
-
-        CurrentGoal.ManualUpdate();
+        _goalHandler.ManualUpdate();
     }
 }

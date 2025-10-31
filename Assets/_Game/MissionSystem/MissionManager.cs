@@ -76,14 +76,6 @@ public class MissionManager : MonoBehaviour
             throw new Exception("CurrentMission is null in MissionCompleteHandler.");
         }
 
-        string msg = $"Completed objective '{CurrentMission.Name}'";
-        Debug.Log(msg);
-
-        if (!CurrentMission.SuccessMessage.Equals(string.Empty))
-        {
-            BottomTypewriter.Instance.Enqueue(CurrentMission.SuccessMessage);
-        }
-
         CurrentMission = null;
     }
 }
