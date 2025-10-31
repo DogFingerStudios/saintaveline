@@ -6,48 +6,44 @@ using UnityEngine;
 
 public class Mission
 {
-    readonly MissionSO Data;
-    readonly MissionConfig RuntimeConfig;
+    public readonly MissionSO Data;
+    public readonly MissionConfig RuntimeConfig;
 
     public string Name => Data.Name;
     public string Description => Data.Description;
     public string StartMessage => Data.StartMessage;
     public string SuccessMessage => Data.SuccessMessage;
-    public string FailureMessage => Data.FailureMessage;
-
-    public List<Mission> Prerequisites = new();
-    public Mission? Next;
+    public string FailureMessage => Data.FailureMessage;    
 
     public List<Goal> Goals = new();
     public Goal? CurrentGoal;
 
     public event Action OnMissionCompleted = null!;
+    readonly GoalHandlerBase _goalHandler = null!;
 
     public Mission(MissionSO obj, MissionConfig runtimeConfig)
     {
         Data = obj;
         RuntimeConfig = runtimeConfig;
+
+        if (Data.ConcurrentGoals)
+        {
+            _goalHandler = new GoalHandlerAsync() { Goals = Goals };
+        }
+        else
+        {
+            _goalHandler = new GoalHandlerSerial() { Goals = Goals };
+        }
     }
 
     public void StartMission()
     {
-        if (Goals.Count > 0)
+        if (!StartMessage.Equals(string.Empty))
         {
-            CurrentGoal = Goals[0];
-            CurrentGoal.OnStarted += GoalStartedHandler;
-            CurrentGoal.OnCompleted += GoalCompletedHandler;
-
-            if (!StartMessage.Equals(string.Empty))
-            {
-                BottomTypewriter.Instance.Enqueue(StartMessage);
-            }
-
-            CurrentGoal.Start();
+            BottomTypewriter.Instance.Enqueue(StartMessage);
         }
-        else
-        {
-            throw new Exception("Mission must have at least one goal.");
-        }
+        
+        _goalHandler.StartMission();
     }
 
     void GoalStartedHandler()
