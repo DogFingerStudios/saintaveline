@@ -71,6 +71,8 @@ public class Mission
         {
             BottomTypewriter.Instance.Enqueue(SuccessMessage);
         }
+
+        OnMissionCompleted?.Invoke();
     }
 
     public void ManualUpdate()
