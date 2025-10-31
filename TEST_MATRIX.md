@@ -54,18 +54,36 @@
 ### Test Case 4.1: Serial Missions
 - **Data**: Mission A, Task 1, Task 2
 
+- **Input:** Start Mission A
+- **Expected Result:** 
+    - Task 1 becomes available
+    - Mission A started message shows
+    - Task 1 start message shows
+    - Task 1 TaskIcon appears
 - **Input:** Complete Task 1 of Mission A
-- **Expected Result:** Task 1 complete message shows, TaskIcon disappears, Task 2 becomes available
+- **Expected Result:** 
+    - Task 1 complete message shows
+    - Task 1 TaskIcon disappears
+    - Task 2 becomes available
+    - Task 2 start message shows
+    - Task 2 TaskIcon appears
 - **Input:** Complete Task 2 of Mission A
-- **Expected Result:** Task 2 complete message shows, TaskIcon disappears, Mission A complete message shows
+- **Expected Result:** 
+    - Task 2 complete message shows
+    - Task 2 TaskIcon disappears
+    - Mission A complete message shows
 
 ### Test Case 4.2: Parallel Missions
 - **Data**: Mission B, Task 1, Task 2
 - **Input:** Start Mission B
-- **Expected Result:** Both Task 1 and Task 2 become available
-
+- **Expected Result:** 
+    - Both Task 1 and Task 2 become available
 - **Input:** Complete Task 1 of Mission B
-- **Expected Result:** Task 1 complete message shows, Task 1 TaskIcon disappears
-
+- **Expected Result:** 
+    - Task 1 complete message shows
+    - Task 1 TaskIcon disappears
 - **Input:** Complete Task 2 of Mission B
-- **Expected Result:** Task 2 complete message shows, Task 2 TaskIcon disappears, Mission B complete message shows
+- **Expected Result:** 
+    - Task 2 complete message shows
+    - Task 2 TaskIcon disappears
+    - Mission B complete message shows

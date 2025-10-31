@@ -119,6 +119,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &9586941 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 269185165229379148, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+  m_PrefabInstance: {fileID: 169258218}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &11635418
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1646,7 +1651,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 683527052}
     m_Modifications:
     - target: {fileID: 53715557734988291, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1678,15 +1683,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 269185165229379148, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 269185165229379148, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 269185165229379148, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 269185165229379148, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1838,7 +1843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.0000076293945
+      value: -0.000061035156
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1846,6 +1851,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
@@ -1883,6 +1892,10 @@ PrefabInstance:
     - target: {fileID: 6293208314253822531, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Color.r
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7050674937555938359, guid: 2a405954f53c9634482128343354e0fa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_SizeDelta.y
@@ -6769,6 +6782,7 @@ Transform:
   - {fileID: 122374925}
   - {fileID: 611449829}
   - {fileID: 1711401047}
+  - {fileID: 9586941}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &690316567
@@ -15191,7 +15205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MinimapUIObject: {fileID: 645656549}
-  InitialMission: {fileID: 11400000, guid: a0ff20672042a644d8d71c9a31ba9861, type: 2}
+  InitialMission: {fileID: 11400000, guid: a90a5e29bf36390418f03aae33a49719, type: 2}
   MinimapCamera: {fileID: 96491402}
 --- !u!1 &1420598127
 GameObject:
@@ -24046,7 +24060,6 @@ SceneRoots:
   - {fileID: 683527052}
   - {fileID: 1342548523}
   - {fileID: 1788140564}
-  - {fileID: 169258218}
   - {fileID: 1499700084}
   - {fileID: 1231386068}
   - {fileID: 1949006990}
