@@ -71,9 +71,6 @@ public class Mission
         {
             BottomTypewriter.Instance.Enqueue(SuccessMessage);
         }
-
-        Debug.Log($"Mission '{Name}' completed");
-        OnMissionCompleted?.Invoke();
     }
 
     public void ManualUpdate()
