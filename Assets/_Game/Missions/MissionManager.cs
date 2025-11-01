@@ -2,11 +2,11 @@
 using System;
 using UnityEngine;
 
-
 public class MissionManager : MonoBehaviour
 {
     [SerializeField] private RectTransform MinimapUIObject;
-    [SerializeField] private MissionSO InitialMission;    
+    [SerializeField] private MissionSO InitialMission;
+    [SerializeField] private MissionOverlayController MissionOverlay;
 
     // we assume that the minimap camera is a child of the minimap object
     [SerializeField] private Camera MinimapCamera;
@@ -57,6 +57,11 @@ public class MissionManager : MonoBehaviour
         }
 
         CurrentMission.OnMissionCompleted += MissionCompleteHandler;
+
+        MissionOverlay.MissionTitle.text = CurrentMission.Name;
+        MissionOverlay.MissionDescription.text = CurrentMission.Description;
+        MissionOverlay.FixUnitysShittyCode();
+
         CurrentMission.StartMission();
     }
 

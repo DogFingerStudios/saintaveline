@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1254047
 RectTransform:
   m_ObjectHideFlags: 0
@@ -155,7 +155,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 125, y: -145.52}
-  m_SizeDelta: {x: 200, y: 0}
+  m_SizeDelta: {x: 200, y: 17.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1254048
 MonoBehaviour:
@@ -4202,7 +4202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 125, y: -90.845}
+  m_AnchoredPosition: {x: 125, y: -54.05}
   m_SizeDelta: {x: 200, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &419224780
@@ -4225,11 +4225,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Not Sure needs your help! He is in desperate need of a blood transfusion,
-    but he doesn''t know what blood type he is. Go the hospital and get the tools
-    to test his blood, and then find him and give him the right type of blood.
-
-'
+  m_text: This is the description
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -9330,7 +9326,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &877110796
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9348,7 +9344,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 125, y: -199.16002}
-  m_SizeDelta: {x: 200, y: 0}
+  m_SizeDelta: {x: 200, y: 17.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &877110797
 MonoBehaviour:
@@ -11643,7 +11639,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rescue @NotSure
+  m_text: First Mission
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11652,8 +11648,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4287514672
-  m_fontColor: {r: 0.18823528, g: 0.2837876, b: 0.5568628, a: 1}
+    rgba: 4281348238
+  m_fontColor: {r: 0.5566038, g: 0.18640977, b: 0.18640977, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -12616,7 +12612,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1182065160
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12634,7 +12630,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 125, y: -181.28001}
-  m_SizeDelta: {x: 200, y: 0}
+  m_SizeDelta: {x: 200, y: 17.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1182065161
 MonoBehaviour:
@@ -15967,6 +15963,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinimapUIObject: {fileID: 645656549}
   InitialMission: {fileID: 11400000, guid: a90a5e29bf36390418f03aae33a49719, type: 2}
+  MissionOverlay: {fileID: 1434742269}
   MinimapCamera: {fileID: 96491402}
 --- !u!1 &1420598127
 GameObject:
@@ -16224,6 +16221,7 @@ GameObject:
   - component: {fileID: 1434742268}
   - component: {fileID: 1434742267}
   - component: {fileID: 1434742266}
+  - component: {fileID: 1434742269}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -16320,6 +16318,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434742264}
   m_CullTransparentMesh: 1
+--- !u!114 &1434742269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1434742264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2624b986d9e07d54bb2539b2af90c4b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MissionTitle: {fileID: 1045444665}
+  MissionDescription: {fileID: 419224780}
+  TaskItemPrefab: {fileID: 0}
+  TaskListParent: {fileID: 1434742265}
 --- !u!4 &1439562214 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 204601f7f986c204c9e27d4285f4c425, type: 3}
@@ -24006,7 +24020,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2105622295
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24024,7 +24038,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 125, y: -163.40001}
-  m_SizeDelta: {x: 200, y: 0}
+  m_SizeDelta: {x: 200, y: 17.88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2105622296
 MonoBehaviour:
