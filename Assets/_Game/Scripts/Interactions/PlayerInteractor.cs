@@ -154,9 +154,13 @@ public class PlayerInteractor : MonoBehaviour
             _playerEntity!.AddItemToInventory(itemEntity);
             BottomTypewriter.Instance.Enqueue("Added item '" + itemEntity.ItemData!.ItemName + "' to inventory.");
         }
-        else if (Input.GetKeyDown(KeyCode.I))
+        else if (Input.GetKeyDown(KeyCode.M))
         {
-            if (InventoryUI.Instance.IsActive) return;
+            if (CodexOverlayController.Instance.IsActive)
+            {
+                CodexOverlayController.Instance.ToggleCodexOverlay(false);
+                return;
+            }
 
             var playerEntity = this.GetComponentInParent<CharacterEntity>();
             if (playerEntity == null)
@@ -164,7 +168,8 @@ public class PlayerInteractor : MonoBehaviour
                 throw new System.Exception("PlayerInteractor: CharacterEntity script not found on Player object.");
             }
 
-            InventoryUI.Instance.ShowInventory(playerEntity);
+            CodexOverlayController.Instance.OpenCodexOverlay(playerEntity);
+            //InventoryUI.Instance.ShowInventory(playerEntity);
         }
         else if (Input.GetKeyDown(KeyCode.F))
         {
