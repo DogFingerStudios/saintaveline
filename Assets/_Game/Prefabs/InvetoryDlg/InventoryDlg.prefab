@@ -365,7 +365,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219242882913176974}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -455,7 +455,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 6100.021}
   m_SizeDelta: {x: -16, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2703496192608547967
@@ -868,7 +868,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00002670288}
+  m_AnchoredPosition: {x: 0, y: 3198}
   m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!1 &2623911794661952825
@@ -1000,16 +1000,7 @@ MonoBehaviour:
   m_Value: 0
   m_MultiSelect: 0
   m_Options:
-    m_Options:
-    - m_Text: Test Option 1
-      m_Image: {fileID: 0}
-      m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: Test Option 2
-      m_Image: {fileID: 0}
-      m_Color: {r: 1, g: 0, b: 0, a: 1}
-    - m_Text: Test Option 3
-      m_Image: {fileID: 0}
-      m_Color: {r: 0, g: 0.7166667, b: 1, a: 1}
+    m_Options: []
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1201,7 +1192,7 @@ MonoBehaviour:
   _transferButton: {fileID: 1618340756076125279}
   _transferDropdown: {fileID: 6293208314253822531}
   _closeButton: {fileID: 8517589625096318505}
-  _inventoryDlg: {fileID: 2931101716355484645}
+  _inventoryDlg: {fileID: 7050674937555938359}
   _contentPanel: {fileID: 8497853822552326300}
   _itemPrefab: {fileID: 8564637344548645474, guid: 8e388ef179407d54fb38572a42a78780, type: 3}
 --- !u!1 &2962344761722508789
@@ -1629,8 +1620,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6619042178836301239}
   m_HandleRect: {fileID: 2518811069679645204}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 0.84375
+  m_Value: 1
+  m_Size: 0.41015625
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1700,7 +1691,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Test Option 1
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 79307f501eb267b44be9d7ca808a3dfb, type: 2}
   m_sharedMaterial: {fileID: -3191260080303070782, guid: 79307f501eb267b44be9d7ca808a3dfb, type: 2}
@@ -2673,7 +2664,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5906806815940352113}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.5
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
