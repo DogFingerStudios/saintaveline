@@ -6,10 +6,12 @@ public class MissionSO : ScriptableObject
 {
     public string Name;
     [TextArea] public string Description;
-    public List<TaskSO> Tasks;
-    public bool ConcurrentTasks = false;
-    
+    public string ShortDescription;
+
     public string StartMessage;
     public string SuccessMessage;
-    public string FailureMessage; 
+    public string FailureMessage;
+
+    public bool ConcurrentTasks = false;
+    public List<TaskSO> Tasks;
 }

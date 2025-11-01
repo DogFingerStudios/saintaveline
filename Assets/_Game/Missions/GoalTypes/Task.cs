@@ -2,6 +2,14 @@
 using System;
 using UnityEngine;
 
+public enum TaskState
+{
+    Inactive,   // task has not yet started
+    InProgress,
+    Completed,
+    Failed
+}
+
 public class Task
 {
     private readonly TaskSO Data;
@@ -25,7 +33,9 @@ public class Task
 
     public Task(TaskSO data) => this.Data = data;
 
-    protected void Complete()
+    TaskState State = TaskState.Inactive;
+
+    protected void Complete(bool success = true)
     {
         MinimapIconObject?.SetActive(false);
 
@@ -34,6 +44,7 @@ public class Task
             BottomTypewriter.Instance.Enqueue(this.SuccessMessage);
         }
 
+        State = success ? TaskState.Completed : TaskState.Failed;
         OnTaskCompleted?.Invoke(this);
     }
 
@@ -49,6 +60,7 @@ public class Task
             BottomTypewriter.Instance.Enqueue(this.StartMessage);
         }
 
+        State = TaskState.InProgress;
         OnTaskStarted?.Invoke(this);
     }
 

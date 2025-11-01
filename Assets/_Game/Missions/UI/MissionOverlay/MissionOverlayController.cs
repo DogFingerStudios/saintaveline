@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,18 +11,48 @@ public class MissionOverlayController : MonoBehaviour
     [SerializeField] public RectTransform   TaskListParent;
     [SerializeField] public GameObject      MissionOverlayPanel;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private Color TaskCompleteColor = Color.green;
+    [SerializeField] private Color TaskFailedColor = Color.red; // TODO: implement task failed state
+
+    Dictionary<Task, (TextMeshProUGUI, TaskLabelController)> _overlayTasks = new();
+
+    public void AddMission(Mission mission)
     {
+        MissionTitle.text = mission.Name;
+        MissionDescription.text = mission.Data.ShortDescription;
         FixUnityLayoutBug();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddTask(Task task)
     {
+        TextMeshProUGUI newTaskItem = Instantiate(
+            TaskItemPrefab, MissionOverlayPanel.transform);
+
+        var labelCtrl = newTaskItem.GetComponent<TaskLabelController>();
+        if (labelCtrl == null)
+        {
+            throw new System.Exception("TaskItemPrefab is missing TaskLabelController component.");
+        }
+
+        labelCtrl.CompletedColor = TaskCompleteColor;
+        labelCtrl.FailedColor = TaskFailedColor;
+        labelCtrl.SetText(newTaskItem.text, TaskState.InProgress);
+
+        FixUnityLayoutBug();
     }
 
-    public void FixUnityLayoutBug()
+    // TODO: tasks will eventually have states (completed, failed, in-progress)
+    public void CompleteTask(Task task)
+    {
+        TextMeshProUGUI text = _overlayTasks[task].Item1;
+
+        // set the text to strikethrough and update color
+        text.text = "-  " + task.Name;
+        text.color = TaskCompleteColor;
+        FixUnityLayoutBug();
+    }
+
+    void FixUnityLayoutBug()
     {
         LayoutRebuilder.ForceRebuildLayoutImmediate(TaskListParent);
     }

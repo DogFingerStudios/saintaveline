@@ -16,10 +16,6 @@ public class MissionManager : MonoBehaviour
     Mission? CurrentMission;
     RunOnce? _runonce;
     RunOnce _init;
-    Dictionary<Task, TextMeshProUGUI> _overlayTasks = new();
-
-    [SerializeField] private Color TaskCompleteColor;
-    [SerializeField] private Color TaskFailedColor; // for when you implement failed tasks
 
     public void Awake()
     {
@@ -65,10 +61,7 @@ public class MissionManager : MonoBehaviour
         CurrentMission.OnTaskStarted += TaskStartedHandler;
         CurrentMission.OnTaskCompleted += TaskCompletedHandler;
 
-        MissionOverlay.MissionTitle.text = CurrentMission.Name;
-        MissionOverlay.MissionDescription.text = CurrentMission.Description;
-        MissionOverlay.FixUnityLayoutBug();
-
+        MissionOverlay.AddMission(CurrentMission);
         CurrentMission.StartMission();
     }
 
@@ -93,23 +86,11 @@ public class MissionManager : MonoBehaviour
 
     void TaskStartedHandler(Task task)
     {
-        TextMeshProUGUI newTaskItem = Instantiate(
-            MissionOverlay.TaskItemPrefab,
-            MissionOverlay.MissionOverlayPanel.transform);
-
-        newTaskItem.text = task.Name;
-        _overlayTasks[task] = newTaskItem;
-
-        MissionOverlay.FixUnityLayoutBug();
+        MissionOverlay.AddTask(task);
     }
 
     void TaskCompletedHandler(Task task)
     {
-        TextMeshProUGUI text = _overlayTasks[task];
-
-        // set the text to strikethrough and update color
-        text.text = "<s>" + text.text + "</s>";
-        text.color = TaskCompleteColor;
-        MissionOverlay.FixUnityLayoutBug();
+        MissionOverlay.CompleteTask(task);
     }
 }

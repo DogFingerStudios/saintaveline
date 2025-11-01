@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7911202042640536119}
   - component: {fileID: 2475189541992830750}
   - component: {fileID: 480262875131541698}
+  - component: {fileID: 521366698884515348}
   m_Layer: 5
   m_Name: TaskPrefab
   m_TagString: Untagged
@@ -93,8 +94,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 21
-  m_fontSizeBase: 21
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -151,3 +152,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &521366698884515348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5675321380320905867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 174c61f165bd45649a8c561b1a1bb3fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CompletedColor: {r: 0.0744918, g: 0.6981132, b: 0, a: 0}
+  FailedColor: {r: 0.9716981, g: 0.30709326, b: 0.30709326, a: 0}
