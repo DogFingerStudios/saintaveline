@@ -22,7 +22,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Button _transferButton;
     [SerializeField] private TMP_Dropdown _transferDropdown;
     [SerializeField] private Button _closeButton;
-    [SerializeField] private GameObject _inventoryDlg;
+    [SerializeField] private Canvas _inventoryDlg;
     [SerializeField] private Transform _contentPanel;   // Reference to the Content object in ScrollView
     [SerializeField] private GameObject _itemPrefab;    // Reference to the item UI template (e.g., Button)
 
@@ -32,7 +32,7 @@ public class InventoryUI : MonoBehaviour
     // and cursor visibility
     private InputManagerState? _inputState = null;
 
-    public bool IsActive => _inventoryDlg.activeSelf;
+    public bool IsActive => _inventoryDlg.enabled;
 
     private CharacterEntity? _owner = null;
 
@@ -51,7 +51,7 @@ public class InventoryUI : MonoBehaviour
             Instance = this;
         }
 
-        _inventoryDlg.SetActive(false);
+        _inventoryDlg.enabled = false;
 
         _equipButton.onClick.AddListener(() => OnEquipButtonClicked());
         _equipButton.interactable = false;
@@ -85,7 +85,7 @@ public class InventoryUI : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!InventoryUI.Instance.IsActive) return;
+            if (!IsActive) return;
             CloseDialog();
         }
     }
@@ -153,7 +153,7 @@ public class InventoryUI : MonoBehaviour
         }
 
         _selectedCount = 0;
-        _inventoryDlg.SetActive(true);
+        _inventoryDlg.enabled = true;
     }
 
     private void OnToggleClicked(string itemName, bool isOn)
@@ -296,7 +296,7 @@ public class InventoryUI : MonoBehaviour
     private void CloseDialog()
     {
         _inputState?.Dispose();
-        _inventoryDlg.SetActive(false);
+        _inventoryDlg.enabled = false;
         _owner = null;
     }
 
