@@ -1994,7 +1994,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.0000076293945
+      value: 0.0000038146973
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -11594,7 +11594,7 @@ GameObject:
   - component: {fileID: 1045444665}
   - component: {fileID: 1045444667}
   m_Layer: 5
-  m_Name: MissionOverlay
+  m_Name: MissionTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11648,8 +11648,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281348238
-  m_fontColor: {r: 0.5566038, g: 0.18640977, b: 0.18640977, a: 1}
+    rgba: 4278629887
+  m_fontColor: {r: 1, g: 0.70787674, b: 0.023584902, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -11672,7 +11672,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 33
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -15963,7 +15963,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MinimapUIObject: {fileID: 645656549}
   InitialMission: {fileID: 11400000, guid: a90a5e29bf36390418f03aae33a49719, type: 2}
-  MissionOverlay: {fileID: 1434742269}
+  MissionOverlay: {fileID: 1855639651}
   MinimapCamera: {fileID: 96491402}
 --- !u!1 &1420598127
 GameObject:
@@ -16221,7 +16221,6 @@ GameObject:
   - component: {fileID: 1434742268}
   - component: {fileID: 1434742267}
   - component: {fileID: 1434742266}
-  - component: {fileID: 1434742269}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -16318,22 +16317,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1434742264}
   m_CullTransparentMesh: 1
---- !u!114 &1434742269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1434742264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2624b986d9e07d54bb2539b2af90c4b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MissionTitle: {fileID: 1045444665}
-  MissionDescription: {fileID: 419224780}
-  TaskItemPrefab: {fileID: 0}
-  TaskListParent: {fileID: 1434742265}
 --- !u!4 &1439562214 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 204601f7f986c204c9e27d4285f4c425, type: 3}
@@ -21498,6 +21481,7 @@ GameObject:
   - component: {fileID: 1855639650}
   - component: {fileID: 1855639649}
   - component: {fileID: 1855639648}
+  - component: {fileID: 1855639651}
   m_Layer: 5
   m_Name: MissionOverlayCanvas
   m_TagString: Untagged
@@ -21588,6 +21572,22 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1855639651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855639646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2624b986d9e07d54bb2539b2af90c4b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MissionTitle: {fileID: 1045444665}
+  MissionDescription: {fileID: 419224780}
+  TaskItemPrefab: {fileID: 0}
+  TaskListParent: {fileID: 1434742265}
 --- !u!1001 &1871289682
 PrefabInstance:
   m_ObjectHideFlags: 0
