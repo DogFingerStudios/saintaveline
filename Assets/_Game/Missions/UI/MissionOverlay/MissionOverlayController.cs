@@ -37,7 +37,7 @@ public class MissionOverlayController : MonoBehaviour
         labelCtrl.Init();
         labelCtrl.CompletedColor = TaskCompleteColor;
         labelCtrl.FailedColor = TaskFailedColor;
-        labelCtrl.SetText(newTaskItem.text, TaskState.InProgress);
+        labelCtrl.SetText(task.Name, TaskState.InProgress);
 
         _overlayTasks[task] = (newTaskItem, labelCtrl);
 

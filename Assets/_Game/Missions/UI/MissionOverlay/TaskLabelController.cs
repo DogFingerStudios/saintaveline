@@ -26,19 +26,19 @@ public class TaskLabelController : MonoBehaviour
         switch (taskState)
         {
             case TaskState.Completed:
-                _textMesh.text = text;
+                _textMesh.text = "-  " + text;
                 _textMesh.color = CompletedColor;
                 _pulseSpeed = 0f; // Stop pulsing
             break;
 
             case TaskState.Failed:
-                _textMesh.text = text;
+                _textMesh.text = "-  " + text;
                 _textMesh.color = FailedColor;
                 _pulseSpeed = 0f; // Stop pulsing
             break;
 
             case TaskState.InProgress:
-                _textMesh.text = "<b>" + text + "</b>";
+                _textMesh.text = "-  <b>" + text + "</b>";
                 _originalColor = _textMesh.color;
                 _pulseSpeed = 2f; // Start pulsing
             break;
