@@ -1,0 +1,62 @@
+.pm-root
+{
+  /* AI: Fullscreen overlay */
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: rgba(8, 8, 10, 0.70);
+  justify-content: center;
+  align-items: center;
+  display: none; /* AI: Hidden until paused */
+}
+
+.pm-panel
+{
+  /* AI: Center card */
+  width: 380px;
+  padding: 24px;
+  border-radius: 16px;
+  background-color: rgba(22, 22, 26, 0.95);
+  border-left-width: 2px;
+  border-right-width: 2px;
+  border-top-width: 2px;
+  border-bottom-width: 2px;
+  border-left-color: rgba(255,255,255,0.06);
+  border-right-color: rgba(255,255,255,0.06);
+  border-top-color: rgba(255,255,255,0.06);
+  border-bottom-color: rgba(255,255,255,0.06);
+  border-left-style: solid;
+  border-right-style: solid;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  row-gap: 12px;
+}
+
+.pm-title
+{
+  /* AI: Title text */
+  unity-font-style: bold;
+  font-size: 28px;
+  color: #FFFFFF;
+  margin-bottom: 6px;
+  unity-text-align: middle-center;
+}
+
+.pm-button
+{
+  /* AI: Buttons */
+  height: 36px;
+  font-size: 16px;
+  unity-font-style: bold;
+}
+
+.pm-hint
+{
+  /* AI: Footer hint */
+  margin-top: 8px;
+  color: #C8C8C8;
+  font-size: 12px;
+  unity-text-align: middle-center;
+}

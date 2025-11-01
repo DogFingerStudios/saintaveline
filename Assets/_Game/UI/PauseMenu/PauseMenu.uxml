@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <ui:VisualElement name="Root" class="pm-root">
+        <ui:VisualElement class="pm-panel" style="align-self: center;">
+            <ui:Label text="Paused" class="pm-title" />
+            <ui:Button name="btnMainMenu" text="Main Menu" class="pm-button" style="width: auto;" />
+            <ui:Button name="btnSettings" text="Settings" class="pm-button" style="width: auto;" />
+            <ui:Button name="btnExit" text="Exit" class="pm-button" style="width: auto;" />
+            <ui:Label text="Press ESC to Resume" class="pm-hint" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
