@@ -39,17 +39,16 @@ public class MissionOverlayController : MonoBehaviour
         labelCtrl.FailedColor = TaskFailedColor;
         labelCtrl.SetText(newTaskItem.text, TaskState.InProgress);
 
+        _overlayTasks[task] = (newTaskItem, labelCtrl);
+
         FixUnityLayoutBug();
     }
 
     // TODO: tasks will eventually have states (completed, failed, in-progress)
     public void CompleteTask(Task task)
     {
-        TextMeshProUGUI text = _overlayTasks[task].Item1;
-
-        // set the text to strikethrough and update color
-        text.text = "-  " + task.Name;
-        text.color = TaskCompleteColor;
+        var ctrl = _overlayTasks[task].Item2;
+        ctrl.SetText(task.Name, TaskState.Completed);
         FixUnityLayoutBug();
     }
 
