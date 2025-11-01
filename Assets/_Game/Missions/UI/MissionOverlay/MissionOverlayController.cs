@@ -34,6 +34,7 @@ public class MissionOverlayController : MonoBehaviour
             throw new System.Exception("TaskItemPrefab is missing TaskLabelController component.");
         }
 
+        labelCtrl.Init();
         labelCtrl.CompletedColor = TaskCompleteColor;
         labelCtrl.FailedColor = TaskFailedColor;
         labelCtrl.SetText(newTaskItem.text, TaskState.InProgress);
