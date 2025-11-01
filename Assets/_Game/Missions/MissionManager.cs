@@ -1,5 +1,7 @@
 #nullable enable
 using System;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MissionManager : MonoBehaviour
@@ -11,10 +13,10 @@ public class MissionManager : MonoBehaviour
     // we assume that the minimap camera is a child of the minimap object
     [SerializeField] private Camera MinimapCamera;
 
-    private Mission? CurrentMission;
-    
-    private RunOnce? _runonce;
-    private RunOnce _init;
+    Mission? CurrentMission;
+    RunOnce? _runonce;
+    RunOnce _init;
+    Dictionary<Task, TextMeshProUGUI> _overlayTasks = new();
 
     public void Awake()
     {
@@ -57,10 +59,12 @@ public class MissionManager : MonoBehaviour
         }
 
         CurrentMission.OnMissionCompleted += MissionCompleteHandler;
+        CurrentMission.OnTaskStarted += TaskStartedHandler;
+        CurrentMission.OnTaskCompleted += TaskCompletedHandler;
 
         MissionOverlay.MissionTitle.text = CurrentMission.Name;
         MissionOverlay.MissionDescription.text = CurrentMission.Description;
-        MissionOverlay.FixUnitysShittyCode();
+        MissionOverlay.FixUnityLayoutBug();
 
         CurrentMission.StartMission();
     }
@@ -82,5 +86,26 @@ public class MissionManager : MonoBehaviour
         }
 
         CurrentMission = null;
+    }
+
+    void TaskStartedHandler(Task task)
+    {
+        TextMeshProUGUI newTaskItem = GameObject.Instantiate(
+            MissionOverlay.TaskItemPrefab,
+            MissionOverlay.MissionOverlayPanel.transform);
+
+        newTaskItem.text = task.Name;
+        _overlayTasks[task] = newTaskItem;
+
+        MissionOverlay.FixUnityLayoutBug();
+    }
+
+    void TaskCompletedHandler(Task task)
+    {
+        TextMeshProUGUI text = _overlayTasks[task];
+
+        // set the text to strikethrough
+        text.text = "<s>" + text.text + "</s>";
+        MissionOverlay.FixUnityLayoutBug();
     }
 }

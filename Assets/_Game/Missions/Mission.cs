@@ -13,11 +13,15 @@ public class Mission
     public string Description => Data.Description;
     public string StartMessage => Data.StartMessage;
     public string SuccessMessage => Data.SuccessMessage;
-    public string FailureMessage => Data.FailureMessage;    
+    public string FailureMessage => Data.FailureMessage;
 
     public List<Task> Tasks = new();
 
+    public event Action<Task> OnTaskStarted = null!;
+    public event Action<Task> OnTaskCompleted = null!;
     public event Action OnMissionCompleted = null!;
+
+
     readonly TaskHandlerBase _taskHandler = null!;
 
     public Mission(MissionSO obj, MissionConfig runtimeConfig)
@@ -58,11 +62,14 @@ public class Mission
 
         taskIconObject.GetComponent<TaskIconController>()
             .SetData(RuntimeConfig.MinimapCamera, RuntimeConfig.MinimapParent);
+
+        OnTaskStarted?.Invoke(task);
     }
 
     void TaskCompletedHandler(Task task)
     {
         task.MinimapIconObject?.SetActive(false);
+        OnTaskCompleted?.Invoke(task);
     }
 
     void AllTasksCompletedHandler()

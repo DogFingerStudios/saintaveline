@@ -7,12 +7,13 @@ public class MissionOverlayController : MonoBehaviour
     [SerializeField] public TextMeshProUGUI MissionTitle;
     [SerializeField] public TextMeshProUGUI MissionDescription;
     [SerializeField] public TextMeshProUGUI TaskItemPrefab;
-    [SerializeField] public RectTransform TaskListParent;
+    [SerializeField] public RectTransform   TaskListParent;
+    [SerializeField] public GameObject      MissionOverlayPanel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        FixUnitysShittyCode();
+        FixUnityLayoutBug();
     }
 
     // Update is called once per frame
@@ -20,7 +21,7 @@ public class MissionOverlayController : MonoBehaviour
     {
     }
 
-    public void FixUnitysShittyCode()
+    public void FixUnityLayoutBug()
     {
         LayoutRebuilder.ForceRebuildLayoutImmediate(TaskListParent);
     }
