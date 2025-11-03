@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-public class InputManagerState : IDisposable
+public class UIManagerState : IDisposable
 {
-    private InputManager _manager;
+    private UIManager _manager;
     private bool _crosshairActive = false;
     private CursorLockMode _cursorLockMode;
     private bool _cursorVisible;
 
-    public InputManagerState(InputManager manager)
+    public UIManagerState(UIManager manager)
     {
         _manager = manager;
         _crosshairActive = _manager.CrossHair.activeSelf;
@@ -24,12 +24,12 @@ public class InputManagerState : IDisposable
     }
 }
 
-public class InputManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject _crossHair;
     public GameObject CrossHair => _crossHair;
 
-    public static InputManager Instance { get; private set; }
+    public static UIManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -43,7 +43,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public InputManagerState SetState(bool crossHairVisible, CursorLockMode cursorLockMode, bool cursorVisible)
+    public UIManagerState SetState(bool crossHairVisible, CursorLockMode cursorLockMode, bool cursorVisible)
     {
         var retval = PushState();
 
@@ -54,9 +54,9 @@ public class InputManager : MonoBehaviour
         return retval;
     }
 
-    public InputManagerState PushState()
+    public UIManagerState PushState()
     {
-        InputManagerState retval = new(this);
+        UIManagerState retval = new(this);
         return retval;
     }
 }

@@ -30,7 +30,7 @@ public class InventoryUI : MonoBehaviour
 
     // used to preserve the state of the crosshair, cursor lock mode,
     // and cursor visibility
-    private InputManagerState? _inputState = null;
+    private UIManagerState? _inputState = null;
 
     public bool IsActive => _inventoryDlg.enabled;
 
@@ -92,7 +92,7 @@ public class InventoryUI : MonoBehaviour
 
     public void ShowInventory(CharacterEntity entity)
     {
-        _inputState = InputManager.Instance.SetState(false, CursorLockMode.None, true);
+        _inputState = UIManager.Instance.SetState(false, CursorLockMode.None, true);
 
         foreach (GameObject item in _itemObjects)
         {
