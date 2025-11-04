@@ -1,16 +1,23 @@
 using UnityEngine;
+using System;
 
-public class InputProcessor : MonoBehaviour
+public class InputProcessor
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public Action activeInputHandler;
+    public Action storedInputHandler;
+
+    public void ActivateInputHandler()
     {
-        
+        activeInputHandler = storedInputHandler;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DeactivateInputHandler()
     {
-        
+        activeInputHandler = null;
+    }
+
+    public void ProcessInput()
+    {
+        activeInputHandler?.Invoke();
     }
 }

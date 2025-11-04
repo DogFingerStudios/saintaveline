@@ -154,18 +154,6 @@ public class PlayerInteractor : MonoBehaviour
             _playerEntity!.AddItemToInventory(itemEntity);
             BottomTypewriter.Instance.Enqueue("Added item '" + itemEntity.ItemData!.ItemName + "' to inventory.");
         }
-        else if (Input.GetKeyDown(KeyCode.I))
-        {
-            if (InventoryUI.Instance.IsActive) return;
-
-            var playerEntity = this.GetComponentInParent<CharacterEntity>();
-            if (playerEntity == null)
-            {
-                throw new System.Exception("PlayerInteractor: CharacterEntity script not found on Player object.");
-            }
-
-            InventoryUI.Instance.ShowInventory(playerEntity);
-        }
         else if (Input.GetKeyDown(KeyCode.M))
         {
             if (CodexOverlayController.Instance.IsActive)
