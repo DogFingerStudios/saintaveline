@@ -95,6 +95,8 @@ public class BoatDriver : MonoBehaviour
         _rb.angularDamping = Mathf.Max(_rb.angularDamping, 2f);
         _rb.interpolation = RigidbodyInterpolation.Interpolate;
         _rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+        InputManager.Instance.RegisterInputHandler(InputState.BoatDriving, ProcessInput);
     }
 
     private float _mouseSensitivity = 2f;
@@ -102,7 +104,7 @@ public class BoatDriver : MonoBehaviour
     private float _xRotation = 0f;
     private float _yRotation = 0f;
 
-    private void Update()
+    private void ProcessInput()
     {
         if (_isPiloting)
         {
@@ -166,7 +168,10 @@ public class BoatDriver : MonoBehaviour
                 1f - Mathf.Exp(-_cameraLerp * Time.deltaTime)
             );
         }
+    }
 
+    private void Update()
+    {
         // AI: visual wheel turn
         if (_steeringWheelVisual != null)
         {
@@ -306,6 +311,7 @@ public class BoatDriver : MonoBehaviour
         _characterController!.enabled = false;
         _fpsMovement!.IsInDrivingMode = true;
         _footstepAudio!.IsEnabled = false;
+        InputManager.Instance.SetInputState(InputState.BoatDriving);
         this.StartCoolDown();
     }
 
@@ -356,6 +362,7 @@ public class BoatDriver : MonoBehaviour
         _fpsMovement!.IsInDrivingMode = false;
         _footstepAudio!.IsEnabled = true;
         this.StartCoolDown();
+        InputManager.Instance.SetInputState(InputState.Gameplay);
     }
 
     // AI: utility to find and disable a component by type name

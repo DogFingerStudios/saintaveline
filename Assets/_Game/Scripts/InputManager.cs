@@ -7,7 +7,8 @@ public enum InputState
     Gameplay,
     InventoryDlg,
     CodexDlg,
-    MapLabeling
+    MapLabeling,
+    BoatDriving
 }
 
 public class InputManager : MonoBehaviour
