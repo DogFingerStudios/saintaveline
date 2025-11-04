@@ -54,7 +54,6 @@ public class CodexOverlayController : MonoBehaviour
 
     public void OpenCodexOverlay(CharacterEntity entity)
     {
-        InventoryUI.Instance.ShowInventory(entity);
         ToggleCodexOverlay(true);
     }
 }

@@ -6,6 +6,7 @@ public enum InputState
 {
     Gameplay,
     InventoryDlg,
+    CodexDlg
 }
 
 public class InputManager : MonoBehaviour
@@ -46,7 +47,7 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I) && CurrentState != InputState.InventoryDlg)
+        if (Input.GetKeyDown(KeyCode.I) && CurrentState == InputState.Gameplay)
         {
             if (InventoryUI.Instance.IsActive)
             {
@@ -61,6 +62,38 @@ public class InputManager : MonoBehaviour
 
             this.SetInputState(InputState.InventoryDlg);
             InventoryUI.Instance.ShowInventory(playerEntity);
+        }
+        else if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (CurrentState == InputState.Gameplay)
+            {
+                if (CodexOverlayController.Instance.IsActive)
+                {
+                    throw new Exception("InputManager: Codex Overlay is already active when trying to open it.");
+                }
+
+                var playerEntity = this.GetComponentInParent<CharacterEntity>();
+                if (playerEntity == null)
+                {
+                    throw new System.Exception("PlayerInteractor: CharacterEntity script not found on Player object.");
+                }
+
+                this.SetInputState(InputState.CodexDlg);
+                CodexOverlayController.Instance.OpenCodexOverlay(playerEntity);
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (CurrentState == InputState.CodexDlg)
+            {
+                if (!CodexOverlayController.Instance.IsActive)
+                {
+                    throw new Exception("InputManager: Codex Overlay is not active when trying to close it.");
+                }
+
+                this.SetInputState(InputState.Gameplay);
+                CodexOverlayController.Instance.ToggleCodexOverlay(false);
+            }
         }
 
         _currentHandler?.Invoke();
