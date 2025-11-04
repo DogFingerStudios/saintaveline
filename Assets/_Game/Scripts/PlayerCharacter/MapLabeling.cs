@@ -7,7 +7,7 @@ using UnityEngine.UI;
 // functionality to marking and naming points on the map
 public class MapLabeler : MonoBehaviour
 {
-    private enum State
+    private enum MapLabelingState
     {
         Idle,
         MarkingMap,
@@ -26,7 +26,7 @@ public class MapLabeler : MonoBehaviour
     private Camera _mainCamera;
     private Vector3 _lastHitPoint;
     private Vector3 _savedPosition;
-    private State _currentState = State.Idle;
+    private MapLabelingState _currentState = MapLabelingState.Idle;
     private PlayerStats _playerStats;
 
     private void Start()
@@ -38,36 +38,38 @@ public class MapLabeler : MonoBehaviour
             Debug.LogError("PlayerStats component not found on the player character.");
             return;
         }
+
+        InputManager.Instance.RegisterInputHandler(InputState.MapLabeling, ProcessInput);
     }
 
-    private void Update()
+    private void ProcessInput()
     {
-        if (_currentState == State.Idle && Input.GetKeyDown(KeyCode.Comma))
+        if (_currentState == MapLabelingState.Idle && Input.GetKeyDown(KeyCode.Comma))
         {
-            _currentState = State.MarkingMap;
+            _currentState = MapLabelingState.MarkingMap;
             _crossHair.SetActive(false);
 
             _circleInstance = Instantiate(_circlePrefab);
         }
 
-        if (_currentState == State.MarkingMap)
+        if (_currentState == MapLabelingState.MarkingMap)
         {
             HandleMarkingMap();
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (_currentState == State.MarkingMap)
+            if (_currentState == MapLabelingState.MarkingMap)
             {
                 Destroy(_circleInstance);
                 _circleInstance = null;
             }
-            else if (_currentState == State.Labeling)
+            else if (_currentState == MapLabelingState.Labeling)
             {
                 CleanupInstances();
             }
 
-            _currentState = State.Idle;
+            _currentState = MapLabelingState.Idle;
             _crossHair.SetActive(true);
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -90,7 +92,7 @@ public class MapLabeler : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 _savedPosition = hitInfo.point;
-                _currentState = State.Labeling;
+                _currentState = MapLabelingState.Labeling;
                 ShowLabelNameDialog();
             }
         }
@@ -116,7 +118,7 @@ public class MapLabeler : MonoBehaviour
         string labelName = inputField.text.Trim();
         if (string.IsNullOrEmpty(labelName)) return;
 
-        _currentState = State.Idle;
+        _currentState = MapLabelingState.Idle;
         RestoreUI();
         CleanupInstances();
 
@@ -130,7 +132,7 @@ public class MapLabeler : MonoBehaviour
 
     private void CancelButtonClicked()
     {
-        _currentState = State.Idle;
+        _currentState = MapLabelingState.Idle;
         RestoreUI();
         CleanupInstances();
     }
@@ -148,6 +150,8 @@ public class MapLabeler : MonoBehaviour
             Destroy(_circleInstance);
             _circleInstance = null;
         }
+
+        InputManager.Instance.SetInputState(InputState.Gameplay);
     }
 
     private void RestoreUI()

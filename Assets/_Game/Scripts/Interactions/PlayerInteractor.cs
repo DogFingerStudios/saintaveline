@@ -96,6 +96,8 @@ public class PlayerInteractor : MonoBehaviour
         }
 
         _playerEntity = playerEntity;
+
+        InputManager.Instance.RegisterInputHandler(InputState.Gameplay, this.ProcessInput);
     }
 
     void ClearFocus()
@@ -119,10 +121,13 @@ public class PlayerInteractor : MonoBehaviour
         FocusedObject = null;
     }
 
-    void Update()
+    private void Update()
     {
         checkInteractions();
+    }
 
+    void ProcessInput()
+    {
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (_playerEntity!.EquippedItem == null)

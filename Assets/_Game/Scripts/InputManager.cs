@@ -6,7 +6,8 @@ public enum InputState
 {
     Gameplay,
     InventoryDlg,
-    CodexDlg
+    CodexDlg,
+    MapLabeling
 }
 
 public class InputManager : MonoBehaviour
@@ -41,13 +42,12 @@ public class InputManager : MonoBehaviour
         {
             Instance = this;
         }
-
-        _inputHandlers.Add(InputState.Gameplay, null);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I) && CurrentState == InputState.Gameplay)
+        if (Input.GetKeyDown(KeyCode.I) 
+            && CurrentState == InputState.Gameplay)
         {
             if (InventoryUI.Instance.IsActive)
             {
@@ -94,6 +94,10 @@ public class InputManager : MonoBehaviour
                 this.SetInputState(InputState.Gameplay);
                 CodexOverlayController.Instance.ToggleCodexOverlay(false);
             }
+        }
+        else if (Input.GetKeyDown(KeyCode.Comma) && CurrentState == InputState.Gameplay)
+        {
+            this.SetInputState(InputState.MapLabeling);
         }
 
         _currentHandler?.Invoke();
