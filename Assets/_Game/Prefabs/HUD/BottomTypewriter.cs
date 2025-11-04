@@ -5,6 +5,24 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum MessageType
+{
+    Info,
+    Warning,
+    Error
+}
+
+public struct MessageEntry
+{
+    public string Text;
+    public MessageType Type;
+    public MessageEntry(string text, MessageType type)
+    {
+        Text = text;
+        Type = type;
+    }
+}
+
 public sealed class BottomTypewriter : MonoBehaviour
 {
     [Header("References")]
@@ -24,7 +42,7 @@ public sealed class BottomTypewriter : MonoBehaviour
     [SerializeField] private UnityEvent<char> _onTypedChar;
     [SerializeField] private UnityEvent<string> _onMessageShown;
 
-    private readonly Queue<string> _queue = new Queue<string>();
+    private readonly Queue<MessageEntry> _queue = new Queue<MessageEntry>();
     private Coroutine _runner;
     private bool _isVisible;
     private bool _isTyping;
@@ -76,14 +94,35 @@ public sealed class BottomTypewriter : MonoBehaviour
         }
     }
 
-    public void Enqueue(string message)
+    public void Enqueue(string message, MessageType type = MessageType.Info)
     {
         if (string.IsNullOrEmpty(message))
         {
             return;
         }
 
-        _queue.Enqueue(message);
+        _queue.Enqueue(new MessageEntry(message, type));
+        TryRun();
+    }
+
+    public void EnqueueWarning(string message)
+    {
+        if (string.IsNullOrEmpty(message))
+        {
+            return;
+        }
+
+        _queue.Enqueue(new MessageEntry(message, MessageType.Warning));
+        TryRun();
+    }
+
+    public void EnqueueError(string message)
+    {
+        if (string.IsNullOrEmpty(message))
+        {
+            return;
+        }
+        _queue.Enqueue(new MessageEntry(message, MessageType.Error));
         TryRun();
     }
 
@@ -150,9 +189,8 @@ public sealed class BottomTypewriter : MonoBehaviour
     {
         while (_queue.Count > 0)
         {
-            string next = _queue.Dequeue();
-
-            PrepareHidden(next);
+            var entry = _queue.Dequeue();
+            PrepareHidden(entry);
 
             if (!_isVisible)
             {
@@ -181,10 +219,17 @@ public sealed class BottomTypewriter : MonoBehaviour
         _runner = null;
     }
 
-    private void PrepareHidden(string message)
+    private void PrepareHidden(MessageEntry entry)
     {
-        _text.maxVisibleCharacters = 0;   // Clamp first
-        _text.text = message;             // Then assign
+        _text.color = entry.Type switch
+        {
+            MessageType.Info => Color.white,
+            MessageType.Warning => Color.yellow,
+            MessageType.Error => Color.red,
+            _ => Color.white
+        };
+        _text.maxVisibleCharacters = 0;     // Clamp first
+        _text.text = entry.Text;            // Then assign
         _text.ForceMeshUpdate();
     }
 

@@ -1,6 +1,7 @@
 // AI: BoatPilotStation.cs - simple "press E while looking at wheel" interactor for piloting toggle
 // AI: Attach to the steering wheel object. Assign _boat reference in Inspector.
 
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [DefaultExecutionOrder(10)]
@@ -12,7 +13,10 @@ public class BoatPilotStation : MonoBehaviour
     [SerializeField] private KeyCode _useKey = KeyCode.E;
 
     private Camera _cam;
+
+    // these could probably be combined into a single player reference
     private Transform _player;
+    private CharacterEntity _playerEntity;
 
     private void Start()
     {
@@ -21,6 +25,29 @@ public class BoatPilotStation : MonoBehaviour
         {
             _player = _cam.transform; // AI: fallback for distance gating
         }
+
+        var playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj == null)
+        {
+            throw new System.Exception("BoatPilotStation: No GameObject with tag 'Player' found in scene.");
+        }
+
+        _playerEntity = playerObj.GetComponent<CharacterEntity>();
+        if (_playerEntity == null)
+        {
+            throw new System.Exception("BoatPilotStation: No CharacterEntity component found on Player object.");
+        }
+    }
+
+    private void TryBeginPiloting()
+    {
+        if (_playerEntity.EquippedItem != null)
+        {
+            BottomTypewriter.Instance.EnqueueError("You must unequip your item before piloting the boat.");
+            return;
+        }
+
+        _boat.BeginPiloting(GetPlayerRoot(), _cam);
     }
 
     private void Update()
@@ -59,7 +86,7 @@ public class BoatPilotStation : MonoBehaviour
                         }
                     }
 
-                    _boat.BeginPiloting(GetPlayerRoot(), _cam);
+                    this.TryBeginPiloting();
                 }
             }
         }
