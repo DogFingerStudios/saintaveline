@@ -13,26 +13,20 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance { get; private set; }
     public InputState CurrentState { get; private set; } = InputState.Gameplay;
 
-    Dictionary<InputState, InputProcessor> _inputHandlers = new Dictionary<InputState, InputProcessor>();
-    InputProcessor _currentHandler;
+    Dictionary<InputState, Action> _inputHandlers = new Dictionary<InputState, Action>();
+    Action _currentHandler;
 
-    public void RegisterInputHandler(InputState area, InputProcessor handler)
+    public void RegisterInputHandler(InputState area, Action handler)
     {
         _inputHandlers[area] = handler;
     }
 
     public void SetInputState(InputState newState)
     {
-        if (_inputHandlers.TryGetValue(CurrentState, out var currentHandler) && currentHandler != null)
-        {
-            currentHandler.DeactivateInputHandler();
-        }
-
         CurrentState = newState;
         if (_inputHandlers.TryGetValue(CurrentState, out var newHandler) && newHandler != null)
         {
             _currentHandler = newHandler;
-            newHandler.ActivateInputHandler();
         }
     }
 
@@ -68,5 +62,7 @@ public class InputManager : MonoBehaviour
             this.SetInputState(InputState.InventoryDlg);
             InventoryUI.Instance.ShowInventory(playerEntity);
         }
+
+        _currentHandler?.Invoke();
     }
 }

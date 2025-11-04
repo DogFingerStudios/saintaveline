@@ -39,7 +39,6 @@ public class InventoryUI : MonoBehaviour
     private int _selectedCount = 0;
     private Dictionary<string, CharacterEntity> _transferTargets = new Dictionary<string, CharacterEntity>();
     private float _maxTransferDistance = 7.5f;
-    private InputProcessor _inputProcessor = new InputProcessor();
 
     private void Awake()
     {
@@ -81,13 +80,7 @@ public class InventoryUI : MonoBehaviour
 
         _transferDropdown.AddOptions(listItems.OrderBy(x => x).ToList());
 
-        _inputProcessor.storedInputHandler = ProcessInput;
-        InputManager.Instance.RegisterInputHandler(InputState.InventoryDlg, _inputProcessor);
-    }
-
-    public void Update()
-    {
-        _inputProcessor.ProcessInput();
+        InputManager.Instance.RegisterInputHandler(InputState.InventoryDlg, this.ProcessInput);
     }
 
     public void ProcessInput()
