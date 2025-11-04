@@ -26,9 +26,13 @@ public class InputManager : MonoBehaviour
     public void SetInputState(InputState newState)
     {
         CurrentState = newState;
-        if (_inputHandlers.TryGetValue(CurrentState, out var newHandler) && newHandler != null)
+        if (_inputHandlers.TryGetValue(CurrentState, out var newHandler))
         {
             _currentHandler = newHandler;
+        }
+        else
+        {
+            _currentHandler = null;
         }
     }
 
@@ -95,7 +99,8 @@ public class InputManager : MonoBehaviour
                 CodexOverlayController.Instance.ToggleCodexOverlay(false);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Comma) && CurrentState == InputState.Gameplay)
+        else if (Input.GetKeyDown(KeyCode.Comma) 
+            && CurrentState == InputState.Gameplay)
         {
             this.SetInputState(InputState.MapLabeling);
         }
