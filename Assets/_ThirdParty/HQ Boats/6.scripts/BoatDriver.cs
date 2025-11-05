@@ -53,6 +53,10 @@ public class BoatDriver : MonoBehaviour
 
     [Header("Dismount Points")]
     [SerializeField] private Transform _dismountPoint1;
+
+    [Header("Boat Sounds")]
+    [SerializeField] private AudioSource _motorSound;
+    [SerializeField] private AudioSource _idleFloatingSound;
    
     // AI: runtime state
     private Rigidbody _rb;
@@ -70,14 +74,10 @@ public class BoatDriver : MonoBehaviour
     private Vector3 _originalCamLocalPos;
     private Quaternion _originalCamLocalRot;
     private Transform _originalPlayerParent = null!;
-    private Vector3 _originalPlayerLocalPos;
-    private Quaternion _originalPlayerLocalRot;
     
     private FPSMovement? _fpsMovement;
     private FootstepAudio? _footstepAudio;
     private CharacterController? _characterController;
-
-    private AudioSource _motorSound;
 
     private void Awake()
     {
@@ -87,7 +87,6 @@ public class BoatDriver : MonoBehaviour
         _characterController = playerObject.GetComponent<CharacterController>();
 
         _rb = GetComponent<Rigidbody>();
-        _motorSound = GetComponent<AudioSource>();
         _motorSound.loop = true;
 
         // AI: reasonable Rigidbody defaults for surface craft
@@ -277,8 +276,6 @@ public class BoatDriver : MonoBehaviour
 
         // AI: remember original player transform
         _originalPlayerParent = _playerRoot.parent;
-        _originalPlayerLocalPos = _playerRoot.localPosition;
-        _originalPlayerLocalRot = _playerRoot.localRotation;
 
         // AI: parent player to seat or boat
         Transform seat = _pilotSeat ? _pilotSeat : transform;
