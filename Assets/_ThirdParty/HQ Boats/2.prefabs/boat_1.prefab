@@ -310,7 +310,7 @@ MonoBehaviour:
   _waterLevel: -4
   _floatForce: 5
   _damping: 0
-  _waveAmplitude: 0.05
+  _waveAmplitude: 0.0625
   _waveFrequency: 5
 --- !u!114 &1608317397246759995
 MonoBehaviour:
@@ -1022,8 +1022,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: e36eb04bdaf164dfa8b2da8c4af1100a, type: 3}
+  m_Resource: {fileID: 8300000, guid: e36eb04bdaf164dfa8b2da8c4af1100a, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1034,7 +1034,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1069,7 +1069,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
