@@ -19,6 +19,16 @@ public class InputManager : MonoBehaviour
     Dictionary<InputState, Action> _inputHandlers = new Dictionary<InputState, Action>();
     Action _currentHandler;
 
+    InputManager()
+    {
+        if (Instance != null)
+        {
+            throw new Exception("InputManager: Multiple instances detected. InputManager is a singleton and there should only be one instance in the scene.");
+        }
+
+        Instance = this;
+    }
+
     public void RegisterInputHandler(InputState area, Action handler)
     {
         _inputHandlers[area] = handler;
@@ -34,18 +44,6 @@ public class InputManager : MonoBehaviour
         else
         {
             _currentHandler = null;
-        }
-    }
-
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            Instance = this;
         }
     }
 
