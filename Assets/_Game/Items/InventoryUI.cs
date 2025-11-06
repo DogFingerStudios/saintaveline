@@ -1,15 +1,12 @@
 #nullable enable
 
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Button = UnityEngine.UI.Button;
-using Toggle = UnityEngine.UI.Toggle;
 using Image = UnityEngine.UI.Image;
-using static UnityEngine.GraphicsBuffer;
-using System.Linq;
-using System.Runtime.CompilerServices;
+using Toggle = UnityEngine.UI.Toggle;
 
 // This script is attached to the Inventory UI dialog prefab. 
 public class InventoryUI : MonoBehaviour
