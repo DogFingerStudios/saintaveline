@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using Unity.Mathematics;
 
 /// <summary>
 /// Attach to any GameObject that should react when the player
@@ -33,7 +34,15 @@ public class SeenTrigger : MonoBehaviour
         // Find the main camera (or a custom FPS controller camera)
         playerCam = Camera.main?.transform;
         if (playerCam == null)
-            Debug.LogError("SeenTrigger: No Main Camera found!", this);
+        {
+            throw new Exception("There is no Camera");
+        }
+
+        AddListener(() =>
+        {
+            this.transform.Rotate(0, 0, 90);
+
+        });
     }
 
     private void Update()

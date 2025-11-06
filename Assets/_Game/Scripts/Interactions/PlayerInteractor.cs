@@ -50,8 +50,8 @@ public class PlayerInteractor : MonoBehaviour
             // 3. Rotate
             // transform.Rotate(0, 180, 0);
 
-            //Debug.Log($"{name} was looked away from!");
-            BottomTypewriter.Instance.Enqueue("You looked away from " + name + "!");
+            Debug.Log($"{name} was looked away from!");
+            //BottomTypewriter.Instance.Enqueue("You looked away from " + name + "!");
         });
     }
 
