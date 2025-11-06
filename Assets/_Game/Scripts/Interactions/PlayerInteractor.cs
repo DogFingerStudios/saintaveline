@@ -26,9 +26,33 @@ public class PlayerInteractor : MonoBehaviour
 
     private CharacterEntity? _playerEntity = null;
 
+    [Header("Seen Trigger Settings")]
+    [SerializeField] private SeenTrigger seenTrigger;
+
     private void Start()
     {
         helpTextUI?.gameObject.SetActive(false);
+
+        if (seenTrigger == null) seenTrigger = GetComponent<SeenTrigger>();
+        seenTrigger.AddListener(() =>
+        {
+            // Example actions:
+            // 1. Remove
+            // Destroy(gameObject);
+
+            // 2. Replace
+            //if (replacementSign != null)
+            //{
+            //    Instantiate(replacementSign, transform.position, transform.rotation);
+            //    Destroy(gameObject);
+            //}
+
+            // 3. Rotate
+            // transform.Rotate(0, 180, 0);
+
+            //Debug.Log($"{name} was looked away from!");
+            BottomTypewriter.Instance.Enqueue("You looked away from " + name + "!");
+        });
     }
 
     private void checkInteractions()
