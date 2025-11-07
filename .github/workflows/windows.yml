@@ -20,69 +20,67 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-2019
+    runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        build_type: [Debug, Release]
+        build_type: [Release]
     env:
       BUILD_TYPE: ${{ matrix.build_type }}
 
     steps:
-    - uses: actions/checkout@v2
+      - name: Discord Workflow Start Notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: ${{ env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "💬 Starting CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
 
-    - name: Get Conan
-      uses: turtlebrowser/get-conan@v1.0
+      # - uses: game-ci/unity-builder@v4
+      #   env:
+      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      #     UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      #     UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      #   with:
+      #     targetPlatform: StandaloneWindows64
+      
+      # - uses: actions/checkout@v2
 
-    - name: Add custom conan repo
-      run:  conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
-            
-    - name: Create Build Environment
-      run: cmake -E make_directory ${{github.workspace}}/build
 
-    - name: Init Git Submodules
-      shell: bash
-      working-directory: ${{github.workspace}}
-      run: git submodule update --init --recursive
+      # - name: Build
+      #   working-directory: ${{github.workspace}}/build
+      #   shell: bash
+      #   run: cmake --build . --config $BUILD_TYPE
 
-    - name: Configure CMake
-      shell: bash
-      working-directory: ${{github.workspace}}/build
-      run: cmake $GITHUB_WORKSPACE -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_UNIT_TESTS=ON -DSHARED_SFML=OFF
+      # - name: Tests
+      #   working-directory: ${{github.workspace}}/build
+      #   shell: bash
+      #   run: ctest --rerun-failed --output-on-failure -C $BUILD_TYPE
 
-    - name: Build
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      run: cmake --build . --config $BUILD_TYPE
+      # - name: Build Artifacts
+      #   working-directory:  ${{github.workspace}}/build
+      #   if: "env.BUILD_TYPE == 'Release'"
+      #   shell: bash
+      #   run: |
+      #     cpack -G NSIS -C Release --config TTVGCPackConfig.cmake --verbose
+      #     mkdir stage
+      #     cp tooter-*.exe stage
+          
+      # - name: Upload Artifacts
+      #   uses: actions/upload-artifact@v3
+      #   if: "env.BUILD_TYPE == 'Release'"
+      #   with:
+      #     name: windows_artficats
+      #     path: ${{github.workspace}}/build/tooter-*.exe
 
-    - name: Tests
-      working-directory: ${{github.workspace}}/build
-      shell: bash
-      run: ctest --rerun-failed --output-on-failure -C $BUILD_TYPE
-
-    - name: Build Artifacts
-      working-directory:  ${{github.workspace}}/build
-      if: "env.BUILD_TYPE == 'Release'"
-      shell: bash
-      run: |
-        cpack -G NSIS -C Release --config TTVGCPackConfig.cmake --verbose
-        mkdir stage
-        cp tooter-*.exe stage
-        
-    - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
-      if: "env.BUILD_TYPE == 'Release'"
-      with:
-        name: windows_artficats
-        path: ${{github.workspace}}/build/tooter-*.exe
-
-    - name: 📂 FTP Installer
-      uses: SamKirkland/FTP-Deploy-Action@4.3.0
-      if: "env.BUILD_TYPE == 'Release' && github.ref == 'refs/heads/master'"
-      with:
-        server: ${{ secrets.FTP_SERVER }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /public_html/downloads/
-        local-dir: ${{github.workspace}}/build/stage/
-        exclude: tooter-*.zip
+      # - name: 📂 FTP Installer
+      #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      #   if: "env.BUILD_TYPE == 'Release' && github.ref == 'refs/heads/master'"
+      #   with:
+      #     server: ${{ secrets.FTP_SERVER }}
+      #     username: ${{ secrets.FTP_USERNAME }}
+      #     password: ${{ secrets.FTP_PASSWORD }}
+      #     server-dir: /public_html/downloads/
+      #     local-dir: ${{github.workspace}}/build/stage/
+      #     exclude: tooter-*.zip
