@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DebugHUD : MonoBehaviour
 {
+    [SerializeField] private GameObject _debugPanel;
+
     [Header("Object to measure distance to")]
     [SerializeField] private TextMeshProUGUI distanceText;
     [SerializeField] private GameObject distanceObject;
@@ -24,10 +26,10 @@ public class DebugHUD : MonoBehaviour
         // Toggle visibility with "."
         if (Input.GetKeyDown(KeyCode.Period))
         {
-            this.enabled = !this.enabled;
+            _debugPanel.SetActive(!_debugPanel.activeSelf);
         }
 
-        if (!this.enabled) return;
+        if (!_debugPanel.activeSelf) return;
 
         float distanceValue = Vector3.Distance(_playerTransform.position, distanceObject.transform.position);
         distanceText.text = "Distance: " + distanceValue.ToString("F2");

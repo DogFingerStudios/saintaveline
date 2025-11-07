@@ -9,6 +9,7 @@ public class ParkLampInteraction : MonoBehaviour
 
     void Start()
     {
+        _minTimeBetweenRotations = Random.Range(10f, 600f);
     }
 
     // Update is called once per frame
@@ -25,8 +26,8 @@ public class ParkLampInteraction : MonoBehaviour
         if (_timeSinceLookedAway <= 0f) 
         {
             _objectToRotate.transform.Rotate(0, 0, 90);
-            BottomTypewriter.Instance.Enqueue("The lamp post seems to have a loose fixture.");
             _timeSinceLookedAway = _minTimeBetweenRotations;
+            _minTimeBetweenRotations = Random.Range(10f, 600f);
         }
     }
 }
