@@ -1,0 +1,88 @@
+name: windows
+
+on:
+  push:
+    branches:
+      - dev/action1
+    paths:
+      - CMakeLists.txt
+      - CMake/**
+      - .github/workflows/windows.yml
+      - src/**
+      - tests/**
+  pull_request:
+    paths:
+      - CMakeLists.txt
+      - CMake/**
+      - .github/workflows/windows.yml
+      - src/**
+      - tests/**
+
+jobs:
+  build-windows:
+    runs-on: windows-2019
+    strategy:
+      fail-fast: false
+      matrix:
+        build_type: [Debug, Release]
+    env:
+      BUILD_TYPE: ${{ matrix.build_type }}
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get Conan
+      uses: turtlebrowser/get-conan@v1.0
+
+    - name: Add custom conan repo
+      run:  conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+            
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{github.workspace}}/build
+
+    - name: Init Git Submodules
+      shell: bash
+      working-directory: ${{github.workspace}}
+      run: git submodule update --init --recursive
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{github.workspace}}/build
+      run: cmake $GITHUB_WORKSPACE -G "Visual Studio 16 2019" -A x64 -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DBUILD_UNIT_TESTS=ON -DSHARED_SFML=OFF
+
+    - name: Build
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+
+    - name: Tests
+      working-directory: ${{github.workspace}}/build
+      shell: bash
+      run: ctest --rerun-failed --output-on-failure -C $BUILD_TYPE
+
+    - name: Build Artifacts
+      working-directory:  ${{github.workspace}}/build
+      if: "env.BUILD_TYPE == 'Release'"
+      shell: bash
+      run: |
+        cpack -G NSIS -C Release --config TTVGCPackConfig.cmake --verbose
+        mkdir stage
+        cp tooter-*.exe stage
+        
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      if: "env.BUILD_TYPE == 'Release'"
+      with:
+        name: windows_artficats
+        path: ${{github.workspace}}/build/tooter-*.exe
+
+    - name: 📂 FTP Installer
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      if: "env.BUILD_TYPE == 'Release' && github.ref == 'refs/heads/master'"
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        server-dir: /public_html/downloads/
+        local-dir: ${{github.workspace}}/build/stage/
+        exclude: tooter-*.zip
