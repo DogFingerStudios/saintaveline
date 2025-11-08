@@ -18,7 +18,7 @@ public class SeenTrigger : MonoBehaviour
     public float minVisibleTime = 0.5f;
 
     [Tooltip("Optional: only count if the dot product (forward direction) is above this")]
-    [Range(0f, 1f)] public float minDot = 0f; // 0 = any angle, 1 = straight ahead
+    [Range(0f, 1f)] public float minDot = 0.5f; // 0 = any angle, 1 = straight ahead
 
     [Header("What to do when the player looks away")]
     public UnityEvent onLookedAway = new UnityEvent();

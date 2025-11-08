@@ -4,12 +4,14 @@ public class ParkLampInteraction : MonoBehaviour
 {
     [SerializeField] private GameObject _objectToRotate;
 
-    [SerializeField] private float _minTimeBetweenRotations = 5f;
+    [SerializeField] private float _minCooldownTime = 10f;
+    [SerializeField] private float _maxCooldownTime = 600f;
+
     private float _timeSinceLookedAway;
 
     void Start()
     {
-        _minTimeBetweenRotations = Random.Range(10f, 600f);
+        _timeSinceLookedAway = 0;
     }
 
     // Update is called once per frame
@@ -23,11 +25,11 @@ public class ParkLampInteraction : MonoBehaviour
 
     public void LookedAway()
     {
-        if (_timeSinceLookedAway <= 0f) 
+        if (_timeSinceLookedAway <= 0f)
         {
+            Debug.Log("ParkLampInteraction: LookedAway triggered, rotating object.");
             _objectToRotate.transform.Rotate(0, 0, 90);
-            _timeSinceLookedAway = _minTimeBetweenRotations;
-            _minTimeBetweenRotations = Random.Range(10f, 600f);
+            _timeSinceLookedAway = Random.Range(_minCooldownTime, _maxCooldownTime);
         }
     }
 }
