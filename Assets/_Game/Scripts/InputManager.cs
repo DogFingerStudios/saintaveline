@@ -93,7 +93,12 @@ public class InputManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (CurrentState == InputState.CodexDlg)
+            if (CurrentState == InputState.Gameplay)
+            {
+                PauseMenuController.Instance.PauseGame();
+                this.SetInputState(InputState.PauseMenu);
+            }
+            else if (CurrentState == InputState.CodexDlg)
             {
                 if (!CodexOverlayController.Instance.IsActive)
                 {

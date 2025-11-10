@@ -5,6 +5,9 @@ using Cursor = UnityEngine.Cursor;
 
 public class PauseMenuController : MonoBehaviour
 {
+    // make PauseMenuController a singleton for easy access
+    public static PauseMenuController Instance { get; private set; }
+
     // AI: Assign in Inspector (scene name must be in Build Settings)
     [SerializeField] private string _mainMenuSceneName = "MainMenu";
 
@@ -19,6 +22,16 @@ public class PauseMenuController : MonoBehaviour
     private bool _isPaused = false;
     private float _cachedTimeScale = 1f;
     private float _cachedFixedDelta = 0.02f;
+
+    private PauseMenuController()
+    {
+        if (Instance != null)
+        {
+            throw new System.Exception("PauseMenuController: Multiple instances detected.");
+        }
+
+        Instance = this;
+    }
 
     private void Awake()
     {
@@ -81,12 +94,12 @@ public class PauseMenuController : MonoBehaviour
             }
             else
             {
-                PauseGame();
+                //PauseGame();
             }
         }
     }
 
-    private void PauseGame()
+    public void PauseGame()
     {
         if (_isPaused)
         {
@@ -109,8 +122,6 @@ public class PauseMenuController : MonoBehaviour
         SetMenuVisible(true);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-
-        InputManager.Instance.SetInputState(InputState.PauseMenu);
     }
 
     private void ResumeGame()
