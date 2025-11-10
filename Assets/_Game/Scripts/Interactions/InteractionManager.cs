@@ -119,12 +119,6 @@ public class InteractionManager : MonoBehaviour
         _instance = this;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        // nothing to do
-    }
-
     // Update is called once per frame
     void Update()
     {

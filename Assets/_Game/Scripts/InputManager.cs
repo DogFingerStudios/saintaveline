@@ -8,7 +8,8 @@ public enum InputState
     InventoryDlg,
     CodexDlg,
     MapLabeling,
-    BoatDriving
+    BoatDriving,
+    PauseMenu
 }
 
 public class InputManager : MonoBehaviour
@@ -49,7 +50,7 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I) 
+        if (Input.GetKeyDown(KeyCode.I)
             && CurrentState == InputState.Gameplay)
         {
             if (InventoryUI.Instance.IsActive)
@@ -85,6 +86,11 @@ public class InputManager : MonoBehaviour
                 CodexOverlayController.Instance.OpenCodexOverlay(playerEntity);
             }
         }
+        else if (Input.GetKeyDown(KeyCode.Comma) 
+            && CurrentState == InputState.Gameplay)
+        {
+            this.SetInputState(InputState.MapLabeling);
+        }
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (CurrentState == InputState.CodexDlg)
@@ -97,11 +103,6 @@ public class InputManager : MonoBehaviour
                 this.SetInputState(InputState.Gameplay);
                 CodexOverlayController.Instance.ToggleCodexOverlay(false);
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.Comma) 
-            && CurrentState == InputState.Gameplay)
-        {
-            this.SetInputState(InputState.MapLabeling);
         }
 
         _currentHandler?.Invoke();
