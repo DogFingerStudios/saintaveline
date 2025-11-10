@@ -50,7 +50,7 @@ jobs:
       #     args: "💬 Starting CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
 
       - name: Restore LFS cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         id: lfs-cache
         with:
           path: .git/lfs
