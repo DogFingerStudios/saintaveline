@@ -23,8 +23,7 @@ jobs:
           args: "💬 Starting CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
 
   build-windows:
-    # runs-on: windows-latest
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
@@ -71,6 +70,7 @@ jobs:
           buildName: ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
 
       - name: Archive Windows build artifacts
+        shell: powershell
         run: |
           mkdir -p artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
           cp -r build/StandaloneWindows64/* artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/
