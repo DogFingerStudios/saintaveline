@@ -55,7 +55,10 @@ public class PauseMenuController : MonoBehaviour
 
         if (_btnMainMenu != null)
         {
-            _btnMainMenu.clicked += OnMainMenuClicked;
+            _btnMainMenu.clicked += () =>
+            {
+                SceneManager.LoadScene(_mainMenuSceneName);
+            };
         }
 
         if (_btnSettings != null)
