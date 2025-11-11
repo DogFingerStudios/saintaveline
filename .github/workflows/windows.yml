@@ -74,7 +74,8 @@ jobs:
         run: |
           mkdir -p artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
           cp -r build/StandaloneWindows64/* artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/
-          cd artifacts && zip -r ../windows-build.zip ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/*          
+          cd artifacts
+          zip -r ../windows-build.zip ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/*          
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
