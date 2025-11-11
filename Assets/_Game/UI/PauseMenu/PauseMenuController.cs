@@ -82,23 +82,6 @@ public class PauseMenuController : MonoBehaviour
         SetMenuVisible(false);
     }
 
-    private void Update()
-    {
-        // AI: Listen for ESC every frame (works even when paused)
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Debug.Log("AI: Escape pressed, toggling pause menu.");
-            if (_isPaused)
-            {
-                ResumeGame();
-            }
-            else
-            {
-                //PauseGame();
-            }
-        }
-    }
-
     public void PauseGame()
     {
         if (_isPaused)
@@ -124,7 +107,7 @@ public class PauseMenuController : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
-    private void ResumeGame()
+    public void ResumeGame()
     {
         if (!_isPaused)
         {

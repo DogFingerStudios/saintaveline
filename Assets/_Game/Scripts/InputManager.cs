@@ -30,9 +30,9 @@ public class InputManager : MonoBehaviour
         Instance = this;
     }
 
-    public void RegisterInputHandler(InputState area, Action handler)
+    public void RegisterInputHandler(InputState state, Action handler)
     {
-        _inputHandlers[area] = handler;
+        _inputHandlers[state] = handler;
     }
 
     public void SetInputState(InputState newState)
@@ -89,6 +89,7 @@ public class InputManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Comma) 
             && CurrentState == InputState.Gameplay)
         {
+            MapLabeler.Instance.Init();
             this.SetInputState(InputState.MapLabeling);
         }
         else if (Input.GetKeyDown(KeyCode.Escape))
@@ -97,6 +98,11 @@ public class InputManager : MonoBehaviour
             {
                 PauseMenuController.Instance.PauseGame();
                 this.SetInputState(InputState.PauseMenu);
+            }
+            else if (CurrentState == InputState.PauseMenu)
+            {
+                PauseMenuController.Instance.ResumeGame();
+                this.SetInputState(InputState.Gameplay);
             }
             else if (CurrentState == InputState.CodexDlg)
             {

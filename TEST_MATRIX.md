@@ -87,3 +87,39 @@
     - Task 2 complete message shows
     - Task 2 TaskIcon disappears
     - Mission B complete message shows
+
+---
+
+## Feature 5: Pause Menu
+
+### Test Case 5.1: Open Pause Menu
+
+#### Test Case 5.1.1: During Gameplay
+- **Input:** Press 'Esc' during gameplay
+- **Expected Result:** Pause menu appears, game is paused
+
+#### Test Case 5.1.2: From Inventory Dialog
+- **Input:** Press 'Esc' while in inventory dialog
+- **Expected Result:** Inventory dialog closes, no pause is triggered
+
+#### Test Case 5.1.3: From Map Labeling - Selecting Label
+- **Input:** 
+    - Press `,` during GamePlay to enter map labeling mode
+    - then press 'Esc' while in map labeling mode
+- **Expected Result:** 
+    - Map labeling mode exits
+    - no pause is triggered
+
+#### Test Case 5.1.4: From Map Labeling - Naming Label
+- **Input:** 
+    - Press `,` during GamePlay to enter map labeling mode
+    - click a location to place a label
+    - enter a name for the label (do not press 'Enter' to confirm)
+    - then press 'Esc' while naming the label
+- **Expected Result:** 
+    - Naming label dialog closes without saving the label
+    - no pause is triggered
+
+#### Test Case 5.1.5: From Codex Dialog
+- **Input:** Press 'Esc' while in codex dialog
+- **Expected Result:** Codex dialog closes, no pause is triggered    

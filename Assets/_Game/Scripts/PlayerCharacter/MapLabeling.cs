@@ -7,6 +7,8 @@ using UnityEngine.UI;
 // functionality to marking and naming points on the map
 public class MapLabeler : MonoBehaviour
 {
+    public static MapLabeler Instance { get; private set; }
+
     private enum MapLabelingState
     {
         Idle,
@@ -29,6 +31,16 @@ public class MapLabeler : MonoBehaviour
     private MapLabelingState _currentState = MapLabelingState.Idle;
     private PlayerStats _playerStats;
 
+    MapLabeler()
+    {
+        if (Instance != null)
+        {
+            throw new Exception("MapLabeler: Multiple instances detected. MapLabeler is a singleton and there should only be one instance in the scene.");
+        }
+
+        Instance = this;
+    }
+
     private void Start()
     {
         _mainCamera = Camera.main;
@@ -42,16 +54,16 @@ public class MapLabeler : MonoBehaviour
         InputManager.Instance.RegisterInputHandler(InputState.MapLabeling, ProcessInput);
     }
 
+    public void Init()
+    {
+        _currentState = MapLabelingState.MarkingMap;
+        _crossHair.SetActive(false);
+
+        _circleInstance = Instantiate(_circlePrefab);
+    }    
+
     private void ProcessInput()
     {
-        if (_currentState == MapLabelingState.Idle && Input.GetKeyDown(KeyCode.Comma))
-        {
-            _currentState = MapLabelingState.MarkingMap;
-            _crossHair.SetActive(false);
-
-            _circleInstance = Instantiate(_circlePrefab);
-        }
-
         if (_currentState == MapLabelingState.MarkingMap)
         {
             HandleMarkingMap();
@@ -64,10 +76,8 @@ public class MapLabeler : MonoBehaviour
                 Destroy(_circleInstance);
                 _circleInstance = null;
             }
-            else if (_currentState == MapLabelingState.Labeling)
-            {
-                CleanupInstances();
-            }
+
+            CleanupInstances();
 
             _currentState = MapLabelingState.Idle;
             _crossHair.SetActive(true);
