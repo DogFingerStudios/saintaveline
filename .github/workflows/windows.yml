@@ -4,21 +4,19 @@ on:
   push:
     branches:
       - dev/action1
-    paths:
-      - CMakeLists.txt
-      - CMake/**
-      - .github/workflows/windows.yml
-      - src/**
-      - tests/**
-  pull_request:
-    paths:
-      - CMakeLists.txt
-      - CMake/**
-      - .github/workflows/windows.yml
-      - src/**
-      - tests/**
 
 jobs:
+  discord-notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Discord Workflow Start Notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: ${{ env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "💬 Starting CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
+
   build-windows:
     runs-on: windows-latest
     strategy:
@@ -41,14 +39,6 @@ jobs:
           git add .
           git reset --hard
 
-      # - name: Discord Workflow Start Notification
-      #   env:
-      #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      #   if: ${{ env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
-      #   uses: Ilshidur/action-discord@0.3.2
-      #   with:
-      #     args: "💬 Starting CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
-
       - name: Restore LFS cache
         uses: actions/cache@v4
         id: lfs-cache
@@ -64,32 +54,17 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: StandaloneWindows64
+          versioning: Semantic
+          buildName: SaintAveline
+          # versioning: Custom
+          # version: ${{ needs.generate-version.outputs.version }}
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: Build
-          path: build
+          name: SaintAveline-Windows-${{ env.BUILD_TYPE }}
+          path: SaintAveline
       
-      # - name: Build
-      #   working-directory: ${{github.workspace}}/build
-      #   shell: bash
-      #   run: cmake --build . --config $BUILD_TYPE
-
-      # - name: Tests
-      #   working-directory: ${{github.workspace}}/build
-      #   shell: bash
-      #   run: ctest --rerun-failed --output-on-failure -C $BUILD_TYPE
-
-      # - name: Build Artifacts
-      #   working-directory:  ${{github.workspace}}/build
-      #   if: "env.BUILD_TYPE == 'Release'"
-      #   shell: bash
-      #   run: |
-      #     cpack -G NSIS -C Release --config TTVGCPackConfig.cmake --verbose
-      #     mkdir stage
-      #     cp tooter-*.exe stage
-          
       # - name: Upload Artifacts
       #   uses: actions/upload-artifact@v3
       #   if: "env.BUILD_TYPE == 'Release'"
@@ -106,4 +81,4 @@ jobs:
       #     password: ${{ secrets.FTP_PASSWORD }}
       #     server-dir: /public_html/downloads/
       #     local-dir: ${{github.workspace}}/build/stage/
-      #     exclude: tooter-*.zip
+      #     exclude: saintaveline-*.zip
