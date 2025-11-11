@@ -108,10 +108,11 @@ jobs:
           cp -r build/StandaloneWindows64/* artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/
           cd artifacts
           Compress-Archive -Path ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/* -DestinationPath ../windows-build.zip -CompressionLevel Optimal
+
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: windows-build-${{ steps.version.outputs.short-sha }}
+          name: windows-build-${{ github.sha }}
           path: windows-build.zip
       
       # - name: Upload Artifacts
