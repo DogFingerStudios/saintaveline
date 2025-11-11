@@ -2,6 +2,7 @@
 #
 # - https://github.com/planetarium/NineChronicles/blob/development/.github/workflows/build.yml
 # - https://github.com/szejkerek/KnotFun/blob/main/.github/workflows/unity-build-and-release.yml
+# - https://github.com/roo-makes/unity-ci-deploy-base/blob/main/workflows/build-deploy.yml
 #
 name: windows
 
@@ -38,18 +39,33 @@ jobs:
       - name: Create LFS file list
         run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
 
+      - name: Restore LFS cache
+        uses: actions/cache@v3
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
       - name: Git LFS Pull
         run: |
           git lfs pull
           git add .
           git reset --hard
 
-      - name: Restore LFS cache
-        uses: actions/cache@v4
-        id: lfs-cache
+      - name: Unity Cache
+        uses: actions/cache@v3
         with:
-          path: .git/lfs
-          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      # - name: Restore LFS cache
+      #   uses: actions/cache@v4
+      #   id: lfs-cache
+      #   with:
+      #     path: .git/lfs
+      #     key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
 
       # - name: Free up disk space
       #   run: |
@@ -69,14 +85,29 @@ jobs:
           versioning: Semantic
           buildName: ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
 
+      # - name: Discord Build Notification
+      #   env:
+      #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      #   if: ${{ env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
+      #   uses: Ilshidur/action-discord@0.3.2
+      #   with:
+      #     args: "✅ Successfully built `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}` for WebGL, deploying..."
+
+      - name: Discord Build Failure Notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: ${{ failure() && env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "❗️ Build failed for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`"
+
       - name: Archive Windows build artifacts
         shell: powershell
         run: |
           mkdir -p artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
           cp -r build/StandaloneWindows64/* artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/
           cd artifacts
-          zip -r ../windows-build.zip ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/*          
-
+          Compress-Archive -Path ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/* -DestinationPath ../windows-build.zip -CompressionLevel Optimal
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
