@@ -1,3 +1,8 @@
+# The following repositories were used as references:
+#
+# - https://github.com/planetarium/NineChronicles
+# - https://github.com/szejkerek/KnotFun/blob/main/.github/workflows/unity-build-and-release.yml
+#
 name: windows
 
 on:
@@ -55,15 +60,19 @@ jobs:
         with:
           targetPlatform: StandaloneWindows64
           versioning: Semantic
-          buildName: SaintAveline
-          # versioning: Custom
-          # version: ${{ needs.generate-version.outputs.version }}
+          buildName: ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
+
+      - name: Archive Windows build artifacts
+        run: |
+          mkdir -p artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
+          cp -r build/StandaloneWindows64/* artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/
+          cd artifacts && zip -r ../windows-build.zip ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/*          
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: SaintAveline-Windows-${{ env.BUILD_TYPE }}
-          path: SaintAveline
+          name: windows-build-${{ steps.version.outputs.short-sha }}
+          path: windows-build.zip
       
       # - name: Upload Artifacts
       #   uses: actions/upload-artifact@v3
