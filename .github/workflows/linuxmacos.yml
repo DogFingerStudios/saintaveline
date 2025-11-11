@@ -1,4 +1,4 @@
-name: MacOS and Linux Build
+name: macos and linux build
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
         if: ${{ env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "💬 Starting macOS CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
+          args: "💬 Starting macOS and Linux CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
 
       - name: Runnner Initial Setup
         run: |
@@ -74,7 +74,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          targetPlatform: StandaloneOSX
+          targetPlatform: ${{ matrix.targetPlatform }}
           versioning: Semantic
           buildName: ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
 
