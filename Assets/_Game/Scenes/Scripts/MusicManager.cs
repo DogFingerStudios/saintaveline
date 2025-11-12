@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// This object is attached to a GameObject in the initial scene (e.g. SplashScreen)
+// and then persists across the scenes to manage menu music playback.
 [DefaultExecutionOrder(-100)]
 public class MusicManager : MonoBehaviour
 {
@@ -22,18 +24,18 @@ public class MusicManager : MonoBehaviour
         // AI: Basic singleton guard.
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
             return;
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this.gameObject);
 
         // AI: Ensure there is an AudioSource.
         _source = GetComponent<AudioSource>();
         if (_source == null)
         {
-            _source = gameObject.AddComponent<AudioSource>();
+            _source = this.gameObject.AddComponent<AudioSource>();
         }
 
         // AI: Configure default 2D music behavior.

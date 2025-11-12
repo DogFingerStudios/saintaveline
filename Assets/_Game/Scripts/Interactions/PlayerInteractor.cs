@@ -155,6 +155,10 @@ public class PlayerInteractor : MonoBehaviour
             _playerEntity!.AddItemToInventory(itemEntity);
             BottomTypewriter.Instance.Enqueue("Added item '" + itemEntity.ItemData!.ItemName + "' to inventory.");
         }
+        else if (Input.GetKeyDown(KeyCode.E))
+        {
+            BottomTypewriter.Instance.Enqueue("Calling Object Primary Action.");
+        }
         else if (Input.GetKeyDown(KeyCode.F))
         {
             if (FocusedObject != null)
