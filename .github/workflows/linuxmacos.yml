@@ -23,7 +23,7 @@ jobs:
         if: ${{ env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "💬 Starting macOS and Linux CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
+          args: "💬 Starting ${{ matrix.targetPlatform }} CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
 
       - name: Runnner Initial Setup
         run: |
@@ -97,7 +97,7 @@ jobs:
         if: ${{ failure() && env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "❗️ MacOS build failed for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`"
+          args: "❗️ ${{ matrix.targetPlatform }} build failed for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`"
 
       - name: Archive build artifacts
         shell: powershell
