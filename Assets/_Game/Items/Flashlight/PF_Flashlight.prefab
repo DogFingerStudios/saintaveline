@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33012785063044670}
   - component: {fileID: 23035564008676742}
   - component: {fileID: 95363276851437522}
-  - component: {fileID: -1777271495753801636}
+  - component: {fileID: -6629688867236944898}
   - component: {fileID: -1025476473880076489}
   - component: {fileID: -3028521433733834139}
   m_Layer: 0
@@ -119,7 +119,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &-1777271495753801636
+--- !u!114 &-6629688867236944898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,12 +128,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1002705123656268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e7d0793161171244a430da72f7a6b64, type: 3}
+  m_Script: {fileID: 11500000, guid: 39d55a704ad12464d9936f300884b4cf, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: Assembly-CSharp::FlashlightInteraction
   Health: 100
   MaxHealth: 100
   _itemData: {fileID: 11400000, guid: 73cd966f4715f0e42b6060824859dcec, type: 2}
+  FlashlightLight: {fileID: 108038271100546340}
 --- !u!136 &-1025476473880076489
 CapsuleCollider:
   m_ObjectHideFlags: 0

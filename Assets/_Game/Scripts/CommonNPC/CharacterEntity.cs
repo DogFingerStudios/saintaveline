@@ -153,4 +153,12 @@ public class CharacterEntity : GameEntity
             _equippedItem.Attack();
         }
     }
+
+    public void PrimaryAction()
+    {
+        if (_equippedItem != null)
+        {
+            _equippedItem.PrimaryAction();
+        }
+    }
 }

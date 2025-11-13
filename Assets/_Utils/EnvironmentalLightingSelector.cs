@@ -1,16 +1,17 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public struct EnvironmentalLightingSettings
+[System.Serializable]
+public class EnvironmentalLightingSettings
 {
-    public Material SkyboxMaterial;
+    [SerializeField] public Material SkyboxMaterial;
     public Light SunSource;
     public Color RealtimeShadowColor;
     
     public AmbientMode EnvironmentLightingSource;
-    public Color EnvironmentLightingSkyColor;
-    public Color EnvironmentLightingEquatorColor;
-    public Color EnvironmentLightingGroundColor;
+    [ColorUsage(true, true)] public Color EnvironmentLightingSkyColor;
+    [ColorUsage(true, true)] public Color32 EnvironmentLightingEquatorColor;
+    [ColorUsage(true, true)] public Color32 EnvironmentLightingGroundColor;
 
     public bool FogEnabled;
     public Color FogColor;
@@ -20,22 +21,20 @@ public struct EnvironmentalLightingSettings
     public float FogEndDistance;
 }
 
-// AI: Lives in the scene and holds references you wire in the Inspector.
 [ExecuteAlways]
-public sealed class EnvironmentalLightingSelector : MonoBehaviour
+public class EnvironmentalLightingSelector : MonoBehaviour
 {
     // AI: Assign the controller roots (or individual objects) you want to toggle.
     [SerializeField] public GameObject MatthewsController;
     [SerializeField] public GameObject AddysController;
     [SerializeField] public GameObject PureDarknessController;
 
-    // AI: Optional per-preset skyboxes and ambient settings.
-    [Header("Matthew's Preset")]
+    [Header("Matthew's Day Night Controller Settings")]
     [SerializeField] public EnvironmentalLightingSettings MatthewsSettings;
-
-    [Header("Addy's Preset")]
+    
+    [Header("Addy's Day Night Controller Settings")]
     [SerializeField] public EnvironmentalLightingSettings AddysSettings;
 
-    [Header("Pure Darkness Preset")]
+    [Header("Pure Darkness Settings")]
     [SerializeField] public EnvironmentalLightingSettings PureDarknessSettings;
 }

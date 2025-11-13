@@ -41,7 +41,6 @@ public static class EnvironmentalLightingMenu
     // AI: Apply environment settings and mark scene dirty.
     private static void ApplyEnvironment(EnvironmentalLightingSettings settings)
     {
-        Undo.RecordObject(RenderSettings.skybox, "Change Skybox");
         RenderSettings.skybox = settings.SkyboxMaterial;
 
         RenderSettings.sun = settings.SunSource;

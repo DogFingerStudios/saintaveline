@@ -15,17 +15,17 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.39607844, g: 0.39607844, b: 0.39607844, a: 0}
+  m_FogColor: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.005
   m_LinearFogStart: 0
-  m_LinearFogEnd: 0
-  m_AmbientSkyColor: {r: 0.21176471, g: 0.22745098, b: 0.25882354, a: 0}
-  m_AmbientEquatorColor: {r: 0.11372549, g: 0.1254902, b: 0.13333334, a: 0}
-  m_AmbientGroundColor: {r: 0.047058824, g: 0.043137256, b: 0.03529412, a: 0}
+  m_LinearFogEnd: 300
+  m_AmbientSkyColor: {r: 0.21176471, g: 0.22745098, b: 0.25882354, a: 1}
+  m_AmbientEquatorColor: {r: 0.11372549, g: 0.1254902, b: 0.13333334, a: 1}
+  m_AmbientGroundColor: {r: 0.047058824, g: 0.043137256, b: 0.03529412, a: 1}
   m_AmbientIntensity: 0.68
   m_AmbientMode: 1
-  m_SubtractiveShadowColor: {r: 0.6784314, g: 0.6901961, b: 0.7176471, a: 0}
+  m_SubtractiveShadowColor: {r: 0.6797793, g: 0.69030815, b: 0.7169812, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: e41b0473114de444cb9c91d9471878ec, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -2290,7 +2290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4179098
+      value: 4101438
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2362,7 +2362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 5309565.5
+      value: 5170790
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -12760,25 +12760,7 @@ MonoBehaviour:
   MatthewsSettings:
     SkyboxMaterial: {fileID: 2100000, guid: e41b0473114de444cb9c91d9471878ec, type: 2}
     SunSource: {fileID: 1349327386}
-    RealtimeShadowColor: {r: 0.6784314, g: 0.6901961, b: 0.7176471, a: 0}
-    EnvironmentLightingSource: 1
-    EnvironmentLightingSkyColor: {r: 0.21176471, g: 0.22745098, b: 0.25882354, a: 0}
-    EnvironmentLightingEquatorColor:
-      serializedVersion: 2
-      rgba: 2236445
-    EnvironmentLightingGroundColor:
-      serializedVersion: 2
-      rgba: 592652
-    FogEnabled: 1
-    FogColor: {r: 0.39607844, g: 0.39607844, b: 0.39607844, a: 0}
-    FogMode: 3
-    FogDensity: 0.005
-    FogStartDistance: 0
-    FogEndDistance: 0
-  AddysSettings:
-    SkyboxMaterial: {fileID: 2100000, guid: 9af23ba5fa5364ff598888460e0e2759, type: 2}
-    SunSource: {fileID: 2019195016}
-    RealtimeShadowColor: {r: 0.6320754, g: 0.55157524, b: 0.55157524, a: 0}
+    RealtimeShadowColor: {r: 0, g: 0, b: 0, a: 0}
     EnvironmentLightingSource: 0
     EnvironmentLightingSkyColor: {r: 0, g: 0, b: 0, a: 0}
     EnvironmentLightingEquatorColor:
@@ -12787,9 +12769,27 @@ MonoBehaviour:
     EnvironmentLightingGroundColor:
       serializedVersion: 2
       rgba: 0
-    FogEnabled: 1
-    FogColor: {r: 0.5849056, g: 0.488341, b: 0.488341, a: 0}
-    FogMode: 3
+    FogEnabled: 0
+    FogColor: {r: 0, g: 0, b: 0, a: 0}
+    FogMode: 0
+    FogDensity: 0
+    FogStartDistance: 0
+    FogEndDistance: 0
+  AddysSettings:
+    SkyboxMaterial: {fileID: 0}
+    SunSource: {fileID: 0}
+    RealtimeShadowColor: {r: 0, g: 0, b: 0, a: 0}
+    EnvironmentLightingSource: 0
+    EnvironmentLightingSkyColor: {r: 0, g: 0, b: 0, a: 0}
+    EnvironmentLightingEquatorColor:
+      serializedVersion: 2
+      rgba: 0
+    EnvironmentLightingGroundColor:
+      serializedVersion: 2
+      rgba: 0
+    FogEnabled: 0
+    FogColor: {r: 0, g: 0, b: 0, a: 0}
+    FogMode: 0
     FogDensity: 0
     FogStartDistance: 0
     FogEndDistance: 0
@@ -12797,7 +12797,7 @@ MonoBehaviour:
     SkyboxMaterial: {fileID: 0}
     SunSource: {fileID: 0}
     RealtimeShadowColor: {r: 0, g: 0, b: 0, a: 0}
-    EnvironmentLightingSource: 3
+    EnvironmentLightingSource: 0
     EnvironmentLightingSkyColor: {r: 0, g: 0, b: 0, a: 0}
     EnvironmentLightingEquatorColor:
       serializedVersion: 2
@@ -25463,11 +25463,6 @@ PrefabInstance:
 --- !u!4 &2019195013 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6113188245272004472, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
-  m_PrefabInstance: {fileID: 2019195012}
-  m_PrefabAsset: {fileID: 0}
---- !u!108 &2019195016 stripped
-Light:
-  m_CorrespondingSourceObject: {fileID: 8782791397282730456, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
   m_PrefabInstance: {fileID: 2019195012}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2020857917

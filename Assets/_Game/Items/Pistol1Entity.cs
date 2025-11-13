@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using System.Collections;
 
-public class PistolInteraction : ItemEntity
+public class Pistol1Entity : ItemEntity
 {
     // TODO: improve the way that NPCs "hear" gunshots
     //public static event Action<Vector3> OnGunFired = null!;

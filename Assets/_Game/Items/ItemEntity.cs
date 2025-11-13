@@ -217,6 +217,12 @@ public class ItemEntity : GameEntity, ItemInteractable
         _swingCoroutine = StartCoroutine(AnimateSwing());
     }
 
+    public virtual void PrimaryAction()
+    {
+        // nothing to do
+        Debug.Log("PrimaryAction called on ItemEntity");
+    }
+
     private IEnumerator AnimateSwing()
     {
         OnStartAttack();

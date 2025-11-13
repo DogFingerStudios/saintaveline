@@ -157,7 +157,7 @@ public class PlayerInteractor : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
-            BottomTypewriter.Instance.Enqueue("Calling Object Primary Action.");
+            _playerEntity!.PrimaryAction();
         }
         else if (Input.GetKeyDown(KeyCode.F))
         {
