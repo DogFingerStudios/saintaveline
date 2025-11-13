@@ -5,6 +5,17 @@ public class FlashlightEntity : ItemEntity
 {
     [SerializeField] public Light FlashlightLight;
 
+    private AudioSource _click;
+
+    private void Awake()
+    {
+        _click = this.GetComponent<AudioSource>();
+        if (_click == null)
+        {
+            throw new System.Exception("FlashlightEntity: AudioSource component is missing.");
+        }
+    }
+
     [ItemAction("take_equip")]
     protected override void onTakeEquip()
     {
@@ -13,6 +24,7 @@ public class FlashlightEntity : ItemEntity
 
     public override void PrimaryAction()
     {
+        _click.Play();
         FlashlightLight.enabled = !FlashlightLight.enabled;
     }
 }
