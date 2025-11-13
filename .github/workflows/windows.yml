@@ -17,18 +17,15 @@ jobs:
         if: ${{ env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
         uses: Ilshidur/action-discord@0.3.2
         with:
-          args: "💬 Starting Windows CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
+          args: "💬 Starting ${{ matrix.targetPlatform }} CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
 
   build-windows:
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        build_type: [Release]
         targetPlatform: [StandaloneWindows64]
-    env:
-      BUILD_TYPE: ${{ matrix.build_type }}
-
+        
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
