@@ -111,7 +111,6 @@ jobs:
           args: "❗️ ${{ matrix.targetPlatform }} build failed for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`"
 
       - name: Archive build artifacts
-        shell: powershell
         run: |
           mkdir -p artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
           cp -r build/${{ matrix.targetPlatform }}/* artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/
