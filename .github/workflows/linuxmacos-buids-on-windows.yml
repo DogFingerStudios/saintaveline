@@ -10,6 +10,8 @@ on:
 
 jobs:
   discord-notification:
+    # temporarily disable macos and linux builds
+    if: false 
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -25,6 +27,8 @@ jobs:
           args: "💬 Starting ${{ matrix.targetPlatform }} CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
 
   build:
+    # temporarily disable macos and linux builds
+    if: false
     runs-on: windows-latest
     strategy:
       fail-fast: false
