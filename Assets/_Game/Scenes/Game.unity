@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.005
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
-  m_AmbientEquatorColor: {r: 0, g: 0, b: 0, a: 1}
-  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 1}
+  m_AmbientSkyColor: {r: 0.21176471, g: 0.22745098, b: 0.25882354, a: 1}
+  m_AmbientEquatorColor: {r: 0.11372549, g: 0.1254902, b: 0.13333334, a: 1}
+  m_AmbientGroundColor: {r: 0.047058824, g: 0.043137256, b: 0.03529412, a: 1}
   m_AmbientIntensity: 0.68
   m_AmbientMode: 1
   m_SubtractiveShadowColor: {r: 0.6797793, g: 0.69030815, b: 0.7169812, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 9af23ba5fa5364ff598888460e0e2759, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e41b0473114de444cb9c91d9471878ec, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 0
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 2019195016}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2290,7 +2290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3924932
+      value: 4015649
       objectReference: {fileID: 0}
     - target: {fileID: 5906806815940352113, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2362,7 +2362,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 4786446
+      value: 4981661.5
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2730,6 +2730,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0cd51b3be73a99b49ba521ea7b6f6055, type: 3}
+--- !u!1 &201050257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 874608226485040222, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
+  m_PrefabInstance: {fileID: 547399}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &215170209
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10495,6 +10500,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36f3c19a7597eb94987d9f341e3010eb, type: 3}
+--- !u!1 &863945035 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 874608226485040222, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
+  m_PrefabInstance: {fileID: 2019195012}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &872085769 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100006, guid: 39799cf03cd78bd4b96ed2f556aa8af9, type: 3}
@@ -12706,6 +12716,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1034024232}
+  - component: {fileID: 1034024233}
   m_Layer: 0
   m_Name: DayNightCycles
   m_TagString: Untagged
@@ -12731,6 +12742,33 @@ Transform:
   - {fileID: 1240553900}
   m_Father: {fileID: 1949006990}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1034024233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034024231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e74155a6193ad34fb27fc0ba23b22ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnvironmentalLightingSelector
+  _matthewsController: {fileID: 1368792807}
+  _addysController: {fileID: 863945035}
+  _pureDarknessController: {fileID: 201050257}
+  _matthewsSkybox: {fileID: 0}
+  _matthewsAmbientMode: 0
+  _matthewsAmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
+  _matthewsAmbientIntensity: 1
+  _addysSkybox: {fileID: 0}
+  _addysAmbientMode: 0
+  _addysAmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
+  _addysAmbientIntensity: 1
+  _pureDarknessSkybox: {fileID: 0}
+  _pureDarknessAmbientMode: 3
+  _pureDarknessAmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
+  _pureDarknessAmbientIntensity: 0
 --- !u!4 &1038229290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f3f099a1e77db0f43b8f3e7fe072979b, type: 3}
@@ -17456,6 +17494,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 0880d9ac631f24f409114af2781b3480, type: 3}
   m_PrefabInstance: {fileID: 1366106549}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1368792807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7098470662580613713, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
+  m_PrefabInstance: {fileID: 4443733641537643473}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1374553587
 GameObject:
@@ -25373,6 +25416,11 @@ PrefabInstance:
 --- !u!4 &2019195013 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6113188245272004472, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
+  m_PrefabInstance: {fileID: 2019195012}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &2019195016 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 8782791397282730456, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
   m_PrefabInstance: {fileID: 2019195012}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2020857917

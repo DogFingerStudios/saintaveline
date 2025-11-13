@@ -17,7 +17,6 @@ public class MusicManager : MonoBehaviour
     // AI: Backing fields (private variables use leading underscore per your rule).
     private AudioSource _source;
     private Coroutine _fadeRoutine;
-    private bool _isInGameplay;
 
     private void Awake()
     {
@@ -68,7 +67,6 @@ public class MusicManager : MonoBehaviour
         }
         else
         {
-            _isInGameplay = true;
             StopImmediately();
         }
     }
@@ -79,13 +77,10 @@ public class MusicManager : MonoBehaviour
 
         if (isGameplay)
         {
-            _isInGameplay = true;
             FadeOutAndStop();
         }
         else
         {
-            _isInGameplay = false;
-
             if (_autoResumeOnMenus)
             {
                 if (_menuMusic != null)

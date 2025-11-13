@@ -39,26 +39,24 @@ public static class EnvironmentalLightingMenu
     }
 
     // AI: Apply environment settings and mark scene dirty.
-    private static void ApplyEnvironment(Material skybox, AmbientMode ambientMode, Color ambientSkyColor, float ambientIntensity)
+    private static void ApplyEnvironment(EnvironmentalLightingSettings settings)
     {
         Undo.RecordObject(RenderSettings.skybox, "Change Skybox");
-        RenderSettings.skybox = skybox;
+        RenderSettings.skybox = settings.SkyboxMaterial;
 
-        RenderSettings.ambientMode = ambientMode;
-        RenderSettings.ambientSkyColor = ambientSkyColor;
-        RenderSettings.ambientIntensity = ambientIntensity;
+        RenderSettings.sun = settings.SunSource;
+        RenderSettings.subtractiveShadowColor = settings.RealtimeShadowColor;
+        RenderSettings.ambientMode = settings.EnvironmentLightingSource;
+        RenderSettings.ambientSkyColor = settings.EnvironmentLightingSkyColor;
+        RenderSettings.ambientEquatorColor = settings.EnvironmentLightingEquatorColor;
+        RenderSettings.ambientGroundColor = settings.EnvironmentLightingGroundColor;
 
-        if (ambientIntensity <= 0.01f)
-        {
-            RenderSettings.defaultReflectionMode = DefaultReflectionMode.Custom;
-            RenderSettings.customReflection = null;
-            RenderSettings.reflectionIntensity = 0.0f;
-        }
-        else
-        {
-            RenderSettings.defaultReflectionMode = DefaultReflectionMode.Skybox;
-            RenderSettings.reflectionIntensity = 1.0f;
-        }
+        RenderSettings.fog = settings.FogEnabled;
+        RenderSettings.fogColor = settings.FogColor;
+        RenderSettings.fogMode = settings.FogMode;
+        RenderSettings.fogDensity = settings.FogDensity;
+        RenderSettings.fogStartDistance = settings.FogStartDistance;
+        RenderSettings.fogEndDistance = settings.FogEndDistance;
 
         var scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
         if (scene.IsValid())
@@ -97,7 +95,7 @@ public static class EnvironmentalLightingMenu
         }
 
         ActivateOnly(b.MatthewsController, b.AddysController, b.PureDarknessController);
-        //ApplyEnvironment(b.MatthewsSkybox, b.MatthewsAmbientMode, b.MatthewsAmbientSkyColor, b.MatthewsAmbientIntensity);
+        ApplyEnvironment(b.MatthewsSettings);
     }
 
     [MenuItem("Tools/Environmental Lighting/Addy's Simple Day Night Controller")]
@@ -111,7 +109,7 @@ public static class EnvironmentalLightingMenu
         }
 
         ActivateOnly(b.AddysController, b.MatthewsController, b.PureDarknessController);
-        //ApplyEnvironment(b.AddysSkybox, b.AddysAmbientMode, b.AddysAmbientSkyColor, b.AddysAmbientIntensity);
+        ApplyEnvironment(b.AddysSettings);
     }
 
     [MenuItem("Tools/Environmental Lighting/Pure Darkness")]
@@ -125,6 +123,6 @@ public static class EnvironmentalLightingMenu
         }
 
         ActivateOnly(b.PureDarknessController, b.MatthewsController, b.AddysController);
-        //ApplyEnvironment(b.PureDarknessSkybox, b.PureDarknessAmbientMode, b.PureDarknessAmbientSkyColor, b.PureDarknessAmbientIntensity);
+        ApplyEnvironment(b.PureDarknessSettings);
     }
 }
