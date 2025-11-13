@@ -33,6 +33,7 @@ jobs:
 
     steps:
       - name: Runnner Initial Setup
+        shell: bash
         run: |
           if [[ ${{ matrix.targetPlatform }} == 'StandaloneOSX' ]]; then
               echo "OSNAME=macos" >> "$GITHUB_ENV"
