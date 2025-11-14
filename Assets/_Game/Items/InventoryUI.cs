@@ -168,6 +168,7 @@ public class InventoryUI : MonoBehaviour
         SetButtonsState();
     }
 
+    // this button will turn into "Unequip" if the selected item is the currently equipped item
     private void OnEquipButtonClicked()
     {
         if (_selectedCount != 1) return;
@@ -187,7 +188,7 @@ public class InventoryUI : MonoBehaviour
                     }
                     else
                     {
-                        _owner.SetEquippedItem(tag.ItemEntity);
+                        _owner.SetEquippedItem(tag.ItemEntity, autoUnequip: true);
                         msg = $"Item '{tag.ItemEntity.ItemData!.ItemName}' equipped.";
                     }
 

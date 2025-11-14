@@ -86,7 +86,7 @@ public class CharacterEntity : GameEntity
         _inventory.Remove(item);
     }
 
-    public ItemEntity? SetEquippedItem(ItemEntity item)
+    public ItemEntity? SetEquippedItem(ItemEntity item, bool autoUnequip = false)
     {
         if (item.ItemData == null)
         {
@@ -95,9 +95,15 @@ public class CharacterEntity : GameEntity
 
         if (_equippedItem != null)
         {
-            // TODO: auto store an equip item, and if the item is not 
-            // storable, then show a message to the player.
-            throw new System.NotImplementedException("EquippedItem: Unequipping an item when one is already equipped is not implemented.");
+            if (autoUnequip)
+            {
+                _equippedItem.OnUnEquipped();
+                this.AddItemToInventory(_equippedItem);
+            }
+            else
+            {
+                throw new System.Exception($"EquippedItem: Character '{name}' already has an equipped item '{_equippedItem.name}'.");
+            }
         }
 
         _equippedItem = item;
