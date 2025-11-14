@@ -90,13 +90,13 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           versioning: Semantic
-          buildName: ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
+          buildName: ${{ github.event.repository.name }}-${{ github.sha }}
 
       - name: Change Permissions (Mac Only)
         if: ${{ matrix.targetPlatform == 'StandaloneOSX' }}
         run: |
           ls -alR build
-          sudo chmod +x build/${{ matrix.targetPlatform }}/StandaloneOSX.app/Contents/MacOS/*
+          sudo chmod +x build/${{ matrix.targetPlatform }}/${{ github.event.repository.name }}-${{ github.sha }}.app/Contents/MacOS/*
           
       - name: Archive build artifacts
         run: |
