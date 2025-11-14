@@ -108,16 +108,10 @@ public class InventoryUI : MonoBehaviour
             GameObject newItem = Instantiate(_itemPrefab, _contentPanel);
             newItem.SetActive(true);
 
-            TextMeshProUGUI text = newItem.transform.Find("ItemName")?.GetComponent<TextMeshProUGUI>();
-            if (text != null)
+            var itemName = newItem.transform.Find("ItemName");            
+            if (itemName != null && itemName.TryGetComponent<TextMeshProUGUI>(out var itemNameText))
             {
-                text.text = item.ItemData.ItemName;
-            }
-
-            TextMeshProUGUI text2 = newItem.transform.Find("ShortcutText")?.GetComponent<TextMeshProUGUI>();
-            if (text2 != null)
-            {
-                text2.text = (_itemObjects.Count + 1).ToString();
+                itemNameText.text = item.ItemData.ItemName;
             }
 
             InventoryItemHelper helper = newItem.GetComponentInChildren<InventoryItemHelper>();
@@ -129,6 +123,7 @@ public class InventoryUI : MonoBehaviour
                 }
                 
                 helper.ItemEntity = item;
+                helper.ShortcutText.text = (_itemObjects.Count + 1).ToString();
             }
 
             Toggle itemToggle = newItem.GetComponentInChildren<Toggle>();
