@@ -48,6 +48,11 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        SetInputState(InputState.Gameplay);
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.I)
