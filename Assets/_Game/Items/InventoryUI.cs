@@ -108,10 +108,16 @@ public class InventoryUI : MonoBehaviour
             GameObject newItem = Instantiate(_itemPrefab, _contentPanel);
             newItem.SetActive(true);
 
-            TextMeshProUGUI text = newItem.GetComponentInChildren<TextMeshProUGUI>();
+            TextMeshProUGUI text = newItem.transform.Find("ItemName")?.GetComponent<TextMeshProUGUI>();
             if (text != null)
             {
                 text.text = item.ItemData.ItemName;
+            }
+
+            TextMeshProUGUI text2 = newItem.transform.Find("ShortcutText")?.GetComponent<TextMeshProUGUI>();
+            if (text2 != null)
+            {
+                text2.text = "X";
             }
 
             InventoryItemHelper helper = newItem.GetComponentInChildren<InventoryItemHelper>();
