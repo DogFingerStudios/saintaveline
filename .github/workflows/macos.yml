@@ -95,6 +95,7 @@ jobs:
       - name: Change Permissions (Mac Only)
         if: ${{ matrix.targetPlatform == 'StandaloneOSX' }}
         run: |
+          ls -alR build
           sudo chmod +x build/${{ matrix.targetPlatform }}/StandaloneOSX.app/Contents/MacOS/*
           
       - name: Archive build artifacts
