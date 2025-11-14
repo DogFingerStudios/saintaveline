@@ -117,7 +117,7 @@ public class InventoryUI : MonoBehaviour
             TextMeshProUGUI text2 = newItem.transform.Find("ShortcutText")?.GetComponent<TextMeshProUGUI>();
             if (text2 != null)
             {
-                text2.text = "X";
+                text2.text = (_itemObjects.Count + 1).ToString();
             }
 
             InventoryItemHelper helper = newItem.GetComponentInChildren<InventoryItemHelper>();
