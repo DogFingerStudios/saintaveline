@@ -1,0 +1,135 @@
+name: linux build
+
+on:
+  push:
+    branches:
+      - dev/action1
+    paths:
+      - .github/workflows/macos.yml
+      - Assets/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        targetPlatform: [StandaloneLinux64]
+
+    steps:
+      - name: Discord Workflow Start Notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: ${{ env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "💬 Starting ${{ matrix.targetPlatform }} CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
+
+      - name: Runnner Initial Setup
+        run: |
+          if [[ ${{ matrix.targetPlatform }} == 'StandaloneOSX' ]]; then
+              echo "OSNAME=macos" >> "$GITHUB_ENV"
+          else
+              echo "OSNAME=linux" >> "$GITHUB_ENV"
+          fi
+
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create LFS file list
+        run: git lfs ls-files -l | cut -d' ' -f1 | sort > .lfs-assets-id
+
+      - name: Restore LFS cache
+        uses: actions/cache@v3
+        id: lfs-cache
+        with:
+          path: .git/lfs
+          key: ${{ runner.os }}-lfs-${{ hashFiles('.lfs-assets-id') }}
+
+      - name: Git LFS Pull
+        run: |
+          git lfs pull
+          git add .
+          git reset --hard
+
+      - name: Unity Cache
+        uses: actions/cache@v3
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-
+
+      - name: Free up disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"          
+
+      - name: Build Unity Project
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: ${{ matrix.targetPlatform }}
+          versioning: Semantic
+          buildName: ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
+
+      # - name: Change Permissions (Mac Only)
+      #   if: ${{ matrix.targetPlatform == 'StandaloneOSX' }}
+      #   run: |
+      #     sudo chmod +x build/${{ matrix.targetPlatform }}/StandaloneOSX.app/Contents/MacOS/*
+
+      # - name: Discord Build Notification
+      #   env:
+      #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      #   if: ${{ env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
+      #   uses: Ilshidur/action-discord@0.3.2
+      #   with:
+      #     args: "✅ Successfully built `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}` for WebGL, deploying..."
+
+      - name: Discord Build Failure Notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        if: ${{ failure() && env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
+        uses: Ilshidur/action-discord@0.3.2
+        with:
+          args: "❗️ ${{ matrix.targetPlatform }} build failed for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`"
+
+      - name: Archive build artifacts
+        run: |
+          mkdir -p artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
+          cp -r build/${{ matrix.targetPlatform }}/* artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/
+          cd artifacts
+          zip -r ../${{ env.OSNAME }}-build.zip ${{ github.event.repository.name }}-${{ steps.version.outputs.version }}/*
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.OSNAME }}-build-${{ github.sha }}
+          path: ${{ env.OSNAME }}-build.zip
+
+      # - name: 📂 FTP Installer
+      #   uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      #   if: "env.BUILD_TYPE == 'Release' && github.ref == 'refs/heads/master'"
+      #   with:
+      #     server: ${{ secrets.FTP_SERVER }}
+      #     username: ${{ secrets.FTP_USERNAME }}
+      #     password: ${{ secrets.FTP_PASSWORD }}
+      #     server-dir: /public_html/downloads/
+      #     local-dir: ${{github.workspace}}/build/stage/
+      #     exclude: saintaveline-*.zip
