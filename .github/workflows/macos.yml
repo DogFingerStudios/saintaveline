@@ -104,23 +104,7 @@ jobs:
         if: ${{ matrix.targetPlatform == 'StandaloneOSX' }}
         run: |
           sudo chmod +x build/${{ matrix.targetPlatform }}/StandaloneOSX.app/Contents/MacOS/*
-
-      # - name: Discord Build Notification
-      #   env:
-      #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-      #   if: ${{ env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
-      #   uses: Ilshidur/action-discord@0.3.2
-      #   with:
-      #     args: "✅ Successfully built `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}` for WebGL, deploying..."
-
-      - name: Discord Build Failure Notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        if: ${{ failure() && env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
-        uses: Ilshidur/action-discord@0.3.2
-        with:
-          args: "❗️ ${{ matrix.targetPlatform }} build failed for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`"
-
+          
       - name: Archive build artifacts
         run: |
           mkdir -p artifacts/${{ github.event.repository.name }}-${{ steps.version.outputs.version }}
