@@ -167,4 +167,21 @@ public class CharacterEntity : GameEntity
             _equippedItem.PrimaryAction();
         }
     }
+
+    public void EquipItem(int slot)
+    {
+        if (slot < 0)
+        {
+            throw new System.Exception($"EquipItem: Slot {slot} is out of range for character '{name}' inventory.");
+        }
+
+        if (slot >= _inventory.Count)
+        {
+            // slow it empty. ignore
+            return;
+        }
+
+        var item = _inventory[slot];
+        SetEquippedItem(item, autoUnequip: true);
+    }
 }
