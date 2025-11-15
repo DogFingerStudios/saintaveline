@@ -1,9 +1,11 @@
 #nullable enable
 
-using NUnit.Framework.Interfaces;
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+using Assert = UnityEngine.Assertions.Assert;
 
 
 // This class is attached to all characters (players, NPCs, etc.). For the player
@@ -20,9 +22,19 @@ public class CharacterEntity : GameEntity
     [SerializeField] private GameObject? _initialEquippedItem = null;
 
     public UInt16 MaxInventorySize = 10;
+    //private ItemEntity? _equippedItem = null;
+    //public ItemEntity? EquippedItem { get => _equippedItem; }
 
-    private ItemEntity? _equippedItem = null;
-    public ItemEntity? EquippedItem { get => _equippedItem; }
+    [SerializeField] private int? _equippedItemIndex = null; // the item the player is carrying
+    [SerializeField] private ItemEntity? EquippdItem2
+    {
+        get
+        {
+            if (_equippedItemIndex == null) return null;
+            if (_equippedItemIndex < 0 || _equippedItemIndex >= _inventory.Count) return null;
+            return _inventory[(int)_equippedItemIndex];
+        }
+    }
 
     public virtual void Awake()
     {
@@ -34,11 +46,17 @@ public class CharacterEntity : GameEntity
             this.AddItemToInventory(item);
         }
 
-        if (_initialEquippedItem != null)
+        //if (_initialEquippedItem != null)
+        //{
+        //    GameObject newItem = Instantiate(_initialEquippedItem);
+        //    var item = newItem.GetComponent<ItemEntity>();
+        //    item.Initialize();
+        //    this.SetEquippedItem(item);
+        //}
+
+        if (_equippedItemIndex != null)
         {
-            GameObject newItem = Instantiate(_initialEquippedItem);
-            var item = newItem.GetComponent<ItemEntity>();
-            item.Initialize();
+            var item = _inventory[(int)_equippedItemIndex];
             this.SetEquippedItem(item);
         }
     }
@@ -59,20 +77,25 @@ public class CharacterEntity : GameEntity
         return Health;
     }
 
+    // TODO: maybe `AddItemToInventory`'s usage in general needs to be refactored
     public void AddItemToInventory(ItemEntity item)
     {
         if (_inventory.Contains(item)) return;
         if (_inventory.Count >= MaxInventorySize)
         {
-            BottomTypewriter.Instance.Enqueue("Inventory is full!");
+            BottomTypewriter.Instance.EnqueueWarning("Inventory is full!");
             return;
         }
 
-        if (item == _equippedItem)
-        {
-            item.OnUnEquipped();
-            _equippedItem = null;
-        }
+        //Assert.IsTrue(_equippedItemIndex == null 
+        //    || (_equippedItemIndex >= 0 && _equippedItemIndex < _inventory.Count));
+
+        //if (_equippedItemIndex != null 
+        //    && _inventory[_equippedItemIndex.Value] == item)
+        //{
+        //    // this is the equipped item being added back to inventory
+        //    _inventory[_equippedItemIndex.Value].OnUnEquipped();
+        //}
 
         item.OnRemovePhysics();
         item.OnPickedUp(EquippedItemPos);
