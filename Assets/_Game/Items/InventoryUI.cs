@@ -101,7 +101,7 @@ public class InventoryUI : MonoBehaviour
 
         _owner = entity;
 
-        foreach (ItemEntity? item in entity.Inventory.Prepend(_owner!.EquippedItem))
+        foreach (ItemEntity? item in entity.Inventory)
         {
             if (item == null || item.ItemData == null) continue;
 
@@ -140,7 +140,7 @@ public class InventoryUI : MonoBehaviour
                 button.onClick.AddListener(() => OnItemClicked(newItem, item.ItemData.ItemName));
             }
 
-            if (item == _owner.EquippedItem)
+            if (item == _owner.EquippedItem2)
             {
                 var image = newItem.GetComponentInChildren<Image>();
                 if (image != null)
@@ -332,7 +332,7 @@ public class InventoryUI : MonoBehaviour
             if (itemToggle != null && itemToggle.isOn)
             {
                 var tag = itemobj.GetComponent<InventoryItemHelper>();
-                if (tag != null && tag.ItemEntity == _owner!.EquippedItem)
+                if (tag != null && tag.ItemEntity == _owner!.EquippedItem2)
                 {
                     return true;
                 }

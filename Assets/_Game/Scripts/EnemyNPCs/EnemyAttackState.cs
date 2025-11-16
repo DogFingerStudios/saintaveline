@@ -105,7 +105,7 @@ public class EnemyAttackState : NPCState
 
         if (Time.time >= nextFireTime)
         {
-            this.NPC!.EquippedItem?.Attack();
+            this.NPC!.EquippedItem2?.Attack();
             //Shoot();
             // get a random time between 0.5 and 1.5 seconds
             float randomTime = UnityEngine.Random.Range(0.5f, 1.5f);
