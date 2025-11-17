@@ -44,6 +44,7 @@ public sealed class BottomTypewriter : MonoBehaviour
 
     private readonly Queue<MessageEntry> _queue = new Queue<MessageEntry>();
     private Coroutine _runner;
+    private TextDisplayer _textDisplayer;
     private bool _isVisible;
     private bool _isTyping;
     private bool _wasEscPressedOnceDuringCurrentMessage;
@@ -59,6 +60,7 @@ public sealed class BottomTypewriter : MonoBehaviour
         }
 
         Instance = this;
+        _textDisplayer = new TextDisplayer();
 
         if (_canvasGroup == null)
         {
@@ -75,7 +77,7 @@ public sealed class BottomTypewriter : MonoBehaviour
         }
 
         // Start hidden and clamped
-        _canvasGroup.alpha = 0f;
+        _text.alpha = 0f;
         _canvasGroup.blocksRaycasts = false;
         _canvasGroup.interactable = false;
         if (_text != null)
@@ -141,7 +143,7 @@ public sealed class BottomTypewriter : MonoBehaviour
             _text.maxVisibleCharacters = 0;
             _text.text = string.Empty;
         }
-        StartCoroutine(FadeTo(0f, _fadeSeconds));
+        StartCoroutine(_textDisplayer.FadeTo(0f, _fadeSeconds, _text, _useUnscaledTime));
         _isVisible = false;
     }
 
@@ -194,7 +196,7 @@ public sealed class BottomTypewriter : MonoBehaviour
 
             if (!_isVisible)
             {
-                yield return FadeTo(1f, _fadeSeconds);
+                yield return _textDisplayer.FadeTo(1f, _fadeSeconds, _text, _useUnscaledTime);
                 _isVisible = true;
             }
 
@@ -204,7 +206,7 @@ public sealed class BottomTypewriter : MonoBehaviour
             float t = 0f;
             while (t < hold)
             {
-                t += DeltaTime();
+                t += _textDisplayer.DeltaTime(_useUnscaledTime);
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     DismissAll();
@@ -214,7 +216,7 @@ public sealed class BottomTypewriter : MonoBehaviour
             }
         }
 
-        yield return FadeTo(0f, _fadeSeconds);
+        yield return _textDisplayer.FadeTo(0f, _fadeSeconds, _text, _useUnscaledTime);
         _isVisible = false;
         _runner = null;
     }
@@ -277,7 +279,7 @@ public sealed class BottomTypewriter : MonoBehaviour
                     }
                 }
 
-                t += DeltaTime();
+                t += _textDisplayer.DeltaTime(_useUnscaledTime);
                 yield return null;
             }
         }
@@ -287,31 +289,5 @@ public sealed class BottomTypewriter : MonoBehaviour
         {
             _onMessageShown.Invoke(_text.text);
         }
-    }
-
-    private IEnumerator FadeTo(float target, float seconds)
-    {
-        if (seconds <= 0f)
-        {
-            _canvasGroup.alpha = target;
-            yield break;
-        }
-
-        float start = _canvasGroup.alpha;
-        float t = 0f;
-
-        while (t < seconds)
-        {
-            t += DeltaTime();
-            _canvasGroup.alpha = Mathf.Lerp(start, target, t / seconds);
-            yield return null;
-        }
-
-        _canvasGroup.alpha = target;
-    }
-
-    private float DeltaTime()
-    {
-        return _useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
     }
 }
