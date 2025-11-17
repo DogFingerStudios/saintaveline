@@ -7,7 +7,9 @@ using Image = UnityEngine.UI.Image;
 public class InventoryItemHelper : MonoBehaviour
 {
     public Image? Thumbnail = null;
-    public TextMeshProUGUI ShortcutText = null;
+    public TextMeshProUGUI ShortcutText = null!;
+    public TextMeshProUGUI ItemName = null!;
+    public GameObject ShortcutObj = null!;
 
     private ItemEntity? _itemEntity = null;
     public ItemEntity? ItemEntity { get => _itemEntity; set => _itemEntity = value; }

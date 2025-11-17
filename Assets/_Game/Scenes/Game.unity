@@ -19,7 +19,7 @@ RenderSettings:
   m_FogMode: 0
   m_FogDensity: 0
   m_LinearFogStart: 0
-  m_LinearFogEnd: 0.01
+  m_LinearFogEnd: 0
   m_AmbientSkyColor: {r: 0.9716981, g: 0.5729352, b: 0.5729352, a: 0}
   m_AmbientEquatorColor: {r: 0.90588236, g: 0.8156863, b: 0.8156863, a: 0}
   m_AmbientGroundColor: {r: 0.7372549, g: 0.5294118, b: 0.5294118, a: 0}
@@ -2295,7 +2295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 526174
+      value: 63866
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -2371,7 +2371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 717211.06
+      value: 116203.62
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -13725,6 +13725,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5616181022774733529, guid: f684cfd6225530b4a9c2b46b271093bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5701634503056946229, guid: f684cfd6225530b4a9c2b46b271093bd, type: 3}
       propertyPath: m_Size
       value: 0.60546875
@@ -20083,7 +20087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.95, y: 0.5}
-  m_AnchoredPosition: {x: -495.03918, y: 2.260376}
+  m_AnchoredPosition: {x: -495.03918, y: 2.2604065}
   m_SizeDelta: {x: 230.8276, y: 95.4791}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!4 &1589037724 stripped
@@ -21972,7 +21976,6 @@ MonoBehaviour:
   - {fileID: 1002705123656268, guid: d86ca2f4159e6a942abd8dfc52b38395, type: 3}
   - {fileID: 3535473601529558972, guid: 9c993bdd1f0fb3e4da5b61dabec5fbb3, type: 3}
   _initialEquippedItem: {fileID: 0}
-  MaxInventorySize: 10
   _audioSource: {fileID: 0}
   _entityProfile:
     _personality:

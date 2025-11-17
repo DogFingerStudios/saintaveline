@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+
 using Button = UnityEngine.UI.Button;
 using Image = UnityEngine.UI.Image;
 using Toggle = UnityEngine.UI.Toggle;
+using Assert = UnityEngine.Assertions.Assert;
+using UnityEditor;
 
 // This script is attached to the Inventory UI dialog prefab. 
 public class InventoryUI : MonoBehaviour
@@ -22,6 +25,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Canvas _inventoryDlg;
     [SerializeField] private Transform _contentPanel;   // Reference to the Content object in ScrollView
     [SerializeField] private GameObject _itemPrefab;    // Reference to the item UI template (e.g., Button)
+    [SerializeField] private Color _emptySlotColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
 
     private List<GameObject> _itemObjects = new List<GameObject>(); // Track instantiated items
 
@@ -103,53 +107,61 @@ public class InventoryUI : MonoBehaviour
 
         foreach (ItemEntity? item in entity.Inventory)
         {
-            if (item == null || item.ItemData == null) continue;
-
             GameObject newItem = Instantiate(_itemPrefab, _contentPanel);
             newItem.SetActive(true);
 
-            var itemName = newItem.transform.Find("ItemName");            
-            if (itemName != null && itemName.TryGetComponent<TextMeshProUGUI>(out var itemNameText))
-            {
-                itemNameText.text = item.ItemData.ItemName;
-            }
-
             InventoryItemHelper helper = newItem.GetComponentInChildren<InventoryItemHelper>();
-            if (helper != null && helper.Thumbnail != null)
+            Assert.IsNotNull(helper, "InventoryUI.ShowInventory: InventoryItemHelper component not found on item prefab");
+            
+            if (item == null || item.ItemData == null)
             {
-                if (item.ItemData.Thumbnail != null)
+                helper.ItemName.color = _emptySlotColor; 
+                helper.ShortcutObj.SetActive(false);  
+            }
+            else
+            { 
+                if (helper.ItemName != null)
                 {
-                    helper.Thumbnail.sprite = item.ItemData.Thumbnail;
+                    helper.ItemName.text = item.ItemData.ItemName;
                 }
-                
-                helper.ItemEntity = item;
-                helper.ShortcutText.text = (_itemObjects.Count + 1).ToString();
-            }
 
-            Toggle itemToggle = newItem.GetComponentInChildren<Toggle>();
-            if (itemToggle != null)
-            {
-                itemToggle.isOn = false;
-                itemToggle.onValueChanged.AddListener(isOn
-                    => OnToggleClicked(item.ItemData.ItemName, isOn));
-            }
-
-            Button button = newItem.GetComponent<Button>();
-            if (button != null)
-            {
-                button.onClick.AddListener(() => OnItemClicked(newItem, item.ItemData.ItemName));
-            }
-
-            if (item == _owner.EquippedItem2)
-            {
-                var image = newItem.GetComponentInChildren<Image>();
-                if (image != null)
+                if (helper.Thumbnail != null)
                 {
-                    image.color = new Color(0.8f, 0.8f, 1.0f, 1.0f);
+                    if (item.ItemData.Thumbnail != null)
+                    {
+                        helper.Thumbnail.sprite = item.ItemData.Thumbnail;
+                    }
+                    
+                    helper.ItemEntity = item;
+                    helper.ShortcutText.text = (_itemObjects.Count + 1).ToString();
                 }
-            }
 
-            _itemObjects.Add(newItem);
+                Toggle itemToggle = newItem.GetComponentInChildren<Toggle>();
+                if (itemToggle != null)
+                {
+                    itemToggle.isOn = false;
+                    itemToggle.onValueChanged.AddListener(isOn
+                        => OnToggleClicked(item.ItemData.ItemName, isOn));
+                }
+
+                Button button = newItem.GetComponent<Button>();
+                if (button != null)
+                {
+                    button.onClick.AddListener(() => OnItemClicked(newItem, item.ItemData.ItemName));
+                }
+
+                // decorate the item if this is the currently equipped item
+                if (item == _owner.EquippedItem2)
+                {
+                    var image = newItem.GetComponentInChildren<Image>();
+                    if (image != null)
+                    {
+                        image.color = new Color(0.8f, 0.8f, 1.0f, 1.0f);
+                    }
+                }
+
+                _itemObjects.Add(newItem);
+            }
         }
 
         _selectedCount = 0;

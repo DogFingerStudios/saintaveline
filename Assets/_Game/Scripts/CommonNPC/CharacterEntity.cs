@@ -110,7 +110,10 @@ public class CharacterEntity : GameEntity
 
             if (autoUnequip)
             {
-                equippedItem!.OnUnEquipped();
+                equippedItem!.OnRemovePhysics();
+                equippedItem!.OnPickedUp(EquippedItemPos); // set the item's position to the character's equipped item pos
+                equippedItem!.gameObject.SetActive(false);
+                equippedItem!.OnUnEquipped(); 
             }
             else
             {
@@ -208,11 +211,31 @@ public class CharacterEntity : GameEntity
         _inventory[(int)_equippedItemIndex]!.PrimaryAction();  
     }
 
-    public void EquipItem(int slot)
+    // will equip the item in the specified slot, 
+    // or unequip if already equipped
+    public void ToggleEquippedItem(int slot)
     {
         if (slot < 0 || slot >= MaxInventorySize)
         {
-            throw new System.Exception($"EquipItem: Slot {slot} is out of range for character '{name}' inventory.");
+            throw new System.Exception($"ToggleEquippedItem: Slot {slot} is out of range for character '{name}' inventory.");
+        }
+
+        if (_equippedItemIndex != null && _equippedItemIndex == slot)
+        {
+            
+            var equippedItem = _inventory[slot];
+            Assert.IsNotNull(equippedItem,
+                $"ToggleEquippedItem: Equipped item at slot {slot} is null for character '{name}'.");
+
+            // TODO: this unequip logic is duplicated in a few places,
+            // should refactor into its own method
+            equippedItem!.OnRemovePhysics();
+            equippedItem!.OnPickedUp(EquippedItemPos); // set the item's position to the character's equipped item pos
+            equippedItem!.gameObject.SetActive(false);
+            equippedItem!.OnUnEquipped(); 
+
+            _equippedItemIndex = null;
+            return;
         }
 
         var item = _inventory[slot];

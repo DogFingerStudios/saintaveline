@@ -199,43 +199,43 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            _playerEntity!.EquipItem(0);
+            _playerEntity!.ToggleEquippedItem(0);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            _playerEntity!.EquipItem(1);
+            _playerEntity!.ToggleEquippedItem(1);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            _playerEntity!.EquipItem(2);
+            _playerEntity!.ToggleEquippedItem(2);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            _playerEntity!.EquipItem(3);
+            _playerEntity!.ToggleEquippedItem(3);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha5))
         {
-            _playerEntity!.EquipItem(4);
+            _playerEntity!.ToggleEquippedItem(4);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            _playerEntity!.EquipItem(5);
+            _playerEntity!.ToggleEquippedItem(5);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            _playerEntity!.EquipItem(6);
+            _playerEntity!.ToggleEquippedItem(6);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            _playerEntity!.EquipItem(7);
+            _playerEntity!.ToggleEquippedItem(7);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            _playerEntity!.EquipItem(8);
+            _playerEntity!.ToggleEquippedItem(8);
         }
         else if (Input.GetKeyDown(KeyCode.Alpha0))
         {
-            _playerEntity!.EquipItem(9);
+            _playerEntity!.ToggleEquippedItem(9);
         }
     }
 }
