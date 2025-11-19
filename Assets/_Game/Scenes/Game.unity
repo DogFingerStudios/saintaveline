@@ -1449,6 +1449,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 28d375a433cc78c4fa3db00df795f14d, type: 3}
   m_PrefabInstance: {fileID: 1426184433}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &95267202 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 859c228a1a8fbe4439ce250eabda57aa, type: 3}
+  m_PrefabInstance: {fileID: 301159321}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &96491399
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,7 +2295,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 438086
+      value: 526174
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -2366,7 +2371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 600646.9
+      value: 717211.06
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3395,23 +3400,31 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1231386068}
     m_Modifications:
     - target: {fileID: 100000, guid: 859c228a1a8fbe4439ce250eabda57aa, type: 3}
       propertyPath: m_Name
       value: ParkLamp
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 859c228a1a8fbe4439ce250eabda57aa, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.4999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 859c228a1a8fbe4439ce250eabda57aa, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.4999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 859c228a1a8fbe4439ce250eabda57aa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 474.53384
+      value: -570.4662
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 859c228a1a8fbe4439ce250eabda57aa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.4385662
+      value: 623.1663
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 859c228a1a8fbe4439ce250eabda57aa, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 151.4488
+      value: -361.5512
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 859c228a1a8fbe4439ce250eabda57aa, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3423,7 +3436,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 859c228a1a8fbe4439ce250eabda57aa, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 859c228a1a8fbe4439ce250eabda57aa, type: 3}
       propertyPath: m_LocalRotation.z
@@ -15837,6 +15850,7 @@ Transform:
   - {fileID: 1229615831}
   - {fileID: 1101761723}
   - {fileID: 433568707}
+  - {fileID: 95267202}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1240184641
@@ -24809,6 +24823,7 @@ Transform:
   - {fileID: 67006557}
   - {fileID: 1785627280}
   - {fileID: 923805722}
+  - {fileID: 2037159268}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1952299600 stripped
@@ -25984,11 +25999,11 @@ Transform:
   m_GameObject: {fileID: 2037159267}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.6362188, z: -0, w: 0.7715087}
-  m_LocalPosition: {x: -1917, y: -1300, z: 758}
-  m_LocalScale: {x: 250, y: 250, z: 500}
+  m_LocalPosition: {x: -7772, y: -1300, z: 1894}
+  m_LocalScale: {x: 299.99997, y: 300, z: 299.99997}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1949006990}
   m_LocalEulerAnglesHint: {x: 0, y: -79.021, z: 0}
 --- !u!114 &2037159269
 MonoBehaviour:
@@ -26002,7 +26017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b23ccf4852049d98a5bf8045972c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bouncer
-  _destinationPosition: {x: -1917, y: 890, z: 758}
+  _destinationPosition: {x: -1900, y: 890, z: 700}
   _riseDuration: 2
   moveDistance: 15
   moveDuration: 0.5
@@ -28185,5 +28200,3 @@ SceneRoots:
   - {fileID: 1788140564}
   - {fileID: 1231386068}
   - {fileID: 1949006990}
-  - {fileID: 301159321}
-  - {fileID: 2037159268}

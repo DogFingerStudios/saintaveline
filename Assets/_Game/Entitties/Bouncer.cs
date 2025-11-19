@@ -44,7 +44,6 @@ public class Bouncer : MonoBehaviour
 
             // AI: Lerp entire position from start to destination
             Vector3 newPosition = Vector3.Lerp(_startPosition, _destinationPosition, t);
-
             transform.position = newPosition;
 
             if (t >= 1f)

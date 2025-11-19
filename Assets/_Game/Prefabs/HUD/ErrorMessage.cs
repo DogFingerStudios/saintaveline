@@ -20,7 +20,6 @@ public sealed class ErrorMessage : MonoBehaviour
 
     private void Awake()
     {
-
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -53,7 +52,6 @@ public sealed class ErrorMessage : MonoBehaviour
 
     public void ShowError(string message)
     {
-
         if (string.IsNullOrEmpty(message))
         {
             return;
