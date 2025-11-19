@@ -28,6 +28,7 @@ public class EnvironmentalLightingSelector : MonoBehaviour
     [SerializeField] public GameObject MatthewsController;
     [SerializeField] public GameObject AddysController;
     [SerializeField] public GameObject PureDarknessController;
+    [SerializeField] public GameObject BrightDaylightController;
 
     [Header("Matthew's Day Night Controller Settings")]
     [SerializeField] public EnvironmentalLightingSettings MatthewsSettings;
@@ -37,4 +38,7 @@ public class EnvironmentalLightingSelector : MonoBehaviour
 
     [Header("Pure Darkness Settings")]
     [SerializeField] public EnvironmentalLightingSettings PureDarknessSettings;
+
+    [Header("Bright Daylight Settings")]
+    [SerializeField] public EnvironmentalLightingSettings BrightDaylightSettings;
 }

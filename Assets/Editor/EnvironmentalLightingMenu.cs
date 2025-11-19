@@ -83,6 +83,12 @@ public static class EnvironmentalLightingMenu
         return FindBindings() != null;
     }
 
+    [MenuItem("Tools/Environmental Lighting/Bright Daylight", true)]
+    private static bool ValidateBrightDaylight()
+    {
+        return FindBindings() != null;
+    }
+
     [MenuItem("Tools/Environmental Lighting/Matthew's Day Night Controller")]
     public static void MatthewsDayNightController()
     {
@@ -123,5 +129,19 @@ public static class EnvironmentalLightingMenu
 
         ActivateOnly(b.PureDarknessController, b.MatthewsController, b.AddysController);
         ApplyEnvironment(b.PureDarknessSettings);
+    }
+
+    [MenuItem("Tools/Environmental Lighting/Bright Daylight")]
+    public static void BrightDaylight()
+    {
+        var b = FindBindings();
+        if (b == null)
+        {
+            Debug.LogError("EnvironmentalLightingBindings not found in scene.");
+            return;
+        }
+ 
+        ActivateOnly(b.BrightDaylightController, b.MatthewsController, b.AddysController, b.PureDarknessController);
+        ApplyEnvironment(b.BrightDaylightSettings);
     }
 }
