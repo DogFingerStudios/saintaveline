@@ -2290,7 +2290,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 392612
+      value: 425315
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -2366,7 +2366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 509423.22
+      value: 566932.5
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -18112,8 +18112,8 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2037159269}
           m_TargetAssemblyTypeName: Bouncer, Assembly-CSharp
-          m_MethodName: SetVisible
-          m_Mode: 6
+          m_MethodName: BeginLerp
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -25984,7 +25984,7 @@ Transform:
   m_GameObject: {fileID: 2037159267}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.6362188, z: -0, w: 0.7715087}
-  m_LocalPosition: {x: -1917, y: 884, z: 758}
+  m_LocalPosition: {x: -1917, y: -1300, z: 758}
   m_LocalScale: {x: 250, y: 250, z: 500}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26002,8 +26002,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b23ccf4852049d98a5bf8045972c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bouncer
-  moveDistance: 7
-  moveDuration: 0.5
+  _destinationPosition: {x: -1917, y: 890, z: 758}
+  _duration: 4
 --- !u!212 &2037159270
 SpriteRenderer:
   m_ObjectHideFlags: 0
