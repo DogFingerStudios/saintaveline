@@ -6,7 +6,7 @@ public class Bouncer : MonoBehaviour
 {
     // lerping variables
     [SerializeField] private Vector3 _destinationPosition;
-    [SerializeField] private float _duration = 2f;
+    [SerializeField] private float _riseDuration = 2f;
     private float _elapsed = 0f;
     private Vector3 _startPosition;
 
@@ -35,7 +35,7 @@ public class Bouncer : MonoBehaviour
         {
             _elapsed += Time.deltaTime;
 
-            float t = _elapsed / _duration;
+            float t = _elapsed / _riseDuration;
 
             if (t > 1f)
             {
