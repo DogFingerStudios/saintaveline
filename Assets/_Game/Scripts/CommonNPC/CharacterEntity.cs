@@ -189,6 +189,7 @@ public class CharacterEntity : GameEntity
         }
 
         _inventory[(int)_equippedItemIndex] = null;
+        _equippedItemIndex = null;
     }
 
     public void Attack()
