@@ -65,21 +65,6 @@ public sealed class ErrorMessage : MonoBehaviour
         _routine = StartCoroutine(ShowErrorRoutine(message));
     }
 
-    //THIS FUNCTION IS TEMPORARY. Should be removed after the implementation of the text field into the Canvas_Main (prefab missing).
-    public void InitErrEssentials()
-    {
-        this._canvasGroup = GameObject.Find("BottomMessageRoot").GetComponent<CanvasGroup>();
-        GameObject btwText = GameObject.Find("MessageText");
-        GameObject copy = Instantiate(
-            btwText,
-            new Vector3(btwText.transform.position.x, btwText.transform.position.y - 100f, btwText.transform.position.z),
-            btwText.transform.rotation,
-            btwText.transform.parent
-        );
-        copy.name = "ErrorText";
-        this._text = copy.GetComponent<TextMeshProUGUI>();
-    }
-
     private IEnumerator ShowErrorRoutine(string message)
     {
         _text.color = Color.red;

@@ -120,12 +120,7 @@ public sealed class BottomTypewriter : MonoBehaviour
 
     public void EnqueueError(string message)
     {
-        if (string.IsNullOrEmpty(message))
-        {
-            return;
-        }
-        _queue.Enqueue(new MessageEntry(message, MessageType.Error));
-        TryRun();
+        ErrorMessage.Instance.ShowError(message);
     }
 
     public void DismissAll()

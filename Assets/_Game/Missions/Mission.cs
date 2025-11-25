@@ -47,11 +47,6 @@ public class Mission
     {
         if (!StartMessage.Equals(string.Empty))
         {
-            //These should be removed once the error message TMP is added to the HUD.
-            GameObject canvasMain = GameObject.Find("Canvas_Main");
-            canvasMain.AddComponent<ErrorMessage>();
-            ErrorMessage.Instance.InitErrEssentials();
-            ErrorMessage.Instance.ShowError("Testing error message!");
             BottomTypewriter.Instance.Enqueue(StartMessage);
         }
         
