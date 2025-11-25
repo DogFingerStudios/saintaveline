@@ -97,6 +97,7 @@ public class InventoryUI : MonoBehaviour
     {
         _inputState = UIManager.Instance.SetState(false, CursorLockMode.None, true);
 
+        _contentPanel.DetachChildren();
         foreach (GameObject item in _itemObjects)
         {
             Destroy(item);
