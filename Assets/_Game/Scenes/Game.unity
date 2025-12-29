@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0
   m_LinearFogStart: 0
   m_LinearFogEnd: 0.01
-  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 0}
-  m_AmbientEquatorColor: {r: 0.90588236, g: 0.8156863, b: 0.8156863, a: 0}
-  m_AmbientGroundColor: {r: 0.7372549, g: 0.5294118, b: 0.5294118, a: 0}
+  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 0}
+  m_AmbientEquatorColor: {r: 0, g: 0, b: 0, a: 0}
+  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_AmbientIntensity: 0.68
-  m_AmbientMode: 1
-  m_SubtractiveShadowColor: {r: 0.5660378, g: 0.5660378, b: 0.49394804, a: 0}
-  m_SkyboxMaterial: {fileID: 2100000, guid: d4425bdebd7810b48b29852d281e54a6, type: 2}
+  m_AmbientMode: 0
+  m_SubtractiveShadowColor: {r: 0, g: 0, b: 0, a: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 0.2
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 2019195016}
+  m_Sun: {fileID: 0}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 874608226485040222, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4357120802854823438, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
       propertyPath: m_Enabled
@@ -543,10 +543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1875161217831392945, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2140603274}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f9ac039a10be514dbfc03631d59a9c0, type: 3}
 --- !u!4 &20799682 stripped
@@ -2295,7 +2292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 172370
+      value: 195052
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -2371,7 +2368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 295610.3
+      value: 344760.28
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -12793,6 +12790,8 @@ MonoBehaviour:
     FogDensity: 0.005
     FogStartDistance: 0
     FogEndDistance: 0
+    CameraClearFlags: 0
+    CameraBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   AddysSettings:
     SkyboxMaterial: {fileID: 2100000, guid: 9af23ba5fa5364ff598888460e0e2759, type: 2}
     SunSource: {fileID: 2019195016}
@@ -12811,6 +12810,8 @@ MonoBehaviour:
     FogDensity: 0
     FogStartDistance: 0
     FogEndDistance: 0
+    CameraClearFlags: 0
+    CameraBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   PureDarknessSettings:
     SkyboxMaterial: {fileID: 0}
     SunSource: {fileID: 0}
@@ -12829,6 +12830,28 @@ MonoBehaviour:
     FogDensity: 0
     FogStartDistance: 0
     FogEndDistance: 0
+    CameraClearFlags: 0
+    CameraBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  PureDarknessSettings2:
+    SkyboxMaterial: {fileID: 0}
+    SunSource: {fileID: 0}
+    RealtimeShadowColor: {r: 0, g: 0, b: 0, a: 0}
+    EnvironmentLightingSource: 0
+    EnvironmentLightingSkyColor: {r: 0, g: 0, b: 0, a: 0}
+    EnvironmentLightingEquatorColor:
+      serializedVersion: 2
+      rgba: 0
+    EnvironmentLightingGroundColor:
+      serializedVersion: 2
+      rgba: 0
+    FogEnabled: 0
+    FogColor: {r: 0, g: 0, b: 0, a: 0}
+    FogMode: 0
+    FogDensity: 0
+    FogStartDistance: 0
+    FogEndDistance: 0
+    CameraClearFlags: 0
+    CameraBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   BrightDaylightSettings:
     SkyboxMaterial: {fileID: 2100000, guid: d4425bdebd7810b48b29852d281e54a6, type: 2}
     SunSource: {fileID: 2019195016}
@@ -12847,6 +12870,8 @@ MonoBehaviour:
     FogDensity: 0
     FogStartDistance: 0
     FogEndDistance: 0
+    CameraClearFlags: 0
+    CameraBackgroundColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!4 &1038229290 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f3f099a1e77db0f43b8f3e7fe072979b, type: 3}
@@ -17887,8 +17912,24 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3107997214993371336, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
+      propertyPath: m_ClearFlags
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3107997214993371336, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: far clip plane
       value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3107997214993371336, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3107997214993371336, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3107997214993371336, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3897292680037668505, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -27424,165 +27465,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: f3f099a1e77db0f43b8f3e7fe072979b, type: 3}
   m_PrefabInstance: {fileID: 2134592413}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2140603273
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2140603274}
-  - component: {fileID: 2140603279}
-  - component: {fileID: 2140603278}
-  - component: {fileID: 2140603277}
-  - component: {fileID: 2140603276}
-  - component: {fileID: 2140603275}
-  m_Layer: 0
-  m_Name: Poster_Quad
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2140603274
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140603273}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -9.412096, y: 2.3983426, z: 6.7311945}
-  m_LocalScale: {x: 1.1000001, y: 1.6666667, z: 1.1111112}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 20799682}
-  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
---- !u!114 &2140603275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140603273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 388835dbfa82aea45a03a47f1c8fba3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SeenTrigger
-  maxDistance: 8
-  minVisibleTime: 0.5
-  minDot: 0.5
-  onLookedAway:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2140603276}
-        m_TargetAssemblyTypeName: PosterSwap, Assembly-CSharp
-        m_MethodName: LookedAwayHandler
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &2140603276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140603273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1797efcdb1769c24f9961c794abd1a60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PosterSwap
-  _originalTexture: {fileID: 2800000, guid: df6e0d45229b42e479f586671804519e, type: 3}
-  _alternateTexture: {fileID: 2800000, guid: 6892cd98f18df3c4eb225306b1b341d8, type: 3}
-  _swapCooldownMinutes: 1.5
---- !u!64 &2140603277
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140603273}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &2140603278
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140603273}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 10c70ad0b5656584d8a709c1b62a27b1, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &2140603279
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140603273}
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &2142649428 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100010, guid: 39799cf03cd78bd4b96ed2f556aa8af9, type: 3}

@@ -19,6 +19,10 @@ public class EnvironmentalLightingSettings
     public float FogDensity;
     public float FogStartDistance;
     public float FogEndDistance;
+
+    // camera settings
+    public CameraClearFlags CameraClearFlags = CameraClearFlags.Skybox;
+    public Color CameraBackgroundColor = Color.gray;
 }
 
 [ExecuteAlways]
@@ -38,6 +42,9 @@ public class EnvironmentalLightingSelector : MonoBehaviour
 
     [Header("Pure Darkness Settings")]
     [SerializeField] public EnvironmentalLightingSettings PureDarknessSettings;
+
+    [Header("Pure Darkness Settings2")]
+    [SerializeField] public EnvironmentalLightingSettings PureDarknessSettings2;
 
     [Header("Bright Daylight Settings")]
     [SerializeField] public EnvironmentalLightingSettings BrightDaylightSettings;

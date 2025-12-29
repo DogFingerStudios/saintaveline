@@ -62,6 +62,15 @@ public static class EnvironmentalLightingMenu
         {
             EditorSceneManager.MarkSceneDirty(scene);
         }
+
+        var camera = Camera.main;
+        if (camera != null)
+        {
+            Undo.RecordObject(camera, "Apply Camera Settings");
+            camera.clearFlags = settings.CameraClearFlags;
+            camera.backgroundColor = settings.CameraBackgroundColor;
+            EditorSceneManager.MarkSceneDirty(camera.gameObject.scene);
+        }
     }
 
     // AI: Validators so menu items enable only when bindings exist.
@@ -117,20 +126,6 @@ public static class EnvironmentalLightingMenu
         ApplyEnvironment(b.AddysSettings);
     }
 
-    [MenuItem("Tools/Environmental Lighting/Pure Darkness")]
-    public static void PureDarkness()
-    {
-        var b = FindBindings();
-        if (b == null)
-        {
-            Debug.LogError("EnvironmentalLightingBindings not found in scene.");
-            return;
-        }
-
-        ActivateOnly(b.PureDarknessController, b.MatthewsController, b.AddysController);
-        ApplyEnvironment(b.PureDarknessSettings);
-    }
-
     [MenuItem("Tools/Environmental Lighting/Bright Daylight")]
     public static void BrightDaylight()
     {
@@ -143,5 +138,19 @@ public static class EnvironmentalLightingMenu
  
         ActivateOnly(b.BrightDaylightController, b.MatthewsController, b.AddysController, b.PureDarknessController);
         ApplyEnvironment(b.BrightDaylightSettings);
+    }
+
+    [MenuItem("Tools/Environmental Lighting/Pure Darkness2")]
+    public static void PureDarkness2()
+    {
+        var b = FindBindings();
+        if (b == null)
+        {
+            Debug.LogError("EnvironmentalLightingBindings not found in scene.");
+            return;
+        }
+
+        ActivateOnly(b.PureDarknessController, b.MatthewsController, b.AddysController, b.BrightDaylightController);
+        ApplyEnvironment(b.PureDarknessSettings2);
     }
 }
