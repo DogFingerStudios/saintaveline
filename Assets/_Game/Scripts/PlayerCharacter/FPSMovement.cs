@@ -75,29 +75,26 @@ public class FPSMovement : MonoBehaviour
         }
 
         // Crouch code
-        if (Input.GetKey(KeyCode.C))
+        if (Input.GetKey(KeyCode.LeftControl))
         {
             localMoveSpeed *= crouchSpeedFactor;
             isCrouching = true;
             controller.height = 1f; // Adjust height for crouching
             controller.center = new Vector3(0f, 0.5f, 0f); // Adjust center for crouching
         }
-        else
+        else if (isCrouching) // Only adjust if we were previously crouching
         {
-            if (isCrouching) // Only adjust if we were previously crouching
-            {
-                isCrouching = false;
+            isCrouching = false;
 
-                // Calculate the difference in height
-                float heightDifference = defaultHeight - controller.height;
+            // Calculate the difference in height
+            float heightDifference = defaultHeight - controller.height;
 
-                // Adjust the vertical position based on the height difference
-                transform.position += new Vector3(0f, heightDifference / 2f, 0f);
+            // Adjust the vertical position based on the height difference
+            transform.position += new Vector3(0f, heightDifference / 2f, 0f);
 
-                // Reset height and center
-                controller.height = defaultHeight;
-                controller.center = defaultCenter;
-            }
+            // Reset height and center
+            controller.height = defaultHeight;
+            controller.center = defaultCenter;
         }
 
         // Rotate the camera up/down
