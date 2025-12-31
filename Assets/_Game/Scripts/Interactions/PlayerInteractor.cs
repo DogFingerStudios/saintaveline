@@ -125,7 +125,7 @@ public class PlayerInteractor : MonoBehaviour
     void ProcessInput()
     {
         // pick an item up and equip it
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.R))
         {
             if (_playerEntity!.EquippedItem2 == null)
             {
@@ -156,7 +156,7 @@ public class PlayerInteractor : MonoBehaviour
             _playerEntity!.AddItemToInventory(itemEntity);
             BottomTypewriter.Instance.Enqueue("Added item '" + itemEntity.ItemData!.ItemName + "' to inventory.");
         }
-        else if (Input.GetKeyDown(KeyCode.E))
+        else if (Input.GetKeyDown(KeyCode.E) || Input.GetMouseButtonDown(2)) 
         {
             _playerEntity!.PrimaryAction();
         }

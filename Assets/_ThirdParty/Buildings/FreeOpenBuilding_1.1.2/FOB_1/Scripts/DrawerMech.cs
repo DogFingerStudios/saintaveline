@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class DrawerMech : MonoBehaviour 
 {
-
     public Vector3 OpenPosition, ClosePosition;
 
     float moveSpeed;
-
     float lerpTimer;
-
     public bool drawerBool;
-
-    
 
     void Start()
     {
@@ -22,36 +17,26 @@ public class DrawerMech : MonoBehaviour
         
     void OnTriggerStay(Collider col)
     {
-        if(col.gameObject.tag == ("Player") && Input.GetKeyDown(KeyCode.E))
+        if (col.gameObject.tag == ("Player") && Input.GetKeyDown(KeyCode.Q))
         {
-            if (!drawerBool)
-                drawerBool = true;
-            else
-                drawerBool = false;
+            drawerBool = !drawerBool;
         }
     }
 
     void Update()
     {
-
         if (drawerBool)
         {
             moveSpeed = +1f;
-
             lerpTimer = Mathf.Clamp(lerpTimer + Time.deltaTime * moveSpeed, 0f, 1f);
-
             transform.localPosition = Vector3.Lerp(ClosePosition, OpenPosition, lerpTimer);
         }
-            
         else
         {
             moveSpeed = -1f;
-
             lerpTimer = Mathf.Clamp(lerpTimer + Time.deltaTime * moveSpeed, 0f, 1f);
-
             transform.localPosition = Vector3.Lerp(ClosePosition, OpenPosition, lerpTimer);
         }
-
     }
 
 }

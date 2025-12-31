@@ -14,7 +14,7 @@ public class DoorInteraction : MonoBehaviour
     void Update()
     {
         // Cast a ray from the player toward the center of the screen
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             TryInteractWithDoor();
         }
