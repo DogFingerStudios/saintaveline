@@ -270,11 +270,9 @@ public class ItemEntity : GameEntity, ItemInteractable
         if (_alreadyHit.Contains(other)) return;
 
         var entity = other.GetComponent<GameEntity>();
-        if (entity != null)
-        {
-            entity.TakeDamage(_itemData.DamageScore);
-            _alreadyHit.Add(other);
-        }
+        if (entity == null) return;
+        entity.TakeDamage(_itemData.DamageScore);
+        _alreadyHit.Add(other);
     }
 
     protected virtual void OnStartAttack()

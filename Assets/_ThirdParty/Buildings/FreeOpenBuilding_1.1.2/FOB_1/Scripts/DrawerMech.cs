@@ -5,9 +5,9 @@ using UnityEngine;
 public class DrawerMech : MonoBehaviour 
 {
 
-	public Vector3 OpenPosition, ClosePosition;
+    public Vector3 OpenPosition, ClosePosition;
 
-	float moveSpeed;
+    float moveSpeed;
 
     float lerpTimer;
 
@@ -15,24 +15,24 @@ public class DrawerMech : MonoBehaviour
 
     
 
-	void Start()
-	{
+    void Start()
+    {
         drawerBool = false;
-	}
-		
-	void OnTriggerStay(Collider col)
-	{
-		if(col.gameObject.tag == ("Player") && Input.GetKeyDown(KeyCode.E))
-		{
-			if (!drawerBool)
+    }
+        
+    void OnTriggerStay(Collider col)
+    {
+        if(col.gameObject.tag == ("Player") && Input.GetKeyDown(KeyCode.E))
+        {
+            if (!drawerBool)
                 drawerBool = true;
-			else
+            else
                 drawerBool = false;
-		}
-	}
+        }
+    }
 
-	void Update()
-	{
+    void Update()
+    {
 
         if (drawerBool)
         {
