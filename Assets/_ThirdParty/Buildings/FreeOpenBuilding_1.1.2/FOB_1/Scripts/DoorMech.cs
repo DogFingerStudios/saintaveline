@@ -11,19 +11,20 @@ public class DoorMech : MonoBehaviour, IInteractable
     private Transform _transform;
     public Vector3 OpenRotation, CloseRotation;
     public float rotSpeed = 1f;
-    public bool doorBool;
     public float interactionDistance = 3f;
     public DoorMech? adjacentDoor;
 
-    private void Awake()
+    private bool _doorBool;
+
+    void Awake()
     {
         _transform = transform;
-        doorBool = false;
+        _doorBool = false;
     }
 
     void Update()
     {
-        Vector3 targetRotation = doorBool ? OpenRotation : CloseRotation;
+        Vector3 targetRotation = _doorBool ? OpenRotation : CloseRotation;
         if (_transform.localRotation.eulerAngles != targetRotation)
         {
             _transform.localRotation = Quaternion.Lerp(_transform.localRotation, Quaternion.Euler(targetRotation), rotSpeed * Time.deltaTime);
@@ -34,7 +35,7 @@ public class DoorMech : MonoBehaviour, IInteractable
     {
         get
         {
-            if (doorBool)
+            if (_doorBool)
             {
                 return "Press [Q] to close";
             }
@@ -57,7 +58,7 @@ public class DoorMech : MonoBehaviour, IInteractable
 
     public void Interact(GameEntity? interactor = null)
     {
-        doorBool = !doorBool;
-        if (adjacentDoor != null) adjacentDoor.doorBool = doorBool;
+        _doorBool = !_doorBool;
+        if (adjacentDoor != null) adjacentDoor._doorBool = _doorBool;
     }
 }
