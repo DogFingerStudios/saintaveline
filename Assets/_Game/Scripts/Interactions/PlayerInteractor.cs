@@ -61,7 +61,7 @@ public class PlayerInteractor : MonoBehaviour
                     FocusedObject = hit.collider.gameObject;
                 }
 
-                if (Input.GetKeyDown(KeyCode.E))
+                if (Input.GetKeyDown(KeyCode.Q))
                 {
                     _currentFocus!.Interact();
                 }
