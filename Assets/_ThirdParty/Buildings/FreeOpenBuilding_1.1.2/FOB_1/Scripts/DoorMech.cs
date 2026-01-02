@@ -48,12 +48,10 @@ public class DoorMech : MonoBehaviour, IInteractable
 
     public void OnFocus()
     {
-        Debug.Log("Door focused");
     }
 
     public void OnDefocus()
     {
-        Debug.Log("Door defocused");
     }
 
     public void Interact(GameEntity? interactor = null)

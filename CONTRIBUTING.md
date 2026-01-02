@@ -8,6 +8,7 @@ Thank you for your interest. By submitting code, content, or suggestions, you ag
 - You certify the work you’re submitting is your own or you have rights to submit it.
 
 To contribute:
+
 1. Fork the repo.
 2. Create a feature branch.
 3. Submit a PR with a clear description.
