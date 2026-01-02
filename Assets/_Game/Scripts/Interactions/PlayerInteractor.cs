@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// This script is attached to the Main Camera which is a child of the Player object.
 /// 
-/// When a player looks at an interactable object, aka and Item, within a certain 
+/// When a player looks at an interactable object, aka an Item, within a certain 
 /// range, this script is responsible for detecting if the player is looking at an 
 /// interactable object, displaying the help text, and invoking the Item's
 /// interaction menu.

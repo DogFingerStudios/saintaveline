@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public interface IInteractable
 {
-    string HoverText { get; }
+    public string HoverText { get; }
     List<InteractionData> Interactions { get; }
 
     void OnFocus();
