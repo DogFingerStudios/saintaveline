@@ -4,12 +4,14 @@ on:
   push:
     branches:
       - master
+      - dev/*
     paths:
       - .github/workflows/macos.yml
       - Assets/**
 
 jobs:
   discord-notification:
+    if: contains(fromJson(vars.ALLOWED_ACTORS_JSON), github.actor)
     runs-on: ubuntu-latest
     steps:
       - name: Discord Workflow Start Notification
@@ -21,6 +23,7 @@ jobs:
           args: "💬 Starting 'StandaloneOSX' CI workflow for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`. See progress at https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}"
 
   build-macos:
+    if: contains(fromJson(vars.ALLOWED_ACTORS_JSON), github.actor)
     runs-on: macos-latest
     strategy:
       fail-fast: false

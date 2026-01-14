@@ -4,12 +4,14 @@ on:
   push:
     branches:
       - master
+      - dev/*
     paths:
       - .github/workflows/ubuntu.yml
       - Assets/**
 
 jobs:
   build-ubuntu:
+    if: contains(fromJson(vars.ALLOWED_ACTORS_JSON), github.actor)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
