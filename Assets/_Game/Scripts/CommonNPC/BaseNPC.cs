@@ -126,7 +126,7 @@ public class BaseNPC : CharacterEntity, IHearingSensor
         _animator.Play("Idle");
     }
 
-    protected virtual void Update()
+    protected override void Update()
     {
         if (stateMachine == null) return;
         stateMachine.Update();

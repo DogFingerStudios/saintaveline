@@ -15,7 +15,7 @@ public abstract class GameEntity : MonoBehaviour
         _entityTransform = this.transform;
     }
 
-    public virtual void Update()
+    protected virtual void Update()
     {
         Velocity = (_entityTransform.position - _lastPosition) / Time.deltaTime;
         _lastPosition = _entityTransform.position;

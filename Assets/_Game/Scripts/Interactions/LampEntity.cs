@@ -85,7 +85,7 @@ public class LampEntity : ItemEntity
         StartCoroutine(FlickerLight());
     }
 
-    private void Update()
+    protected override void Update()
     {
         if (Light.enabled)
         {
