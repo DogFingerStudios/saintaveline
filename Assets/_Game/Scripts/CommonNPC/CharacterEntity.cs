@@ -259,4 +259,9 @@ public class CharacterEntity : GameEntity
         RaiseOnHealthChanged(Health);
         return Health;
     }
+
+    public virtual Vector3 DirectionToTarget(bool addFuzziness = false)
+    {
+        return transform.forward;
+    }
 }

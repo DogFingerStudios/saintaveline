@@ -151,7 +151,7 @@ public class BaseNPC : CharacterEntity, IHearingSensor
         // Debug.Log($"Object {objectName} heard a {stim.Kind} at {stim.Position}");
     }
 
-    public Vector3 DirectionToTarget(bool addFuzziness = false)
+    public override Vector3 DirectionToTarget(bool addFuzziness = false)
     {
         Assert.IsNotNull(_entityProfile, "BaseNPC.DirectionToTarget: EntityProfile is null.");
         if (Target == null) return Vector3.zero;
