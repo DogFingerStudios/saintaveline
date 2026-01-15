@@ -3,8 +3,7 @@
 using System.Collections;
 using UnityEngine;
 
-// public class LampInteractable : MonoBehaviour, ItemInteractable
-public class LampInteractable : ItemEntity
+public class LampEntity : ItemEntity
 {
     public Light Light;
 
@@ -25,7 +24,6 @@ public class LampInteractable : ItemEntity
     public float minFlickerTime = 0.1f;
     public float maxFlickerTime = 1f;
 
-
     protected override void Awake()
     {
         base.Awake();
@@ -36,7 +34,7 @@ public class LampInteractable : ItemEntity
     {
         if (Light == null)
         {
-            Debug.Log("No Light component found on LampInteractable, should probably have one.");
+            Debug.Log("No Light component found on LampEntity, should probably have one.");
             return;
         }
 

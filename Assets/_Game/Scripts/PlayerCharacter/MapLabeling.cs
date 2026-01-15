@@ -29,7 +29,7 @@ public class MapLabeler : MonoBehaviour
     private Vector3 _lastHitPoint;
     private Vector3 _savedPosition;
     private MapLabelingState _currentState = MapLabelingState.Idle;
-    private PlayerStats _playerStats;
+    private PlayerEntity _playerStats;
 
     MapLabeler()
     {
@@ -44,10 +44,10 @@ public class MapLabeler : MonoBehaviour
     private void Start()
     {
         _mainCamera = Camera.main;
-        _playerStats = GetComponent<PlayerStats>();
+        _playerStats = GetComponent<PlayerEntity>();
         if (_playerStats == null)
         {
-            Debug.LogError("PlayerStats component not found on the player character.");
+            Debug.LogError("PlayerEntity component not found on the player character.");
             return;
         }
 

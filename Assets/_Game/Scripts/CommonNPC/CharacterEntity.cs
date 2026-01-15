@@ -8,7 +8,7 @@ using System.Linq;
 using Assert = UnityEngine.Assertions.Assert;
 
 // This class is attached to all characters (players, NPCs, etc.). For the player
-// character, the class `PlayerStats` inherits from this class, and is attached
+// character, the class `PlayerEntity` inherits from this class, and is attached
 // to the root player GameObject.
 // For NPCs, the class BaseNPC inherits from this class.
 public class CharacterEntity : GameEntity
@@ -34,8 +34,9 @@ public class CharacterEntity : GameEntity
         }
     }
 
-    public virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         foreach (var itemObj in _initialInventory)
         {
             GameObject newItem = Instantiate(itemObj);

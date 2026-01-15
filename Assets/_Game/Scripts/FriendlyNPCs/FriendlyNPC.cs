@@ -12,7 +12,7 @@ public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
     // TODO: these three fields should be refactored out of here
     [SerializeField] private GameObject _mapLabelDialogPrefab;
     [SerializeField] private Canvas _uiCanvas;
-    private PlayerStats _playerStats;
+    private PlayerEntity _playerStats;
 
     public List<InteractionData> Interactions { get; } = new List<InteractionData>();
 
@@ -20,10 +20,10 @@ public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
     {
         base.Start();
 
-        _playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerStats>();
+        _playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEntity>();
         if (_playerStats == null)
         {
-            throw new Exception("PlayerStats component not found on Player");
+            throw new Exception("PlayerEntity component not found on Player");
         }
 
         Interactions.Add(new InteractionData { key = "stay", description = "Stay" });

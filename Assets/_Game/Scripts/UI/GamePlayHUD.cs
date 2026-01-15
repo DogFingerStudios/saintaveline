@@ -5,7 +5,7 @@ public class GamePlayHUD : MonoBehaviour
 {    
     public GameObject player;
     public TextMeshProUGUI healthText;
-    private PlayerStats playerStats;
+    private PlayerEntity playerStats;
 
     public SonNPC sonNPC;
     public TextMeshProUGUI sonHealthText;
@@ -13,7 +13,7 @@ public class GamePlayHUD : MonoBehaviour
 
     void Start()
     {
-        playerStats = player.GetComponent<PlayerStats>();
+        playerStats = player.GetComponent<PlayerEntity>();
     }
 
     // Update is called once per frame
