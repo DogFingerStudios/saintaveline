@@ -83,6 +83,8 @@ SpriteRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -104,6 +106,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -222,10 +225,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8018992134920938627}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -263,6 +266,8 @@ LineRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -284,6 +289,7 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -461,9 +467,9 @@ MonoBehaviour:
   Health: 100
   MaxHealth: 100
   EquippedItemPos: {fileID: 5746262284330423432}
-  _initialInventory: []
-  _initialEquippedItem: {fileID: 0}
-  MaxInventorySize: 10
+  _initialInventory:
+  - {fileID: 2225440571541060868, guid: 3d475f10d076c444d8584c1be775ba38, type: 3}
+  _initialEquippedItemIndex: 0
   _audioSource: {fileID: 0}
   _entityProfile:
     _personality:
@@ -479,8 +485,8 @@ MonoBehaviour:
       BaseCalmRate: 0.1
   rotationSpeed: 90
   moveSpeed: 3.5
-  DetectionDistance: 65
-  stopDistance: 25
+  DetectionDistance: 62.5
+  stopDistance: 12.5
   target: {fileID: 0}
   _defaultState: EnemyIdle
   PatrolPoints: []
@@ -588,6 +594,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5311034482893019840}
     m_Modifications:
+    - target: {fileID: 1358857095831013244, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2466390616220768613, guid: d4b577630be655049bbaf5ac70b94f51, type: 3}
       propertyPath: NPC
       value: 

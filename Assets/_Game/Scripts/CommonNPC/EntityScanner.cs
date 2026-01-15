@@ -71,7 +71,7 @@ class EntityScanner
             float angleToTarget = Vector3.Angle(SourceTransform.forward, dirToTarget);
             if (angleToTarget > (ViewAngle / 2f)) continue;
 
-            // float distanceToTarget = Vector3.Distance(eyePosition, target.transform.position);
+            // float distanceToTarget = Vector3.Distance(eyePosition, Target.transform.position);
             if (!Physics.Raycast(eyePosition, dirToTarget, distanceToTarget, _obstacleMask))
             {
                 yield return target;

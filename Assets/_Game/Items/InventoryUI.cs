@@ -152,7 +152,7 @@ public class InventoryUI : MonoBehaviour
                 }
 
                 // decorate the item if this is the currently equipped item
-                if (item == _owner.EquippedItem2)
+                if (item == _owner.EquippedItem)
                 {
                     var image = newItem.GetComponentInChildren<Image>();
                     if (image != null)
@@ -345,7 +345,7 @@ public class InventoryUI : MonoBehaviour
             if (itemToggle != null && itemToggle.isOn)
             {
                 var tag = itemobj.GetComponent<InventoryItemHelper>();
-                if (tag != null && tag.ItemEntity == _owner!.EquippedItem2)
+                if (tag != null && tag.ItemEntity == _owner!.EquippedItem)
                 {
                     return true;
                 }

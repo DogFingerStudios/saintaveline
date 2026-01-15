@@ -38,7 +38,7 @@ public class ItemEntity : GameEntity, ItemInteractable
 
     public List<InteractionData> Interactions { get; } = new List<InteractionData>();
 
-    public virtual string HoverText => $"Press [E] to interact with '{_itemData?.ItemName}'";
+    public virtual string HoverText => $"Press [Q] to interact with '{_itemData?.ItemName}'";
 
     public virtual void Interact(GameEntity? interactor = null)
     {

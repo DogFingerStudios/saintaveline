@@ -9,7 +9,8 @@ public enum InputState
     CodexDlg,
     MapLabeling,
     BoatDriving,
-    PauseMenu
+    PauseMenu,
+    InteractionMenu
 }
 
 public class InputManager : MonoBehaviour

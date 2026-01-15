@@ -7,9 +7,6 @@ using System.Collections.Generic;
 [NPCStateTag("EnemyAttack")]
 public class EnemyAttackState : NPCState
 {  
-    public Transform _firePoint = new GameObject("FirePoint").transform;
-    public AudioClip[] _gunshotSounds;
-
     public float fireRate = 1f;
     public float range = 50f;
     public float damage = 10f;
@@ -19,22 +16,17 @@ public class EnemyAttackState : NPCState
     [Tooltip("Audio clip to play when the gun is fired.")]
     private AudioSource _audioSource;
 
-    private float nextFireTime = 0f;
+    private float _nextFireTime = 0f;
     private LineRenderer _lineRenderer;
     private readonly GameEntity _targetEntity;
 
     public EnemyAttackState(BaseNPC npc, GameEntity target)
         : base(npc)
     {
-        if (this.NPC!.target == null)
+        if (this.NPC!.Target == null)
         {
             throw new System.Exception("BaseNPC is not an EnemyNPC. Cannot enter attack state.");
         }
-
-        _firePoint.SetParent(this.NPC!.transform);
-        _firePoint.localPosition = new Vector3(0.004f, 0.6019999f, 0.425f);
-        _firePoint.localRotation = Quaternion.Euler(0f, 0f, 0f);
-        _firePoint.localScale = new Vector3(1f, 0.5555556f, 1f);
 
         _lineRenderer = this.NPC!.GetComponent<LineRenderer>();
         _lineRenderer.enabled = false;
@@ -56,12 +48,6 @@ public class EnemyAttackState : NPCState
         _audioSource.SetCustomCurve(AudioSourceCurveType.CustomRolloff, rolloff);
         _audioSource.maxDistance = 50f; // Can tweak based on how far you want it heard
 
-        _gunshotSounds = new AudioClip[]
-        {
-            Resources.Load<AudioClip>("Sounds/gunshot1"),
-            Resources.Load<AudioClip>("Sounds/gunshot2")
-        };
-
         _targetEntity = target;
     }
 
@@ -79,19 +65,19 @@ public class EnemyAttackState : NPCState
     {
         if (_targetEntity!.IsAlive == false)
         {
-            // target is dead, go back to idle state
+            // Target is dead, go back to idle state
             return new NPCStateReturnValue(NPCStateReturnValue.ActionType.PopState);
         }
 
-        float distance = Vector3.Distance(this.NPC!.transform.position, this.NPC.target.position);
+        float distance = Vector3.Distance(this.NPC!.transform.position, this.NPC.Target.position);
         if (distance > this.NPC!.stopDistance)
         {
-            // target is out of range, go back to last state
+            // Target is out of range, go back to last state
             return new NPCStateReturnValue(NPCStateReturnValue.ActionType.PopState);
         }
 
-        // turn in the direction of the target
-        Vector3 direction = this.NPC.target.position - this.NPC.transform.position;
+        // turn in the direction of the Target
+        Vector3 direction = this.NPC.Target.position - this.NPC.transform.position;
         direction.y = 0f; // Keep rotation flat
         if (direction.sqrMagnitude > 0.001f)
         {
@@ -103,49 +89,15 @@ public class EnemyAttackState : NPCState
             );
         }
 
-        if (Time.time >= nextFireTime)
+        if (Time.time >= _nextFireTime)
         {
-            this.NPC!.EquippedItem2?.Attack();
-            //Shoot();
+            this.NPC!.EquippedItem?.Attack();
+
             // get a random time between 0.5 and 1.5 seconds
             float randomTime = UnityEngine.Random.Range(0.5f, 1.5f);
-            nextFireTime = Time.time + randomTime;
+            _nextFireTime = Time.time + randomTime;
         }
 
         return null;
-    }
-
-    void Shoot()
-    {
-        var direction = this.NPC!.target.position - _firePoint.position;
-        if (Physics.Raycast(_firePoint.position, direction, out RaycastHit hit, range))
-        {
-            this.NPC!.StartCoroutine(FireRayEffect(hit.point));
-
-            // get the distance from the fire point to the hit point
-            float distance = Vector3.Distance(_firePoint.position, hit.point);
-            int damage = Mathf.RoundToInt(defaultDamage * (1 - (distance / range)));
-
-            var targetEntity = hit.collider.GetComponent<GameEntity>();
-            targetEntity?.TakeDamage(damage);
-        }
-        else
-        {
-            this.NPC!.StartCoroutine(FireRayEffect(_firePoint.position + direction * range));
-        }
-
-        _audioSource.PlayOneShot(_gunshotSounds[UnityEngine.Random.Range(0, _gunshotSounds.Length)]);
-    }
-
-    IEnumerator FireRayEffect(Vector3 hitPoint)
-    {
-        _lineRenderer.SetPosition(0, _firePoint.position);
-        _lineRenderer.SetPosition(1, hitPoint);
-        _lineRenderer.enabled = true;
-
-        yield return new WaitForSeconds(0.05f);
-
-        _lineRenderer.enabled = false;
-        // // OnGunFired?.Invoke();
     }
 }

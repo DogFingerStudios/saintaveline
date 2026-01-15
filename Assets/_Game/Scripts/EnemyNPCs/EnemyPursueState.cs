@@ -8,23 +8,23 @@ public class EnemyPursueState : NPCState
     private UnityEngine.AI.NavMeshAgent? _agent = null;
     private AudioClip? _warningSound;
     private AudioClip? _willFindYouSound;
+    private float _nextFireTime = 0f;
 
     private readonly GameEntity _targetEntity;
     
-
     // TODO: this is a poor man's way to stop chasing, eventually we will want to be a 
-    // little smarter -- for example, if the NPC cannot "see" the target, then the NPC could
-    // go to the last position it saw the target, and if the target is not in range or
+    // little smarter -- for example, if the NPC cannot "see" the Target, then the NPC could
+    // go to the last position it saw the Target, and if the Target is not in range or
     // not visible, then the NPC could return to patrol state
     private float _detectionRange;
 
     /// <param name="npc">The NPC to which this state is attached.</param>
-    /// <param name="target">The target Transform that the NPC will pursue.</param>
+    /// <param name="target">The Target Transform that the NPC will pursue.</param>
     public EnemyPursueState(BaseNPC npc, GameEntity target)
         : base(npc)
     {
         // TODO: CHANGE ME!!
-        this.NPC!.target = target.transform;
+        this.NPC!.Target = target.transform;
 
         if (this.NPC is not EnemyNPC)
         {
@@ -34,7 +34,7 @@ public class EnemyPursueState : NPCState
         _warningSound = Resources.Load<AudioClip>("Sounds/Freeze");
         _willFindYouSound = Resources.Load<AudioClip>("Sounds/IWillFindYou");
 
-        _targetEntity = this.NPC!.target!.GetComponent<GameEntity>();
+        _targetEntity = this.NPC!.Target!.GetComponent<GameEntity>();
 
     }
 
@@ -62,7 +62,7 @@ public class EnemyPursueState : NPCState
         if (_agent == null) return null;
         if (!_targetEntity!.IsAlive)
         {
-            // target is dead, go back to idle state
+            // Target is dead, go back to idle state
             _agent.isStopped = true;
             _agent.ResetPath();
 
@@ -70,7 +70,7 @@ public class EnemyPursueState : NPCState
                 NPCStateReturnValue.ActionType.PopState);
         }
         
-        float distance = Vector3.Distance(this.NPC!.transform.position, this.NPC.target.position);
+        float distance = Vector3.Distance(this.NPC!.transform.position, this.NPC.Target.position);
         if (distance < this.NPC!.stopDistance)
         {
             _agent.isStopped = true;
@@ -84,7 +84,7 @@ public class EnemyPursueState : NPCState
 
         if (distance <= _detectionRange)
         {
-            _agent.SetDestination(this.NPC.target.transform.position);
+            _agent.SetDestination(this.NPC.Target.transform.position);
         }
         else
         {
@@ -92,9 +92,18 @@ public class EnemyPursueState : NPCState
             _agent.isStopped = true;
             _agent.ResetPath();
 
-            // target is out of range, go back to idle state which we pushed earlier
+            // Target is out of range, go back to idle state which we pushed earlier
             return new NPCStateReturnValue(
                 NPCStateReturnValue.ActionType.PopState);
+        }
+
+        if (Time.time >= _nextFireTime)
+        {
+            this.NPC!.EquippedItem?.Attack();
+
+            // get a random time between 0.5 and 1.5 seconds
+            float randomTime = UnityEngine.Random.Range(0.5f, 1.5f);
+            _nextFireTime = Time.time + randomTime;
         }
 
         return null;

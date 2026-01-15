@@ -24,10 +24,10 @@ public class NPCIdleState : NPCState
 
     public override NPCStateReturnValue? Update()
     {
-        if (this.NPC == null || this.NPC.target == null) return null;
+        if (this.NPC == null || this.NPC.Target == null) return null;
         
-        // turn in the direction of the target
-        Vector3 direction = this.NPC.target.position - this.NPC.transform.position;
+        // turn in the direction of the Target
+        Vector3 direction = this.NPC.Target.position - this.NPC.transform.position;
         direction.y = 0f; // Keep rotation flat
         if (direction.sqrMagnitude > 0.001f)
         {

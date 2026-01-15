@@ -10,14 +10,14 @@ public class MentalState
     public Func<bool> ShouldCalmDown;
     public Func<bool> ShouldRegainComfort;
 
-    [Tooltip("The entity's comfort level, ranging from 0 (uncomfortable) to 1 (comfortable)")]
-    [Range(0f, 1f)] public float Comfort = 0.5f;
+    [Tooltip("The entity's comfort level, ranging from -1 (uncomfortable) to 1 (comfortable)")]
+    [Range(-1f, 1f)] public float Comfort = 0.5f;
 
     [Tooltip("How quickly the entity recovers comfort over time (higher = faster recovery)")]
     [Range(0f, 1f)] public float BaseComfortRate = 0.1f;
 
-    // The entity's panic level, ranging from -1 (calm) to 1 (panicked).
-    [Tooltip("The entity's panic level, ranging from 0 (calm) to 1 (panicked)")]
+    // AI: The entity's panic level, ranging from -1 (panicked) to 1 (calm).
+    [Tooltip("The entity's panic level, ranging from -1 (panicked) to 1 (calm)")]
     [Range(-1f, 1f)] public float Calmness = 0f;
 
     [Tooltip("How quickly the entity recovers calmness over time (higher = faster recovery)")]
@@ -39,11 +39,11 @@ public class MentalState
     {
         if (ShouldCalmDown?.Invoke() != true) return;
 
-        // the more calm they are the faster they get calmer
+        // AI: the more calm they are the faster they get calmer
         float calmMultiplier = Mathf.InverseLerp(-1f, 1f, Calmness);
 
-        // Comfort increases recovery speed (up to double), discomfort slows it down (down to zero)
-        // map from [-1, 1] → [0, 2] → then clamp to [0,1]
+        // AI: Comfort increases recovery speed (up to double), discomfort slows it down (down to zero)
+        // AI: map from [-1, 1] → [0, 2] → then clamp to [0,1]
         float comfortMultiplier = Mathf.Clamp01(Comfort + 1f); 
 
         float actualRecovery = BaseCalmRate * (1f + calmMultiplier) * comfortMultiplier;

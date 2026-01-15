@@ -12,7 +12,7 @@ public class NPCFollowIdleState : NPCState
             throw new System.Exception("BaseNPC is not a FriendlyNPC. Cannot enter idle state.");
         }
 
-        if (this.NPC.target == null)
+        if (this.NPC.Target == null)
         {
             throw new System.Exception("Target is null. Cannot enter follow state.");
         }
@@ -29,19 +29,19 @@ public class NPCFollowIdleState : NPCState
     public override NPCStateReturnValue? Update()
     {
         // TODO: logging?
-        if (this.NPC == null || this.NPC.target == null) return null;
+        if (this.NPC == null || this.NPC.Target == null) return null;
 
-        float distance = Vector3.Distance(this.NPC.transform.position, this.NPC.target.position);
+        float distance = Vector3.Distance(this.NPC.transform.position, this.NPC.Target.position);
         if (distance > this.NPC.stopDistance && distance < this.NPC.DetectionDistance)
         {
-            // if the target is within detection distance, switch to follow state
+            // if the Target is within detection distance, switch to follow state
             return new NPCStateReturnValue(
                 NPCStateReturnValue.ActionType.ChangeState, 
                 new NPCFollowState(this.NPC));
         }
 
-        // turn in the direction of the target
-        Vector3 direction = this.NPC.target.position - this.NPC.transform.position;
+        // turn in the direction of the Target
+        Vector3 direction = this.NPC.Target.position - this.NPC.transform.position;
         direction.y = 0f; // Keep rotation flat
         if (direction.sqrMagnitude > 0.001f)
         {

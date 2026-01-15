@@ -1,5 +1,6 @@
 #nullable enable
 
+using NUnit.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,10 +45,10 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     [Tooltip("The distance at which the NPC will stop moving towards the target")]
     public float stopDistance = 1f;
 
-    public Transform target = null!;
+    // The target the NPC is interested in (e.g., the NPC this object is attacking)
+    public Transform Target = null!; 
 
-
-#region Interactable Interface Implementation
+    #region Interactable Interface Implementation
 
     public virtual string HelpText => $"{this.name}";
     public virtual void OnFocus() { }
@@ -148,5 +149,29 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     {
         // string objectName = this.name;
         // Debug.Log($"Object {objectName} heard a {stim.Kind} at {stim.Position}");
+    }
+
+    public override Vector3 DirectionToTarget(bool addFuzziness = false)
+    {
+        Assert.IsNotNull(_entityProfile, "BaseNPC.DirectionToTarget: EntityProfile is null.");
+        if (Target == null) return Vector3.zero;
+        if (!addFuzziness) return (Target.position - transform.position).normalized;
+
+        Vector3 direction = (Target.position - transform.position).normalized;
+
+        float fuzziness = Mathf.Lerp(0.7f, 0f, (_entityProfile.MentalState.Calmness + 1f) / 2f);
+        
+        if (fuzziness > 0f)
+        {
+            direction += new Vector3(
+                UnityEngine.Random.Range(-fuzziness, fuzziness),
+                UnityEngine.Random.Range(-fuzziness, fuzziness),
+                UnityEngine.Random.Range(-fuzziness, fuzziness)
+            );
+
+            direction.Normalize();
+        }
+
+        return direction;
     }
 }

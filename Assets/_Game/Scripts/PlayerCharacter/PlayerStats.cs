@@ -12,7 +12,12 @@ public class PlayerStats : CharacterEntity
     {
         if (Health <= 0)
         {
-            SceneManager.LoadScene("GameOver"); 
+            SceneManager.LoadScene("GameOver");
         }
+    }
+
+    public override Vector3 DirectionToTarget(bool addFuzziness = false)
+    {
+        return Camera.main.transform.forward;
     }
 }

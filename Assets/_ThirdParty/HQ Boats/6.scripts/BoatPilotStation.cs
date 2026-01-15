@@ -41,7 +41,7 @@ public class BoatPilotStation : MonoBehaviour
 
     private void TryBeginPiloting()
     {
-        if (_playerEntity.EquippedItem2 != null)
+        if (_playerEntity.EquippedItem != null)
         {
             BottomTypewriter.Instance.EnqueueError("You must unequip your item before piloting the boat.");
             return;

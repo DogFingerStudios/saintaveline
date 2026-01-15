@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using NUnit.Framework;
 
 public class Pistol1Entity : ItemEntity
 {
@@ -12,7 +13,6 @@ public class Pistol1Entity : ItemEntity
     private Coroutine? _attackCoroutine;
     private PistolItemData? _pistolItemData;
     private AudioSource? _audioSource;
-    private Camera? _mainCamera;
     private LineRenderer _lineRenderer;
     private Transform? _firePoint;
     private bool _canFire = true;
@@ -40,7 +40,6 @@ public class Pistol1Entity : ItemEntity
         }
 
         _audioSource = Instantiate(_pistolItemData!.AudioSourcePrefab);
-        _mainCamera = Camera.main;
 
         _firePoint = new GameObject("FirePoint").transform;
         _firePoint.SetParent(this.transform);
@@ -119,18 +118,15 @@ public class Pistol1Entity : ItemEntity
         _attackCoroutine = null;
     }
 
-    private Vector3 GetFireDirection()
-    {
-        Vector3 screenCenter = new Vector3(_mainCamera!.pixelWidth / 2f, _mainCamera.pixelHeight / 2f, 0f);
-        Ray ray = _mainCamera.ScreenPointToRay(screenCenter);
-        Vector3 targetPoint = ray.GetPoint(_pistolItemData!.FireRange);
-        return (targetPoint - _firePoint!.position).normalized;
-    }
-
     void Shoot()
     {
-        Vector3 direction = GetFireDirection();
-        
+        Assert.IsNotNull(this.OwnerEntity, "Pistol1Entity.Shoot: OwnerEntity is null.");
+
+        var owner = this.OwnerEntity as CharacterEntity;
+        Assert.IsNotNull(owner, "Pistol1Entity.Shoot: OwnerEntity is not a CharacterEntity.");
+
+        Vector3 direction = owner!.DirectionToTarget(true);
+
         if (Physics.Raycast(_firePoint!.position, direction, out RaycastHit hit, _pistolItemData!.FireRange))
         {
             var entity = hit.collider.GetComponent<GameEntity>();

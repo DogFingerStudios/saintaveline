@@ -60,11 +60,6 @@ public class PlayerInteractor : MonoBehaviour
 
                     FocusedObject = hit.collider.gameObject;
                 }
-
-                if (Input.GetKeyDown(KeyCode.Q))
-                {
-                    _currentFocus!.Interact();
-                }
             }
             else
             {
@@ -127,7 +122,7 @@ public class PlayerInteractor : MonoBehaviour
         // pick an item up and equip it
         if (Input.GetKeyDown(KeyCode.R))
         {
-            if (_playerEntity!.EquippedItem2 == null)
+            if (_playerEntity!.EquippedItem == null)
             {
                 if (FocusedObject == null) return;
 
@@ -173,12 +168,17 @@ public class PlayerInteractor : MonoBehaviour
                 _playerEntity!.AddItemToInventory(itemEntity);
                 BottomTypewriter.Instance.Enqueue("Added item '" + itemEntity.ItemData!.ItemName + "' to inventory.");
             }
-            else if (_playerEntity!.EquippedItem2 != null)
+            else if (_playerEntity!.EquippedItem != null)
             {
-                var itemEntity = _playerEntity!.EquippedItem2;
-                _playerEntity!.AddItemToInventory(_playerEntity!.EquippedItem2!);
+                var itemEntity = _playerEntity!.EquippedItem;
+                _playerEntity!.AddItemToInventory(_playerEntity!.EquippedItem!);
                 BottomTypewriter.Instance.Enqueue("Added item '" + itemEntity.ItemData!.ItemName + "' to inventory.");
             }
+        }
+        else if (Input.GetKeyDown(KeyCode.Q) && _currentFocus != null)
+        {
+            InputManager.Instance.SetInputState(InputState.InteractionMenu);
+            _currentFocus!.Interact();
         }
 
         // mouse interaction

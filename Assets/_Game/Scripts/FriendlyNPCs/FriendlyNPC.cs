@@ -38,7 +38,7 @@ public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
         get
         {
             if (!this.IsAlive) return $"{this.name} is dead";
-            return $"Press [E] to interact with {this.name}";
+            return $"Press [Q] to interact with {this.name}";
         }
     }
 

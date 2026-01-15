@@ -117,16 +117,17 @@ public class InteractionManager : MonoBehaviour
     void Awake()
     {
         _instance = this;
+        InputManager.Instance.RegisterInputHandler(InputState.InteractionMenu, this.ProcessInput);
     }
 
-    // Update is called once per frame
-    void Update()
+    void ProcessInput()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Q))
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             CloseMenu();
+            InputManager.Instance.SetInputState(InputState.Gameplay);
         }
     }
 }
