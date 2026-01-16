@@ -6,16 +6,16 @@ using UnityEngine;
 
 public class MissionManager : MonoBehaviour
 {
-    [SerializeField] private RectTransform MinimapUIObject;
-    [SerializeField] private MissionSO InitialMission;
-    [SerializeField] private MissionOverlayController MissionOverlay;
+    [SerializeField] private RectTransform MinimapUIObject = null!;
+    [SerializeField] private MissionSO InitialMission = null!;
+    [SerializeField] private MissionOverlayController MissionOverlay = null!;
 
     // we assume that the minimap camera is a child of the minimap object
-    [SerializeField] private Camera MinimapCamera;
+    [SerializeField] private Camera MinimapCamera = null!;
 
     Mission? CurrentMission;
     RunOnce? _runonce;
-    RunOnce _init;
+    RunOnce _init = null!;
 
     public void Awake()
     {
