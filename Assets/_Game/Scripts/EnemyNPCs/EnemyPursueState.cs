@@ -10,6 +10,10 @@ public class EnemyPursueState : NPCState
     private AudioClip? _willFindYouSound;
     private float _nextFireTime = 0f;
 
+    // AI: Controls how often the destination is updated (in seconds)
+    private const float _destinationUpdateInterval = 0.5f;
+    private float _lastDestinationUpdateTime = 0f;
+
     private readonly GameEntity _targetEntity;
     
     // TODO: this is a poor man's way to stop chasing, eventually we will want to be a 
@@ -57,6 +61,15 @@ public class EnemyPursueState : NPCState
         // nothing to do
     }
 
+    private void SetDestination(Vector3 targetPosition)
+    {
+        if (Time.time >= _lastDestinationUpdateTime + _destinationUpdateInterval)
+        {
+            _agent.SetDestination(targetPosition);
+            _lastDestinationUpdateTime = Time.time;
+        }
+    }
+
     public override NPCStateReturnValue? Update()
     {
         if (_agent == null) return null;
@@ -84,7 +97,7 @@ public class EnemyPursueState : NPCState
 
         if (distance <= _detectionRange)
         {
-            _agent.SetDestination(this.NPC.Target.transform.position);
+            this.SetDestination(this.NPC.Target.position);
         }
         else
         {
