@@ -5,7 +5,7 @@ using UnityEngine;
 [NPCStateTag("EnemyPursue")]
 public class EnemyPursueState : NPCState
 {
-    private UnityEngine.AI.NavMeshAgent? _agent = null;
+    private UnityEngine.AI.NavMeshAgent _agent = null!;
     private AudioClip? _warningSound;
     private AudioClip? _willFindYouSound;
     private float _nextFireTime = 0f;
@@ -44,8 +44,7 @@ public class EnemyPursueState : NPCState
 
     public override void Enter()
     {
-        _agent = this.NPC!.GetComponent<UnityEngine.AI.NavMeshAgent>();
-        if (_agent == null)
+        if (!this.NPC!.TryGetComponent<UnityEngine.AI.NavMeshAgent>(out _agent))
         {
             throw new System.Exception("NavMeshAgent component is missing on the NPC.");
         }
@@ -65,14 +64,13 @@ public class EnemyPursueState : NPCState
     {
         if (Time.time >= _lastDestinationUpdateTime + _destinationUpdateInterval)
         {
-            _agent.SetDestination(targetPosition);
+            _agent!.SetDestination(targetPosition);
             _lastDestinationUpdateTime = Time.time;
         }
     }
 
     public override NPCStateReturnValue? Update()
     {
-        if (_agent == null) return null;
         if (!_targetEntity!.IsAlive)
         {
             // Target is dead, go back to idle state
