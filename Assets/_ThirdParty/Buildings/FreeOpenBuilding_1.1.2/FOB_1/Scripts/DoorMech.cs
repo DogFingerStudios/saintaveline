@@ -8,7 +8,7 @@ public class DoorMech : MonoBehaviour, IInteractable
     // Cached the transform. Using transform directly always
     // uses GetComponent behind the scenes, so this script was
     // taking up about 50% of the CPU time (at time of change) with the GetComponent call alone.
-    private Transform _transform;
+    private Transform _transform = null!;
     public Vector3 OpenRotation, CloseRotation;
     public float rotSpeed = 1f;
     public float interactionDistance = 3f;

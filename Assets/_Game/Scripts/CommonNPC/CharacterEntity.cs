@@ -15,7 +15,7 @@ public class CharacterEntity : GameEntity
 {
     public const UInt16 MaxInventorySize = 10;
 
-    [SerializeField] public Transform EquippedItemPos; // the positio where equipped items are held
+    [SerializeField] public Transform EquippedItemPos = null!; // the positio where equipped items are held
 
     private readonly List<ItemEntity?> _inventory = Enumerable.Repeat<ItemEntity?>(null, MaxInventorySize).ToList();
     public IReadOnlyList<ItemEntity?> Inventory => _inventory.AsReadOnly();

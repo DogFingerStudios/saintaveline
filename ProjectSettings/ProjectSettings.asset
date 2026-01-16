@@ -661,7 +661,9 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols: {}
-  additionalCompilerArguments: {}
+  additionalCompilerArguments:
+    Standalone:
+    - -warnaserror+
   platformArchitecture: {}
   scriptingBackend:
     Standalone: 1

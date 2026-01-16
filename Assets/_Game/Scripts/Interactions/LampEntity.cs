@@ -5,14 +5,14 @@ using UnityEngine;
 
 public class LampEntity : ItemEntity
 {
-    public Light Light;
+    public Light Light = null!;
 
     public override string HoverText
     {
         get { return "Press [E] to toggle lamp"; }
     }
 
-    public AudioClip lampSwitchSound;
+    public AudioClip lampSwitchSound = null!;
 
     [Header("Flickering Settings")]
     public float minTurnOnDelay = 0f;

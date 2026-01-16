@@ -10,7 +10,7 @@ using UnityEngine;
 public class BoatDriver : MonoBehaviour
 {
     [Header("References")]
-    public BoatWaterDetector WaterDetector;
+    public BoatWaterDetector WaterDetector = null!;
 
     [Header("Engine")]
     [SerializeField] private float _maxThrust = 50000f; // AI: Newtons at full ahead
@@ -52,14 +52,14 @@ public class BoatDriver : MonoBehaviour
     [SerializeField] private float _maxSpeedForPitch = 20f; // AI: normalize pitch to this speed (m/s); adjust based on boat
 
     [Header("Dismount Points")]
-    [SerializeField] private Transform _dismountPoint1;
+    [SerializeField] private Transform _dismountPoint1 = null!;
 
     [Header("Boat Sounds")]
-    [SerializeField] private AudioSource _motorSound;
-    [SerializeField] private AudioSource _idleFloatingSound;
+    [SerializeField] private AudioSource _motorSound = null!;
+    //[SerializeField] private AudioSource _idleFloatingSound = null!;
    
     // AI: runtime state
-    private Rigidbody _rb;
+    private Rigidbody _rb = null!;
     private bool _isPiloting = false;
     private float _throttleTarget = 0f; // AI: -1..+1
     private float _throttle = 0f; // AI: -1..+1 smoothed
@@ -75,9 +75,9 @@ public class BoatDriver : MonoBehaviour
     private Quaternion _originalCamLocalRot;
     private Transform _originalPlayerParent = null!;
     
-    private FPSMovement? _fpsMovement;
-    private FootstepAudio? _footstepAudio;
-    private CharacterController? _characterController;
+    private FPSMovement? _fpsMovement = null!;
+    private FootstepAudio? _footstepAudio = null!;
+    private CharacterController? _characterController = null!;
 
     private void Awake()
     {
