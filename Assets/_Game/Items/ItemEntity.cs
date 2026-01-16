@@ -93,8 +93,10 @@ public class ItemEntity : GameEntity, ItemInteractable
         this.Awake();
     }
 
-    protected virtual void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {

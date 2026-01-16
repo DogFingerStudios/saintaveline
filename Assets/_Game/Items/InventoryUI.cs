@@ -14,17 +14,17 @@ using UnityEditor;
 // This script is attached to the Inventory UI dialog prefab. 
 public class InventoryUI : MonoBehaviour
 {
-    public static InventoryUI Instance { get; private set; }
+    public static InventoryUI Instance { get; private set; } = null!;
 
-    [SerializeField] private Button _equipButton;
-    [SerializeField] private Button _dropButton;
-    [SerializeField] private Button _useButton;
-    [SerializeField] private Button _transferButton;
-    [SerializeField] private TMP_Dropdown _transferDropdown;
-    [SerializeField] private Button _closeButton;
-    [SerializeField] private Canvas _inventoryDlg;
-    [SerializeField] private Transform _contentPanel;   // Reference to the Content object in ScrollView
-    [SerializeField] private GameObject _itemPrefab;    // Reference to the item UI template (e.g., Button)
+    [SerializeField] private Button _equipButton = null!;
+    [SerializeField] private Button _dropButton = null!;
+    [SerializeField] private Button _useButton = null!;
+    [SerializeField] private Button _transferButton = null!;
+    [SerializeField] private TMP_Dropdown _transferDropdown = null!;
+    [SerializeField] private Button _closeButton = null!;
+    [SerializeField] private Canvas _inventoryDlg = null!;
+    [SerializeField] private Transform _contentPanel = null!;   // Reference to the Content object in ScrollView
+    [SerializeField] private GameObject _itemPrefab = null!;    // Reference to the item UI template (e.g., Button)
     [SerializeField] private Color _emptySlotColor = new Color(0.2f, 0.2f, 0.2f, 1.0f);
 
     private List<GameObject> _itemObjects = new List<GameObject>(); // Track instantiated items
@@ -194,7 +194,7 @@ public class InventoryUI : MonoBehaviour
                 var tag = itemobj.GetComponent<InventoryItemHelper>();
                 if (tag != null && tag.ItemEntity != null && _owner != null)
                 {
-                    string msg;
+                    string msg = null!;
                     if (IsEquippedItemSelected())
                     {
                         _owner.AddItemToInventory(tag.ItemEntity);

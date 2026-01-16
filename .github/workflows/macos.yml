@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - dev/*
+      # - dev/*
     paths:
       - .github/workflows/macos.yml
       - Assets/**

@@ -13,7 +13,7 @@ public class Pistol1Entity : ItemEntity
     private Coroutine? _attackCoroutine;
     private PistolItemData? _pistolItemData;
     private AudioSource? _audioSource;
-    private LineRenderer _lineRenderer;
+    private LineRenderer _lineRenderer = null!;
     private Transform? _firePoint;
     private bool _canFire = true;
 

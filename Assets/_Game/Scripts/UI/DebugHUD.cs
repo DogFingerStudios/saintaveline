@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class DebugHUD : MonoBehaviour
 {
-    [SerializeField] private GameObject _debugPanel;
+    [SerializeField] private GameObject _debugPanel = null!;
 
     [Header("Object to measure distance to")]
-    [SerializeField] private TextMeshProUGUI distanceText;
-    [SerializeField] private GameObject distanceObject;
+    [SerializeField] private TextMeshProUGUI distanceText = null!;
+    [SerializeField] private GameObject distanceObject = null!;
 
-    private Transform _playerTransform;
+    private Transform _playerTransform = null!;
     
     void Start()
     {
