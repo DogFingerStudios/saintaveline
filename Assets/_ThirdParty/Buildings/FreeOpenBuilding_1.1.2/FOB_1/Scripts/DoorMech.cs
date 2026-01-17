@@ -18,7 +18,7 @@ public class DoorMech : MonoBehaviour, IInteractable
 
     private bool _doorBool;
 
-    private WaitForSeconds _doorAnimationDelay = new(0.01f);
+    private readonly WaitForSeconds _doorAnimationDelay = new(0.01f);
 
 
     void Awake()
