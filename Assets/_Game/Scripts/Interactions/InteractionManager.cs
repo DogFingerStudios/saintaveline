@@ -25,7 +25,6 @@ public struct InteractionData
 // This script is attached to the `InteractMenus` canvas in the Hierarchy. `InteractMenus` is the parent
 // of all the interact menus in the game. This class is responsible for opening and closing the interact
 // menu, acreating the buttons, and handling button clicks
-[DefaultExecutionOrder(1)]
 public class InteractionManager : MonoBehaviour
 {
     [SerializeField] private GameObject _buttonPrefab;

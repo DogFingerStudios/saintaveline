@@ -10,7 +10,6 @@ using UnityEngine;
 /// interactable object, displaying the help text, and invoking the Item's
 /// interaction menu.
 /// </summary>
-[DefaultExecutionOrder(1)]
 public class PlayerInteractor : MonoBehaviour
 {
 

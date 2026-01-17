@@ -13,7 +13,7 @@ public enum InputState
     InteractionMenu
 }
 
-[DefaultExecutionOrder(0)]
+[DefaultExecutionOrder(-1)]
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
