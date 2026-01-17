@@ -17,6 +17,9 @@ public class Pistol1Entity : ItemEntity
     private Transform? _firePoint;
     private bool _canFire = true;
 
+    private readonly WaitForSeconds _fireRayDelay = new(.05f);
+
+
     // this is called AFTER the item is equipped
     public override void OnEquipped()
     {
@@ -143,20 +146,21 @@ public class Pistol1Entity : ItemEntity
         }
     }
 
+    private SoundStimulus _gunshotStimulus = new();
     IEnumerator FireRayEffect(Vector3 hitPoint)
     {
         _lineRenderer.SetPosition(0, _firePoint!.position);
         _lineRenderer.SetPosition(1, hitPoint);
         _lineRenderer.enabled = true;
 
-        yield return new WaitForSeconds(0.05f);
+        // Play gunshot sound
+        _gunshotStimulus.Position = this.transform.position;
+        _gunshotStimulus.Kind = StimulusKind.Gunshot;
+        _gunshotStimulus.HearingRange = _pistolItemData!.AudioRange;
+        StimulusBus.Emit2(_gunshotStimulus);
 
-        _lineRenderer.enabled = false;
-        StimulusBus.Emit2(new SoundStimulus
-        {
-            Position = this.transform.position,
-            Kind = StimulusKind.Gunshot,
-            HearingRange = _pistolItemData!.AudioRange
-        });
+        yield return _fireRayDelay;
+
+        _lineRenderer.enabled = false;        
     }
 }
