@@ -79,7 +79,7 @@ public class BoatDriver : MonoBehaviour
     private FootstepAudio? _footstepAudio = null!;
     private CharacterController? _characterController = null!;
 
-    private void Awake()
+    private void Start()
     {
         var playerObject = GameObject.FindGameObjectWithTag("Player");
         _fpsMovement = playerObject.GetComponent<FPSMovement>();
