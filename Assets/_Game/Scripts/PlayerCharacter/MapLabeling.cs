@@ -1,10 +1,10 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 // this script is attached to the `Player` character and contains the 
 // functionality to marking and naming points on the map
+//[DefaultExecutionOrder(-1)]
 public class MapLabeler : MonoBehaviour
 {
     public static MapLabeler Instance { get; private set; }
@@ -31,13 +31,8 @@ public class MapLabeler : MonoBehaviour
     private MapLabelingState _currentState = MapLabelingState.Idle;
     private PlayerEntity _playerStats;
 
-    MapLabeler()
+    private void Awake()
     {
-        if (Instance != null)
-        {
-            throw new Exception("MapLabeler: Multiple instances detected. MapLabeler is a singleton and there should only be one instance in the scene.");
-        }
-
         Instance = this;
     }
 
@@ -60,7 +55,7 @@ public class MapLabeler : MonoBehaviour
         _crossHair.SetActive(false);
 
         _circleInstance = Instantiate(_circlePrefab);
-    }    
+    }
 
     private void ProcessInput()
     {
@@ -126,7 +121,8 @@ public class MapLabeler : MonoBehaviour
     {
         var inputField = _dialogInstance.transform.Find("LabelInputField").GetComponent<TMP_InputField>();
         string labelName = inputField.text.Trim();
-        if (string.IsNullOrEmpty(labelName)) return;
+        if (string.IsNullOrEmpty(labelName))
+            return;
 
         _currentState = MapLabelingState.Idle;
         RestoreUI();
