@@ -12,6 +12,7 @@ using Assert = UnityEngine.Assertions.Assert;
 using UnityEditor;
 
 // This script is attached to the Inventory UI dialog prefab. 
+[DefaultExecutionOrder(1)]
 public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance { get; private set; } = null!;
