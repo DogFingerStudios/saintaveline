@@ -82,12 +82,10 @@ public class DrawerMech : MonoBehaviour, IInteractable
         _drawerBool = !_drawerBool;
         if (_drawerBool)
         {
-            Debug.Log("Open this mthfkn drawer!");
             StartOpenDrawer();
         }
         else
         {
-            Debug.Log("Close this mthfkn drawer!");
             StartCloseDrawer();
         }
     }
