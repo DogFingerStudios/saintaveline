@@ -13,7 +13,6 @@ public enum InputState
     InteractionMenu
 }
 
-[DefaultExecutionOrder(-1)]
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
@@ -22,8 +21,13 @@ public class InputManager : MonoBehaviour
     Dictionary<InputState, Action> _inputHandlers = new Dictionary<InputState, Action>();
     Action _currentHandler;
 
-    private void Awake()
+    InputManager()
     {
+        if (Instance != null)
+        {
+            throw new Exception("InputManager: Multiple instances detected. InputManager is a singleton and there should only be one instance in the scene.");
+        }
+
         Instance = this;
     }
 
@@ -88,7 +92,7 @@ public class InputManager : MonoBehaviour
                 CodexOverlayController.Instance.OpenCodexOverlay(playerEntity);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Comma)
+        else if (Input.GetKeyDown(KeyCode.Comma) 
             && CurrentState == InputState.Gameplay)
         {
             MapLabeler.Instance.Init();
