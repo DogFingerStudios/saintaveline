@@ -57,7 +57,7 @@ public class BoatDriver : MonoBehaviour
     [Header("Boat Sounds")]
     [SerializeField] private AudioSource _motorSound = null!;
     //[SerializeField] private AudioSource _idleFloatingSound = null!;
-   
+
     // AI: runtime state
     private Rigidbody _rb = null!;
     private bool _isPiloting = false;
@@ -74,12 +74,12 @@ public class BoatDriver : MonoBehaviour
     private Vector3 _originalCamLocalPos;
     private Quaternion _originalCamLocalRot;
     private Transform _originalPlayerParent = null!;
-    
+
     private FPSMovement? _fpsMovement = null!;
     private FootstepAudio? _footstepAudio = null!;
     private CharacterController? _characterController = null!;
 
-    private void Awake()
+    private void Start()
     {
         var playerObject = GameObject.FindGameObjectWithTag("Player");
         _fpsMovement = playerObject.GetComponent<FPSMovement>();
@@ -234,13 +234,13 @@ public class BoatDriver : MonoBehaviour
         // AI: rudder torque scales with forward speed to avoid spinning in place
         Vector3 vLocal = transform.InverseTransformDirection(_rb.linearVelocity);
         float speedFactor = Mathf.Clamp01(Mathf.Abs(vLocal.z) / 2f); // AI: scale onset around 2 m/s
-        float yawTorque = _steer * _rudderTorque * (0.3f + 0.7f * speedFactor);        
+        float yawTorque = _steer * _rudderTorque * (0.3f + 0.7f * speedFactor);
 
         // AI: quadratic-like water resistance
         // AI: lateral (sideways) resistance
         Vector3 lateralLocal = new Vector3(vLocal.x, 0f, 0f);
         Vector3 lateralWorld = transform.TransformDirection(lateralLocal);
-        Vector3 lateralDrag = -lateralWorld * _lateralWaterResistance * Mathf.Abs(vLocal.x);        
+        Vector3 lateralDrag = -lateralWorld * _lateralWaterResistance * Mathf.Abs(vLocal.x);
 
         // AI: longitudinal drag
         Vector3 longWorld = transform.forward * vLocal.z;
@@ -363,7 +363,7 @@ public class BoatDriver : MonoBehaviour
     }
 
     // AI: utility to find and disable a component by type name
-    private T? TryDisable<T>(Transform root, string typeName) 
+    private T? TryDisable<T>(Transform root, string typeName)
         where T : MonoBehaviour
     {
         if (root == null)
