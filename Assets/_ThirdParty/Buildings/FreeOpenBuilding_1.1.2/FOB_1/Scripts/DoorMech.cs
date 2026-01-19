@@ -23,7 +23,7 @@ public class DoorMech : MonoBehaviour, IInteractable
 
     void Awake()
     {
-        _transform = GetComponent<Transform>();
+        _transform = this.transform;
         _doorBool = false;
     }
 
@@ -72,7 +72,7 @@ public class DoorMech : MonoBehaviour, IInteractable
     private IEnumerator AnimateDoor()
     {
         Vector3 targetRotation = _doorBool ? OpenRotation : CloseRotation;
-        while(_transform.localRotation.eulerAngles != targetRotation)
+        while (_transform.localRotation.eulerAngles != targetRotation)
         {
             _transform.localRotation = Quaternion.Lerp(_transform.localRotation, Quaternion.Euler(targetRotation), rotSpeed * Time.deltaTime);
             yield return _doorAnimationDelay;

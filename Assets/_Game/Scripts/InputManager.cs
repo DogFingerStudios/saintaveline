@@ -24,6 +24,11 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null)
+        {
+            throw new Exception("InputManager: Multiple instances detected. InputManager is a singleton and there should only be one instance in the scene.");
+        }
+
         Instance = this;
     }
 

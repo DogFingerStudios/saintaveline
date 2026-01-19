@@ -121,8 +121,7 @@ public class MapLabeler : MonoBehaviour
     {
         var inputField = _dialogInstance.transform.Find("LabelInputField").GetComponent<TMP_InputField>();
         string labelName = inputField.text.Trim();
-        if (string.IsNullOrEmpty(labelName))
-            return;
+        if (string.IsNullOrEmpty(labelName)) return;
 
         _currentState = MapLabelingState.Idle;
         RestoreUI();
