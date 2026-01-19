@@ -2,40 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Transform))]
 public class DrawerMech : MonoBehaviour, IInteractable
 {
+    private Transform _transform;
+
     public Vector3 OpenPosition, ClosePosition;
 
     float _moveSpeed;
     float _lerpTimer;
     public bool _drawerBool;
 
+    private readonly WaitForSeconds _drawerAnimationDelay = new(0.01f);
+
     void Start()
     {
+        _transform = GetComponent<Transform>();
         _drawerBool = false;
     }
-        
-    void OnTriggerStay(Collider col)
+
+    private void StartOpenDrawer()
     {
-        if (col.gameObject.tag == ("Player") && Input.GetKeyDown(KeyCode.Q))
-        {
-            _drawerBool = !_drawerBool;
-        }
+        StopCoroutine(nameof(OpenDrawer));
+        StartCoroutine(nameof(OpenDrawer));
     }
 
-    void Update()
+    private void StartCloseDrawer()
     {
-        if (_drawerBool)
+        StopCoroutine(nameof(CloseDrawer));
+        StartCoroutine(nameof(CloseDrawer));
+    }
+
+    private IEnumerator OpenDrawer()
+    {
+        while (_transform.localPosition != OpenPosition)
         {
             _moveSpeed = +1f;
             _lerpTimer = Mathf.Clamp(_lerpTimer + Time.deltaTime * _moveSpeed, 0f, 1f);
             transform.localPosition = Vector3.Lerp(ClosePosition, OpenPosition, _lerpTimer);
+            yield return _drawerAnimationDelay;
         }
-        else
+    }
+
+    private IEnumerator CloseDrawer()
+    {
+        while (_transform.localPosition != ClosePosition)
         {
             _moveSpeed = -1f;
             _lerpTimer = Mathf.Clamp(_lerpTimer + Time.deltaTime * _moveSpeed, 0f, 1f);
             transform.localPosition = Vector3.Lerp(ClosePosition, OpenPosition, _lerpTimer);
+            yield return _drawerAnimationDelay;
         }
     }
 
@@ -63,7 +79,15 @@ public class DrawerMech : MonoBehaviour, IInteractable
 
     void IInteractable.Interact(GameEntity interactor)
     {
-        this._drawerBool = !this._drawerBool;
+        _drawerBool = !_drawerBool;
+        if (_drawerBool)
+        {
+            StartOpenDrawer();
+        }
+        else
+        {
+            StartCloseDrawer();
+        }
     }
 }
 

@@ -13,6 +13,7 @@ public enum InputState
     InteractionMenu
 }
 
+[DefaultExecutionOrder(-1)]
 public class InputManager : MonoBehaviour
 {
     public static InputManager Instance { get; private set; }
@@ -21,7 +22,7 @@ public class InputManager : MonoBehaviour
     Dictionary<InputState, Action> _inputHandlers = new Dictionary<InputState, Action>();
     Action _currentHandler;
 
-    InputManager()
+    private void Awake()
     {
         if (Instance != null)
         {
@@ -92,7 +93,7 @@ public class InputManager : MonoBehaviour
                 CodexOverlayController.Instance.OpenCodexOverlay(playerEntity);
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Comma) 
+        else if (Input.GetKeyDown(KeyCode.Comma)
             && CurrentState == InputState.Gameplay)
         {
             MapLabeler.Instance.Init();
