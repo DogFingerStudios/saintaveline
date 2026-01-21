@@ -39,7 +39,7 @@ public class BoatDriver : MonoBehaviour
     [SerializeField] private float _cameraLerp = 10f; // AI: how fast camera snaps to anchor
 
     [Header("Input Map (WASD)")]
-    [SerializeField] private KeyCode _enterExitKey = KeyCode.E;
+    [SerializeField] private KeyCode _enterExitKey = KeyCode.Q;
     [SerializeField] private KeyCode _throttleForwardKey = KeyCode.W;
     [SerializeField] private KeyCode _throttleReverseKey = KeyCode.S;
     [SerializeField] private KeyCode _steerLeftKey = KeyCode.A;
@@ -136,7 +136,9 @@ public class BoatDriver : MonoBehaviour
             _steer = Mathf.MoveTowards(_steer, _steerTarget, _rudderResponse * Time.deltaTime);
 
             // AI: optional exit
-            if (Input.GetKeyDown(_enterExitKey) && !IsCoolingDown())
+            if (Input.GetKeyDown(_enterExitKey) 
+                //&& !IsCoolingDown()
+                )
             {
                 EndPiloting();
             }
@@ -308,6 +310,8 @@ public class BoatDriver : MonoBehaviour
         _characterController!.enabled = false;
         _fpsMovement!.IsInDrivingMode = true;
         _footstepAudio!.IsEnabled = false;
+
+        BottomTypewriter.Instance?.Enqueue("Press [Q] to stop piloting the boat.");
         InputManager.Instance.SetInputState(InputState.BoatDriving);
         this.StartCoolDown();
     }

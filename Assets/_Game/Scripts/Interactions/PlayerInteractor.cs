@@ -12,6 +12,11 @@ using UnityEngine;
 /// </summary>
 public class PlayerInteractor : MonoBehaviour
 {
+    // AI: Singleton instance
+    public static PlayerInteractor? Instance
+    {
+        get; private set;
+    }
 
 #region Interaction Interface Settings
     public float interactRange = 3f;
@@ -74,6 +79,15 @@ public class PlayerInteractor : MonoBehaviour
 
     private void Awake()
     {
+        // AI: Implement singleton pattern
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+
+        Instance = this;
+
         var player = GameObject.FindGameObjectWithTag("Player");
         if (player == null)
         {
