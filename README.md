@@ -1,5 +1,10 @@
 # 🏠 Saint Aveline: Survival Horror
    
+
+![Windows Build](https://github.com/DogFingerStudios/saintaveline/actions/workflows/windows.yml/badge.svg)
+![MacOS Build](https://github.com/DogFingerStudios/saintaveline/actions/workflows/macos.yml/badge.svg)
+![Ubuntu Build](https://github.com/DogFingerStudios/saintaveline/actions/workflows/ubuntu.yml/badge.svg)   
+
 <center>
 
  ![Saint Aveline Screenshot](./Docs/images/screenshot1.png) 
