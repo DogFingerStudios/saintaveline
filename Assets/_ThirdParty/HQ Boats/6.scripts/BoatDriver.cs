@@ -136,9 +136,7 @@ public class BoatDriver : MonoBehaviour
             _steer = Mathf.MoveTowards(_steer, _steerTarget, _rudderResponse * Time.deltaTime);
 
             // AI: optional exit
-            if (Input.GetKeyDown(_enterExitKey) 
-                //&& !IsCoolingDown()
-                )
+            if (Input.GetKeyDown(_enterExitKey) && !IsCoolingDown())
             {
                 EndPiloting();
             }
