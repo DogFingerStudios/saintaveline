@@ -122,9 +122,9 @@ public class GameTimeController : MonoBehaviour
         gameMinutesInDaylightHours = GetGameMinutesFromGameHours(daylightHours);
         gameMinutesInNightHours = GetGameMinutesFromGameHours(hoursPerDay - daylightHours);
         //currentDaySlider.maxValue = hoursPerDay * daysInWeek;
-        UpdateCurrentDayOfWeekSlider(startingHour);
-        UpdateDayText();
-        UpdateWeekText();
+        //UpdateCurrentDayOfWeekSlider(startingHour);
+        //UpdateDayText();
+        //UpdateWeekText();
     }
 
     private void Update()
@@ -255,7 +255,7 @@ public class GameTimeController : MonoBehaviour
 
     private void UpdateCurrentTimeAsString()
     {
-        currentTimeString = currentHour.ToString("00") + ":" + currentMinute.ToString("00") + " " + AMPM;
+        //currentTimeString = currentHour.ToString("00") + ":" + currentMinute.ToString("00") + " " + AMPM;
     }
 
     private float GetGameMinutesFromGameHours(int hours)
@@ -265,15 +265,15 @@ public class GameTimeController : MonoBehaviour
 
     private void ConvertTimeToStringAndDisplay()
     {
-        if (currentHour >= 0 && currentHour <= 11)
-        {
-            AMPM = " AM";
-        }
-        else
-        {
-            AMPM = " PM";
-        }
-        UpdateCurrentTimeAsString();
+        //if (currentHour >= 0 && currentHour <= 11)
+        //{
+        //    AMPM = " AM";
+        //}
+        //else
+        //{
+        //    AMPM = " PM";
+        //}
+        //UpdateCurrentTimeAsString();
         //text_GameTime.text = currentTimeString;
     }
 
