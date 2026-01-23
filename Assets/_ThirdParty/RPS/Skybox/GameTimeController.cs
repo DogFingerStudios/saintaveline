@@ -140,6 +140,13 @@ public class GameTimeController : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        gameHourPassed -= HourTickDebug;
+        gameDayPassed -= DayTickDebug;
+        gameWeekPassed -= WeekTickDebug;
+    }
+
     private void OnDestroy()
     {
         gameHourPassed -= HourTickDebug;
@@ -159,6 +166,10 @@ public class GameTimeController : MonoBehaviour
 
     private void InitListeners()
     {
+        gameHourPassed -= HourTickDebug;
+        gameDayPassed -= DayTickDebug;
+        gameWeekPassed -= WeekTickDebug;
+
         gameHourPassed += HourTickDebug;
         gameDayPassed += DayTickDebug;
         gameWeekPassed += WeekTickDebug;
