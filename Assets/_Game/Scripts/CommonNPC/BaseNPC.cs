@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class BaseNPC : CharacterEntity, IHearingSensor
 {
+    private static WaitForSeconds _waitForSeconds0_4 = new WaitForSeconds(0.4f);
+
     // TODO: Come back in here and clean up these ugly variable names
     [SerializeField]
     [Tooltip("The AudioSource component for playing NPC sounds")]
@@ -107,7 +109,8 @@ public class BaseNPC : CharacterEntity, IHearingSensor
 
     public void Panic()
     {
-         StartCoroutine(BlinkTwiceCoroutine());
+        StopCoroutine(BlinkTwiceCoroutine());
+        StartCoroutine(BlinkTwiceCoroutine());
     }
 
     private IEnumerator BlinkTwiceCoroutine()
@@ -118,9 +121,9 @@ public class BaseNPC : CharacterEntity, IHearingSensor
         }
 
         _animator.SetTrigger("RefuseBlink");
-        yield return new WaitForSeconds(0.4f); // Match animation clip duration
+        yield return _waitForSeconds0_4; // Match animation clip duration
         _animator.SetTrigger("RefuseBlink");
-        yield return new WaitForSeconds(0.4f);
+        yield return _waitForSeconds0_4;
         
         // Optional: force back to Idle (if needed)
         _animator.Play("Idle");
