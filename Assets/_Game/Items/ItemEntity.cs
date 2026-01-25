@@ -43,7 +43,8 @@ public class ItemEntity : GameEntity, ItemInteractable
     public virtual void Interact(GameEntity? interactor = null)
     {
         if (ItemData == null) return;
-        
+
+        InputManager.Instance.SetInputState(InputState.InteractionMenu);
         InteractionManager.Instance.OnInteractionAction += this.DoInteraction;
         InteractionManager.Instance.OnMenuClosed += () =>
         {

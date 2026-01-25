@@ -48,6 +48,7 @@ public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
     public override void Interact(GameEntity? interactor = null)
     {
         if (!this.IsAlive) return;
+        InputManager.Instance.SetInputState(InputState.InteractionMenu);
         InteractionManager.Instance.OnInteractionAction += this.DoInteraction;
         InteractionManager.Instance.OpenMenu(Interactions);
     }

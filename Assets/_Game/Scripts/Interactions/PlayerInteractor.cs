@@ -191,7 +191,6 @@ public class PlayerInteractor : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Q) && _currentFocus != null)
         {
-            InputManager.Instance.SetInputState(InputState.InteractionMenu);
             _currentFocus!.Interact();
         }
 

@@ -105,6 +105,7 @@ public class InteractionManager : MonoBehaviour
         OnMenuClosed?.Invoke();
         OnMenuClosed = null;
         OnInteractionAction = null;
+        InputManager.Instance.SetInputState(InputState.Gameplay);
     }
 
     private void OnInteractionClicked(string action)
@@ -127,7 +128,6 @@ public class InteractionManager : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             CloseMenu();
-            InputManager.Instance.SetInputState(InputState.Gameplay);
         }
     }
 }
