@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Assert = UnityEngine.Assertions.Assert;
+using UnityEngine.AI;
 
 // This class is attached to all characters (players, NPCs, etc.). For the player
 // character, the class `PlayerEntity` inherits from this class, and is attached
@@ -14,6 +15,8 @@ using Assert = UnityEngine.Assertions.Assert;
 public class CharacterEntity : GameEntity
 {
     public const UInt16 MaxInventorySize = 10;
+
+    public Transform SpawnLocation = null!;
 
     [SerializeField] public Transform EquippedItemPos = null!; // the positio where equipped items are held
 
@@ -34,9 +37,66 @@ public class CharacterEntity : GameEntity
         }
     }
 
+    private void setInitialPosition()
+    {
+        var spawnPos = SpawnLocation.position;
+
+        var renderer = this.GetComponentInChildren<Renderer>();
+        if (renderer != null)
+        {
+            RaycastHit hit;
+            Ray ray = new(SpawnLocation.position, Vector3.down);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, ~0))
+            {
+                var height = renderer.bounds.size.y;
+                spawnPos.y = hit.point.y + (height / 2f);
+            }
+        }
+
+        this.transform.SetPositionAndRotation(spawnPos, SpawnLocation.rotation);
+    }
+
     protected override void Awake()
     {
         base.Awake();
+
+        if (SpawnLocation != null)
+        {
+            CharacterController? ctrler;
+            this.TryGetComponent<CharacterController>(out ctrler);
+            if (ctrler != null)
+            {
+                if (ctrler.enabled)
+                { 
+                    ctrler.enabled = false;
+                }
+                else
+                {
+                    ctrler = null;
+                }
+            }
+
+            NavMeshAgent? agent;
+            this.TryGetComponent<NavMeshAgent>(out agent);
+            if (agent != null)
+            {
+                if (agent.enabled)
+                {
+                    agent.enabled = false;
+                }
+                else
+                {
+                    agent = null;
+                }
+            }
+
+            setInitialPosition();
+
+            if (ctrler != null) ctrler!.enabled = true;
+            if (agent != null) agent!.enabled = true;
+        }
+
+
         foreach (var itemObj in _initialInventory)
         {
             GameObject newItem = Instantiate(itemObj);
