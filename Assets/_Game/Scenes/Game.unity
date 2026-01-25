@@ -19,7 +19,7 @@ RenderSettings:
   m_FogMode: 0
   m_FogDensity: 0
   m_LinearFogStart: 0
-  m_LinearFogEnd: 0
+  m_LinearFogEnd: 0.01
   m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 0}
   m_AmbientEquatorColor: {r: 0.90588236, g: 0.8156863, b: 0.8156863, a: 0}
   m_AmbientGroundColor: {r: 0.7372549, g: 0.5294118, b: 0.5294118, a: 0}
@@ -2602,7 +2602,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 17616640
+      value: 17839024
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -2678,7 +2678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 12192931
+      value: 12457252
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3674,6 +3674,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 267525966}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &271310277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 271310278}
+  m_Layer: 0
+  m_Name: Apartment1.2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &271310278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271310277}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 523.14764, y: 9.221558, z: 537.493}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 569809567}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &272115941
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6903,6 +6934,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1639441941}
+  - {fileID: 1170152274}
+  - {fileID: 271310278}
   m_Father: {fileID: 322283500}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &570336247
@@ -15782,6 +15815,37 @@ Transform:
   - {fileID: 580217655}
   m_Father: {fileID: 1231386068}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1170152273
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1170152274}
+  m_Layer: 0
+  m_Name: Apartment1.1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1170152274
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170152273}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 523.14764, y: 9.221558, z: 540.699}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 569809567}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1172524331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19265,7 +19329,7 @@ PrefabInstance:
     - target: {fileID: 4908647138769127317, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: SpawnLocation
       value: 
-      objectReference: {fileID: 1639441941}
+      objectReference: {fileID: 1170152274}
     - target: {fileID: 5234290954045619251, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: _uiCanvas
       value: 
@@ -23323,7 +23387,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   MaxHealth: 100
-  SpawnLocation: {fileID: 0}
+  SpawnLocation: {fileID: 271310278}
   EquippedItemPos: {fileID: 719853085}
   _initialInventory:
   - {fileID: 7194513566672273187, guid: 82e2ad6bad5f94a479543b373f73109b, type: 3}
@@ -23347,7 +23411,7 @@ MonoBehaviour:
   moveSpeed: 7.5
   DetectionDistance: 5
   stopDistance: 3.5
-  Target: {fileID: 0}
+  Target: {fileID: 1417590809}
   _mapLabelDialogPrefab: {fileID: 4309021723165264976, guid: 0fbe6e54d5a8f9c4cb034e89f5cf38ab, type: 3}
   _uiCanvas: {fileID: 1711401046}
 --- !u!95 &1747406718
