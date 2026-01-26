@@ -1,14 +1,11 @@
 #nullable enable
-
 using UnityEngine;
 
-[NPCStateTag("EnemyPursue")]
-public class EnemyPursueState : NPCState
+[NPCStateTag("EnemyFollow")]
+public class EnemyFollowState : NPCState
 {
     private UnityEngine.AI.NavMeshAgent _agent = null!;
-    private AudioClip? _warningSound;
-    private AudioClip? _willFindYouSound;
-    private float _nextFireTime = 0f;
+    private AudioClip? _getBackInsideSound;
 
     // AI: Controls how often the destination is updated (in seconds)
     private const float _destinationUpdateInterval = 1.0f;
@@ -16,16 +13,22 @@ public class EnemyPursueState : NPCState
     private float _lastDestinationUpdateTime = 0f;
 
     private readonly GameEntity _targetEntity;
-    
+
     // TODO: this is a poor man's way to stop chasing, eventually we will want to be a 
     // little smarter -- for example, if the NPC cannot "see" the Target, then the NPC could
     // go to the last position it saw the Target, and if the Target is not in range or
     // not visible, then the NPC could return to previous state
     private float _detectionRange;
 
+    /// <summary>
+    ///  how long we've been following the target
+    /// </summary>
+    private float _followStopTime = 0f;
+    private readonly float FollowTimeout = 30f; // how long to follow before attacking
+
     /// <param name="npc">The NPC to which this state is attached.</param>
     /// <param name="target">The Target Transform that the NPC will pursue.</param>
-    public EnemyPursueState(BaseNPC npc, GameEntity target)
+    public EnemyFollowState(BaseNPC npc, GameEntity target)
         : base(npc)
     {
         // TODO: CHANGE ME!!
@@ -36,11 +39,8 @@ public class EnemyPursueState : NPCState
             throw new System.Exception("BaseNPC is not an EnemyNPC. Cannot enter pursue state.");
         }
 
-        _warningSound = Resources.Load<AudioClip>("Sounds/Freeze");
-        _willFindYouSound = Resources.Load<AudioClip>("Sounds/IWillFindYou");
-
         _targetEntity = this.NPC!.Target!.GetComponent<GameEntity>();
-
+        _getBackInsideSound = Resources.Load<AudioClip>("Sounds/GetBackInside");
     }
 
     public override void Enter()
@@ -51,9 +51,9 @@ public class EnemyPursueState : NPCState
         }
 
         _detectionRange = this.NPC.DetectionDistance;
-        this.NPC!.AudioSource.dopplerLevel = 0f;
-        this.NPC!.AudioSource.spatialBlend = 1f;
-        this.NPC!.AudioSource.PlayOneShot(_warningSound);
+        _followStopTime = Time.time + FollowTimeout;
+
+        this.NPC!.AudioSource.PlayOneShot(_getBackInsideSound);
     }
 
     public override void Exit()
@@ -82,41 +82,28 @@ public class EnemyPursueState : NPCState
             return new NPCStateReturnValue(
                 NPCStateReturnValue.ActionType.PopState);
         }
-        
-        float distance = Vector3.Distance(this.NPC!.transform.position, this.NPC.Target.position);
-        if (distance < this.NPC!.stopDistance)
-        {
-            _agent.isStopped = true;
-            _agent.ResetPath();
 
-            this.NPC.PushState(this);
+        if (Time.time >= _followStopTime)
+        {
             return new NPCStateReturnValue(
                 NPCStateReturnValue.ActionType.ChangeState,
-                new EnemyAttackState(this.NPC, _targetEntity));
+                    new EnemyPursueState(this.NPC!, _targetEntity));
         }
 
+        float distance = Vector3.Distance(this.NPC!.transform.position, this.NPC.Target.position);
         if (distance <= _detectionRange)
         {
             this.SetDestination(this.NPC.Target.position);
         }
         else
         {
-            this.NPC!.AudioSource.PlayOneShot(_willFindYouSound);
+            // the target is out of range
             _agent.isStopped = true;
             _agent.ResetPath();
 
             // Target is out of range, go back to idle state which we pushed earlier
             return new NPCStateReturnValue(
                 NPCStateReturnValue.ActionType.PopState);
-        }
-
-        if (Time.time >= _nextFireTime)
-        {
-            this.NPC!.EquippedItem?.Attack();
-
-            // get a random time between 0.5 and 1.5 seconds
-            float randomTime = UnityEngine.Random.Range(0.5f, 1.5f);
-            _nextFireTime = Time.time + randomTime;
         }
 
         return null;
