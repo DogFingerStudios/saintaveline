@@ -1,10 +1,11 @@
 #nullable enable
 
-using UnityEngine.Assertions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class BaseNPC : CharacterEntity, IHearingSensor
 {
@@ -48,7 +49,10 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     public float stopDistance = 1f;
 
     // The target the NPC is interested in (e.g., the NPC this object is attacking)
-    public Transform Target = null!; 
+    public Transform Target = null!;
+
+    [SerializeField]
+    public Partnership Partnership = null!;
 
     #region Interactable Interface Implementation
 
@@ -58,11 +62,6 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     public virtual void Interact(GameEntity? interactor = null) { }
 
 #endregion
-
-    public BaseNPC()
-    {
-    }
-
 
 #region State Management
     public void setState(NPCState state)
@@ -101,10 +100,25 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     protected NPCStateMachine stateMachine = new NPCStateMachine();
     public NPCStateMachine StateMachine => stateMachine;
 
+    private void validatePartnership()
+    {
+        var partners = this.Partnership.Partners;
+        if (partners.Count == 0) return;
+
+        if (partners.Contains(this)) return;
+
+        if (partners.Any(p => !p.Partnership.Partners.Contains(this)))
+        {
+            throw new Exception("Partnership validation failed: NPC is not included in partner's partnership list.");
+        }
+    }
+
     protected virtual void Start()
     {
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
+
+        validatePartnership();
     }
 
     public void Panic()
