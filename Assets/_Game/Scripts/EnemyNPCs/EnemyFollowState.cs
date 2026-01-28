@@ -54,17 +54,6 @@ public class EnemyFollowState : NPCState
         _detectionRange = this.NPC.DetectionDistance;
         _followStopTime = Time.time + FollowTimeout;
 
-        ////Action myaction = () =>
-        ////    {
-        ////        this.NPC!.AudioSource.PlayOneShot(_getBackInsideSound);
-        ////        Debug.Log($"{this.NPC!.name} says: Get back inside!");
-        ////    };
-        //Action myaction = () =>
-        //{
-        //    this.NPC!.AudioSource.PlayOneShot(_getBackInsideSound);
-        //    Debug.Log($"{this.NPC!.name} says: Get back inside!");
-        //};
-
         this.NPC!.Partnership.TakeAction("getbackinside", 
             () => 
             { 

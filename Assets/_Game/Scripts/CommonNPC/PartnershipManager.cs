@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PartnershipManager : MonoBehaviour
 {
-    private Dictionary<int, Partnership> _partnerships = new();
-    public Dictionary<int, Partnership> Partnerships => _partnerships;
+    public Dictionary<BaseNPC, Partnership> PartnershipMap { get; private set; } = new();
 
     public static PartnershipManager Instance { get; private set; }
 
-    void Awake()
+    PartnershipManager()
     {
         if (Instance != null)
         {
@@ -16,5 +16,20 @@ public class PartnershipManager : MonoBehaviour
         }
 
         Instance = this;
+    }
+
+    public void RegisterPartnership(BaseNPC npc, List<BaseNPC> partners)
+    {
+        if (PartnershipMap.ContainsKey(npc)) return;
+
+        Partnership partnership = new();
+        partnership.Partners.Add(npc);
+        partnership.Partners.AddRange(partners);
+
+        foreach (var partner in partnership.Partners)
+        {
+            PartnershipMap[partner] = partnership;
+            partner.Partnership = partnership;
+        }
     }
 }

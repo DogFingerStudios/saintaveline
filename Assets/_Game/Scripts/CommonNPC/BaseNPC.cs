@@ -51,8 +51,11 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     // The target the NPC is interested in (e.g., the NPC this object is attacking)
     public Transform Target = null!;
 
-    [SerializeField]
+    [HideInInspector]
     public Partnership Partnership = null!;
+    
+    [SerializeField]
+    public List<BaseNPC> Partners = new();
 
     #region Interactable Interface Implementation
 
@@ -113,12 +116,22 @@ public class BaseNPC : CharacterEntity, IHearingSensor
         }
     }
 
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        validatePartnership();
+        PartnershipManager.Instance.RegisterPartnership(this, Partners);
+    }
+
     protected virtual void Start()
     {
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
-
-        validatePartnership();
     }
 
     public void Panic()
