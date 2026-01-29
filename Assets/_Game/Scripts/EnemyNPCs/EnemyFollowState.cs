@@ -55,11 +55,7 @@ public class EnemyFollowState : NPCState
         _followStopTime = Time.time + FollowTimeout;
 
         this.NPC!.Partnership.TakeAction("getbackinside", 
-            () => 
-            { 
-                this.NPC!.AudioSource.PlayOneShot(_getBackInsideSound); 
-                Debug.Log($"{this.NPC!.name} says: Get back inside!");
-            });
+            () => this.NPC!.AudioSource.PlayOneShot(_getBackInsideSound), 5);
     }
 
     public override void Exit()
