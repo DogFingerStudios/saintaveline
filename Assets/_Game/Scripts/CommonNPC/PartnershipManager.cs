@@ -1,22 +1,15 @@
-using System.Collections.Generic;
 using UnityEngine;
-
+using System;
+using System.Collections.Generic;
 
 public class PartnershipManager : MonoBehaviour
 {
     public Dictionary<BaseNPC, Partnership> PartnershipMap { get; private set; } = new();
 
-    public static PartnershipManager Instance { get; private set; }
+    private static readonly Lazy<PartnershipManager> _instance =
+        new(() => new PartnershipManager());
 
-    PartnershipManager()
-    {
-        if (Instance != null)
-        {
-            throw new System.Exception("PartnershipManager: Multiple instances detected.");
-        }
-
-        Instance = this;
-    }
+    public static PartnershipManager Instance => _instance.Value;
 
     public void RegisterPartnership(BaseNPC npc, List<BaseNPC> partners)
     {
