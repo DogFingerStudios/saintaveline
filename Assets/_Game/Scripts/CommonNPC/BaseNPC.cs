@@ -52,10 +52,10 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     public Transform Target = null!;
 
     [HideInInspector]
-    public Partnership Partnership = null!;
+    public Group Group = null!;
     
     [SerializeField]
-    public List<BaseNPC> Partners = new();
+    public List<BaseNPC> GroupMembers = new();
 
     #region Interactable Interface Implementation
 
@@ -103,24 +103,24 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     protected NPCStateMachine stateMachine = new NPCStateMachine();
     public NPCStateMachine StateMachine => stateMachine;
 
-    private void validatePartnership()
+    private void validateGroup()
     {
-        var partners = this.Partnership.Partners;
-        if (partners.Count == 0) return;
+        var members = this.Group.Members;
+        if (members.Count == 0) return;
 
-        if (partners.Contains(this)) return;
+        if (members.Contains(this)) return;
 
-        if (partners.Any(p => !p.Partnership.Partners.Contains(this)))
+        if (members.Any(p => !p.Group.Members.Contains(this)))
         {
-            throw new Exception("Partnership validation failed: NPC is not included in partner's partnership list.");
+            throw new Exception("Group validation failed: NPC is not included in member's group  list.");
         }
     }
 
     protected override void Awake()
     {
         base.Awake();
-        validatePartnership();
-        PartnershipManager.Instance.RegisterPartnership(this, Partners);
+        validateGroup();
+        GroupManager.Instance.RegisterGroup(this, GroupMembers);
     }
 
     protected virtual void Start()
