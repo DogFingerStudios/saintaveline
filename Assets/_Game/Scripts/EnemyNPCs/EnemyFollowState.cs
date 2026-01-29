@@ -54,8 +54,8 @@ public class EnemyFollowState : NPCState
         _detectionRange = this.NPC.DetectionDistance;
         _followStopTime = Time.time + FollowTimeout;
 
-        this.NPC!.Group.TakeAction("getbackinside", 
-            () => this.NPC!.AudioSource.PlayOneShot(_getBackInsideSound), 5);
+        this.NPC!.Group.TakeAction(new GroupAction { ID = "getbackinside", 
+            Action = () => this.NPC!.AudioSource.PlayOneShot(_getBackInsideSound), Cooldown = 5, Initiator = this.NPC! });
     }
 
     public override void Exit()
