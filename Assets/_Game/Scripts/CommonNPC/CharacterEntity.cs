@@ -56,6 +56,12 @@ public class CharacterEntity : GameEntity
         this.transform.SetPositionAndRotation(spawnPos, SpawnLocation.rotation);
     }
 
+    public Vector3 SetInitialPositionTest()
+    {
+        transform.position = SpawnLocation.position;
+        return transform.position;
+    }
+
     protected override void Awake()
     {
         base.Awake();
