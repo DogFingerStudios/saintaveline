@@ -116,11 +116,6 @@ public class BaseNPC : CharacterEntity, IHearingSensor
         }
     }
 
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
-    }
-
     protected override void Awake()
     {
         base.Awake();
