@@ -1,15 +1,15 @@
+#nullable enable
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using UnityEngine.Rendering;
 using System.Collections.Concurrent;
 
 public class GroupAction
 {
-    public string ID;
-    public Action Action;
+    public string ID = null!;
+    public Action Action = null!;
     public float Cooldown;
-    public BaseNPC Initiator;
+    public BaseNPC Initiator = null!;
 }
 
 [System.Serializable]
