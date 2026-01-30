@@ -9,7 +9,7 @@ public class LampEntity : ItemEntity
 
     public override string HoverText
     {
-        get { return "Press [E] to toggle lamp"; }
+        get { return "Press [Q] to toggle lamp"; }
     }
 
     public AudioClip lampSwitchSound = null!;
