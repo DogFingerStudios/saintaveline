@@ -53,7 +53,7 @@ public class ZoneManager : MonoBehaviour
 
         if (_currentZone != null)
         {
-            BottomTypewriter.Instance.Enqueue(_currentZone.ZoneName);
+            BottomTypewriter.Instance.Enqueue(_currentZone.Data.Name);
         }
     }
 }

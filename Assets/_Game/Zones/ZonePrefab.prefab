@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3032439380635671632}
   - component: {fileID: 6880182088939083743}
   - component: {fileID: 4048765165074125437}
-  - component: {fileID: 7372389442317748442}
+  - component: {fileID: 7981640431565225457}
   m_Layer: 0
   m_Name: ZonePrefab
   m_TagString: Untagged
@@ -113,7 +113,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7372389442317748442
+--- !u!114 &7981640431565225457
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,5 +125,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c09326a7cde3dc4eaa24c88b3470c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Zone
-  _zoneName: 
+  _data: {fileID: 0}
   _priority: 0
