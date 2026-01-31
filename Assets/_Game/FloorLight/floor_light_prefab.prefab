@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6395173387035970875
 Transform:
   m_ObjectHideFlags: 0
@@ -40,13 +40,13 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9160983380487210544}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 12
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 10
   m_Range: 10
-  m_SpotAngle: 80
+  m_SpotAngle: 23.31667
   m_InnerSpotAngle: 0
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
@@ -149,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c3df16ce2f4c8604d87650d0a9b69c2f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 603.2207
+      value: 591.5593
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c3df16ce2f4c8604d87650d0a9b69c2f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -157,7 +157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c3df16ce2f4c8604d87650d0a9b69c2f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 604.92
+      value: 634.9099
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: c3df16ce2f4c8604d87650d0a9b69c2f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -201,8 +201,28 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: c3df16ce2f4c8604d87650d0a9b69c2f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6395173387035970875}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c3df16ce2f4c8604d87650d0a9b69c2f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9034043701612935252}
   m_SourcePrefab: {fileID: 100100000, guid: c3df16ce2f4c8604d87650d0a9b69c2f, type: 3}
+--- !u!1 &1402296308609374769 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c3df16ce2f4c8604d87650d0a9b69c2f, type: 3}
+  m_PrefabInstance: {fileID: 2284623267023939424}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9034043701612935252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1402296308609374769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1fc951b065124f41afa23100d596137, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::floorlight_control
 --- !u!4 &1746875197974151307 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c3df16ce2f4c8604d87650d0a9b69c2f, type: 3}
