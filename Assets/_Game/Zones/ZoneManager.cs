@@ -4,6 +4,8 @@ using UnityEngine;
 public class ZoneManager : MonoBehaviour
 {
     private readonly HashSet<Zone> _activeZones = new HashSet<Zone>();
+    private List<Zone> _visitedZones = new List<Zone>();
+    
     private Zone _currentZone;
 
     private void OnTriggerEnter(Collider other)
@@ -51,9 +53,10 @@ public class ZoneManager : MonoBehaviour
 
         _currentZone = bestZone;
 
-        if (_currentZone != null)
+        if (_currentZone != null && !_visitedZones.Contains(_currentZone))
         {
             BottomTypewriter.Instance.Enqueue(_currentZone.Data.Name);
+            _visitedZones.Add(_currentZone);
         }
     }
 }
