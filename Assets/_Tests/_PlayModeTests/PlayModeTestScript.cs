@@ -6,7 +6,7 @@ using UnityEngine.TestTools;
 public class PlayModeTestScript
 {
     [UnityTest]
-    public IEnumerator PLayerTakesDamage()
+    public IEnumerator PlayerTakesDamage()
     {
         var player = new GameObject("PlayerTest");
         var playerEntity = player.AddComponent<PlayerEntity>();
