@@ -6,20 +6,18 @@ using UnityEngine.TestTools;
 public class PlayModeTestScript
 {
     [UnityTest]
-    public IEnumerator MovePlayerToSpawnPosition()
+    public IEnumerator PLayerTakesDamage()
     {
         var player = new GameObject("PlayerTest");
         var playerEntity = player.AddComponent<PlayerEntity>();
+        playerEntity.MaxHealth = 100;
 
-        var spawnTransform = new GameObject("PlayerSpawnTransformTest");
-        playerEntity.SpawnLocation = spawnTransform.transform;
-        playerEntity.SpawnLocation.position = new Vector3(-878f, 22f, -73f);
-
-        Vector3 positionAfterSettingSpawnPoint = playerEntity.SetInitialPositionTest();
+        float dmgToTake = 50f;
+        playerEntity.TakeDamage(dmgToTake);
 
         yield return null;
 
-        Assert.AreEqual(playerEntity.SpawnLocation, positionAfterSettingSpawnPoint);
+        Assert.AreEqual(playerEntity.MaxHealth - dmgToTake, playerEntity.Health);
     }
 
 }
