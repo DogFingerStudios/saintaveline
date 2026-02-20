@@ -87,6 +87,20 @@ jobs:
           name: unity-test-results-${{ github.sha }}
           path: artifacts
 
+      - name: Debug git status (optional)
+        run: |
+          git status --porcelain=v1
+          git diff --stat || true
+
+      - name: Clean workspace so semantic versioning works
+        run: |
+          # remove untracked stuff created by tests
+          rm -rf CodeCoverage artifacts
+          # revert tracked files Unity may have touched
+          git restore --source=HEAD -- Packages/manifest.json Packages/packages-lock.json
+          # if anything else untracked sneaks in, wipe it
+          git clean -fdx
+
       - name: Build Unity Project
         uses: game-ci/unity-builder@v4
         env:
