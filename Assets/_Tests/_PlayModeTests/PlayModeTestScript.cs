@@ -7,17 +7,25 @@ public class PlayModeTestScript
 {
     [UnityTest]
     public IEnumerator PlayerTakesDamage()
-    {
-        var player = new GameObject("PlayerTest");
-        var playerEntity = player.AddComponent<PlayerEntity>();
-        playerEntity.MaxHealth = 100;
+    {   
+        GameObject player = null;
+        try
+        {
+            player = new GameObject("PlayerTest");
+            var playerEntity = player.AddComponent<PlayerEntity>();
+            playerEntity.MaxHealth = 100;
 
-        float dmgToTake = 50f;
-        playerEntity.TakeDamage(dmgToTake);
+            float dmgToTake = 50f;
+            playerEntity.TakeDamage(dmgToTake);
 
-        yield return null;
+            yield return null;
 
-        Assert.AreEqual(playerEntity.MaxHealth - dmgToTake, playerEntity.Health);
+            Assert.AreEqual(playerEntity.MaxHealth - dmgToTake, playerEntity.Health);
+        }
+        finally
+        {
+            if (player != null) UnityEngine.Object.Destroy(player);
+        }
     }
 
 }
