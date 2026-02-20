@@ -106,13 +106,13 @@ jobs:
       #   with:
       #     args: "✅ Successfully built `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}` for WebGL, deploying..."
 
-      - name: Discord Build Failure Notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        if: ${{ failure() && env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
-        uses: Ilshidur/action-discord@0.3.2
-        with:
-          args: "❗️ Build failed for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`"
+      # - name: Discord Build Failure Notification
+      #   env:
+      #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      #   if: ${{ failure() && env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
+      #   uses: Ilshidur/action-discord@0.3.2
+      #   with:
+      #     args: "❗️ Build failed for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`"
 
       - name: Archive Windows build artifacts
         shell: powershell
