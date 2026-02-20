@@ -21,6 +21,11 @@ public class EditorTestScript
     [UnityTest]
     public IEnumerator NewTestScriptWithEnumeratorPasses()
     {
+        // AI: Use the Assert class to test conditions by verifying simple state changes.
+        int _frameCount = 0;
+        _frameCount++;
+        Assert.AreEqual(1, _frameCount);
+
         // Use the Assert class to test conditions.
         // Use yield to skip a frame.
         yield return null;
