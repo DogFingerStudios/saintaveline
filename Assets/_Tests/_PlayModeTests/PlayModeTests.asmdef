@@ -6,11 +6,7 @@
         "GUID:0acc523941302664db1f4e527237feb3",
         "GUID:73df42fd0fd16ed4282676587fb2d269"
     ],
-    "includePlatforms": [
-        "Editor",
-        "macOSStandalone",
-        "WindowsStandalone64"
-    ],
+    "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": true,
@@ -18,7 +14,9 @@
         "nunit.framework.dll"
     ],
     "autoReferenced": false,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }
