@@ -106,9 +106,9 @@ jobs:
           # remove test output folders that may be root-owned after test runner
           sudo rm -rf CodeCoverage artifacts || true
           # revert tracked files Unity may have touched
-          git reset --hard HEAD
+          sudo git reset --hard HEAD
           # remove remaining untracked files
-          git clean -fdx
+          sudo git clean -fdx
 
       - name: Verify workspace is clean
         run: |
@@ -137,13 +137,13 @@ jobs:
       #   with:
       #     args: "✅ Successfully built `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}` for WebGL, deploying..."
 
-      - name: Discord Build Failure Notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        if: ${{ failure() && env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
-        uses: Ilshidur/action-discord@0.3.2
-        with:
-          args: "❗️ ${{ matrix.targetPlatform }} build failed for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`"
+      # - name: Discord Build Failure Notification
+      #   env:
+      #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      #   if: ${{ failure() && env.DISCORD_WEBHOOK != '' && env.DISCORD_WEBHOOK != 'disabled' }}
+      #   uses: Ilshidur/action-discord@0.3.2
+      #   with:
+      #     args: "❗️ ${{ matrix.targetPlatform }} build failed for `${{ github.repository }}` on ${{ github.ref_type }}: `${{ github.ref_name }}`"
 
       - name: Archive build artifacts
         run: |
