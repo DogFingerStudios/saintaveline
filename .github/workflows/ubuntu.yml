@@ -103,9 +103,11 @@ jobs:
 
       - name: Clean workspace so semantic versioning works
         run: |
+          # remove test output folders that may be root-owned after test runner
+          sudo rm -rf CodeCoverage artifacts || true
           # revert tracked files Unity may have touched
-          git restore --source=HEAD -- Packages/manifest.json Packages/packages-lock.json
-          # remove untracked stuff created by tests and anything else untracked
+          git reset --hard HEAD
+          # remove remaining untracked files
           git clean -fdx
 
       - name: Build Unity Project
