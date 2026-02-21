@@ -16,6 +16,16 @@ public class EditorTestScript
         Assert.IsTrue(beggingForUnitTests);
     }
 
+    [Test]
+    public void ThisWillFail()
+    {
+        // AI: This test is intentionally designed to fail to demonstrate the testing framework's ability to catch failures.
+        int expectedValue = 42;
+        int actualValue = 24; // This value is incorrect on purpose
+
+        Assert.AreEqual(expectedValue, actualValue, "The actual value does not match the expected value, indicating a failure in the test.");
+    }
+
     // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
     // `yield return null;` to skip a frame.
     [UnityTest]
