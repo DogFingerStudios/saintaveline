@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      # - dev/*
+      - dev/*
     paths:
       - .github/workflows/ubuntu.yml
       - Assets/**
@@ -95,6 +95,13 @@ jobs:
         with:
           name: unity-test-results-${{ github.sha }}
           path: artifacts
+
+      - name: Fail if any Unity test failed
+        run: |
+          if grep -R 'result="Failed"' artifacts/*-results.xml; then
+            echo "Unity tests failed."
+            exit 1
+          fi
 
       - name: Debug git status (optional)
         run: |
