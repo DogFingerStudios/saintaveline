@@ -94,11 +94,9 @@ jobs:
 
       - name: Clean workspace so semantic versioning works
         run: |
-          # remove untracked stuff created by tests
-          rm -rf CodeCoverage artifacts
           # revert tracked files Unity may have touched
           git restore --source=HEAD -- Packages/manifest.json Packages/packages-lock.json
-          # if anything else untracked sneaks in, wipe it
+          # remove untracked stuff created by tests and anything else untracked
           git clean -fdx
 
       - name: Build Unity Project
