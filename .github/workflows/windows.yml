@@ -87,6 +87,46 @@ jobs:
           name: unity-test-results-${{ github.sha }}
           path: artifacts
 
+      - name: Fail job if any Unity tests failed
+        shell: pwsh
+        run: |
+          $xmlFiles = Get-ChildItem -Path "artifacts" -Recurse -Filter "*.xml" -ErrorAction SilentlyContinue
+          if (-not $xmlFiles)
+          {
+            Write-Host "No test XML files found under artifacts/. Failing to be safe."
+            exit 1
+          }
+
+          foreach ($file in $xmlFiles)
+          {
+            [xml]$doc = Get-Content $file.FullName
+
+            # NUnit root is typically <test-run ... failed="X" ... />
+            $testRun = $doc.SelectSingleNode("//test-run")
+            if ($null -ne $testRun)
+            {
+              $failed = [int]$testRun.GetAttribute("failed")
+              $result = $testRun.GetAttribute("result")
+              Write-Host "Parsed $($file.Name): result=$result failed=$failed"
+
+              if ($failed -gt 0 -or $result -eq "Failed")
+              {
+                Write-Host "Unity tests failed according to $($file.FullName)"
+                exit 1
+              }
+            }
+
+            # Fallback: if any <test-case result="Failed"> exists
+            $failedCases = $doc.SelectNodes("//test-case[@result='Failed']")
+            if ($failedCases -and $failedCases.Count -gt 0)
+            {
+              Write-Host "Found $($failedCases.Count) failed test-case nodes in $($file.FullName)"
+              exit 1
+            }
+          }
+
+          Write-Host "All Unity test result XML files indicate success."
+
       - name: Debug git status (optional)
         run: |
           git status --porcelain=v1
