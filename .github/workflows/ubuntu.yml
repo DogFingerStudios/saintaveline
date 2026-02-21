@@ -8,10 +8,11 @@ on:
     paths:
       - .github/workflows/ubuntu.yml
       - Assets/**
+  workflow_dispatch:
 
 jobs:
   build-ubuntu:
-    if: contains(fromJson(vars.ALLOWED_ACTORS_JSON), github.actor)
+    if: github.event_name == 'workflow_dispatch' || contains(fromJson(vars.ALLOWED_ACTORS_JSON), github.actor)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
