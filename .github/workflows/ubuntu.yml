@@ -96,6 +96,43 @@ jobs:
           name: unity-test-results-${{ github.sha }}
           path: artifacts
 
+      - name: Fail job if any Unity tests failed (Linux)
+        shell: bash
+        run: |
+          echo "Checking Unity test result XML files..."
+
+          if [ ! -d "artifacts" ]; then
+            echo "No artifacts directory found. Failing to be safe."
+            exit 1
+          fi
+
+          xml_files=$(find artifacts -type f -name "*.xml")
+
+          if [ -z "$xml_files" ]; then
+            echo "No XML test files found under artifacts/. Failing to be safe."
+            exit 1
+          fi
+
+          for file in $xml_files; do
+            echo "Parsing $file"
+
+            # Check for failed attribute on test-run node
+            failed_count=$(grep -o 'failed="[0-9]*"' "$file" | head -n1 | grep -o '[0-9]*')
+            result_attr=$(grep -o 'result="Failed"' "$file")
+
+            if [ ! -z "$failed_count" ] && [ "$failed_count" -gt 0 ]; then
+              echo "Unity test-run reports $failed_count failed tests."
+              exit 1
+            fi
+
+            if [ ! -z "$result_attr" ]; then
+              echo "Unity test-case result=\"Failed\" found."
+              exit 1
+            fi
+          done
+
+          echo "All Unity test XML files indicate success."
+
       - name: Debug git status (optional)
         run: |
           git status --porcelain=v1
