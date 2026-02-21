@@ -94,10 +94,19 @@ jobs:
 
       - name: Clean workspace so semantic versioning works
         run: |
-          # revert tracked files Unity may have touched
-          git restore --source=HEAD -- Packages/manifest.json Packages/packages-lock.json
-          # remove untracked stuff created by tests and anything else untracked
-          git clean -fdx
+          # reset tracked files changed by tests
+          git reset --hard HEAD
+          # remove untracked files/folders aggressively
+          git clean -ffdx
+
+      - name: Verify workspace is clean
+        run: |
+          $status = git status --porcelain=v1
+          if ($status)
+          {
+            Write-Host $status
+            throw "Workspace is dirty before build"
+          }
 
       - name: Build Unity Project
         uses: game-ci/unity-builder@v4

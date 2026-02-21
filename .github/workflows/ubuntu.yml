@@ -110,6 +110,14 @@ jobs:
           # remove remaining untracked files
           git clean -fdx
 
+      - name: Verify workspace is clean
+        run: |
+          if [[ -n "$(git status --porcelain=v1)" ]]; then
+            git status --porcelain=v1
+            echo "Workspace is dirty before build"
+            exit 1
+          fi
+
       - name: Build Unity Project
         uses: game-ci/unity-builder@v4
         env:
