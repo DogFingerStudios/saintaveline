@@ -1,10 +1,11 @@
 #nullable enable
 
-using UnityEngine.Assertions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class BaseNPC : CharacterEntity, IHearingSensor
 {
@@ -48,7 +49,13 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     public float stopDistance = 1f;
 
     // The target the NPC is interested in (e.g., the NPC this object is attacking)
-    public Transform Target = null!; 
+    public Transform Target = null!;
+
+    [HideInInspector]
+    public Group Group = null!;
+    
+    [SerializeField]
+    public List<BaseNPC> GroupMembers = new();
 
     #region Interactable Interface Implementation
 
@@ -58,11 +65,6 @@ public class BaseNPC : CharacterEntity, IHearingSensor
     public virtual void Interact(GameEntity? interactor = null) { }
 
 #endregion
-
-    public BaseNPC()
-    {
-    }
-
 
 #region State Management
     public void setState(NPCState state)
@@ -100,6 +102,26 @@ public class BaseNPC : CharacterEntity, IHearingSensor
 
     protected NPCStateMachine stateMachine = new NPCStateMachine();
     public NPCStateMachine StateMachine => stateMachine;
+
+    private void validateGroup()
+    {
+        var members = this.Group.Members;
+        if (members.Count == 0) return;
+
+        if (members.Contains(this)) return;
+
+        if (members.Any(p => !p.Group.Members.Contains(this)))
+        {
+            throw new Exception("Group validation failed: NPC is not included in member's group  list.");
+        }
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        validateGroup();
+        GroupManager.Instance.RegisterGroup(this, GroupMembers);
+    }
 
     protected virtual void Start()
     {

@@ -11,7 +11,8 @@ public class EnemyPursueState : NPCState
     private float _nextFireTime = 0f;
 
     // AI: Controls how often the destination is updated (in seconds)
-    private const float _destinationUpdateInterval = 0.5f;
+    private const float _destinationUpdateInterval = 1.0f;
+    private Vector3 _lastTargetPosition = Vector3.zero;
     private float _lastDestinationUpdateTime = 0f;
 
     private readonly GameEntity _targetEntity;
@@ -19,7 +20,7 @@ public class EnemyPursueState : NPCState
     // TODO: this is a poor man's way to stop chasing, eventually we will want to be a 
     // little smarter -- for example, if the NPC cannot "see" the Target, then the NPC could
     // go to the last position it saw the Target, and if the Target is not in range or
-    // not visible, then the NPC could return to patrol state
+    // not visible, then the NPC could return to previous state
     private float _detectionRange;
 
     /// <param name="npc">The NPC to which this state is attached.</param>
@@ -62,11 +63,12 @@ public class EnemyPursueState : NPCState
 
     private void SetDestination(Vector3 targetPosition)
     {
-        if (Time.time >= _lastDestinationUpdateTime + _destinationUpdateInterval)
-        {
-            _agent!.SetDestination(targetPosition);
-            _lastDestinationUpdateTime = Time.time;
-        }
+        if (_lastTargetPosition == targetPosition) return;
+        if (Time.time < _lastDestinationUpdateTime + _destinationUpdateInterval) return;
+
+        _agent!.SetDestination(targetPosition);
+        _lastDestinationUpdateTime = Time.time;
+        _lastTargetPosition = targetPosition;
     }
 
     public override NPCStateReturnValue? Update()
