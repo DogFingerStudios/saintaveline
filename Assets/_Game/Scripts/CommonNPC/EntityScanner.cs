@@ -56,7 +56,7 @@ class EntityScanner
         Array.Clear(_candidates, 0, _candidates.Length); // Reset candidates array
 
         // OverlapSphereNonAlloc will not allocate anything to memory, and a sphere is also quicker than a box
-        int candidateCount = Physics.OverlapSphereNonAlloc(SourceTransform.position, ViewDistance / 2f, _candidates, _targetMask);
+        int candidateCount = Physics.OverlapSphereNonAlloc(SourceTransform.position, ViewDistance, _candidates, _targetMask);
 
         int count = 0;
         foreach (Collider target in _candidates)
@@ -71,8 +71,7 @@ class EntityScanner
             float angleToTarget = Vector3.Angle(SourceTransform.forward, dirToTarget);
             if (angleToTarget > (ViewAngle / 2f)) continue;
 
-            // float distanceToTarget = Vector3.Distance(eyePosition, Target.transform.position);
-            if (!Physics.Raycast(eyePosition, dirToTarget, distanceToTarget, _obstacleMask))
+            if (Physics.Raycast(eyePosition, dirToTarget, distanceToTarget, _obstacleMask))
             {
                 yield return target;
 

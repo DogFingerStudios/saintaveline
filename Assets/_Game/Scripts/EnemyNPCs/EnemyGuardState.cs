@@ -93,8 +93,8 @@ public class EnemyGuardState : NPCState
                 {
                     this.NPC!.PushState(this);
                     return new NPCStateReturnValue(
-                            NPCStateReturnValue.ActionType.ChangeState,
-                            new EnemyFollowState(this.NPC, entity));
+                        NPCStateReturnValue.ActionType.ChangeState,
+                        new EnemyPursueState(this.NPC, entity));
                 }
             }
 
