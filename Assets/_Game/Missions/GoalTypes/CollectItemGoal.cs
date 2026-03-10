@@ -1,4 +1,6 @@
-﻿public class CollectItemGoal : Task
+﻿using UnityEngine;
+
+public class CollectItemGoal : Task
 {
     public string ItemName => Data.ItemName;
     public int QuantityNeeded => Data.QuantityNeeded;
