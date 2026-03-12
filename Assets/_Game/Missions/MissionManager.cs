@@ -14,7 +14,6 @@ public class MissionManager : MonoBehaviour
     [SerializeField] private Camera MinimapCamera = null!;
 
     Mission? CurrentMission;
-    RunOnce? _runonce;
     RunOnce _init = null!;
 
     public void Awake()
