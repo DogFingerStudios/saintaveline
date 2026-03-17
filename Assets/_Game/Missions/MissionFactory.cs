@@ -31,6 +31,9 @@ public class MissionFactory
                 CollectItemGoalSO collectItemGoalSO
                     => new CollectItemGoal(collectItemGoalSO.Copy()) { Host = config.Host },
 
+                TimedArriveAtTaskSO timedArriveAtTaskSO
+                    => new TimedArriveAtTask(timedArriveAtTaskSO.Copy()) { Host = config.Host },
+
                 _ => throw new Exception("Unknown GoalSO type.")
             };
 

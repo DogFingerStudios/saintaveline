@@ -12,7 +12,7 @@ public class MissionManager : MonoBehaviour
 
     // we assume that the minimap camera is a child of the minimap object
     [SerializeField] private Camera MinimapCamera = null!;
-    [SerializeField] private TextMeshProUGUI TaskTimerText = null!;
+    //[SerializeField] private TextMeshProUGUI TaskTimerText = null!;
 
     Mission? CurrentMission;
     RunOnce _init = null!;

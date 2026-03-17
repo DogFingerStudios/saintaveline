@@ -18,21 +18,22 @@ public class TimedArriveAtTask : Task
     public override void ManualUpdate()
     {
         _timeLeft -= Time.deltaTime;
-
         if (_timeLeft <= 0f)
         {
+            Debug.LogWarning("Mission failed");
             base.Complete(false);
             return;
         }
 
-        if (Vector3.Distance(ChracterTransform.position, Data.Location) <= ArrivedDistance)
+        var distanceToTarget = Vector3.Distance(ChracterTransform.position, Data.Location);
+        if (distanceToTarget <= ArrivedDistance)
         {
             base.Complete();
         }
 
         if (Data.ShowTimer)
         {
-            //Data.TimeText.text = Mathf.CeilToInt(_timeLeft).ToString();
+            // yay!
         }
     }
 }
