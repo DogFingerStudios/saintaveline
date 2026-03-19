@@ -13,12 +13,12 @@ public class TaskHandlerAsync : TaskHandlerBase
         {
             _inProcessTasks.Add(task);
             task.OnTaskStarted += base.NotifyTaskStarted;
-            task.OnTaskCompleted += GoalCompletedHandler;
+            task.OnTaskCompleted += TaskCompletedHandler;
             task.Start();
         }
     }
 
-    void GoalCompletedHandler(Task task)
+    void TaskCompletedHandler(Task task)
     {
         NotifyTaskCompleted(task);
         _inProcessTasks.Remove(task);
