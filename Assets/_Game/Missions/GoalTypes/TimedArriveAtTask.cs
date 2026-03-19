@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class TimedArriveAtTask : Task
@@ -8,6 +9,7 @@ public class TimedArriveAtTask : Task
     public Transform ChracterTransform => Host!.transform;
 
     private float _timeLeft = 0f;
+    public string TimeLeftFormatted => TimeSpan.FromSeconds(_timeLeft).ToString(@"mm\:ss");
 
     public TimedArriveAtTask(TimedArriveAtTaskSO data)
         : base(data)
@@ -17,10 +19,11 @@ public class TimedArriveAtTask : Task
 
     public override void ManualUpdate()
     {
+        base.ManualUpdate(); 
+
         _timeLeft -= Time.deltaTime;
         if (_timeLeft <= 0f)
         {
-            Debug.LogWarning("Mission failed");
             base.Complete(false);
             return;
         }
@@ -30,10 +33,6 @@ public class TimedArriveAtTask : Task
         {
             base.Complete();
         }
-
-        if (Data.ShowTimer)
-        {
-            // yay!
-        }
     }
 }
+    

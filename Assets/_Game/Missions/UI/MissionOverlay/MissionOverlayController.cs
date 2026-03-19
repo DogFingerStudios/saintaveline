@@ -44,11 +44,11 @@ public class MissionOverlayController : MonoBehaviour
         FixUnityLayoutBug();
     }
 
-    // TODO: tasks will eventually have states (completed, failed, in-progress)
     public void CompleteTask(Task task)
     {
         var ctrl = _overlayTasks[task].Item2;
-        ctrl.SetText(task.Name, TaskState.Completed);
+        ctrl.SetText(task.Name, task.State);
+
         FixUnityLayoutBug();
     }
 

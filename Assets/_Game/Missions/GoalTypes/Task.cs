@@ -28,23 +28,37 @@ public class Task
 
     public Action<Task>? OnTaskStarted;
     public event Action<Task>? OnTaskCompleted;
+    public event Action<Task>? OnTaskTick;
 
     public GameObject? MinimapIconObject { get; private set; }
 
     public Task(TaskSO data) => this.Data = data;
 
-    TaskState State = TaskState.Inactive;
+    public TaskState State = TaskState.Inactive;
 
     protected void Complete(bool success = true)
     {
         MinimapIconObject?.SetActive(false);
 
-        if (!this.SuccessMessage.Equals(string.Empty))
+        if (success)
         {
-            BottomTypewriter.Instance.Enqueue(this.SuccessMessage);
+            if (!this.SuccessMessage.Equals(string.Empty))
+            {
+                BottomTypewriter.Instance.Enqueue(this.SuccessMessage);
+            }
+
+            State = TaskState.Completed;
+        }
+        else
+        {
+            if (!this.FailureMessage.Equals(string.Empty))
+            {
+                BottomTypewriter.Instance.Enqueue(this.FailureMessage);
+            }
+
+            State = TaskState.Failed;
         }
 
-        State = success ? TaskState.Completed : TaskState.Failed;
         OnTaskCompleted?.Invoke(this);
     }
 
@@ -66,6 +80,6 @@ public class Task
 
     public virtual void ManualUpdate()
     {
-        // nothing to do
+        OnTaskTick?.Invoke(this);
     }
 }

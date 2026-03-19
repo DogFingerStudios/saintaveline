@@ -20,7 +20,7 @@ public class Mission
     public event Action<Task> OnTaskStarted = null!;
     public event Action<Task> OnTaskCompleted = null!;
     public event Action OnMissionCompleted = null!;
-
+    public event Action<Task> OnTaskTick = null!;
 
     readonly TaskHandlerBase _taskHandler = null!;
 
@@ -62,6 +62,8 @@ public class Mission
 
         taskIconObject.GetComponent<TaskIconController>()
             .SetData(RuntimeConfig.MinimapCamera, RuntimeConfig.MinimapParent);
+
+        task.OnTaskTick += (task) => OnTaskTick?.Invoke(task);
 
         OnTaskStarted?.Invoke(task);
     }

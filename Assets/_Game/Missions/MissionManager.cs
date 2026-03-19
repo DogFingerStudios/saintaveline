@@ -12,7 +12,7 @@ public class MissionManager : MonoBehaviour
 
     // we assume that the minimap camera is a child of the minimap object
     [SerializeField] private Camera MinimapCamera = null!;
-    //[SerializeField] private TextMeshProUGUI TaskTimerText = null!;
+    [SerializeField] private TextMeshProUGUI TaskTimerText = null!;
 
     Mission? CurrentMission;
     RunOnce _init = null!;
@@ -60,7 +60,8 @@ public class MissionManager : MonoBehaviour
         CurrentMission.OnMissionCompleted += MissionCompleteHandler;
         CurrentMission.OnTaskStarted += TaskStartedHandler;
         CurrentMission.OnTaskCompleted += TaskCompletedHandler;
-
+        CurrentMission.OnTaskTick += TaskTickHandler;
+        
         MissionOverlay.AddMission(CurrentMission);
         CurrentMission.StartMission();
     }
@@ -87,10 +88,20 @@ public class MissionManager : MonoBehaviour
     void TaskStartedHandler(Task task)
     {
         MissionOverlay.AddTask(task);
+        TaskTimerText.enabled = task is TimedArriveAtTask;
     }
 
     void TaskCompletedHandler(Task task)
     {
         MissionOverlay.CompleteTask(task);
+        TaskTimerText.enabled = false;
+    }
+
+    private void TaskTickHandler(Task task)
+    {
+        if (TaskTimerText != null && task is TimedArriveAtTask taat)
+        {
+            TaskTimerText.SetText(taat.TimeLeftFormatted);
+        }
     }
 }

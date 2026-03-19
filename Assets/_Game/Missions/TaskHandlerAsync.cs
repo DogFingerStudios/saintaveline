@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 
+// NOTE: The "aync" in this class name is a lie. This is not a traditional type
+// of asynchronicity, this is more about having multiple tasks in progress at
+// the same time
 public class TaskHandlerAsync : TaskHandlerBase
 {
     List<Task> _inProcessTasks = new();

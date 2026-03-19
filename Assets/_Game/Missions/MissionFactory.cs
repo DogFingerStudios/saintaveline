@@ -1,4 +1,6 @@
 using System;
+using System.Reflection;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 public struct MissionConfig
@@ -17,11 +19,11 @@ public class MissionFactory
 
     // objectiveSO - the scriptable object defining the objective
     // host - the character entity that will be undertaking the objective
-    public Mission CreateMissionFromSO(MissionSO objectiveSO, MissionConfig config)
+    public Mission CreateMissionFromSO(MissionSO missionSO, MissionConfig config)
     {
-        Mission objective = new(objectiveSO.Copy(), config);
+        Mission objective = new(missionSO.Copy(), config);
 
-        foreach (TaskSO taskSO in objectiveSO.Tasks)
+        foreach (TaskSO taskSO in missionSO.Tasks)
         {
             Task task = taskSO switch
             {
@@ -32,7 +34,7 @@ public class MissionFactory
                     => new CollectItemGoal(collectItemGoalSO.Copy()) { Host = config.Host },
 
                 TimedArriveAtTaskSO timedArriveAtTaskSO
-                    => new TimedArriveAtTask(timedArriveAtTaskSO.Copy()) { Host = config.Host },
+                    => CreateTimedTask(missionSO, timedArriveAtTaskSO.Copy(), config.Host),
 
                 _ => throw new Exception("Unknown GoalSO type.")
             };
@@ -41,5 +43,15 @@ public class MissionFactory
         }
 
         return objective;
+    }
+
+    private Task CreateTimedTask(MissionSO missionSO, TimedArriveAtTaskSO so, CharacterEntity host)
+    {
+        if (missionSO.ConcurrentTasks)
+        {
+            throw new Exception("Timed tasks are not supported for concurrent missions.");
+        }
+
+        return new TimedArriveAtTask(so.Copy()) { Host = host };
     }
 }
