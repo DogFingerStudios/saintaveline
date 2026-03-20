@@ -103,8 +103,8 @@ Material:
     m_Floats:
     - AO_Scale: 0.5
     - Alpha_Clip_Threshold: 0.5
-    - Animation_Cutoff: 20
-    - Distance_Fade_End: 80
+    - Animation_Cutoff: 100
+    - Distance_Fade_End: 200
     - Distance_Fade_Start: 40
     - Dither_Scale: 1.5
     - Enable_Blend_Terrain_Color: 0
@@ -114,9 +114,9 @@ Material:
     - Terrain_Blend_B: 0
     - Terrain_Blend_G: 0
     - Terrain_Blend_R: 0
-    - Vector1_593c5cea6c4a42e993ed03ced4685732: 0.167
-    - Vector1_8651797e3e304e108dbd25f9d5a426ba: 0.5
-    - Vector1_a5b8b09028ce49a39f4d090894c89e22: 0.5
+    - Vector1_593c5cea6c4a42e993ed03ced4685732: 4
+    - Vector1_8651797e3e304e108dbd25f9d5a426ba: 0.7
+    - Vector1_a5b8b09028ce49a39f4d090894c89e22: 0.15
     - Vector1_a6983181c8dc4691ba6a28a34c4223a6: 1
     - Wind_Blast: 0.05
     - Wind_Intensity: 0.1
@@ -216,7 +216,7 @@ Material:
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _SSSColor: {r: 0.6295641, g: 0.9622642, b: 0.28595585, a: 0}
-    - _Subsurface_Scattering_Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Subsurface_Scattering_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Thickness_Remap: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
