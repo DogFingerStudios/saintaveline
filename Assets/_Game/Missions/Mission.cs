@@ -74,11 +74,15 @@ public class Mission
         OnTaskCompleted?.Invoke(task);
     }
 
-    void AllTasksCompletedHandler()
+    void AllTasksCompletedHandler(bool success)
     {
-        if (!SuccessMessage.Equals(string.Empty))
+        if (success && !SuccessMessage.Equals(string.Empty))
         {
             BottomTypewriter.Instance.Enqueue(SuccessMessage);
+        }
+        else if (!success && !FailureMessage.Equals(string.Empty))
+        {
+            BottomTypewriter.Instance.Enqueue(FailureMessage);
         }
 
         OnMissionCompleted?.Invoke();

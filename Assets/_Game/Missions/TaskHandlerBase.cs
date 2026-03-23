@@ -9,7 +9,7 @@ public abstract class TaskHandlerBase
     public event Action<Task>? OnTaskStarted;
     public event Action<Task>? OnTaskCompleted;
 
-    public event Action OnAllTasksCompleted = null!;
+    public event Action<bool> OnAllTasksCompleted = null!;
 
     public void NotifyTaskStarted(Task task)
     {
@@ -21,9 +21,9 @@ public abstract class TaskHandlerBase
         OnTaskCompleted?.Invoke(task);
     }
 
-    public void NotifyAllTasksCompleted()
+    public void NotifyAllTasksCompleted(bool success)
     {
-        OnAllTasksCompleted?.Invoke();
+        OnAllTasksCompleted?.Invoke(success);
     }
 
     public abstract void StartMission();

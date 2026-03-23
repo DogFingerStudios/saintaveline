@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class TaskHandlerAsync : TaskHandlerBase
 {
     List<Task> _inProcessTasks = new();
+    bool _succeeded = true;
 
     public override void StartMission()
     {
@@ -22,6 +23,12 @@ public class TaskHandlerAsync : TaskHandlerBase
     {
         NotifyTaskCompleted(task);
         _inProcessTasks.Remove(task);
+        
+        if (task.State == TaskState.Failed)
+        {
+            _succeeded = false;
+            _inProcessTasks.Clear();
+        }
     }
 
     public override void ManualUpdate()
@@ -34,7 +41,7 @@ public class TaskHandlerAsync : TaskHandlerBase
 
         if (_inProcessTasks.Count == 0)
         {
-            NotifyAllTasksCompleted();
+            NotifyAllTasksCompleted(_succeeded);
         }
     }
 }
