@@ -29,6 +29,12 @@ public class TaskHandlerSerial : TaskHandlerBase
 
         NotifyTaskCompleted(task);
 
+        if (task.State == TaskState.Failed)
+        {
+            NotifyAllTasksCompleted(false);
+            return;
+        }
+
         _currentTaskIndex++;
         if (_currentTaskIndex < Tasks.Count)
         {
@@ -39,7 +45,7 @@ public class TaskHandlerSerial : TaskHandlerBase
         }
         else
         {
-            NotifyAllTasksCompleted();
+            NotifyAllTasksCompleted(true);
         }
     }
 

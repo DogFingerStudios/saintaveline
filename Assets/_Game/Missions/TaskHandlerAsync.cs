@@ -1,8 +1,12 @@
 using System.Collections.Generic;
 
+// NOTE: The "aync" in this class name is a lie. This is not a traditional type
+// of asynchronicity, this is more about having multiple tasks in progress at
+// the same time
 public class TaskHandlerAsync : TaskHandlerBase
 {
     List<Task> _inProcessTasks = new();
+    bool _succeeded = true;
 
     public override void StartMission()
     {
@@ -10,15 +14,21 @@ public class TaskHandlerAsync : TaskHandlerBase
         {
             _inProcessTasks.Add(task);
             task.OnTaskStarted += base.NotifyTaskStarted;
-            task.OnTaskCompleted += GoalCompletedHandler;
+            task.OnTaskCompleted += TaskCompletedHandler;
             task.Start();
         }
     }
 
-    void GoalCompletedHandler(Task task)
+    void TaskCompletedHandler(Task task)
     {
         NotifyTaskCompleted(task);
         _inProcessTasks.Remove(task);
+        
+        if (task.State == TaskState.Failed)
+        {
+            _succeeded = false;
+            _inProcessTasks.Clear();
+        }
     }
 
     public override void ManualUpdate()
@@ -31,7 +41,7 @@ public class TaskHandlerAsync : TaskHandlerBase
 
         if (_inProcessTasks.Count == 0)
         {
-            NotifyAllTasksCompleted();
+            NotifyAllTasksCompleted(_succeeded);
         }
     }
 }
