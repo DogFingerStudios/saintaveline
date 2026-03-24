@@ -57,7 +57,9 @@ public class MissionManager : MonoBehaviour
             throw new Exception("CurrentMission is null after creation in Initialization.");
         }
 
+        CurrentMission.OnMissionStarted += MissionStartedHandler;
         CurrentMission.OnMissionCompleted += MissionCompleteHandler;
+
         CurrentMission.OnTaskStarted += TaskStartedHandler;
         CurrentMission.OnTaskCompleted += TaskCompletedHandler;
         CurrentMission.OnTaskTick += TaskTickHandler;
@@ -75,11 +77,30 @@ public class MissionManager : MonoBehaviour
         CurrentMission.ManualUpdate();
     }
 
-    void MissionCompleteHandler()
+    void MissionStartedHandler(Mission mission)
+    {
+        if (mission.StartMessage != string.Empty)
+        {
+            BottomTypewriter.Instance.Enqueue(mission.StartMessage);
+        }
+    }
+
+    void MissionCompleteHandler(Mission mission)
     {
         if (CurrentMission == null)
         {
             throw new Exception("CurrentMission is null in MissionCompleteHandler.");
+        }
+
+        if (mission.State == MissionState.Completed 
+                && !mission.SuccessMessage.Equals(string.Empty))
+        {
+            BottomTypewriter.Instance.Enqueue(mission.SuccessMessage);
+        }
+        else if (mission.State == MissionState.Failed 
+                && !mission.FailureMessage.Equals(string.Empty))
+        {
+            BottomTypewriter.Instance.Enqueue(mission.FailureMessage);
         }
 
         CurrentMission = null;

@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 
 [NPCStateTag("EnemyIdle")]
-public class EnemyGuardState : NPCState
+public class EnemyIdleState : NPCState
 {
     private Vector3 _originalDirection;
     private readonly EnemyNPC _enemyNPC;
@@ -26,7 +26,7 @@ public class EnemyGuardState : NPCState
     private NPCState? _nextState = null;
     private bool _firstTime = true;
 
-    public EnemyGuardState(EnemyNPC enemyNPC)
+    public EnemyIdleState(EnemyNPC enemyNPC)
         : base(enemyNPC)
     {
         if (this.NPC == null)
