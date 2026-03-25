@@ -2945,7 +2945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 43978050
+      value: 44249370
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -3021,7 +3021,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 36871416
+      value: 37231588
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -16948,13 +16948,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: StationedGuard1
       objectReference: {fileID: 0}
-    - target: {fileID: 8355103650703838962, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
-      propertyPath: m_AnchorMax.x
+    - target: {fileID: 8018992134920938627, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8355103650703838962, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.62299997
+      objectReference: {fileID: 0}
+    - target: {fileID: 8355103650703838962, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21183,7 +21187,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: _defaultState
-      value: EnemyIdle
+      value: EnemyPatrol
       objectReference: {fileID: 0}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: EquippedItemPos
@@ -21213,6 +21217,10 @@ PrefabInstance:
       propertyPath: 'PatrolPoints.Array.data[3]'
       value: 
       objectReference: {fileID: 919698022}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: 'PatrolPoints.Array.data[4]'
+      value: 
+      objectReference: {fileID: 2015105752}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: _entityProfile._mentalState.Calmness
       value: -1
@@ -21263,15 +21271,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8018992134920938627, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8355103650703838962, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.62299997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8355103650703838962, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31458,7 +31466,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1360472216782407304, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1360472216782407304, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
       propertyPath: m_TagString
@@ -31550,11 +31558,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3058107962341032794, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.62299997
       objectReference: {fileID: 0}
     - target: {fileID: 3058107962341032794, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3579123722393013533, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
       propertyPath: m_Enabled
@@ -38292,7 +38300,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2315515643589016134, guid: 2e3b15140a2524bc59b7769082ab61ee, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 511.58
+      value: 467
       objectReference: {fileID: 0}
     - target: {fileID: 2828232227433526610, guid: 2e3b15140a2524bc59b7769082ab61ee, type: 3}
       propertyPath: m_LocalPosition.x

@@ -16,8 +16,6 @@ public class EnemyNPC : BaseNPC
     public float ViewAngle = 120f;
     public Vector3 EyeOffset = new(0f, 1.6f, 0f);
 
-    private EnemyPatrolState? _patrolState = null;
-
     protected override void Start()
     {
         base.Start();
@@ -26,12 +24,6 @@ public class EnemyNPC : BaseNPC
         if (state != null)
         {
             this.stateMachine.SetState(state);
-        }
-
-        // TODO: could this be deleted?
-        if (state is EnemyPatrolState patrolState)
-        {
-            _patrolState = patrolState;
         }
 
         MissionManager.Instance.OnMissionCompleted += OnMissionCompleted;
