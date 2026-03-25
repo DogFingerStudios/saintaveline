@@ -28,10 +28,13 @@ public class EnemyNPC : BaseNPC
             this.stateMachine.SetState(state);
         }
 
+        // TODO: could this be deleted?
         if (state is EnemyPatrolState patrolState)
         {
             _patrolState = patrolState;
         }
+
+        MissionManager.Instance.OnMissionCompleted += OnMissionCompleted;
     }
 
     public override void HandleSound(SoundStimulus stim)
@@ -41,6 +44,17 @@ public class EnemyNPC : BaseNPC
         if (stim.Kind == StimulusKind.Gunshot)
         {
             this.stateMachine.CurrentState?.HandleSound(stim);
+        }
+    }
+
+    private void OnMissionCompleted(Mission mission)
+    {
+        if (mission.State == MissionState.Failed)
+        {
+            if (this.StateMachine.CurrentState != null)
+            {
+                this.StateMachine.CurrentState!.IsAggro = true;
+            }
         }
     }
 }

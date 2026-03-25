@@ -20,6 +20,8 @@ public class NPCStateReturnValue
 
 public abstract class NPCState
 {
+    public bool IsAggro { get; set; } = false;
+
     private BaseNPC? _npc;
     public BaseNPC? NPC 
     {

@@ -69,7 +69,7 @@ public class EnemyPatrolState : NPCState
         }
 
         _timer += Time.deltaTime;
-        if (_timer >= _scanInterval)
+        if (this.IsAggro && _timer >= _scanInterval)
         {
             var target = _entityScanner.doScan(1).FirstOrDefault();
             if (target != null)

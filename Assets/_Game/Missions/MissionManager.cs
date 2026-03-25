@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class MissionManager : MonoBehaviour
 {
+    public static MissionManager Instance { get; private set; } = null!;
+
     [SerializeField] private RectTransform MinimapUIObject = null!;
     [SerializeField] private MissionSO InitialMission = null!;
     [SerializeField] private MissionOverlayController MissionOverlay = null!;
@@ -17,8 +19,20 @@ public class MissionManager : MonoBehaviour
     Mission? CurrentMission;
     RunOnce _init = null!;
 
+    public event Action<Mission> OnMissionStarted = null!;
+    public event Action<Mission> OnMissionCompleted = null!;
+
     public void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         if (MinimapCamera == null)
         {
             throw new Exception("Minimap camera not assigned.");
@@ -83,6 +97,8 @@ public class MissionManager : MonoBehaviour
         {
             BottomTypewriter.Instance.Enqueue(mission.StartMessage);
         }
+
+        this.OnMissionStarted?.Invoke(mission);
     }
 
     void MissionCompleteHandler(Mission mission)
@@ -103,6 +119,7 @@ public class MissionManager : MonoBehaviour
             BottomTypewriter.Instance.Enqueue(mission.FailureMessage);
         }
 
+        this.OnMissionCompleted?.Invoke(mission);
         CurrentMission = null;
     }
 
