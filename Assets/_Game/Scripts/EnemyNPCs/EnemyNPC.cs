@@ -45,7 +45,7 @@ public class EnemyNPC : BaseNPC
         {
             if (this.StateMachine.CurrentState != null)
             {
-                this.StateMachine.CurrentState!.IsAggro = true;
+                this.IsAggro = true;
             }
         }
     }

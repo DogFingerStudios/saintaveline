@@ -83,7 +83,7 @@ public class EnemyIdleState : NPCState
         }
 
         _timer += Time.deltaTime;
-        if (this.IsAggro && _timer >= _scanInterval)
+        if (this.NPC!.IsAggro && _timer >= _scanInterval)
         {
             var target = doScan();
             if (target != null)
