@@ -134,7 +134,9 @@ public class Pistol1Entity : ItemEntity
 
         Vector3 direction = owner!.DirectionToTarget(true);
 
-        if (Physics.Raycast(_firePoint!.position, direction, out RaycastHit hit, _pistolItemData!.FireRange))
+        var basenpc = owner as BaseNPC;
+        int layerMask = 1 << basenpc!.Target.gameObject.layer;
+        if (Physics.Raycast(_firePoint!.position, direction, out RaycastHit hit, _pistolItemData!.FireRange, layerMask))
         {
             var entity = hit.collider.GetComponent<GameEntity>();
             if (entity != null)
