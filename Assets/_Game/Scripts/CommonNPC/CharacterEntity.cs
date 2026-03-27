@@ -272,7 +272,34 @@ public class CharacterEntity : GameEntity
         _inventory[(int)_equippedItemIndex]!.PrimaryAction();  
     }
 
-    // will equip the item in the specified slot, 
+    public void SwapInventorySlots(int slotA, int slotB)
+    {
+        if (slotA < 0 || slotA >= MaxInventorySize)
+        {
+            throw new Exception($"SwapInventorySlots: slotA {slotA} is out of range.");
+        }
+
+        if (slotB < 0 || slotB >= MaxInventorySize)
+        {
+            throw new Exception($"SwapInventorySlots: slotB {slotB} is out of range.");
+        }
+
+        if (slotA == slotB) return;
+
+        (_inventory[slotA], _inventory[slotB]) = (_inventory[slotB], _inventory[slotA]);
+
+        // update equipped item index if it was involved in the swap
+        if (_equippedItemIndex == slotA)
+        {
+            _equippedItemIndex = slotB;
+        }
+        else if (_equippedItemIndex == slotB)
+        {
+            _equippedItemIndex = slotA;
+        }
+    }
+
+    // will equip the item in the specified slot,
     // or unequip if already equipped
     public void ToggleEquippedItem(int slot)
     {
