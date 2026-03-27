@@ -106,6 +106,7 @@ public class InventoryUI : MonoBehaviour
 
         _owner = entity;
 
+        int slotIndex = 0;
         foreach (ItemEntity? item in entity.Inventory)
         {
             GameObject newItem = Instantiate(_itemPrefab, _contentPanel);
@@ -113,14 +114,22 @@ public class InventoryUI : MonoBehaviour
 
             InventoryItemHelper helper = newItem.GetComponentInChildren<InventoryItemHelper>();
             Assert.IsNotNull(helper, "InventoryUI.ShowInventory: InventoryItemHelper component not found on item prefab");
-            
+
+            // attach drag handler for reordering
+            var dragHandler = helper.gameObject.GetComponent<InventoryDragHandler>();
+            if (dragHandler == null)
+            {
+                dragHandler = helper.gameObject.AddComponent<InventoryDragHandler>();
+            }
+            dragHandler.SlotIndex = slotIndex;
+
             if (item == null || item.ItemData == null)
             {
-                helper.ItemName.color = _emptySlotColor; 
-                helper.ShortcutObj.SetActive(false);  
+                helper.ItemName.color = _emptySlotColor;
+                helper.ShortcutObj.SetActive(false);
             }
             else
-            { 
+            {
                 if (helper.ItemName != null)
                 {
                     helper.ItemName.text = item.ItemData.ItemName;
@@ -132,7 +141,7 @@ public class InventoryUI : MonoBehaviour
                     {
                         helper.Thumbnail.sprite = item.ItemData.Thumbnail;
                     }
-                    
+
                     helper.ItemEntity = item;
                     helper.ShortcutText.text = (_itemObjects.Count + 1).ToString();
                 }
@@ -163,6 +172,8 @@ public class InventoryUI : MonoBehaviour
 
                 _itemObjects.Add(newItem);
             }
+
+            slotIndex++;
         }
 
         _selectedCount = 0;
@@ -306,6 +317,16 @@ public class InventoryUI : MonoBehaviour
 
         CloseDialog();
         return;
+    }
+
+    public void OnSlotSwapRequested(int fromSlot, int toSlot)
+    {
+        if (_owner == null) return;
+
+        _owner.SwapInventorySlots(fromSlot, toSlot);
+
+        // refresh the inventory display
+        ShowInventory(_owner);
     }
 
     private void CloseDialog()
