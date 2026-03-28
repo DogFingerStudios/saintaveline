@@ -106,6 +106,7 @@ public class InventoryUI : MonoBehaviour
 
         _owner = entity;
 
+        int slotIndex = 0;
         foreach (ItemEntity? item in entity.Inventory)
         {
             GameObject newItem = Instantiate(_itemPrefab, _contentPanel);
@@ -113,14 +114,23 @@ public class InventoryUI : MonoBehaviour
 
             InventoryItemHelper helper = newItem.GetComponentInChildren<InventoryItemHelper>();
             Assert.IsNotNull(helper, "InventoryUI.ShowInventory: InventoryItemHelper component not found on item prefab");
-            
+
+            // Display the shortcut key: slots 0-8 show "1"-"9", slot 9 shows "0"
+            int shortcutKey = (slotIndex + 1) % 10;
+
             if (item == null || item.ItemData == null)
             {
-                helper.ItemName.color = _emptySlotColor; 
-                helper.ShortcutObj.SetActive(false);  
+                helper.ItemName.color = _emptySlotColor;
+                helper.ShortcutText.text = shortcutKey.ToString();
+
+                Toggle emptyToggle = newItem.GetComponentInChildren<Toggle>();
+                if (emptyToggle != null)
+                {
+                    emptyToggle.interactable = false;
+                }
             }
             else
-            { 
+            {
                 if (helper.ItemName != null)
                 {
                     helper.ItemName.text = item.ItemData.ItemName;
@@ -132,9 +142,9 @@ public class InventoryUI : MonoBehaviour
                     {
                         helper.Thumbnail.sprite = item.ItemData.Thumbnail;
                     }
-                    
+
                     helper.ItemEntity = item;
-                    helper.ShortcutText.text = (_itemObjects.Count + 1).ToString();
+                    helper.ShortcutText.text = shortcutKey.ToString();
                 }
 
                 Toggle itemToggle = newItem.GetComponentInChildren<Toggle>();
@@ -160,9 +170,10 @@ public class InventoryUI : MonoBehaviour
                         image.color = new Color(0.8f, 0.8f, 1.0f, 1.0f);
                     }
                 }
-
-                _itemObjects.Add(newItem);
             }
+
+            _itemObjects.Add(newItem);
+            slotIndex++;
         }
 
         _selectedCount = 0;
@@ -339,15 +350,16 @@ public class InventoryUI : MonoBehaviour
     {
         if (_selectedCount == 1 && _itemObjects.Count > 0)
         {
-            GameObject itemobj = _itemObjects[0];
-            Toggle itemToggle = itemobj.GetComponentInChildren<Toggle>();
-
-            if (itemToggle != null && itemToggle.isOn)
+            foreach (GameObject itemobj in _itemObjects)
             {
-                var tag = itemobj.GetComponent<InventoryItemHelper>();
-                if (tag != null && tag.ItemEntity == _owner!.EquippedItem)
+                Toggle itemToggle = itemobj.GetComponentInChildren<Toggle>();
+                if (itemToggle != null && itemToggle.isOn)
                 {
-                    return true;
+                    var tag = itemobj.GetComponent<InventoryItemHelper>();
+                    if (tag != null && tag.ItemEntity == _owner!.EquippedItem)
+                    {
+                        return true;
+                    }
                 }
             }
         }
