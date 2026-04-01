@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Assertions;
 
-public class Pistol1Entity : ItemEntity
+public class Pistol1Entity : GunEntity
 {
     // TODO: improve the way that NPCs "hear" gunshots
     //public static event Action<Vector3> OnGunFired = null!;
@@ -14,12 +14,13 @@ public class Pistol1Entity : ItemEntity
     private PistolItemData? _pistolItemData;
     private AudioSource? _audioSource;
     private LineRenderer _lineRenderer = null!;
+    
     private Transform? _firePoint;
+
     private bool _canFire = true;
     private SoundStimulus _gunshotStimulus = new();
 
     private readonly WaitForSeconds _fireRayDelay = new(.05f);
-
 
     // this is called AFTER the item is equipped
     public override void OnEquipped()
@@ -134,7 +135,9 @@ public class Pistol1Entity : ItemEntity
 
         Vector3 direction = owner!.DirectionToTarget(true);
 
-        if (Physics.Raycast(_firePoint!.position, direction, out RaycastHit hit, _pistolItemData!.FireRange))
+        var basenpc = owner as BaseNPC;
+        int layerMask = 1 << basenpc!.Target.gameObject.layer;
+        if (Physics.Raycast(_firePoint!.position, direction, out RaycastHit hit, _pistolItemData!.FireRange, layerMask))
         {
             var entity = hit.collider.GetComponent<GameEntity>();
             if (entity != null)

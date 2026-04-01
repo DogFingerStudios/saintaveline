@@ -45,10 +45,12 @@ public class EnemyPatrolState : NPCState
 
     public override void Enter()
     {
-        if (_enemyNPC.PatrolPoints.Length > 0)
+        if (_enemyNPC.PatrolPoints.Length == 0)
         {
-            _agent.SetDestination(_enemyNPC.PatrolPoints[_currentIndex].position);
+            throw new System.Exception("EnemyNPC has no patrol points assigned. Cannot enter patrol state.");
         }
+
+        _agent.SetDestination(_enemyNPC.PatrolPoints[_currentIndex].position);
     }
 
     public override NPCStateReturnValue? Update()
@@ -64,12 +66,12 @@ public class EnemyPatrolState : NPCState
 
         if (!_agent.pathPending && _agent.remainingDistance < _enemyNPC.ArrivalThreshold)
         {
-            _currentIndex = (_currentIndex + 1) % _enemyNPC.PatrolPoints.Length;
+            _currentIndex = (_currentIndex + 1) % _enemyNPC.PatrolPoints.Length; 
             _agent.SetDestination(_enemyNPC.PatrolPoints[_currentIndex].position);
         }
 
         _timer += Time.deltaTime;
-        if (_timer >= _scanInterval)
+        if (this.NPC!.IsAggro && _timer >= _scanInterval)
         {
             var target = _entityScanner.doScan(1).FirstOrDefault();
             if (target != null)

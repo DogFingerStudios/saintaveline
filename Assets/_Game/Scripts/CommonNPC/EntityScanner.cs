@@ -65,13 +65,13 @@ class EntityScanner
             if (target.transform == SourceTransform) continue;
 
             float distanceToTarget = Vector3.Distance(eyePosition, target.transform.position);
-            if (distanceToTarget > ViewDistance) continue;
 
             Vector3 dirToTarget = (target.transform.position - eyePosition).normalized;
             float angleToTarget = Vector3.Angle(SourceTransform.forward, dirToTarget);
             if (angleToTarget > (ViewAngle / 2f)) continue;
 
-            if (Physics.Raycast(eyePosition, dirToTarget, distanceToTarget, _obstacleMask))
+            int layerMask = 1 << target.gameObject.layer;
+            if (Physics.Raycast(eyePosition, dirToTarget, distanceToTarget, layerMask))
             {
                 yield return target;
 

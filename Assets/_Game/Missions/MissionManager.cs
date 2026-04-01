@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class MissionManager : MonoBehaviour
 {
+    public static MissionManager Instance { get; private set; } = null!;
+
     [SerializeField] private RectTransform MinimapUIObject = null!;
     [SerializeField] private MissionSO InitialMission = null!;
     [SerializeField] private MissionOverlayController MissionOverlay = null!;
@@ -17,8 +19,20 @@ public class MissionManager : MonoBehaviour
     Mission? CurrentMission;
     RunOnce _init = null!;
 
+    public event Action<Mission> OnMissionStarted = null!;
+    public event Action<Mission> OnMissionCompleted = null!;
+
     public void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         if (MinimapCamera == null)
         {
             throw new Exception("Minimap camera not assigned.");
@@ -57,7 +71,9 @@ public class MissionManager : MonoBehaviour
             throw new Exception("CurrentMission is null after creation in Initialization.");
         }
 
+        CurrentMission.OnMissionStarted += MissionStartedHandler;
         CurrentMission.OnMissionCompleted += MissionCompleteHandler;
+
         CurrentMission.OnTaskStarted += TaskStartedHandler;
         CurrentMission.OnTaskCompleted += TaskCompletedHandler;
         CurrentMission.OnTaskTick += TaskTickHandler;
@@ -75,13 +91,35 @@ public class MissionManager : MonoBehaviour
         CurrentMission.ManualUpdate();
     }
 
-    void MissionCompleteHandler()
+    void MissionStartedHandler(Mission mission)
+    {
+        if (mission.StartMessage != string.Empty)
+        {
+            BottomTypewriter.Instance.Enqueue(mission.StartMessage);
+        }
+
+        this.OnMissionStarted?.Invoke(mission);
+    }
+
+    void MissionCompleteHandler(Mission mission)
     {
         if (CurrentMission == null)
         {
             throw new Exception("CurrentMission is null in MissionCompleteHandler.");
         }
 
+        if (mission.State == MissionState.Completed 
+                && !mission.SuccessMessage.Equals(string.Empty))
+        {
+            BottomTypewriter.Instance.Enqueue(mission.SuccessMessage);
+        }
+        else if (mission.State == MissionState.Failed 
+                && !mission.FailureMessage.Equals(string.Empty))
+        {
+            BottomTypewriter.Instance.Enqueue(mission.FailureMessage);
+        }
+
+        this.OnMissionCompleted?.Invoke(mission);
         CurrentMission = null;
     }
 

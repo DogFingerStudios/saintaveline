@@ -4,10 +4,19 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MissionState
+{
+    Inactive,   // mission has not yet started
+    InProgress,
+    Completed,
+    Failed
+}
+
 public class Mission
 {
     public readonly MissionSO Data;
     public readonly MissionConfig RuntimeConfig;
+    public MissionState State { get; private set; } = MissionState.Inactive;
 
     public string Name => Data.Name;
     public string Description => Data.Description;
@@ -19,8 +28,10 @@ public class Mission
 
     public event Action<Task> OnTaskStarted = null!;
     public event Action<Task> OnTaskCompleted = null!;
-    public event Action OnMissionCompleted = null!;
     public event Action<Task> OnTaskTick = null!;
+
+    public event Action<Mission> OnMissionStarted = null!;
+    public event Action<Mission> OnMissionCompleted = null!;
 
     readonly TaskHandlerBase _taskHandler = null!;
 
@@ -45,11 +56,8 @@ public class Mission
 
     public void StartMission()
     {
-        if (!StartMessage.Equals(string.Empty))
-        {
-            BottomTypewriter.Instance.Enqueue(StartMessage);
-        }
-        
+        this.State = MissionState.InProgress;
+        OnMissionStarted?.Invoke(this);
         _taskHandler.StartMission();
     }
 
@@ -76,16 +84,8 @@ public class Mission
 
     void AllTasksCompletedHandler(bool success)
     {
-        if (success && !SuccessMessage.Equals(string.Empty))
-        {
-            BottomTypewriter.Instance.Enqueue(SuccessMessage);
-        }
-        else if (!success && !FailureMessage.Equals(string.Empty))
-        {
-            BottomTypewriter.Instance.Enqueue(FailureMessage);
-        }
-
-        OnMissionCompleted?.Invoke();
+        this.State = success ? MissionState.Completed : MissionState.Failed;
+        OnMissionCompleted?.Invoke(this);
     }
 
     public void ManualUpdate()
