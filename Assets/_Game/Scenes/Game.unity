@@ -14,19 +14,19 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 0
-  m_FogColor: {r: 0, g: 0, b: 0, a: 0}
-  m_FogMode: 0
+  m_Fog: 1
+  m_FogColor: {r: 0.5849056, g: 0.488341, b: 0.488341, a: 0}
+  m_FogMode: 3
   m_FogDensity: 0
   m_LinearFogStart: 0
-  m_LinearFogEnd: 0.01
-  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 0}
-  m_AmbientEquatorColor: {r: 0.90588236, g: 0.8156863, b: 0.8156863, a: 0}
-  m_AmbientGroundColor: {r: 0.7372549, g: 0.5294118, b: 0.5294118, a: 0}
+  m_LinearFogEnd: 0
+  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 0}
+  m_AmbientEquatorColor: {r: 0, g: 0, b: 0, a: 0}
+  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_AmbientIntensity: 0
-  m_AmbientMode: 1
-  m_SubtractiveShadowColor: {r: 0.5660378, g: 0.5660378, b: 0.49394804, a: 0}
-  m_SkyboxMaterial: {fileID: 2100000, guid: d4425bdebd7810b48b29852d281e54a6, type: 2}
+  m_AmbientMode: 0
+  m_SubtractiveShadowColor: {r: 0.6320754, g: 0.55157524, b: 0.55157524, a: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 9af23ba5fa5364ff598888460e0e2759, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1208,6 +1208,7 @@ GameObject:
   - component: {fileID: 57535403}
   - component: {fileID: 57535405}
   - component: {fileID: 57535404}
+  - component: {fileID: 57535406}
   m_Layer: 0
   m_Name: Terrain_(4934.00, -63.00, 1787.00)
   m_TagString: Untagged
@@ -1290,6 +1291,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &57535406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57535402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 57535405}
 --- !u!1001 &59927887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3619,7 +3633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 84058770
+      value: 87095250
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -3695,7 +3709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 65681060
+      value: 67859944
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -5923,6 +5937,7 @@ GameObject:
   - component: {fileID: 291011334}
   - component: {fileID: 291011336}
   - component: {fileID: 291011335}
+  - component: {fileID: 291011337}
   m_Layer: 0
   m_Name: Terrain_(4934.00, -63.00, -1213.00)
   m_TagString: Untagged
@@ -6005,6 +6020,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &291011337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291011333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 291011336}
 --- !u!1001 &292379930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6126,6 +6154,7 @@ GameObject:
   - component: {fileID: 292394989}
   - component: {fileID: 292394991}
   - component: {fileID: 292394990}
+  - component: {fileID: 292394992}
   m_Layer: 0
   m_Name: Terrain_(-4066.00, -63.00, -1213.00)
   m_TagString: Untagged
@@ -6208,6 +6237,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &292394992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292394988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 292394991}
 --- !u!1001 &293556007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6661,6 +6703,7 @@ GameObject:
   - component: {fileID: 306109743}
   - component: {fileID: 306109745}
   - component: {fileID: 306109744}
+  - component: {fileID: 306109746}
   m_Layer: 0
   m_Name: Terrain_(-4066.00, -63.00, 4787.00)
   m_TagString: Untagged
@@ -6743,6 +6786,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &306109746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306109742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 306109745}
 --- !u!1 &313191193
 GameObject:
   m_ObjectHideFlags: 0
@@ -7778,6 +7834,7 @@ GameObject:
   - component: {fileID: 382219924}
   - component: {fileID: 382219926}
   - component: {fileID: 382219925}
+  - component: {fileID: 382219927}
   m_Layer: 0
   m_Name: Terrain_(-4066.00, -63.00, -4213.00)
   m_TagString: Untagged
@@ -7860,6 +7917,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &382219927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382219923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 382219926}
 --- !u!1001 &392565808
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16428,6 +16498,7 @@ GameObject:
   - component: {fileID: 780541658}
   - component: {fileID: 780541660}
   - component: {fileID: 780541659}
+  - component: {fileID: 780541661}
   m_Layer: 0
   m_Name: Terrain_(-4066.00, -63.00, 1787.00)
   m_TagString: Untagged
@@ -16510,6 +16581,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &780541661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780541657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 780541660}
 --- !u!1001 &781366098
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17824,6 +17908,7 @@ GameObject:
   - component: {fileID: 823382373}
   - component: {fileID: 823382372}
   - component: {fileID: 823382374}
+  - component: {fileID: 823382375}
   m_Layer: 0
   m_Name: Terrain0
   m_TagString: Untagged
@@ -17920,6 +18005,19 @@ WindZone:
   m_WindTurbulence: 1e+15
   m_WindPulseMagnitude: 0.5
   m_WindPulseFrequency: 0.01
+--- !u!114 &823382375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823382370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 823382373}
 --- !u!4 &824424660 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 665492534403836251, guid: cd402ddb0eed6034b9e05263170a08af, type: 3}
@@ -21114,6 +21212,7 @@ GameObject:
   - component: {fileID: 1004081296}
   - component: {fileID: 1004081295}
   - component: {fileID: 1004081294}
+  - component: {fileID: 1004081297}
   m_Layer: 0
   m_Name: Terrain_(1380.00, -63.00, -1660.00)
   m_TagString: Untagged
@@ -21196,6 +21295,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1785627280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1004081297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1004081293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 1004081295}
 --- !u!1001 &1004097812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22974,6 +23086,7 @@ GameObject:
   - component: {fileID: 1060190102}
   - component: {fileID: 1060190101}
   - component: {fileID: 1060190100}
+  - component: {fileID: 1060190103}
   m_Layer: 0
   m_Name: Terrain_(-1620.00, -63.00, 1340.00)
   m_TagString: Untagged
@@ -23056,6 +23169,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1785627280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1060190103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060190099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 1060190101}
 --- !u!114 &1061833471 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
@@ -24560,6 +24686,7 @@ GameObject:
   - component: {fileID: 1142613789}
   - component: {fileID: 1142613791}
   - component: {fileID: 1142613790}
+  - component: {fileID: 1142613792}
   m_Layer: 0
   m_Name: Terrain_(-1066.00, -63.00, -4213.00)
   m_TagString: Untagged
@@ -24642,6 +24769,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &1142613792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142613788}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 1142613791}
 --- !u!1 &1161235137
 GameObject:
   m_ObjectHideFlags: 0
@@ -30529,7 +30669,7 @@ PrefabInstance:
       objectReference: {fileID: 184610867}
     - target: {fileID: 3107997214993371336, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: m_ClearFlags
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3107997214993371336, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: m_OcclusionCulling
@@ -37642,6 +37782,7 @@ GameObject:
   - component: {fileID: 1734254019}
   - component: {fileID: 1734254021}
   - component: {fileID: 1734254020}
+  - component: {fileID: 1734254022}
   m_Layer: 0
   m_Name: Terrain_(4934.00, -63.00, 4787.00)
   m_TagString: Untagged
@@ -37724,6 +37865,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &1734254022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1734254018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 1734254021}
 --- !u!1 &1743374842
 GameObject:
   m_ObjectHideFlags: 0
@@ -38772,6 +38926,7 @@ GameObject:
   - component: {fileID: 1765249706}
   - component: {fileID: 1765249708}
   - component: {fileID: 1765249707}
+  - component: {fileID: 1765249709}
   m_Layer: 0
   m_Name: Terrain_(4934.00, -63.00, -4213.00)
   m_TagString: Untagged
@@ -38854,6 +39009,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &1765249709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1765249705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 1765249708}
 --- !u!4 &1775105778 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6389800393157528084, guid: be5ddce7644ff094db0b61aa24d9814a, type: 3}
@@ -39247,8 +39415,24 @@ MonoBehaviour:
   - enabled: 1
     layer: {fileID: 8574412962073106934, guid: c52ad77efecd38146bfb167ad0f38daf, type: 2}
     modifierStack: []
-  autoRepaint: 0
-  terrainListeners: []
+  autoRepaint: 1
+  terrainListeners:
+  - {fileID: 823382375}
+  - {fileID: 1004081297}
+  - {fileID: 1060190103}
+  - {fileID: 1830400569}
+  - {fileID: 292394992}
+  - {fileID: 1142613792}
+  - {fileID: 382219927}
+  - {fileID: 2048172740}
+  - {fileID: 1765249709}
+  - {fileID: 291011337}
+  - {fileID: 57535406}
+  - {fileID: 1734254022}
+  - {fileID: 2033202415}
+  - {fileID: 1985777513}
+  - {fileID: 306109746}
+  - {fileID: 780541661}
   bounds:
     m_Center: {x: 1934, y: 193, z: 1787}
     m_Extent: {x: 6000, y: 256, z: 6000}
@@ -40344,6 +40528,7 @@ GameObject:
   - component: {fileID: 1830400568}
   - component: {fileID: 1830400567}
   - component: {fileID: 1830400566}
+  - component: {fileID: 1830400569}
   m_Layer: 0
   m_Name: Terrain_(1380.00, -63.00, 1340.00)
   m_TagString: Untagged
@@ -40426,6 +40611,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1785627280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1830400569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830400565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 1830400567}
 --- !u!1001 &1835100237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44025,6 +44223,7 @@ GameObject:
   - component: {fileID: 1985777510}
   - component: {fileID: 1985777512}
   - component: {fileID: 1985777511}
+  - component: {fileID: 1985777513}
   m_Layer: 0
   m_Name: Terrain_(-1066.00, -63.00, 4787.00)
   m_TagString: Untagged
@@ -44107,6 +44306,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &1985777513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985777509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 1985777512}
 --- !u!1001 &1988894103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44723,7 +44935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 874608226485040222, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4357120802854823438, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
       propertyPath: m_Enabled
@@ -45186,6 +45398,7 @@ GameObject:
   - component: {fileID: 2033202412}
   - component: {fileID: 2033202414}
   - component: {fileID: 2033202413}
+  - component: {fileID: 2033202415}
   m_Layer: 0
   m_Name: Terrain_(1934.00, -63.00, 4787.00)
   m_TagString: Untagged
@@ -45268,6 +45481,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &2033202415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033202411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 2033202414}
 --- !u!1001 &2034785114
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45531,6 +45757,7 @@ GameObject:
   - component: {fileID: 2048172737}
   - component: {fileID: 2048172739}
   - component: {fileID: 2048172738}
+  - component: {fileID: 2048172740}
   m_Layer: 0
   m_Name: Terrain_(1934.00, -63.00, -4213.00)
   m_TagString: Untagged
@@ -45613,6 +45840,19 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &2048172740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2048172736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db11228c23499742957c29c86d7afba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.terrain.painter.runtime::sc.terrain.proceduralpainter.TerrainChangeListener
+  terrain: {fileID: 2048172739}
 --- !u!1001 &2048656590
 PrefabInstance:
   m_ObjectHideFlags: 0
