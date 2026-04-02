@@ -155,6 +155,7 @@ public class BaseNPC : CharacterEntity, IHearingSensor
 
     protected override void Update()
     {
+        _entityProfile.MentalState.Tick();
         if (stateMachine == null) return;
         stateMachine.Update();
     }

@@ -9,6 +9,7 @@ public class MentalState
     // to recover these states
     public Func<bool> ShouldCalmDown;
     public Func<bool> ShouldRegainComfort;
+    public Func<bool> ShouldReturnToBaseReceptive;
 
     [Tooltip("The entity's comfort level, ranging from -1 (uncomfortable) to 1 (comfortable)")]
     [Range(-1f, 1f)] public float Comfort = 0.5f;
@@ -17,14 +18,17 @@ public class MentalState
     [Range(0f, 1f)] public float BaseComfortRate = 0.1f;
 
     // AI: The entity's panic level, ranging from -1 (panicked) to 1 (calm).
-    [Tooltip("The entity's panic level, ranging from -1 (panicked) to 1 (calm)")]
+    [Tooltip("The entity's panic level, ranging from -1 (panicked), 0 (baseline) up to 1 (extremely calm)")]
     [Range(-1f, 1f)] public float Calmness = 0f;
 
     [Tooltip("How quickly the entity recovers calmness over time (higher = faster recovery)")]
     [Range(0f, 1f)] public float BaseCalmRate = 0.1f;
 
-    [Tooltip("How emotionally escalated the entity is in the current interaction, ranging from -1 (receptive) to 1 (agitated)")]
-    [Range(-1f, 1f)] public float Agitation = 0f;
+    [Tooltip("How emotionally agitated or not this entity is, ranging from -1 (agitated) to 1 (receptive)")]
+    [Range(-1f, 1f)] public float Receptive = 0f;
+
+    [Tooltip("How quickly the entity's agitation increases in response to stressors (higher = more reactive)")]
+    [Range(0f, 1f)] public float ReturnToBaseReceptiveRate = 0.1f;
 
     private float _timer = 0f;
     public void Tick()
@@ -34,6 +38,7 @@ public class MentalState
         {
             adjustCalmness();
             adjustComfort();
+            adjustReceptive();
             _timer = 0f;
         }
     }
@@ -67,5 +72,13 @@ public class MentalState
         float actualRecovery = BaseComfortRate * (1f + comfortMultiplier) * calmnessMultiplier;
 
         Comfort = Mathf.Clamp(Comfort + actualRecovery, -1f, 1f);
+    }
+
+    private void adjustReceptive()
+    {
+        if (ShouldReturnToBaseReceptive?.Invoke() != true) return;
+        float receptiveMultiplier = Mathf.InverseLerp(-1f, 1f, Receptive);
+        float actualRecovery = ReturnToBaseReceptiveRate * (1f + receptiveMultiplier);
+        Receptive = Mathf.Clamp(Receptive + actualRecovery, -1f, 1f);
     }
 }

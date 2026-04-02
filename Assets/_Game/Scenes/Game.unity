@@ -15,18 +15,18 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.5849056, g: 0.488341, b: 0.488341, a: 0}
+  m_FogColor: {r: 0.39607844, g: 0.39607844, b: 0.39607844, a: 0}
   m_FogMode: 3
-  m_FogDensity: 0
+  m_FogDensity: 0.005
   m_LinearFogStart: 0
-  m_LinearFogEnd: 0
-  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 0}
-  m_AmbientEquatorColor: {r: 0, g: 0, b: 0, a: 0}
-  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_LinearFogEnd: 0.01
+  m_AmbientSkyColor: {r: 0.21176471, g: 0.22745098, b: 0.25882354, a: 0}
+  m_AmbientEquatorColor: {r: 0.11372549, g: 0.1254902, b: 0.13333334, a: 0}
+  m_AmbientGroundColor: {r: 0.047058824, g: 0.043137256, b: 0.03529412, a: 0}
   m_AmbientIntensity: 0
-  m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.6320754, g: 0.55157524, b: 0.55157524, a: 0}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 9af23ba5fa5364ff598888460e0e2759, type: 2}
+  m_AmbientMode: 1
+  m_SubtractiveShadowColor: {r: 0.6784314, g: 0.6901961, b: 0.7176471, a: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: e41b0473114de444cb9c91d9471878ec, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 0
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 2019195016}
+  m_Sun: {fileID: 1349327386}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -745,6 +745,10 @@ PrefabInstance:
       value: 22.5
       objectReference: {fileID: 0}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: _defaultState
+      value: EnemyPatrol
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: EquippedItemPos
       value: 
       objectReference: {fileID: 25558090}
@@ -798,15 +802,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8018992134920938627, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8355103650703838962, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.62299997
       objectReference: {fileID: 0}
     - target: {fileID: 8355103650703838962, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3633,7 +3637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 89822370
+      value: 90091770
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -3709,7 +3713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 68537630
+      value: 68784980
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -26382,15 +26386,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8018992134920938627, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8355103650703838962, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.62299997
       objectReference: {fileID: 0}
     - target: {fileID: 8355103650703838962, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -26811,6 +26815,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 451208, guid: 23d25b2e2d4364dd4b92c52ef40cd36e, type: 3}
   m_PrefabInstance: {fileID: 1246674229}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1247482049 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8018992134920938627, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+  m_PrefabInstance: {fileID: 1817214598}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1248420209
 GameObject:
@@ -30644,6 +30653,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1930801418664341159, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1930801418664341159, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: MinimapCamera
       value: 
       objectReference: {fileID: 96491402}
@@ -30682,7 +30695,7 @@ PrefabInstance:
     - target: {fileID: 4908647138769127317, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: SpawnLocation
       value: 
-      objectReference: {fileID: 240464400}
+      objectReference: {fileID: 1179310430}
     - target: {fileID: 5234290954045619251, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: _uiCanvas
       value: 
@@ -37973,15 +37986,17 @@ MonoBehaviour:
   _entityProfile:
     _personality:
       Trusting: 0.69
-      Loving: 0.74
+      Empathy: 0
       Courage: 0.05
-      Decisiveness: 0.16
+      Dutifulness: 0.5
       Composure: -0.16
     _mentalState:
       Comfort: 0.3
       BaseComfortRate: 0.1
       Calmness: 0
       BaseCalmRate: 0.1
+      Receptive: 0
+      ReturnToBaseReceptiveRate: 0.1
   rotationSpeed: 90
   moveSpeed: 7.5
   DetectionDistance: 5
@@ -38545,7 +38560,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1360472216782407304, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1360472216782407304, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
       propertyPath: m_TagString
@@ -38637,11 +38652,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3058107962341032794, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.62299997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3058107962341032794, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3579123722393013533, guid: 7b850e83e1ab4e6478f884213701a419, type: 3}
       propertyPath: m_Enabled
@@ -40191,6 +40206,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 540243012}
     m_Modifications:
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: stopDistance
       value: 22.5
       objectReference: {fileID: 0}
@@ -40265,7 +40284,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8018992134920938627, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1817214608}
   m_SourcePrefab: {fileID: 100100000, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
 --- !u!4 &1817214599 stripped
 Transform:
@@ -40277,6 +40299,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5746262284330423432, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
   m_PrefabInstance: {fileID: 1817214598}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1817214608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247482049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2a7dd0cbe83042baaefc90c58b149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: GameCore::InteractableEnemyNPC
+  Health: 100
+  MaxHealth: 100
+  SpawnLocation: {fileID: 0}
+  EquippedItemPos: {fileID: 1817214600}
+  _initialInventory: []
+  _initialEquippedItemIndex: -1
+  _audioSource: {fileID: 0}
+  _entityProfile:
+    _personality:
+      Trusting: 0
+      Empathy: 0
+      Courage: 0.5
+      Dutifulness: 0.5
+      Composure: 0.5
+    _mentalState:
+      Comfort: 0.5
+      BaseComfortRate: 0.1
+      Calmness: 0
+      BaseCalmRate: 0.1
+      Receptive: 0
+      ReturnToBaseReceptiveRate: 0.1
+  rotationSpeed: 90
+  moveSpeed: 3.5
+  DetectionDistance: 5
+  stopDistance: 1
+  Target: {fileID: 0}
+  Group:
+    Members: []
+  GroupMembers: []
+  _defaultState: EnemyIdle
+  PatrolPoints: []
+  ArrivalThreshold: 0.5
+  ViewAngle: 120
+  EyeOffset: {x: 0, y: 1.6, z: 0}
 --- !u!1001 &1824788400
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44935,7 +45003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 874608226485040222, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4357120802854823438, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
       propertyPath: m_Enabled
@@ -47497,7 +47565,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130014839}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
@@ -48214,7 +48282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7098470662580613713, guid: 4e4ed8fb8f7b04b4692150826532067d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
