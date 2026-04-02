@@ -23,6 +23,9 @@ public class MentalState
     [Tooltip("How quickly the entity recovers calmness over time (higher = faster recovery)")]
     [Range(0f, 1f)] public float BaseCalmRate = 0.1f;
 
+    [Tooltip("How emotionally escalated the entity is in the current interaction, ranging from -1 (receptive) to 1 (agitated)")]
+    [Range(-1f, 1f)] public float Agitation = 0f;
+
     private float _timer = 0f;
     public void Tick()
     {
