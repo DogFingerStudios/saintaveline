@@ -158,11 +158,6 @@ public class BaseNPC : CharacterEntity, IHearingSensor
         _entityProfile.MentalState.Tick();
         if (stateMachine == null) return;
         stateMachine.Update();
-
-        if (stateMachine.CurrentState == null)
-        {
-            Debug.Log("Warning: BaseNPC.Update called but stateMachine.CurrentState is null");
-        }
     }
 
     private void OnEnable()
