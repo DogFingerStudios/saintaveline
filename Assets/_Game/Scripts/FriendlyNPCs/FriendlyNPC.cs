@@ -73,9 +73,8 @@ public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
 
             type = type.BaseType;
         }
-
         
-        Debug.LogWarning($"No action found for '{actionName}' in {this.GetType().Name}");
+        throw new Exception($"No action found for '{actionName}' in {this.GetType().Name}");
     }
 
     [ItemAction("stay")]
