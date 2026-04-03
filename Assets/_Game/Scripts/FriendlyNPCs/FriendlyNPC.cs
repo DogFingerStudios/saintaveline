@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
+public abstract class FriendlyNPC : BaseNPC, IInteractable
 {
     // TODO: these three fields should be refactored out of here
     [SerializeField] private GameObject _mapLabelDialogPrefab = null!;

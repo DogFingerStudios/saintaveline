@@ -3637,7 +3637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 90091770
+      value: 91686690
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -3713,7 +3713,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 68784980
+      value: 70376030
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -30654,7 +30654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1930801418664341159, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1930801418664341159, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: MinimapCamera
@@ -30759,6 +30759,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7807829936736204002, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1417590822}
+    - targetCorrespondingSourceObject: {fileID: 7807829936736204002, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1417590835}
   m_SourcePrefab: {fileID: 100100000, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
 --- !u!4 &1417590809 stripped
 Transform:
@@ -30777,6 +30780,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d3b61ecef070234a8ed29908348c326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ZoneManager
+--- !u!114 &1417590835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196729777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f2a2cb62dbd88c4891e31e05fc21e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: GameCore::ConversationManager
 --- !u!1 &1420598127
 GameObject:
   m_ObjectHideFlags: 0

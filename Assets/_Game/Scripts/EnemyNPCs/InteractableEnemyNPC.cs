@@ -8,7 +8,7 @@ using System;
 /// <summary>
 /// This class is attached to root NPC objects
 /// </summary>
-public class InteractableEnemyNPC : EnemyNPC, CharacterInteractable
+public class InteractableEnemyNPC : EnemyNPC, IInteractable
 {
     public string HoverText
     {

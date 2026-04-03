@@ -21,7 +21,7 @@ public class ItemAction : Attribute
 /// This script is attached to an item in the game world to
 /// allow entities to interact with it.
 /// </summary>
-public class ItemEntity : GameEntity, ItemInteractable
+public class ItemEntity : GameEntity, IInteractable
 {
     [SerializeField] private ItemData? _itemData;
     public ItemData? ItemData { get => _itemData; }

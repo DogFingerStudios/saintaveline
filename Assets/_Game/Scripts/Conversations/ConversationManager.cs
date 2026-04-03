@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class ConversationManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public static ConversationManager Instance { get; private set; } = null!;
 
-    // Update is called once per frame
-    void Update()
+    public void Awake()
     {
-        
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 }
