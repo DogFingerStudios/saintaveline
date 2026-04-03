@@ -3,28 +3,26 @@ using UnityEngine;
 [System.Serializable]
 public class DialogLineDataRef
 {
-    //public DialogLineSO.DialogLineData InlineData = new();
-    public string Text;
-    public AudioClip AudioClip;
+    public DialogLineData InlineData = new();
     public DialogLineDataSO Asset;
 
     public string GetText()
     {
         if (Asset != null)
         {
-            return Asset.Text;
+            return Asset.Data.Text;
         }
 
-        return Text;
+        return InlineData.Text;
     }
 
     public AudioClip GetAudio()
     {
         if (Asset != null)
         {
-            return Asset.Audio;
+            return Asset.Data.Audio;
         }
 
-        return AudioClip;
+        return InlineData.Audio;
     }
 }
