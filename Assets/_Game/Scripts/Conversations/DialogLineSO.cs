@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "DialogLine", menuName = "Game/Dialogs/DialogLine")]
 public class DialogLineSO : ScriptableObject
 {
-    public GameObject speaker;
+    public GameObject Speaker;
     public string Title;
 
     // these are the possible lines that can be spoken at the current point in the conversation, the 

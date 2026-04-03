@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04a48701bf38f44b88ebac9a648fd2c, type: 3}
   m_Name: Intro1AAB-RespondDisrespectfully
   m_EditorClassIdentifier: GameCore::DialogLineSO
-  speaker: {fileID: 0}
+  Speaker: {fileID: 0}
   Title: Respond Disrespectfully
   Line:
-  - Text: You don't scare me, scumbag!
-    Audio: {fileID: 0}
+  - InlineData:
+      Text: 
+      Audio: {fileID: 0}
+    Asset: {fileID: 0}
   AutoAdvance: 0
   Options: []
-  Note: At this point, the NPC would become Aggro
+  Note: At this point, the NPC would become Aggro. Conversation ends here.

@@ -10,21 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d04a48701bf38f44b88ebac9a648fd2c, type: 3}
-  m_Name: Intro1A-RespondDisrespectfully
+  m_Name: Intro1C-RespondRespectfully
   m_EditorClassIdentifier: GameCore::DialogLineSO
-  speaker: {fileID: 0}
-  Title: Respond Disrespectfully
+  Speaker: {fileID: 0}
+  Title: Respond Respectfully
   Line:
-  - Text: Eat my boogers, fool!
-    AudioClip: {fileID: 0}
+  - InlineData:
+      Text: 
+      Audio: {fileID: 0}
     Asset: {fileID: 0}
-  - Text: Don't have a cow man!
-    AudioClip: {fileID: 0}
+  - InlineData:
+      Text: Yes, sir!
+      Audio: {fileID: 0}
     Asset: {fileID: 0}
-  - Text: 
-    AudioClip: {fileID: 0}
-    Asset: {fileID: 11400000, guid: b56ef29b28f28544d81b25266562307a, type: 2}
-  AutoAdvance: 1
-  Options:
-  - {fileID: 11400000, guid: fda960e927a35854981770abd5b304d9, type: 2}
-  Note: 
+  AutoAdvance: 0
+  Options: []
+  Note: This could increase the NPC's `Comfort`. Conversation ends here.

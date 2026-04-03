@@ -12,14 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04a48701bf38f44b88ebac9a648fd2c, type: 3}
   m_Name: Intro1AA-RespondDisrespectfully
   m_EditorClassIdentifier: GameCore::DialogLineSO
-  speaker: {fileID: 0}
+  Speaker: {fileID: 0}
   Title: 
   Line:
-  - Text: Get back inside before I bash your skull!
-    AudioClip: {fileID: 0}
-    Asset: {fileID: 0}
-  - Text: Don't make me beat you like Matthew's mama beat him when he was 9!
-    AudioClip: {fileID: 0}
+  - InlineData:
+      Text: Get back inside before I bash your skull!
+      Audio: {fileID: 0}
     Asset: {fileID: 0}
   AutoAdvance: 0
   Options:
