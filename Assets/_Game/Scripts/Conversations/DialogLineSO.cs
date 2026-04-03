@@ -5,6 +5,9 @@ using System.Collections.Generic;
 public class DialogLineSO : ScriptableObject
 {
     public GameObject Speaker;
+
+    // when the player is given multiple options to choose from, this is the text that will be
+    // shown for the player to select
     public string Title;
 
     // these are the possible lines that can be spoken at the current point in the conversation, the 
@@ -21,5 +24,16 @@ public class DialogLineSO : ScriptableObject
 
     [TextArea]
     public string Note;
+
+    public DialogLineDataRef GetRandomLine()
+    {
+        if (Line.Count == 0)
+        {
+            Debug.LogWarning($"DialogLineSO {name} has no lines defined.");
+            return null;
+        }
+        int index = Random.Range(0, Line.Count);
+        return Line[index];
+    }
 }
 

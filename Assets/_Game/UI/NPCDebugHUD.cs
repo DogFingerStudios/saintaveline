@@ -23,10 +23,18 @@ public class NPCDebugHUD : MonoBehaviour
             Debug.LogError("Player transform not found in the scene.");
         }
 
-        _thisNPC = transform.parent.GetComponent<BaseNPC>();
+        foreach (var component in transform.parent.GetComponents<Component>())
+        {
+            if (component is BaseNPC npcComponent && npcComponent.enabled)
+            {
+                _thisNPC = npcComponent;
+                break;
+            }
+        }
+
         if (_thisNPC == null)
         {
-            Debug.LogError("Parent GameObject does not have a `BaseNPC` compatible component attached.");        
+            Debug.LogError("Parent GameObject does not have a `BaseNPC` compatible component attached.");
         }
 
         SetUpHealthSlider();

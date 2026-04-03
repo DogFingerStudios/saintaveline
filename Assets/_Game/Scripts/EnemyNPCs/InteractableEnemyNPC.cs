@@ -19,6 +19,7 @@ public class InteractableEnemyNPC : EnemyNPC, IInteractable
         }
     }
 
+    [SerializeField] public ConversationSO Conversation = null!;
     public List<InteractionData> Interactions { get; } = new List<InteractionData>();
     //[SerializeField, NPCStateDropdown]
     //private string _defaultState = "EnemyIdle";
@@ -35,7 +36,7 @@ public class InteractableEnemyNPC : EnemyNPC, IInteractable
         Interactions.Add(new InteractionData { key = "converse", description = "Converse" });
     }
 
-        // TODO: this is copied from ItemInteraction.cs, should be refactored to a common base class
+    // TODO: this is copied from ItemInteraction.cs, should be refactored to a common base class
     private void DoInteraction(string actionName)
     {
         Debug.Log($"Attempting to perform action '{actionName}' on {this.name}");
@@ -70,6 +71,9 @@ public class InteractableEnemyNPC : EnemyNPC, IInteractable
     [ItemAction("converse")]
     protected virtual void onConverse()
     {
-        Debug.Log($"You converse with {this.name}. They don't have anything to say right now.");
+        if (this.Conversation == null) return;
+        //Debug.Log($"You converse with {this.name}. They don't have anything to say right now.");
+        Debug.Log("Starting conversation with " + this.name + ": "
+            + this.Conversation.RootLine.GetRandomLine().GetText());
     }
 }
