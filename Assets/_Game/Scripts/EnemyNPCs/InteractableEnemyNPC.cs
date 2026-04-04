@@ -36,30 +36,6 @@ public class InteractableEnemyNPC : EnemyNPC, IInteractable
         Interactions.Add(new InteractionData { key = "converse", description = "Converse" });
     }
 
-    // TODO: this is copied from ItemInteraction.cs, should be refactored to a common base class
-    private void DoInteraction(string actionName)
-    {
-        Debug.Log($"Attempting to perform action '{actionName}' on {this.name}");
-        Type type = this.GetType();
-        while (type != null && type != typeof(MonoBehaviour))
-        {
-            MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-            foreach (MethodInfo method in methods)
-            {
-                ItemAction attr = method.GetCustomAttribute<ItemAction>();
-                if (attr != null && attr.ActionName == actionName)
-                {
-                    method.Invoke(this, null);
-                    return;
-                }
-            }
-
-            type = type.BaseType;
-        }
-        
-        throw new Exception($"No action found for '{actionName}' in {this.GetType().Name}");
-    }
-
     public override void Interact(GameEntity? interactor = null)
     {
         if (!this.IsAlive) return;
@@ -69,11 +45,9 @@ public class InteractableEnemyNPC : EnemyNPC, IInteractable
     }
 
     [ItemAction("converse")]
-    protected virtual void onConverse()
+    protected virtual void OnConverse()
     {
         if (this.Conversation == null) return;
-        //Debug.Log($"You converse with {this.name}. They don't have anything to say right now.");
-        Debug.Log("Starting conversation with " + this.name + ": "
-            + this.Conversation.RootLine.GetRandomLine().GetText());
+        ConversationManager.Instance.StartConversation(this.Conversation);
     }
 }

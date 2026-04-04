@@ -57,28 +57,6 @@ public class ItemEntity : GameEntity, IInteractable
         _interactorEntity = interactor;
     }
 
-    private void DoInteraction(string actionName)
-    {
-        Type type = this.GetType();
-        while (type != null && type != typeof(MonoBehaviour))
-        {
-            MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-            foreach (MethodInfo method in methods)
-            {
-                ItemAction attr = method.GetCustomAttribute<ItemAction>();
-                if (attr != null && attr.ActionName == actionName)
-                {
-                    method.Invoke(this, null);
-                    return;
-                }
-            }
-
-            type = type.BaseType;
-        }
-
-        Debug.LogWarning($"No action found for '{actionName}' in {this.GetType().Name}");
-    }
-
     public virtual void OnFocus()
     {
         // nothing to do

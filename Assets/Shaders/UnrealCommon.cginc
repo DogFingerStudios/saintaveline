@@ -479,7 +479,12 @@ inline fixed3 UnpackNormal( fixed4 packednormal )
 	return UnpackNormalmapRGorAG( packednormal );
 #endif
 }*/
-void swap( inout float x, inout float y ){	float temp = x;	x = y;	y = temp;}
+void swap( inout float x, inout float y )
+{
+	float temp = x;
+	x = y;
+	y = temp;
+}
 MaterialFloat4 UnpackNormalMap( MaterialFloat4 TextureSample )
 {
 	float3 Unpacked = UnpackNormal( TextureSample );

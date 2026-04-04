@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using UnityEngine;
 
 public abstract class GameEntity : MonoBehaviour
@@ -29,5 +30,27 @@ public abstract class GameEntity : MonoBehaviour
     protected void RaiseOnHealthChanged(float health)
     {
         OnHealthChanged?.Invoke(health);
+    }
+
+    protected virtual void DoInteraction(string actionName)
+    {
+        Type type = this.GetType();
+        while (type != null && type != typeof(GameEntity))
+        {
+            MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
+            foreach (MethodInfo method in methods)
+            {
+                ItemAction attr = method.GetCustomAttribute<ItemAction>();
+                if (attr != null && attr.ActionName == actionName)
+                {
+                    method.Invoke(this, null);
+                    return;
+                }
+            }
+
+            type = type.BaseType;
+        }
+
+        Debug.LogWarning($"No action found for '{actionName}' in {this.GetType().Name}");
     }
 }

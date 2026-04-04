@@ -5,8 +5,7 @@ public class ConversationManager : MonoBehaviour
 {
     public static ConversationManager Instance { get; private set; } = null!;
 
-    // [SerializeField]
-    // private GameObject _conversationPanel = null!;
+    [SerializeField] private PanelManager _panelManager = null!;
 
     public void Awake()
     {
@@ -18,10 +17,23 @@ public class ConversationManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        InputManager.Instance.RegisterInputHandler(InputState.Conversation, ProcessInput);
+        _panelManager.DisableAll();
     }
 
     public void StartConversation(ConversationSO conversation)
     {
-    
+        InputManager.Instance.SetInputState(InputState.Conversation);
+        _panelManager.EnableAll();
+    }
+
+    public void ProcessInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _panelManager.DisableAll();
+            InputManager.Instance.SetInputState(InputState.Gameplay);
+        }
     }
 }
