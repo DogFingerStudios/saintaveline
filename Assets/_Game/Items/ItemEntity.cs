@@ -14,6 +14,7 @@ public class ItemAction : Attribute
     {
         None    = 0,
         SkipStateChange = 1 << 0, 
+        SkipCrossHairReset = 1 << 1,
     }
 
     public string ActionName { get; }

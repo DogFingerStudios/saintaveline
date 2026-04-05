@@ -42,7 +42,7 @@ public class InteractableEnemyNPC : EnemyNPC, IInteractable
         InteractionManager.Instance.OpenMenu(Interactions);
     }
 
-    [ItemAction("converse", ItemAction.Flags.SkipStateChange)]
+    [ItemAction("converse", ItemAction.Flags.SkipStateChange | ItemAction.Flags.SkipCrossHairReset)]
     protected virtual void OnConverse()
     {
         if (this.Conversation == null) return;

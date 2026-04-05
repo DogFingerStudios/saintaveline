@@ -24,8 +24,9 @@ public class ConversationManager : MonoBehaviour
 
     public void StartConversation(ConversationSO conversation)
     {
-        InputManager.Instance.SetInputState(InputState.Conversation);
         _panelManager.EnableAll();
+        InputManager.Instance.SetInputState(InputState.Conversation);
+        UIManager.Instance.SetState(false, CursorLockMode.None, true);
     }
 
     public void ProcessInput()
@@ -34,6 +35,7 @@ public class ConversationManager : MonoBehaviour
         {
             _panelManager.DisableAll();
             InputManager.Instance.SetInputState(InputState.Gameplay);
+            UIManager.Instance.SetState(true, CursorLockMode.Locked, false);
         }
     }
 }

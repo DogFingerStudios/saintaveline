@@ -103,8 +103,12 @@ public class InteractionManager : MonoBehaviour
             }
 
             helpText.SetActive(true);
-            crossHair.SetActive(true);
             _buttonPanel.SetActive(false);
+
+            if (!ActionFlags.HasFlag(ItemAction.Flags.SkipCrossHairReset))
+            {
+                crossHair.SetActive(true);
+            }
 
             OnMenuClosed?.Invoke();
             OnMenuClosed = null;
