@@ -47,12 +47,7 @@ public abstract class GameEntity : MonoBehaviour
                     if (parameters.Length == 0)
                     {
                         method.Invoke(this, null);
-                        return;
-                    }
-
-                    if (parameters.Length == 1 && parameters[0].ParameterType == typeof(ItemAction.Flags))
-                    {
-                        method.Invoke(this, new object[] { attr.ActionFlags });
+                        InteractionManager.Instance.ActionFlags = attr.ActionFlags;
                         return;
                     }
 

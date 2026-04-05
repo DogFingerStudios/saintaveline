@@ -1,9 +1,7 @@
 #nullable enable
 
-using System.Reflection;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 /// <summary>
 /// This class is attached to root NPC objects
@@ -44,7 +42,7 @@ public class InteractableEnemyNPC : EnemyNPC, IInteractable
         InteractionManager.Instance.OpenMenu(Interactions);
     }
 
-    [ItemAction("converse")]
+    [ItemAction("converse", ItemAction.Flags.SkipStateChange)]
     protected virtual void OnConverse()
     {
         if (this.Conversation == null) return;
