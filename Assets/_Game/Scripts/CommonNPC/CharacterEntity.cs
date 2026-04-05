@@ -101,7 +101,12 @@ public class CharacterEntity : GameEntity
         {
             GameObject newItem = Instantiate(itemObj);
             var item = newItem.GetComponent<ItemEntity>();
-            item.Initialize();
+            if (!newItem.activeSelf)
+            {
+                newItem.SetActive(true);
+                newItem.SetActive(false);
+            }
+
             this.AddItemToInventory(item);
         }
 

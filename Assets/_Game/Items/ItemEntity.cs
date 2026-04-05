@@ -82,11 +82,6 @@ public class ItemEntity : GameEntity, IInteractable
         // nothing to do
     }
 
-    public void Initialize()
-    {
-        this.Awake();
-    }
-
     protected override void Awake()
     {
         base.Awake();
