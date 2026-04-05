@@ -3638,7 +3638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 100577250
+      value: 101174250
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -3714,7 +3714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 75053810
+      value: 75301096
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7198,7 +7198,6 @@ Transform:
   - {fileID: 1747406724}
   - {fileID: 540243012}
   - {fileID: 350854209}
-  - {fileID: 569809567}
   m_Father: {fileID: 1165786314}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &324457780
@@ -12452,8 +12451,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 569809566}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1045.2588, y: 622.7278, z: -458.08887}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12465,7 +12464,8 @@ Transform:
   - {fileID: 233066747}
   - {fileID: 240464400}
   - {fileID: 336796280}
-  m_Father: {fileID: 322283500}
+  - {fileID: 1274552658}
+  m_Father: {fileID: 1231386068}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &570336247
 PrefabInstance:
@@ -27938,6 +27938,7 @@ Transform:
   - {fileID: 1165786314}
   - {fileID: 1167568781}
   - {fileID: 403169098}
+  - {fileID: 569809567}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1238411040
@@ -28526,6 +28527,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269316758}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1274552657
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1274552658}
+  m_Layer: 0
+  m_Name: LognomBeach (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1274552658
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274552657}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.9561539, z: -0, w: 0.29286462}
+  m_LocalPosition: {x: 2987, y: 25, z: 5095}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 569809567}
+  m_LocalEulerAnglesHint: {x: 0, y: 145.941, z: 0}
 --- !u!1001 &1277622563
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32334,7 +32366,7 @@ PrefabInstance:
     - target: {fileID: 4908647138769127317, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: SpawnLocation
       value: 
-      objectReference: {fileID: 233066747}
+      objectReference: {fileID: 1274552658}
     - target: {fileID: 5234290954045619251, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: _uiCanvas
       value: 
