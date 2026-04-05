@@ -9,11 +9,25 @@ using UnityEngine;
 [AttributeUsage(AttributeTargets.Method, Inherited = false)]
 public class ItemAction : Attribute
 {
+    [Flags]
+    public enum Flags
+    {
+        None    = 0,
+        SkipStateChange = 1 << 0, 
+    }
+
     public string ActionName { get; }
+    public Flags ActionFlags { get; set; } = Flags.None;
 
     public ItemAction(string actionName)
     {
         ActionName = actionName;
+    }
+
+    public ItemAction(string actionName, Flags actionFlags)
+    {
+        ActionName = actionName;
+        ActionFlags = actionFlags;
     }
 }
 

@@ -43,7 +43,20 @@ public abstract class GameEntity : MonoBehaviour
                 ItemAction attr = method.GetCustomAttribute<ItemAction>();
                 if (attr != null && attr.ActionName == actionName)
                 {
-                    method.Invoke(this, null);
+                    ParameterInfo[] parameters = method.GetParameters();
+                    if (parameters.Length == 0)
+                    {
+                        method.Invoke(this, null);
+                        return;
+                    }
+
+                    if (parameters.Length == 1 && parameters[0].ParameterType == typeof(ItemAction.Flags))
+                    {
+                        method.Invoke(this, new object[] { attr.ActionFlags });
+                        return;
+                    }
+
+                    Debug.LogWarning($"Action '{actionName}' on {this.GetType().Name} has an unsupported signature.");
                     return;
                 }
             }
