@@ -1,8 +1,8 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "DialogLineData", menuName = "Game/Dialogs/Dialog Line Data")]
-public class DialogLineDataSO : ScriptableObject
+public class PhrasingSO : ScriptableObject
 {
     [SerializeField] 
-    public DialogLineData Data;
+    public Phrasing Data;
 }

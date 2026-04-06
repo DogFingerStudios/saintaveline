@@ -17,15 +17,9 @@ public class PanelManager : MonoBehaviour
         _panel.SetActive(false);
         _textField.enabled = false;
     }
-
-    void Start()
+    public void SetText(string text)
     {
-        
+        _textField.text = text;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

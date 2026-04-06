@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [System.Serializable]
-public class DialogLineData
+public class Phrasing
 {
     public string Text;
     public AudioClip Audio;

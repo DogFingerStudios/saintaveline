@@ -1,10 +1,10 @@
 using UnityEngine;
 
 [System.Serializable]
-public class DialogLineDataRef
+public class PhrasingRef
 {
-    public DialogLineData InlineData = new();
-    public DialogLineDataSO Asset;
+    public Phrasing InlineData = new();
+    public PhrasingSO Asset;
 
     public string GetText()
     {
