@@ -16,8 +16,16 @@ public class InteractableEnemyNPC : EnemyNPC, IInteractable
             return $"Press [Q] to interact with the enemy named {this.name}";
         }
     }
+    
+    [SerializeField]
+    Conversationer _conversationer = null!;
+    public Conversationer Conversationer
+    {
+        get => _conversationer;
+        set => _conversationer = value;
+    }
 
-    [SerializeField] public ConversationSO Conversation = null!;
+
     public List<InteractionData> Interactions { get; } = new List<InteractionData>();
     //[SerializeField, NPCStateDropdown]
     //private string _defaultState = "EnemyIdle";
@@ -45,7 +53,9 @@ public class InteractableEnemyNPC : EnemyNPC, IInteractable
     [ItemAction("converse", ItemAction.Flags.SkipStateChange | ItemAction.Flags.SkipCrossHairReset)]
     protected virtual void OnConverse()
     {
-        if (this.Conversation == null) return;
-        ConversationManager.Instance.StartConversation(this.Conversation);
+        if (_conversationer == null) return;
+        var conversation = _conversationer.GetConversation();
+        if (conversation == null) return;
+        ConversationManager.Instance.StartConversation(this, conversation);
     }
 }

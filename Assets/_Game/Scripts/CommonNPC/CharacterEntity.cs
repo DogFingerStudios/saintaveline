@@ -14,6 +14,12 @@ using UnityEngine.AI;
 // For NPCs, the class BaseNPC inherits from this class.
 public class CharacterEntity : GameEntity
 {
+    [SerializeField] public string Name = null!;
+
+    [TextArea]
+    [SerializeField]
+    public string Description = null!;
+
     public const UInt16 MaxInventorySize = 10;
 
     public Transform SpawnLocation = null!;

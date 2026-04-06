@@ -6,7 +6,9 @@ public class ConversationManager : MonoBehaviour
     public static ConversationManager Instance { get; private set; } = null!;
 
     [SerializeField] private PanelManager _panelManager = null!;
-    private PhrasingSO _currentDialogLine;
+
+    private CharacterEntity _currentCharacter = null!;
+    private DialogNodeSO _currentNode = null!;
 
     public void Awake()
     {
@@ -23,14 +25,15 @@ public class ConversationManager : MonoBehaviour
         _panelManager.DisableAll();
     }
 
-    public void StartConversation(ConversationSO conversation)
+    public void StartConversation(CharacterEntity character, ConversationSO conversation)
     {
         InputManager.Instance.SetInputState(InputState.Conversation);
         UIManager.Instance.SetState(false, CursorLockMode.None, true);
 
+        _currentCharacter = character;
+        _currentNode = conversation.RootLine;
         _panelManager.EnableAll();
-        _currentDialogLine = conversation.RootLine;
-        _panelManager.SetText(conversation.GetCurrentLine());
+        _panelManager.SetText(_currentNode.GetRandomLine());
     }
 
     public void ProcessInput()

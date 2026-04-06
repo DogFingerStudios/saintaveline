@@ -3716,7 +3716,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 107069850
+      value: 107377050
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -3792,7 +3792,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 77806560
+      value: 78128744
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -31615,7 +31615,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 15, y: -15}
+  m_AnchoredPosition: {x: 15, y: -15.000061}
   m_SizeDelta: {x: -30, y: -30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1367772772
@@ -40491,6 +40491,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Health: 100
   MaxHealth: 100
+  Name: 
+  Description: 
   SpawnLocation: {fileID: 271310278}
   EquippedItemPos: {fileID: 719853085}
   _initialInventory:
@@ -42837,6 +42839,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: GameCore::InteractableEnemyNPC
   Health: 100
   MaxHealth: 100
+  Name: FlavaPop
+  Description: FalvaPop likes to smoke crack and breakup with this girlfriend.
   SpawnLocation: {fileID: 0}
   EquippedItemPos: {fileID: 1817214600}
   _initialInventory: []
@@ -42869,7 +42873,9 @@ MonoBehaviour:
   ArrivalThreshold: 0.5
   ViewAngle: 120
   EyeOffset: {x: 0, y: 1.6, z: 0}
-  Conversation: {fileID: 11400000, guid: 2a6a390aa1ef02346864d85eb750821e, type: 2}
+  _conversationer:
+    _conversations:
+    - {fileID: 11400000, guid: 2a6a390aa1ef02346864d85eb750821e, type: 2}
 --- !u!1001 &1824788400
 PrefabInstance:
   m_ObjectHideFlags: 0
