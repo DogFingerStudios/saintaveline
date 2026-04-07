@@ -33,7 +33,9 @@ public class ConversationManager : MonoBehaviour
         _currentCharacter = character;
         _currentNode = conversation.RootLine;
         _panelManager.EnableAll();
+
         _panelManager.SetText(character, _currentNode.GetRandomLine());
+        _panelManager.SetOptions(_currentNode.Options);
     }
 
     public void ProcessInput()
