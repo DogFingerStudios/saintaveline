@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class ConversationManager : MonoBehaviour
 {
@@ -33,9 +34,7 @@ public class ConversationManager : MonoBehaviour
         _currentCharacter = character;
         _currentNode = conversation.RootLine;
         _panelManager.EnableAll();
-
-        _panelManager.SetText(character, _currentNode.GetRandomLine());
-        _panelManager.SetOptions(_currentNode.Options);
+        this.SetNode(_currentNode);
     }
 
     public void ProcessInput()
@@ -46,5 +45,15 @@ public class ConversationManager : MonoBehaviour
             InputManager.Instance.SetInputState(InputState.Gameplay);
             UIManager.Instance.SetState(true, CursorLockMode.Locked, false);
         }
+    }
+
+    private void SetNode(DialogNodeSO node)
+    {
+        _currentNode = node;
+        _panelManager.SetText(_currentCharacter, _currentNode.GetRandomLine());
+        _panelManager.SetOptions(_currentNode.Options, (DialogNodeSO node) =>
+        {
+            this.SetNode(node);
+        });
     }
 }

@@ -2,9 +2,11 @@ using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public class PanelManager : MonoBehaviour
 {
+
     [SerializeField] private GameObject _panel;
     [SerializeField] private TextMeshProUGUI _textField;
     [SerializeField] private AudioSource _audioSource;
@@ -50,7 +52,7 @@ public class PanelManager : MonoBehaviour
         _textField.text = phrase.GetText();
     }
 
-    public void SetOptions(List<DialogNodeSO> options)
+    public void SetOptions(List<DialogNodeSO> options, Action<DialogNodeSO> action)
     {
         if (options.Count > _optionButtons.Count)
         {
@@ -67,6 +69,11 @@ public class PanelManager : MonoBehaviour
             {
                 _optionButtons[i].gameObject.SetActive(true);
                 _optionButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = options[i].Title;
+                _optionButtons[i].onClick.RemoveAllListeners();
+                _optionButtons[i].onClick.AddListener(() => 
+                    {
+                        action.Invoke(options[i]);
+                    });
             }
         }
     }
