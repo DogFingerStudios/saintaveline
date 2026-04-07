@@ -12,6 +12,9 @@ public class PanelManager : MonoBehaviour
     [SerializeField] private AudioSource _audioSource;
 
     [SerializeField] private List<Button> _optionButtons = new List<Button>();
+    
+    private Action<DialogNodeSO> _optionSelectedCallback;
+    private List<DialogNodeSO> _nodes = new List<DialogNodeSO>();
 
     public void EnableAll()
     {
@@ -54,6 +57,9 @@ public class PanelManager : MonoBehaviour
 
     public void SetOptions(List<DialogNodeSO> options, Action<DialogNodeSO> action)
     {
+        _nodes.Clear();
+        _optionSelectedCallback = action;
+
         if (options.Count > _optionButtons.Count)
         {
             throw new System.Exception("Not enough option buttons to display all options.");
@@ -67,12 +73,15 @@ public class PanelManager : MonoBehaviour
             }
             else
             {
+                var selectedNode = options[i];
+                _nodes.Add(selectedNode);
                 _optionButtons[i].gameObject.SetActive(true);
-                _optionButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = options[i].Title;
+                _optionButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = selectedNode.Title;
                 _optionButtons[i].onClick.RemoveAllListeners();
                 _optionButtons[i].onClick.AddListener(() => 
                     {
-                        action.Invoke(options[i]);
+                        _optionSelectedCallback.Invoke(selectedNode);
+                        // ConversationManager.Instance.SetNode(selectedNode);
                     });
             }
         }

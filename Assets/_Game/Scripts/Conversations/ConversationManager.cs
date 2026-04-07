@@ -47,7 +47,7 @@ public class ConversationManager : MonoBehaviour
         }
     }
 
-    private void SetNode(DialogNodeSO node)
+    public void SetNode(DialogNodeSO node)
     {
         _currentNode = node;
         _panelManager.SetText(_currentCharacter, _currentNode.GetRandomLine());
