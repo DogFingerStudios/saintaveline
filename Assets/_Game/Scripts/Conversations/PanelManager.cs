@@ -78,11 +78,7 @@ public class PanelManager : MonoBehaviour
                 _optionButtons[i].gameObject.SetActive(true);
                 _optionButtons[i].GetComponentInChildren<TextMeshProUGUI>().text = selectedNode.Title;
                 _optionButtons[i].onClick.RemoveAllListeners();
-                _optionButtons[i].onClick.AddListener(() => 
-                    {
-                        _optionSelectedCallback.Invoke(selectedNode);
-                        // ConversationManager.Instance.SetNode(selectedNode);
-                    });
+                _optionButtons[i].onClick.AddListener(() => action.Invoke(selectedNode));
             }
         }
     }
