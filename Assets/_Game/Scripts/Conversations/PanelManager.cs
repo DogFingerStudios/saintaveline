@@ -6,6 +6,7 @@ public class PanelManager : MonoBehaviour
 {
     [SerializeField] private GameObject _panel;
     [SerializeField] private TextMeshProUGUI _textField;
+    [SerializeField] private AudioSource _audioSource;
 
     public void EnableAll()
     {
@@ -20,8 +21,25 @@ public class PanelManager : MonoBehaviour
     }
     public void SetText(CharacterEntity character, PhrasingRef phrase)
     {
-        var text = $"<color=#FF0000>{character.name}</color>: {phrase.GetText()}";
-        _textField.text = text;
+        if (phrase == null)
+        {
+            _textField.text = "";
+            return;
+        }
+
+        if (character == null || string.IsNullOrEmpty(character.Name))
+        {
+            _textField.text = phrase.GetText();
+            return;
+        }
+
+        _textField.text = $"<color=#FFADAD>{character.Name}</color>: {phrase.GetText()}";
+        if (_audioSource != null && phrase.GetAudio() != null)
+        {
+            _audioSource.clip = phrase.GetAudio();
+            _audioSource.Play();
+        }
+
     }
 
     public void SetText(PhrasingRef phrase)
