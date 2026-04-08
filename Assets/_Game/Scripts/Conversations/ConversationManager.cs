@@ -50,7 +50,15 @@ public class ConversationManager : MonoBehaviour
     public void SetNode(DialogNodeSO node)
     {
         _currentNode = node;
-        _panelManager.SetText(_currentCharacter, _currentNode.GetRandomLine());
+        if (node.Speaker.TryGetComponent<CharacterEntity>(out var charent))
+        {
+            _panelManager.SetText(charent, _currentNode.GetRandomLine());
+        }
+        else
+        {
+            _panelManager.SetText(_currentNode.GetRandomLine());
+        }
+        
         _panelManager.SetOptions(_currentNode.Options, (DialogNodeSO node) =>
         {
             this.SetNode(node);
