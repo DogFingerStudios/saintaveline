@@ -9,6 +9,7 @@ public class ConversationManager : MonoBehaviour
     [SerializeField] private PanelManager _panelManager = null!;
 
     private CharacterEntity _currentCharacter = null!;
+    private CharacterEntity _playerEntity = null!;
     private DialogNodeSO _currentNode = null!;
 
     public void Awake()
@@ -24,6 +25,19 @@ public class ConversationManager : MonoBehaviour
 
         InputManager.Instance.RegisterInputHandler(InputState.Conversation, ProcessInput);
         _panelManager.DisableAll();
+
+        var player = GameObject.FindGameObjectWithTag("Player");
+        if (player == null)
+        {
+            throw new Exception("Player GameObject not found. Make sure the Player has the 'Player' tag.");
+        }
+
+        _playerEntity = player.GetComponent<CharacterEntity>();
+        if (_playerEntity == null)
+        {
+            throw new Exception("CharacterEntity script not found on Player. Make sure the Player has the CharacterEntity component.");
+        }
+
     }
 
     public void StartConversation(CharacterEntity character, ConversationSO conversation)
@@ -50,15 +64,8 @@ public class ConversationManager : MonoBehaviour
     public void SetNode(DialogNodeSO node)
     {
         _currentNode = node;
-        if (node.Speaker.TryGetComponent<CharacterEntity>(out var charent))
-        {
-            _panelManager.SetText(charent, _currentNode.GetRandomLine());
-        }
-        else
-        {
-            _panelManager.SetText(_currentNode.GetRandomLine());
-        }
-        
+        var speaker = node.IsPlayerSpeaking ? _playerEntity : _currentCharacter;
+        _panelManager.SetText(speaker, _currentNode.GetRandomLine());
         _panelManager.SetOptions(_currentNode.Options, (DialogNodeSO node) =>
         {
             this.SetNode(node);

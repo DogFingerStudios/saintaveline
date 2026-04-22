@@ -14,6 +14,7 @@ public class NPCDebugHUD : MonoBehaviour
     public Slider HealthSlider;
     public TextMeshProUGUI DistanceText;
     public TextMeshProUGUI StateText;
+    public TextMeshProUGUI NameText;
 
     private void Start()
     {
@@ -38,6 +39,7 @@ public class NPCDebugHUD : MonoBehaviour
         }
 
         SetUpHealthSlider();
+        NameText.text = _thisNPC.Name;
     }
 
     private void SetUpHealthSlider()

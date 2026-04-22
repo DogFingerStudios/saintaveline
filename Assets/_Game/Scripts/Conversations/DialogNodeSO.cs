@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "DialogLine", menuName = "Game/Dialogs/DialogLine")]
 public class DialogNodeSO : ScriptableObject
 {
-    public GameObject Speaker;
+    public bool IsPlayerSpeaking = false;
 
     // when the player is given multiple options to choose from, this is the text that will be
     // shown for the player to select

@@ -6,7 +6,6 @@ using System;
 
 public class PanelManager : MonoBehaviour
 {
-
     [SerializeField] private GameObject _panel;
     [SerializeField] private TextMeshProUGUI _textField;
     [SerializeField] private AudioSource _audioSource;
