@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Intro1AAB-RespondDisrespectfully
   m_EditorClassIdentifier: GameCore::DialogLineSO
   IsPlayerSpeaking: 1
-  Title: Respond Disrespectfully
+  Title: Respond Disrespectfully (Aggro)
   Line:
   - InlineData:
       Text: I'm not scared of you!
@@ -22,3 +22,4 @@ MonoBehaviour:
   AutoAdvance: 0
   Options: []
   Note: At this point, the NPC would become Aggro. Conversation ends here.
+  SelectedCode: Debug.Log("I am code inside a SO!");

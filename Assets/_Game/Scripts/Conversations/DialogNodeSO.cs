@@ -25,6 +25,18 @@ public class DialogNodeSO : ScriptableObject
     [TextArea]
     public string Note;
 
+    [Header("Action Systems")]
+    // AI: Solution 1 - Enum-based actions (simple, inspector-friendly)
+    public List<DialogueAction> OnSelectedActions = new();
+
+    // AI: Solution 2 - ScriptableObject actions (modular, reusable)
+    public List<DialogueActionSO> OnSelectedActionsSO = new();
+
+    // AI: Solution 3 - Command strings (flexible, text-based)
+    // AI: Format: "CommandName param1 param2; AnotherCommand param1"
+    [TextArea(2, 5)]
+    public string CommandString;
+
     public PhrasingRef GetRandomLine()
     {
         if (Line.Count == 0)
