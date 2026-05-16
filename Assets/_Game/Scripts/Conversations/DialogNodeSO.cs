@@ -25,6 +25,8 @@ public class DialogNodeSO : ScriptableObject
     [TextArea]
     public string Note;
 
+    public List<DialogActionSO> Actions = new();
+
     public PhrasingRef GetRandomLine()
     {
         if (Line.Count == 0)
