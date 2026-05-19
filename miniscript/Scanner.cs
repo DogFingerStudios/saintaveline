@@ -1,43 +1,120 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace Miniscript
 {
     public class Scanner
     {
-        List<string> _items = new List<string>();
-        public List<string> Items => _items;
+        public string Name = "Scanner";
+        public List<Token> Tokens { get; private set; } = new();
 
-        public void Scan(TextReader text)
+        public void Scan(TextReader reader)
         {
-            StringBuilder accum = new StringBuilder();
-
-            while (text.Peek() != -1)
+            while (reader.Peek() != -1)
             {
-                char ch = (char)text.Peek();
+                char ch = (char)reader.Peek();
                 if (char.IsWhiteSpace(ch))
                 {
-                    if (accum.Length > 0)
-                    {
-                        _items.Add(accum.ToString());
-                        accum.Clear();
-                    }
+                    reader.Read();
+                    continue;
+                }
+                else if (ch == '@')
+                {
+                    ScanSpecialVariable(reader);
+                }
+                else if (ch == '"')
+                {
+                    ScanStringLiteral(reader);
+                }
+                else if (char.IsDigit(ch) || ch == '-' || ch == '+')
+                {
+                    ScanNumberLiteral(reader);
                 }
                 else
                 {
-                    accum.Append(ch);
+                    ScanKeyword(reader);
                 }
 
-                text.Read();
-            }
-
-            if (accum.Length > 0)
-            {
-                _items.Add(accum.ToString());
+                reader.Read();
             }
         }
+
+        private void ScanSpecialVariable(TextReader reader)
+        {
+            StringBuilder accum = new StringBuilder();
+            reader.Read(); // skip the '@'
+
+            while (reader.Peek() != -1)
+            {
+                char ch = (char)reader.Peek();
+                if (!char.IsLetterOrDigit(ch) && ch != '_')
+                {
+                    break;
+                }
+
+                accum.Append((char)reader.Read());
+            }
+
+            Tokens.Add(new SpecialVariableToken(accum.ToString()));
+        }
+
+        private void ScanStringLiteral(TextReader reader)
+        {
+            StringBuilder accum = new StringBuilder();
+            reader.Read(); // skip the opening '"'
+            while (reader.Peek() != -1)
+            {
+                char ch = (char)reader.Read();
+                if (ch == '"')
+                {
+                    break; // end of string literal
+                }
+
+                accum.Append(ch);
+            }
+
+            Tokens.Add(new StringLiteralToken(accum.ToString()));
+        }
+
+        private void ScanNumberLiteral(TextReader reader)
+        {
+            StringBuilder accum = new StringBuilder();
+            accum.Append((char)reader.Read());
+            while (reader.Peek() != -1)
+            {
+                char ch = (char)reader.Peek();
+                if (!char.IsDigit(ch) && ch != '.')
+                {
+                    break;
+                }
+
+                accum.Append((char)reader.Read());
+            }
+
+            if (double.TryParse(accum.ToString(), out double numberValue))
+            {
+                Tokens.Add(new NumberLiteralToken(numberValue));
+            }
+            else
+            {
+                throw new Exception($"Invalid number literal: {accum}");
+            }
+        }
+
+        private void ScanKeyword(TextReader reader)
+        {
+            StringBuilder accum = new StringBuilder();
+            while (reader.Peek() != -1)
+            {
+                char ch = (char)reader.Peek();
+                if (!char.IsLetterOrDigit(ch) && ch != '_')
+                {
+                    break;
+                }
+                accum.Append((char)reader.Read());
+            }
+            
+            Tokens.Add(new KeywordToken(accum.ToString()));
+        }
     }
-}
+
+} // namespace Miniscript

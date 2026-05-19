@@ -7,59 +7,59 @@ using System.Threading.Tasks;
 namespace Miniscript
 {
     public abstract class Token;
-    public class CommandToken : Token
+    public class KeywordToken : Token
     {
         public string Value { get; }
-        public CommandToken(string value)
+        public KeywordToken(string value)
         {
             Value = value;
         }
 
-        public virtual int Run(Miniscript vm)
-        {
-            return 0;
-        }
+        //public virtual int Run(Miniscript vm)
+        //{
+        //    return 0;
+        //}
     }
 
-    public class PushCommandToken : CommandToken
-    {
-        public PushCommandToken() : base("push") { }
-        public override int Run(Miniscript vm)
-        {
-            if (vm.OpTokens.Count >= vm.CurrentIndex + 1)
-            {
-                Token nextToken = vm.OpTokens[vm.CurrentIndex + 1];
-                vm.Stack.Push(nextToken);
-                return 1;
-            }
+    //public class PushCommandToken : KeywordToken
+    //{
+    //    public PushCommandToken() : base("push") { }
+    //    public override int Run(Miniscript vm)
+    //    {
+    //        if (vm.OpStatements.Count >= vm.CurrentIndex + 1)
+    //        {
+    //            Token nextToken = vm.OpStatements[vm.CurrentIndex + 1];
+    //            vm.Stack.Push(nextToken);
+    //            return 1;
+    //        }
 
-            return 0;
-        }
-    }
+    //        return 0;
+    //    }
+    //}
 
-    public class CallCommandToken : CommandToken
-    {
-        public CallCommandToken() : base("call") { }
-        public override int Run(Miniscript vm)
-        {
-            if (vm.OpTokens.Count >= vm.CurrentIndex + 1)
-            {
-                Token nextToken = vm.OpTokens[vm.CurrentIndex + 1];
-                if (nextToken is StringLiteralToken strToken)
-                {
-                    CallRunner.Run(strToken.Value, vm);
-                    return 1;
-                }
-            }
+    //public class CallCommandToken : KeywordToken
+    //{
+    //    public CallCommandToken() : base("call") { }
+    //    public override int Run(Miniscript vm)
+    //    {
+    //        if (vm.OpStatements.Count >= vm.CurrentIndex + 1)
+    //        {
+    //            Token nextToken = vm.OpStatements[vm.CurrentIndex + 1];
+    //            if (nextToken is StringLiteralToken strToken)
+    //            {
+    //                //CallRunner.Run(strToken.Value, vm);
+    //                return 1;
+    //            }
+    //        }
 
-            return 0;
-        }
-    }
+    //        return 0;
+    //    }
+    //}
 
-    public class VariableToken : Token
+    public class SpecialVariableToken : Token
     {
         public string Value { get; }
-        public VariableToken(string value)
+        public SpecialVariableToken(string value)
         {
             Value = value;
         }

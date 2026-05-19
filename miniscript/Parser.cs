@@ -8,45 +8,59 @@ namespace Miniscript
 {
     public class Parser
     {
-        public List<Token> Tokens { get; } = new();
+        public List<Statement> Statements = new();
 
-        private List<string> _keywords = new List<string> { "push", "call" };
-        public void Parse(List<string> tokens)
+        private List<string> _keywords = new List<string> { "push", "call", "echo" };
+        public void Parse(List<Token> tokens)
         {
-            foreach (string token in tokens)
+            for (int i = 0; i < tokens.Count; i++)
             {
-                if (token.StartsWith("$"))
-                {
-                    string variableName = token.Substring(1);
-                    Tokens.Add(new VariableToken(variableName));
-                }
-                else if (token.StartsWith("\"") && token.EndsWith("\""))
-                {
-                    string stringValue = token.Substring(1, token.Length - 2);
-                    Tokens.Add(new StringLiteralToken(stringValue));
-                }
-                else if (double.TryParse(token, out double numberValue))
-                {
-                    Tokens.Add(new NumberLiteralToken(numberValue));
-                }
-                else if (_keywords.Contains(token))
-                {
-                    if (token == "push")
-                    {
-                        Tokens.Add(new PushCommandToken());
-                    }
-                    else if (token == "call")
-                    {
-                        Tokens.Add(new CallCommandToken());
-                    }
-                    else
-                    {
-                        throw new Exception($"Unrecognized command: {token}");
-                    }
-                }
-                else
+                Token token = tokens[i];
+                if (token is not KeywordToken)
                 {
                     throw new Exception($"Unrecognized token: {token}");
+                }
+
+                KeywordToken keywordToken = (KeywordToken)token;
+                if (!_keywords.Contains(keywordToken.Value))
+                {
+                    throw new Exception($"Unrecognized command: {keywordToken.Value}");
+                }
+
+                if (keywordToken.Value == "push")
+                {
+                    if (tokens.Count <= i + 1)
+                    {
+                        throw new Exception("Expected argument after 'push' command.");
+                    }
+
+                    Statements.Add(new PushStatement(tokens[i + 1]));
+                    i++;
+                }
+                else if (keywordToken.Value == "call")
+                {
+                    if (tokens.Count <= i + 1)
+                    {
+                        throw new Exception("Expected argument after 'push' command.");
+                    }
+
+                    if (tokens[i+1] is not StringLiteralToken)
+                    {
+                        throw new Exception("Expected string literal after 'call' command.");
+                    }
+
+                    Statements.Add(new CallStatement(tokens[i + 1]));
+                    i++;
+                }
+                else if (keywordToken.Value == "echo")
+                {
+                    if (tokens.Count <= i + 1)
+                    {
+                        throw new Exception("Expected argument after 'echo' command.");
+                    }
+
+                    Statements.Add(new EchoStatement(tokens[i + 1]));
+                    i++;
                 }
             }
         }

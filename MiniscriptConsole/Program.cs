@@ -15,20 +15,38 @@ using Miniscript;
 
 namespace MiniscriptConsole
 {
+    //public class Implementor
+    //{
+    //    [MiniscriptFunction("adjust_npc_attribute", 3)]
+    //    public void AdjustCharacterAttribute(params object[] args)
+    //    {
+    //        if (args.Length != 3)
+    //        {
+    //            throw new ArgumentException($"Expected 3 arguments, got {args.Length}");
+    //        }
+
+    //        foreach(var arg in args)
+    //        {
+    //            Console.WriteLine($"Argument: {arg} (Type: {arg.GetType().Name})");
+    //        }
+    //    }
+    //}
+
+    public class ConsoleImplmentor
+    {
+
+    }
+
     internal class Program
     {
         static void Main(string[] args)
         {
             string data = """
-push $target
+push @target
 push "comfort"
 push  -0.1
+echo @target
 call "adjust_npc_attribute"
-
-push $player
-push "health"
-call "get_attribute"
-
 """;
             Scanner scanner = new Scanner();
             using (TextReader sr = new StringReader(data))
@@ -36,26 +54,25 @@ call "get_attribute"
                 scanner.Scan(sr);
             }
 
-            foreach (var item in scanner.Items)
+            foreach (var item in scanner.Tokens)
             {
                 Console.WriteLine($"Scanned Item: {item}");
             }
 
-            var items = scanner.Items;
-
             Parser parser = new Parser();
-            parser.Parse(items);
+            parser.Parse(scanner.Tokens);
 
-            for (var idx = 0; idx < parser.Tokens.Count; idx++)
+            foreach (var statement in parser.Statements)
             {
-                Token token = parser.Tokens[idx];
-                Console.Write($"Parsed Token {idx}: " + token.GetType().Name);
+                Console.WriteLine($"Parsed Statement: {statement}");
             }
 
-            Miniscript.Miniscript vm = new Miniscript.Miniscript(parser.Tokens);
+            //Implementor implementor = new();
+            ConsoleImplmentor implementor = new();
+            Miniscript.Miniscript vm = new(parser.Statements, implementor);
             vm.Run();
 
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("End of Program!");
         }
     }
 }
