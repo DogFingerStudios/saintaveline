@@ -1,7 +1,8 @@
-﻿using System;
-using System.Text;
+﻿using Miniscript;
+using System;
 using System.Collections.Generic;
-using Miniscript;
+using System.Reflection;
+using System.Text;
 
 //push $target
 //push "comfort"
@@ -18,9 +19,9 @@ namespace MiniscriptConsole
     public class ConsoleImplmentor
     {
         [MiniscriptFunction("adjust_npc_attribute", 3)]
-        public void AdjustNpcAttribute(params object[] args)
+        public void AdjustNpcAttribute(string arg1, string arg2, double arg3)
         {
-            Console.WriteLine($"AdjustNpcAttribute: {args} (Type: {args.GetType().Name})");
+            Console.WriteLine("arg1: " + arg1 + " arg2: " + arg2 + " arg3: " + arg3);
         }
 
         [MiniscriptFunction("echo", 1)]
@@ -34,7 +35,14 @@ namespace MiniscriptConsole
     {
         static void Main(string[] args)
         {
+            string data1 = "Matthew";
+
             string data = """
+push "matthew"
+push "desperation"
+push +100
+call "adjust_npc_attribute"
+
 push @target
 push "comfort"
 push  -0.1
@@ -62,6 +70,7 @@ call "adjust_npc_attribute"
 
             ConsoleImplmentor implementor = new();
             Miniscript.Miniscript vm = new(parser.Statements, implementor);
+            vm.SpecialVariables["target"] = data1;
             vm.Run();
 
             Console.WriteLine("End of Program!");

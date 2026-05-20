@@ -35,7 +35,12 @@ namespace Miniscript
 
         public override object Evaluate(Miniscript vm)
         {
-            throw new NotImplementedException();
+            if (vm.SpecialVariables.TryGetValue(Value, out var val))
+            {
+                return val;
+            }
+
+            throw new Exception($"Special variable '{Value}' not found.");
         }
     }
 

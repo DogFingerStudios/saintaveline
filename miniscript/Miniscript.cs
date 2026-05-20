@@ -29,6 +29,8 @@ namespace Miniscript
         public object? Implementation { get; set; }
         public Dictionary<string, MethodInfo> FunctionMap = new();
 
+        public Dictionary<string, object> SpecialVariables = new();
+
         public Miniscript(List<Statement> tokens, object? implementation = null)
         {
             OpStatements = tokens;
