@@ -15,26 +15,19 @@ using Miniscript;
 
 namespace MiniscriptConsole
 {
-    //public class Implementor
-    //{
-    //    [MiniscriptFunction("adjust_npc_attribute", 3)]
-    //    public void AdjustCharacterAttribute(params object[] args)
-    //    {
-    //        if (args.Length != 3)
-    //        {
-    //            throw new ArgumentException($"Expected 3 arguments, got {args.Length}");
-    //        }
-
-    //        foreach(var arg in args)
-    //        {
-    //            Console.WriteLine($"Argument: {arg} (Type: {arg.GetType().Name})");
-    //        }
-    //    }
-    //}
-
     public class ConsoleImplmentor
     {
+        [MiniscriptFunction("adjust_npc_attribute", 3)]
+        public void AdjustNpcAttribute(params object[] args)
+        {
+            Console.WriteLine($"AdjustNpcAttribute: {args} (Type: {args.GetType().Name})");
+        }
 
+        [MiniscriptFunction("echo", 1)]
+        public void Echo(object arg)
+        {
+            Console.WriteLine($"Echo: {arg} (Type: {arg.GetType().Name})");
+        }
     }
 
     internal class Program
@@ -67,7 +60,6 @@ call "adjust_npc_attribute"
                 Console.WriteLine($"Parsed Statement: {statement}");
             }
 
-            //Implementor implementor = new();
             ConsoleImplmentor implementor = new();
             Miniscript.Miniscript vm = new(parser.Statements, implementor);
             vm.Run();

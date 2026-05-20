@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Miniscript
 {
-    public abstract class Token;
+    public abstract class Token
+    {
+        public abstract object Evaluate(Miniscript vm);
+    }
+
     public class KeywordToken : Token
     {
         public string Value { get; }
@@ -15,46 +19,11 @@ namespace Miniscript
             Value = value;
         }
 
-        //public virtual int Run(Miniscript vm)
-        //{
-        //    return 0;
-        //}
+        public override object Evaluate(Miniscript vm)
+        {
+            throw new Exception("Cannot evaluate a keyword token directly.");
+        }
     }
-
-    //public class PushCommandToken : KeywordToken
-    //{
-    //    public PushCommandToken() : base("push") { }
-    //    public override int Run(Miniscript vm)
-    //    {
-    //        if (vm.OpStatements.Count >= vm.CurrentIndex + 1)
-    //        {
-    //            Token nextToken = vm.OpStatements[vm.CurrentIndex + 1];
-    //            vm.Stack.Push(nextToken);
-    //            return 1;
-    //        }
-
-    //        return 0;
-    //    }
-    //}
-
-    //public class CallCommandToken : KeywordToken
-    //{
-    //    public CallCommandToken() : base("call") { }
-    //    public override int Run(Miniscript vm)
-    //    {
-    //        if (vm.OpStatements.Count >= vm.CurrentIndex + 1)
-    //        {
-    //            Token nextToken = vm.OpStatements[vm.CurrentIndex + 1];
-    //            if (nextToken is StringLiteralToken strToken)
-    //            {
-    //                //CallRunner.Run(strToken.Value, vm);
-    //                return 1;
-    //            }
-    //        }
-
-    //        return 0;
-    //    }
-    //}
 
     public class SpecialVariableToken : Token
     {
@@ -62,6 +31,11 @@ namespace Miniscript
         public SpecialVariableToken(string value)
         {
             Value = value;
+        }
+
+        public override object Evaluate(Miniscript vm)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -72,6 +46,11 @@ namespace Miniscript
         {
             Value = value;
         }
+
+        public override object Evaluate(Miniscript vm)
+        {
+            return Value;
+        }
     }
 
     public class NumberLiteralToken : Token
@@ -80,6 +59,11 @@ namespace Miniscript
         public NumberLiteralToken(double value)
         {
             Value = value;
+        }
+
+        public override object Evaluate(Miniscript vm)
+        {
+            return Value;
         }
     }
 }

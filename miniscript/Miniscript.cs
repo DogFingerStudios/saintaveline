@@ -27,11 +27,32 @@ namespace Miniscript
         public Stack<Token> Stack = new();
         
         public object? Implementation { get; set; }
+        public Dictionary<string, MethodInfo> FunctionMap = new();
 
         public Miniscript(List<Statement> tokens, object? implementation = null)
         {
             OpStatements = tokens;
             Implementation = implementation;
+
+            if (Implementation != null)
+            {
+                Type implementationType = Implementation.GetType();
+
+                foreach (MethodInfo method in 
+                    implementationType.GetMethods(BindingFlags.Instance | BindingFlags.Public))
+                {
+                    MiniscriptFunctionAttribute? attribute =
+                        method.GetCustomAttribute<MiniscriptFunctionAttribute>();
+
+                    if (attribute != null)
+                    {
+                        FunctionMap.Add(attribute.Name, method);
+                        Console.WriteLine(
+                            $"Found Miniscript function: Method={method.Name}, " +
+                            $"Name={attribute.Name}, ParamCount={attribute.ParamCount}");
+                    }
+                }
+            }
         }
 
         public void Run()

@@ -29,12 +29,37 @@ namespace Miniscript
         public Token FunctionName { get; }
         public CallStatement(Token functionName)
         {
-           
             FunctionName = functionName;
         }
         public override void Run(Miniscript vm)
         {
-            Console.WriteLine("Calling function: " + FunctionName.GetType().Name);
+            if (FunctionName == null)
+            {
+                throw new Exception("Function name is not initialized.");
+            }
+
+            string eval = (string)FunctionName.Evaluate(vm);
+            if (eval == null)
+            {
+                throw new Exception("Function name evaluated to null.");
+            }
+
+            if (!vm.FunctionMap.ContainsKey(eval))
+            {
+                throw new Exception($"Function '{eval}' not found.");
+            }
+
+            if (!vm.FunctionMap.TryGetValue(eval, out var methodInfo))
+            {
+                throw new Exception($"Function '{eval}' not found in function map.");
+            }
+
+
+            MiniscriptFunctionAttribute? attribute = methodInfo.GetCustomAttribute<MiniscriptFunctionAttribute>();
+
+
+
+            methodInfo.Invoke(vm.Implementation, null);
         }
     }
 
