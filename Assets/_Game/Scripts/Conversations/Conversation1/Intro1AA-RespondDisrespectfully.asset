@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04a48701bf38f44b88ebac9a648fd2c, type: 3}
   m_Name: Intro1AA-RespondDisrespectfully
   m_EditorClassIdentifier: GameCore::DialogLineSO
-  Speaker: {fileID: 0}
+  IsPlayerSpeaking: 0
   Title: 
   Line:
   - InlineData:
@@ -23,5 +23,15 @@ MonoBehaviour:
   Options:
   - {fileID: 11400000, guid: c7cf71b29437e774e9c1f4fae6be68e3, type: 2}
   - {fileID: 11400000, guid: 62bb23a72fed2064392ce824a013bd4f, type: 2}
+  MiniscriptText: 'echo "2222"
+
+    push @target
+
+    push "composure"
+
+    push
+    -0.2
+
+    call "adjust_npc_mentalstate"'
   Note: This creates a RelationshipTraits object on the NPC relating to the Player.
     Then, the Affection trait is reduced (i.e., the NPC doesn't like the Player much)

@@ -48,6 +48,11 @@ push "comfort"
 push  -0.1
 echo @target
 call "adjust_npc_attribute"
+
+push @target
+push "composure"
+push -0.2
+call "adjust_npc_mentalstate"
 """;
             Scanner scanner = new Scanner();
             using (TextReader sr = new StringReader(data))

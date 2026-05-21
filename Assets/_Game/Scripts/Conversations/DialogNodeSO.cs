@@ -23,9 +23,10 @@ public class DialogNodeSO : ScriptableObject
     public List<DialogNodeSO> Options = new();
 
     [TextArea]
-    public string Note;
+    public string MiniscriptText = string.Empty;
 
-    public List<DialogActionSO> Actions = new();
+    [TextArea]
+    public string Note;
 
     public PhrasingRef GetRandomLine()
     {

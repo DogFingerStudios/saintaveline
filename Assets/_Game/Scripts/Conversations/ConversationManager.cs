@@ -1,6 +1,24 @@
+#nullable enable
+using Miniscript;
 using System;
+using System.IO;
+using Unity.VisualScripting.YamlDotNet.Core;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
+
+internal class MiniscriptImplementation
+{
+    [MiniscriptFunction("adjust_npc_mentalstate", 3)]
+    public void AdjustNpcAttribute(CharacterEntity npc, string stat, double delta)
+    {
+        Console.WriteLine("arg1: " + npc.ToString() + " arg2: " + stat + " arg3: " + delta.ToString());
+    }
+
+    [MiniscriptFunction("echo", 1)]
+    public void Echo(object arg)
+    {
+        Console.WriteLine($"Echo: {arg} (Type: {arg.GetType().Name})");
+    }
+}
 
 public class ConversationManager : MonoBehaviour
 {
@@ -11,6 +29,8 @@ public class ConversationManager : MonoBehaviour
     private CharacterEntity _currentCharacter = null!;
     private CharacterEntity _playerEntity = null!;
     private DialogNodeSO _currentNode = null!;
+
+    private Miniscript.Miniscript? _vm;
 
     public void Awake()
     {
@@ -61,9 +81,26 @@ public class ConversationManager : MonoBehaviour
         }
     }
 
+    Miniscript.Scanner _scanner = new Miniscript.Scanner();
+    Miniscript.Parser _parser = new Miniscript.Parser();
+
     public void SetNode(DialogNodeSO node)
     {
         _currentNode = node;
+        _scanner.Tokens.Clear();
+        _parser.Statements.Clear();
+
+        using (TextReader sr = new StringReader(node.MiniscriptText))
+        {
+            _scanner.Scan(sr);
+        }
+
+        _parser.Parse(_scanner.Tokens);
+
+        _vm = new(_parser.Statements, new MiniscriptImplementation());
+        _vm.SpecialVariables["target"] = _currentCharacter;
+        _vm.Run();
+
         var speaker = node.IsPlayerSpeaking ? _playerEntity : _currentCharacter;
         _panelManager.SetText(speaker, _currentNode.GetRandomLine());
         _panelManager.SetOptions(_currentNode.Options, (DialogNodeSO node) =>

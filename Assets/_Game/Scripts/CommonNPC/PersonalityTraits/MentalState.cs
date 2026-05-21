@@ -9,7 +9,7 @@ public class MentalState
     // to recover these states
     public Func<bool> ShouldCalmDown;
     public Func<bool> ShouldRegainComfort;
-    public Func<bool> ShouldReturnToBaseReceptive;
+    public Func<bool> ShouldReturnToBaseComposure;
 
     [Tooltip("The entity's comfort level, ranging from -1 (uncomfortable) to 1 (comfortable)")]
     [Range(-1f, 1f)] public float Comfort = 0.5f;
@@ -24,11 +24,11 @@ public class MentalState
     [Tooltip("How quickly the entity recovers calmness over time (higher = faster recovery)")]
     [Range(0f, 1f)] public float BaseCalmRate = 0.1f;
 
-    [Tooltip("How emotionally agitated or not this entity is, ranging from -1 (agitated) to 1 (receptive)")]
-    [Range(-1f, 1f)] public float Receptive = 0f;
+    [Tooltip("How emotionally agitated or not this entity is, ranging from -1 (agitated) to 1 (composed)")]
+    [Range(-1f, 1f)] public float Composure = 0f;
 
-    [Tooltip("How quickly the entity's agitation increases in response to stressors (higher = more reactive)")]
-    [Range(0f, 1f)] public float ReturnToBaseReceptiveRate = 0.1f;
+    [Tooltip("How quickly the entity's composure returns to baseline in response to stressors (higher = more reactive)")]
+    [Range(0f, 1f)] public float ReturnToBaseComposureRate = 0.1f;
 
     private float _timer = 0f;
     public void Tick()
@@ -38,7 +38,7 @@ public class MentalState
         {
             adjustCalmness();
             adjustComfort();
-            adjustReceptive();
+            adjustComposure();
             _timer = 0f;
         }
     }
@@ -74,11 +74,11 @@ public class MentalState
         Comfort = Mathf.Clamp(Comfort + actualRecovery, -1f, 1f);
     }
 
-    private void adjustReceptive()
+    private void adjustComposure()
     {
-        if (ShouldReturnToBaseReceptive?.Invoke() != true) return;
-        float receptiveMultiplier = Mathf.InverseLerp(-1f, 1f, Receptive);
-        float actualRecovery = ReturnToBaseReceptiveRate * (1f + receptiveMultiplier);
-        Receptive = Mathf.Clamp(Receptive + actualRecovery, -1f, 1f);
+        if (ShouldReturnToBaseComposure?.Invoke() != true) return;
+        float composureMultiplier = Mathf.InverseLerp(-1f, 1f, Composure);
+        float actualRecovery = ReturnToBaseComposureRate * (1f + composureMultiplier);
+        Composure = Mathf.Clamp(Composure + actualRecovery, -1f, 1f);
     }
 }
