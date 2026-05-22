@@ -28,15 +28,15 @@ public static class DecisionProfile
         // Calculate effective trust
         float totalTrust = traits.Trusting + relationship.TrustToward;
 
-        // Emotional influence from love and fear
-        float emotionalBias = relationship.Love - relationship.FearOf;
+        // Emotional influence from affection and fear
+        float emotionalBias = relationship.Affection - relationship.FearOf;
 
         // Weighted sum of all factors
         float sum =
             adjustedSafety +   // danger consideration
             utility +          // usefulness of the order
             totalTrust +       // global + relational trust
-            (traits.Loving * relationship.Love) -   // overall warmth magnifies love's impact
+            (traits.Empathy * relationship.Affection) -   // overall warmth magnifies love's impact
             relationship.FearOf * 0.5f;             // fear reduces obedience
 
         // Normalize and shift into [0, 1] range

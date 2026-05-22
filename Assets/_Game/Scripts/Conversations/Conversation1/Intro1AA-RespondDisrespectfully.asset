@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04a48701bf38f44b88ebac9a648fd2c, type: 3}
+  m_Name: Intro1AA-RespondDisrespectfully
+  m_EditorClassIdentifier: GameCore::DialogLineSO
+  IsPlayerSpeaking: 0
+  Title: 
+  Line:
+  - InlineData:
+      Text: Get back inside before I bash your skull!
+      Audio: {fileID: 0}
+    Asset: {fileID: 0}
+  AutoAdvance: 0
+  Options:
+  - {fileID: 11400000, guid: c7cf71b29437e774e9c1f4fae6be68e3, type: 2}
+  - {fileID: 11400000, guid: 62bb23a72fed2064392ce824a013bd4f, type: 2}
+  MiniscriptText: 'echo "2222"
+
+    push @target
+
+    push "composure"
+
+    push
+    -0.2
+
+    call "adjust_npc_mentalstate"'
+  Note: This creates a RelationshipTraits object on the NPC relating to the Player.
+    Then, the Affection trait is reduced (i.e., the NPC doesn't like the Player much)

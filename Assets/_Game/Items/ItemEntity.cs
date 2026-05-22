@@ -9,11 +9,26 @@ using UnityEngine;
 [AttributeUsage(AttributeTargets.Method, Inherited = false)]
 public class ItemAction : Attribute
 {
+    [Flags]
+    public enum Flags
+    {
+        None    = 0,
+        SkipStateChange = 1 << 0, 
+        SkipCrossHairReset = 1 << 1,
+    }
+
     public string ActionName { get; }
+    public Flags ActionFlags { get; set; } = Flags.None;
 
     public ItemAction(string actionName)
     {
         ActionName = actionName;
+    }
+
+    public ItemAction(string actionName, Flags actionFlags)
+    {
+        ActionName = actionName;
+        ActionFlags = actionFlags;
     }
 }
 
@@ -21,7 +36,7 @@ public class ItemAction : Attribute
 /// This script is attached to an item in the game world to
 /// allow entities to interact with it.
 /// </summary>
-public class ItemEntity : GameEntity, ItemInteractable
+public class ItemEntity : GameEntity, IInteractable
 {
     [SerializeField] private ItemData? _itemData;
     public ItemData? ItemData { get => _itemData; }
@@ -57,28 +72,6 @@ public class ItemEntity : GameEntity, ItemInteractable
         _interactorEntity = interactor;
     }
 
-    private void DoInteraction(string actionName)
-    {
-        Type type = this.GetType();
-        while (type != null && type != typeof(MonoBehaviour))
-        {
-            MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-            foreach (MethodInfo method in methods)
-            {
-                ItemAction attr = method.GetCustomAttribute<ItemAction>();
-                if (attr != null && attr.ActionName == actionName)
-                {
-                    method.Invoke(this, null);
-                    return;
-                }
-            }
-
-            type = type.BaseType;
-        }
-
-        Debug.LogWarning($"No action found for '{actionName}' in {this.GetType().Name}");
-    }
-
     public virtual void OnFocus()
     {
         // nothing to do
@@ -87,11 +80,6 @@ public class ItemEntity : GameEntity, ItemInteractable
     public virtual void OnDefocus()
     {
         // nothing to do
-    }
-
-    public void Initialize()
-    {
-        this.Awake();
     }
 
     protected override void Awake()

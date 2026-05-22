@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
+public abstract class FriendlyNPC : BaseNPC, IInteractable
 {
     // TODO: these three fields should be refactored out of here
     [SerializeField] private GameObject _mapLabelDialogPrefab = null!;
@@ -53,30 +53,6 @@ public abstract class FriendlyNPC : BaseNPC, CharacterInteractable
         InteractionManager.Instance.OpenMenu(Interactions);
     }
 #endregion
-
-    // TODO: this is copied from ItemInteraction.cs, should be refactored to a common base class
-    private void DoInteraction(string actionName)
-    {
-        Type type = this.GetType();
-        while (type != null && type != typeof(MonoBehaviour))
-        {
-            MethodInfo[] methods = type.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-            foreach (MethodInfo method in methods)
-            {
-                ItemAction attr = method.GetCustomAttribute<ItemAction>();
-                if (attr != null && attr.ActionName == actionName)
-                {
-                    method.Invoke(this, null);
-                    return;
-                }
-            }
-
-            type = type.BaseType;
-        }
-
-        
-        Debug.LogWarning($"No action found for '{actionName}' in {this.GetType().Name}");
-    }
 
     [ItemAction("stay")]
     protected virtual void onStay()

@@ -45,19 +45,25 @@ public class EnemyPatrolState : NPCState
 
     public override void Enter()
     {
-        if (_enemyNPC.PatrolPoints.Length == 0)
+        try
         {
-            throw new System.Exception("EnemyNPC has no patrol points assigned. Cannot enter patrol state.");
-        }
+            if (_enemyNPC.PatrolPoints.Length == 0)
+            {
+                throw new System.Exception("EnemyNPC has no patrol points assigned. Cannot enter patrol state.");
+            }
 
-        _agent.SetDestination(_enemyNPC.PatrolPoints[_currentIndex].position);
+            _agent.SetDestination(_enemyNPC.PatrolPoints[_currentIndex].position);
+        }
+        catch 
+        {
+            _nextState = new EnemyIdleState(_enemyNPC);
+        }
     }
 
     public override NPCStateReturnValue? Update()
     {
         if (_nextState != null)
         {
-            this.NPC!.PushState(this);
             return new NPCStateReturnValue(
                 NPCStateReturnValue.ActionType.ChangeState,
                 _nextState
@@ -102,6 +108,7 @@ public class EnemyPatrolState : NPCState
 
         if (stim.Kind == StimulusKind.Gunshot)
         {
+            this.NPC!.PushState(this);
             _nextState = new EnemyInvestigateState(_enemyNPC, stim.Position);
         }
     }

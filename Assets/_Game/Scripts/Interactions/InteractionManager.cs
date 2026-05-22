@@ -24,7 +24,7 @@ public struct InteractionData
 
 // This script is attached to the `InteractMenus` canvas in the Hierarchy. `InteractMenus` is the parent
 // of all the interact menus in the game. This class is responsible for opening and closing the interact
-// menu, acreating the buttons, and handling button clicks
+// menu, creating the buttons, and handling button clicks
 public class InteractionManager : MonoBehaviour
 {
     [SerializeField] private GameObject _buttonPrefab;
@@ -36,6 +36,8 @@ public class InteractionManager : MonoBehaviour
     public event Action<string> OnInteractionAction;
     public event Action OnLateInteractionAction;
     public event Action OnMenuClosed;
+
+    public ItemAction.Flags ActionFlags = ItemAction.Flags.None;
 
     private static InteractionManager _instance;
     public static InteractionManager Instance
@@ -89,23 +91,38 @@ public class InteractionManager : MonoBehaviour
 
     private void CloseMenu()
     {
-        foreach (Transform child in _buttonPanel.transform)
-        {
-            // Only destroy the button objects, otherwise the panel frame and title are also deleted
-            if (child.TryGetComponent<Button>(out var _))
+        try
+        { 
+            foreach (Transform child in _buttonPanel.transform)
             {
-                Destroy(child.gameObject);
+                // Only destroy the button objects, otherwise the panel frame and title are also deleted
+                if (child.TryGetComponent<Button>(out var _))
+                {
+                    Destroy(child.gameObject);
+                }
+            }
+
+            helpText.SetActive(true);
+            _buttonPanel.SetActive(false);
+
+            if (!ActionFlags.HasFlag(ItemAction.Flags.SkipCrossHairReset))
+            {
+                crossHair.SetActive(true);
+            }
+
+            OnMenuClosed?.Invoke();
+            OnMenuClosed = null;
+            OnInteractionAction = null;
+
+            if (!ActionFlags.HasFlag(ItemAction.Flags.SkipStateChange))
+            {
+                InputManager.Instance.SetInputState(InputState.Gameplay);
             }
         }
-
-        helpText.SetActive(true);
-        crossHair.SetActive(true);
-        _buttonPanel.SetActive(false);
-
-        OnMenuClosed?.Invoke();
-        OnMenuClosed = null;
-        OnInteractionAction = null;
-        InputManager.Instance.SetInputState(InputState.Gameplay);
+        finally
+        {
+            this.ActionFlags = ItemAction.Flags.None;
+        }
     }
 
     private void OnInteractionClicked(string action)

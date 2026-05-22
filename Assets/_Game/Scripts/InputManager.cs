@@ -10,7 +10,8 @@ public enum InputState
     MapLabeling,
     BoatDriving,
     PauseMenu,
-    InteractionMenu
+    InteractionMenu,
+    Conversation
 }
 
 [DefaultExecutionOrder(-1)]
