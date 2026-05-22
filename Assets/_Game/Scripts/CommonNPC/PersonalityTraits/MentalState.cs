@@ -11,6 +11,7 @@ public class MentalState
     public Func<bool> ShouldRegainComfort;
     public Func<bool> ShouldReturnToBaseComposure;
 
+    [MiniscriptStat("comfort")]
     [Tooltip("The entity's comfort level, ranging from -1 (uncomfortable) to 1 (comfortable)")]
     [Range(-1f, 1f)] public float Comfort = 0.5f;
 
@@ -18,12 +19,14 @@ public class MentalState
     [Range(0f, 1f)] public float BaseComfortRate = 0.1f;
 
     // AI: The entity's panic level, ranging from -1 (panicked) to 1 (calm).
+    [MiniscriptStat("calmness")]
     [Tooltip("The entity's panic level, ranging from -1 (panicked), 0 (baseline) up to 1 (extremely calm)")]
     [Range(-1f, 1f)] public float Calmness = 0f;
 
     [Tooltip("How quickly the entity recovers calmness over time (higher = faster recovery)")]
     [Range(0f, 1f)] public float BaseCalmRate = 0.1f;
 
+    [MiniscriptStat("composure")]
     [Tooltip("How emotionally agitated or not this entity is, ranging from -1 (agitated) to 1 (composed)")]
     [Range(-1f, 1f)] public float Composure = 0f;
 
@@ -31,6 +34,7 @@ public class MentalState
     [Range(0f, 1f)] public float ReturnToBaseComposureRate = 0.1f;
 
     private float _timer = 0f;
+
     public void Tick()
     {
         _timer += Time.deltaTime;

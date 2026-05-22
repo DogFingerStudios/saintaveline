@@ -1,16 +1,44 @@
 #nullable enable
 using Miniscript;
 using System;
+using System.Collections.Generic;
 using System.IO;
-using Unity.VisualScripting.YamlDotNet.Core;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
-internal class MiniscriptImplementation
+[AttributeUsage(AttributeTargets.Field)]
+public class MiniscriptStatAttribute : Attribute
 {
-    [MiniscriptFunction("adjust_npc_mentalstate", 3)]
-    public void AdjustNpcAttribute(CharacterEntity npc, string stat, double delta)
+    public string Name { get; }
+    public MiniscriptStatAttribute(string name)
     {
-        Console.WriteLine("arg1: " + npc.ToString() + " arg2: " + stat + " arg3: " + delta.ToString());
+        Name = name;
+    }
+}
+
+public class MiniscriptImplementation
+{
+    private readonly Dictionary<string, FieldInfo> _statFieldsByName = typeof(MentalState)
+        .GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+        .Select(fieldInfo => new
+        {
+            Field = fieldInfo,
+            Attribute = fieldInfo.GetCustomAttribute<MiniscriptStatAttribute>()
+        })
+        .Where(entry => entry.Attribute != null)
+        .ToDictionary(entry => entry.Attribute!.Name, entry => entry.Field);
+
+
+    [MiniscriptFunction("adjust_npc_mentalstate", 3)]
+    public void AdjustNpcAttribute(BaseNPC npc, string stat, double delta)
+    {
+        if (_statFieldsByName.TryGetValue(stat, out FieldInfo field))
+        {
+            float currentValue = (float)field.GetValue(npc.Profile.MentalState);
+            float newValue = Mathf.Clamp(currentValue + (float)delta, -1f, 1f);
+            field.SetValue(npc.Profile.MentalState, newValue);
+        }
     }
 
     [MiniscriptFunction("echo", 1)]
@@ -60,7 +88,7 @@ public class ConversationManager : MonoBehaviour
 
     }
 
-    public void StartConversation(CharacterEntity character, ConversationSO conversation)
+    public void StartConversation(BaseNPC character, ConversationSO conversation)
     {
         InputManager.Instance.SetInputState(InputState.Conversation);
         UIManager.Instance.SetState(false, CursorLockMode.None, true);
