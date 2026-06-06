@@ -19,7 +19,4 @@ public class PersonalityProfile
     // this defines how tightly they follow orders, how much they care
     // about regulations, whether they prioritize “the rules” over pity
     [Range(-1f, 1f)] public float Dutifulness = 0.5f;
-
-    // for matters of whether or not stay rational under emotional pressure
-    [Range(-1f,1f)] public float Composure = 0.5f;
 }

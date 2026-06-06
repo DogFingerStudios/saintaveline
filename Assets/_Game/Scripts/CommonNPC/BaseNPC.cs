@@ -32,8 +32,6 @@ public class BaseNPC : CharacterEntity, IHearingSensor
         set => _animator = value;
     }
 
-    //[SerializeField]
-    //private bool _isAggro = false;
     public bool IsAggro
     {
         get
