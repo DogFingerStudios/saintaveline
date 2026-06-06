@@ -750,7 +750,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: _isAggro
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: stopDistance
@@ -780,6 +780,14 @@ PrefabInstance:
       propertyPath: 'PatrolPoints.Array.data[1]'
       value: 
       objectReference: {fileID: 1077124121}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: _entityProfile._mentalState.Calmness
+      value: -0.595
+      objectReference: {fileID: 0}
+    - target: {fileID: 4174098608106142634, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
+      propertyPath: _entityProfile._mentalState.BaseCalmRate
+      value: 0.074
+      objectReference: {fileID: 0}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 765.3
@@ -3547,7 +3555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 121546170
+      value: 122162010
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -3623,7 +3631,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 83129340
+      value: 83691910
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -44900,7 +44908,6 @@ MonoBehaviour:
       BaseCalmRate: 0.1
       Composure: 0
       ReturnToBaseComposureRate: 0.1
-  _isAggro: 0
   rotationSpeed: 90
   moveSpeed: 7.5
   DetectionDistance: 5
@@ -47080,7 +47087,7 @@ PrefabInstance:
       objectReference: {fileID: 2225440571541060868, guid: 3d475f10d076c444d8584c1be775ba38, type: 3}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 777.5
+      value: 772.67
       objectReference: {fileID: 0}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -47088,7 +47095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 234.1
+      value: 197.74
       objectReference: {fileID: 0}
     - target: {fileID: 5311034482893019840, guid: bd2794bf9e64d463991405af546f3cc4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -47171,8 +47178,9 @@ MonoBehaviour:
   Description: 
   SpawnLocation: {fileID: 0}
   EquippedItemPos: {fileID: 1817214600}
-  _initialInventory: []
-  _initialEquippedItemIndex: -1
+  _initialInventory:
+  - {fileID: 2225440571541060868, guid: 3d475f10d076c444d8584c1be775ba38, type: 3}
+  _initialEquippedItemIndex: 0
   _audioSource: {fileID: 0}
   _entityProfile:
     _personality:
@@ -47180,20 +47188,19 @@ MonoBehaviour:
       Empathy: 0
       Courage: 0.5
       Dutifulness: 0.5
-      Composure: 0.5
+      Composure: 0.05
     _mentalState:
       Comfort: 0.5
       BaseComfortRate: 0.1
       Calmness: 0
       BaseCalmRate: 0.1
-      Composure: 0
+      Composure: 0.05
       ReturnToBaseComposureRate: 0.1
-  _isAggro: 0
   rotationSpeed: 90
   moveSpeed: 3.5
   DetectionDistance: 5
-  stopDistance: 1
-  Target: {fileID: 0}
+  stopDistance: 7.5
+  Target: {fileID: 1417590809}
   Group:
     Members: []
   GroupMembers: []
@@ -52541,11 +52548,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5384087548121770096, guid: a2b5870c8eacfc54180c7dd032aff380, type: 3}
       propertyPath: m_LocalScale.z
-      value: 109.508934
+      value: 117.360725
       objectReference: {fileID: 0}
     - target: {fileID: 5384087548121770096, guid: a2b5870c8eacfc54180c7dd032aff380, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 693
+      value: 698.7
       objectReference: {fileID: 0}
     - target: {fileID: 5384087548121770096, guid: a2b5870c8eacfc54180c7dd032aff380, type: 3}
       propertyPath: m_LocalPosition.y
@@ -52589,7 +52596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5586365529302764015, guid: a2b5870c8eacfc54180c7dd032aff380, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5586365529302764015, guid: a2b5870c8eacfc54180c7dd032aff380, type: 3}
       propertyPath: m_IsActive

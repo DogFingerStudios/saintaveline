@@ -75,5 +75,7 @@ public class NPCDebugHUD : MonoBehaviour
             var currentState = _thisNPC.StateMachine?.CurrentState;
             StateText.text = currentState?.GetType().Name ?? "<Unknown State>";
         }
+
+        NameText.color = _thisNPC.IsAggro ? Color.red : Color.green;
     }
 }

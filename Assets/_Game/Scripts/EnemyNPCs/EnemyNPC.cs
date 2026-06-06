@@ -45,7 +45,8 @@ public class EnemyNPC : BaseNPC
         {
             if (this.StateMachine.CurrentState != null)
             {
-                this.IsAggro = true;
+                //this.IsAggro = true;
+                this.Profile.MentalState.Composure = Mathf.Min(0f, this.Profile.MentalState.Composure - 0.2f);
             }
         }
     }

@@ -140,11 +140,12 @@ public class Pistol1Entity : GunEntity
         if (owner is BaseNPC basenpc)
         {
             layerMask = 1 << basenpc!.Target.gameObject.layer;
+            layerMask |= 1 << LayerMask.NameToLayer("Default");
         }
         else
         {
             Assert.IsTrue(owner is PlayerEntity, "Pistol1Entity.Shoot: owner is not a PlayerEntity or BaseNPC.");
-            layerMask = LayerMask.GetMask("EnemyNPC", "FriendlyNPC");
+            layerMask = LayerMask.GetMask("EnemyNPC", "FriendlyNPC", "Default");
         }
 
         if (Physics.Raycast(_firePoint!.position, direction, out RaycastHit hit, _pistolItemData!.FireRange, layerMask))

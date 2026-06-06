@@ -32,9 +32,15 @@ public class BaseNPC : CharacterEntity, IHearingSensor
         set => _animator = value;
     }
 
-    [SerializeField]
-    private bool _isAggro = false;
-    public bool IsAggro { get => _isAggro; set => _isAggro = value; }
+    //[SerializeField]
+    //private bool _isAggro = false;
+    public bool IsAggro
+    {
+        get
+        {
+            return this.Profile.MentalState.Composure <= 0f;
+        }
+    }
 
     [SerializeField]
     [Tooltip("The rate at which the NPC rotates towards the target")]
