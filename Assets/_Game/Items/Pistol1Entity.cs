@@ -1,7 +1,8 @@
 #nullable enable
+using Mono.Cecil.Cil;
 using System;
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 using UnityEngine.Assertions;
 
 public class Pistol1Entity : GunEntity
@@ -135,8 +136,18 @@ public class Pistol1Entity : GunEntity
 
         Vector3 direction = owner!.DirectionToTarget(true);
 
-        var basenpc = owner as BaseNPC;
-        int layerMask = 1 << basenpc!.Target.gameObject.layer;
+        int layerMask = 0;
+        if (owner is BaseNPC basenpc)
+        {
+            layerMask = 1 << basenpc!.Target.gameObject.layer;
+            layerMask |= 1 << LayerMask.NameToLayer("Default");
+        }
+        else
+        {
+            Assert.IsTrue(owner is PlayerEntity, "Pistol1Entity.Shoot: owner is not a PlayerEntity or BaseNPC.");
+            layerMask = LayerMask.GetMask("EnemyNPC", "FriendlyNPC", "Default");
+        }
+
         if (Physics.Raycast(_firePoint!.position, direction, out RaycastHit hit, _pistolItemData!.FireRange, layerMask))
         {
             var entity = hit.collider.GetComponent<GameEntity>();

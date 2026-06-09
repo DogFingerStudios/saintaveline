@@ -167,9 +167,9 @@ public class ItemEntity : GameEntity, IInteractable
         _defaultLocalRotation = transform.localRotation;
     }
 
-    public virtual void OnUnEquipped()
+    public virtual void OnUnEquipped(bool resetOwner)
     {
-        _ownerEntity = null;
+        if (resetOwner) _ownerEntity = null;
         _interactorEntity = null;
     }
 

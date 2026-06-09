@@ -184,7 +184,7 @@ public class CharacterEntity : GameEntity
                 equippedItem!.OnRemovePhysics();
                 equippedItem!.OnPickedUp(EquippedItemPos); // set the item's position to the character's equipped item pos
                 equippedItem!.gameObject.SetActive(false);
-                equippedItem!.OnUnEquipped(); 
+                equippedItem!.OnUnEquipped(false); 
             }
             else
             {
@@ -234,7 +234,7 @@ public class CharacterEntity : GameEntity
             $"DropEquippedItem: Equipped Item Index is null");
 
         var item = _inventory[_equippedItemIndex];
-        item!.OnUnEquipped();
+        item!.OnUnEquipped(true);
         this.DropItem(item!);
 
         _equippedItemIndex = -1;
@@ -249,7 +249,7 @@ public class CharacterEntity : GameEntity
             $"ThrowEquippedItem: Equipped item's inventory slot is null");
 
         var item = _inventory[_equippedItemIndex];
-        item!.OnUnEquipped();
+        item!.OnUnEquipped(true);
         item!.OnDropped();
         item!.OnRestorePhysics();
 
@@ -304,7 +304,7 @@ public class CharacterEntity : GameEntity
             equippedItem!.OnRemovePhysics();
             equippedItem!.OnPickedUp(EquippedItemPos); // set the item's position to the character's equipped item pos
             equippedItem!.gameObject.SetActive(false);
-            equippedItem!.OnUnEquipped(); 
+            equippedItem!.OnUnEquipped(false); 
 
             _equippedItemIndex = -1;
             return;

@@ -11,6 +11,8 @@ public class EnemyNPC : BaseNPC
     private string _defaultState = "EnemyIdle";
 
     public Transform[] PatrolPoints = new Transform[0];
+
+    [Tooltip("The distance at which the NPC considers itself to have arrived at a destination point.")]
     public float ArrivalThreshold = 0.5f;
 
     public float ViewAngle = 120f;
@@ -45,7 +47,7 @@ public class EnemyNPC : BaseNPC
         {
             if (this.StateMachine.CurrentState != null)
             {
-                this.IsAggro = true;
+                this.Profile.MentalState.Composure = Mathf.Min(0f, this.Profile.MentalState.Composure - 0.2f);
             }
         }
     }
