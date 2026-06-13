@@ -2,9 +2,12 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class NPCDeathState : NPCState
 {
+    List<string> DeathAnimations = new() { "Death_1", "Death_2" };
+
     public NPCDeathState(BaseNPC baseNpc) : base(baseNpc)
     {
         // nothing to do
@@ -13,6 +16,11 @@ public class NPCDeathState : NPCState
     public override void Enter()
     {
         Debug.Log($"{this.NPC!.name} has died.");
+
+        // play a random death animation if available
+        string deathAnimation = DeathAnimations[Random.Range(0, DeathAnimations.Count)];
+        this.NPC!.Animator.Play(deathAnimation);
+
         Rigidbody rb = this.NPC!.GetComponent<Rigidbody>();
         if  (rb != null)
         {
