@@ -13,7 +13,10 @@ public class Pistol1Entity : GunEntity
     private Quaternion _defaultRotation;
     private Coroutine? _attackCoroutine;
     private PistolItemData? _pistolItemData;
+
+    [SerializeField]
     private AudioSource? _audioSource;
+
     private LineRenderer _lineRenderer = null!;
     
     private Transform? _firePoint;
@@ -44,8 +47,6 @@ public class Pistol1Entity : GunEntity
         {
             throw new System.Exception($"PistolInteraction: Item '{this.ItemData!.ItemName}' is not a PistolItemData.");
         }
-
-        _audioSource = Instantiate(_pistolItemData!.AudioSourcePrefab);
 
         _firePoint = new GameObject("FirePoint").transform;
         _firePoint.SetParent(this.transform);
@@ -82,7 +83,7 @@ public class Pistol1Entity : GunEntity
     {
         base.OnStartAttack();
         Shoot();
-        _audioSource!.PlayOneShot(_pistolItemData!.FireSound);
+        _audioSource?.Play();
     }
 
     private IEnumerator AnimateAttack()
