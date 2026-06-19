@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
     using UnityEditor;
 #endif
 
-public class SceneLoader : MonoBehaviour
+public class MainMenuSceneManager : MonoBehaviour
 {
     public void LoadScene(string sceneName)
     {
