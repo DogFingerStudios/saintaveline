@@ -14,19 +14,19 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 1
-  m_FogColor: {r: 0.5849056, g: 0.488341, b: 0.488341, a: 0}
-  m_FogMode: 3
+  m_Fog: 0
+  m_FogColor: {r: 0, g: 0, b: 0, a: 0}
+  m_FogMode: 0
   m_FogDensity: 0
   m_LinearFogStart: 0
   m_LinearFogEnd: 0.01
-  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 0}
-  m_AmbientEquatorColor: {r: 0, g: 0, b: 0, a: 0}
-  m_AmbientGroundColor: {r: 0, g: 0, b: 0, a: 0}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 0}
+  m_AmbientEquatorColor: {r: 0.90588236, g: 0.8156863, b: 0.8156863, a: 0}
+  m_AmbientGroundColor: {r: 0.7372549, g: 0.5294118, b: 0.5294118, a: 0}
   m_AmbientIntensity: 0
-  m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.6320754, g: 0.55157524, b: 0.55157524, a: 0}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 9af23ba5fa5364ff598888460e0e2759, type: 2}
+  m_AmbientMode: 1
+  m_SubtractiveShadowColor: {r: 0.5660378, g: 0.5660378, b: 0.49394804, a: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: d4425bdebd7810b48b29852d281e54a6, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -3629,7 +3629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5490736754747808725, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 127925010
+      value: 127979730
       objectReference: {fileID: 0}
     - target: {fileID: 5798461712433099780, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_Enabled
@@ -3705,7 +3705,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8497853822552326300, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 87347810
+      value: 87426950
       objectReference: {fileID: 0}
     - target: {fileID: 8827480874876668751, guid: 2a405954f53c9634482128343354e0fa, type: 3}
       propertyPath: m_AnchorMax.x
@@ -37790,7 +37790,7 @@ PrefabInstance:
       objectReference: {fileID: 184610867}
     - target: {fileID: 3107997214993371336, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: m_ClearFlags
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3107997214993371336, guid: be9d75cb75e44f3418726ab723e57b24, type: 3}
       propertyPath: m_OcclusionCulling
@@ -53322,7 +53322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 874608226485040222, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4357120802854823438, guid: 14652b9b894fb8447a31c9d8789c680b, type: 3}
       propertyPath: m_Enabled
