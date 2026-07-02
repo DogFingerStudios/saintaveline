@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class SaveFileListUI : MonoBehaviour
 {
@@ -8,11 +9,18 @@ public class SaveFileListUI : MonoBehaviour
     [SerializeField] private SaveFileRowUI rowPrefab;
     [SerializeField] private Button playButton;
 
-    private SaveFileRowUI selectedRow;
-    private string selectedSaveFileName = string.Empty;
+    private SaveFileRowUI _selectedRow;
+    private string _selectedSaveFileName = string.Empty;
+    private string _saveDirectoryPath = null!;
 
     private void Awake()
     {
+        _saveDirectoryPath = Path.Combine(Application.persistentDataPath, "Saves");
+        if (!Directory.Exists(_saveDirectoryPath))
+        {
+            Directory.CreateDirectory(_saveDirectoryPath);
+        }
+
         if (playButton != null)
         {
             playButton.interactable = false;
@@ -21,20 +29,16 @@ public class SaveFileListUI : MonoBehaviour
 
     private void Start()
     {
-        PopulateList(new List<string>
-        {
-            "Save001.json",
-            "Save002.json",
-            "VillageStart.json"
-        });
+        string[] saveFiles = Directory.GetFiles(_saveDirectoryPath, "*.json");
+        PopulateList(new List<string>(saveFiles));
     }
 
     public void PopulateList(List<string> saveFiles)
     {
         ClearList();
 
-        selectedRow = null;
-        selectedSaveFileName = string.Empty;
+        _selectedRow = null;
+        _selectedSaveFileName = string.Empty;
 
         if (playButton != null)
         {
@@ -44,33 +48,33 @@ public class SaveFileListUI : MonoBehaviour
         foreach (string saveFile in saveFiles)
         {
             SaveFileRowUI row = Instantiate(rowPrefab, contentParent);
-            row.Initialize(this, saveFile);
+            row.Initialize(this, Path.GetFileName(saveFile));
         }
     }
 
     public void SelectRow(SaveFileRowUI row, string saveFileName)
     {
-        if (selectedRow != null)
+        if (_selectedRow != null)
         {
-            selectedRow.SetSelected(false);
+            _selectedRow.SetSelected(false);
         }
 
-        selectedRow = row;
-        selectedSaveFileName = saveFileName;
+        _selectedRow = row;
+        _selectedSaveFileName = saveFileName;
 
-        selectedRow.SetSelected(true);
+        _selectedRow.SetSelected(true);
 
         if (playButton != null)
         {
             playButton.interactable = true;
         }
 
-        Debug.Log("Selected save file: " + selectedSaveFileName);
+        Debug.Log("Selected save file: " + _selectedSaveFileName);
     }
 
     public string GetSelectedSaveFileName()
     {
-        return selectedSaveFileName;
+        return Path.Combine(_saveDirectoryPath, _selectedSaveFileName);
     }
 
     private void ClearList()
