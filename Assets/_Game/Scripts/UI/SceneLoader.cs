@@ -5,8 +5,14 @@ using UnityEngine.SceneManagement;
     using UnityEditor;
 #endif
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader : MonoBehaviour 
 {
+    public void SetLoadFilename(string saveFileName = "")
+    {
+        GameStateManager.StartMode = GameStartMode.LoadGame;
+        GameStateManager.SaveFileName = saveFileName;
+    }
+
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);

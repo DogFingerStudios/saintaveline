@@ -1,18 +1,11 @@
-using UnityEngine;
-
-public class GameStateManager : MonoBehaviour
+public enum GameStartMode
 {
-    public static GameStateManager Instance { get; private set; } = null!;
+    NewGame,
+    LoadGame    // Also "Continue Game"
+}
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public static class GameStateManager
+{
+    public static GameStartMode StartMode = GameStartMode.NewGame;
+    public static string SaveFileName { get; set; } = string.Empty;
 }
