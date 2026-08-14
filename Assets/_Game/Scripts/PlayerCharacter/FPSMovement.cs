@@ -18,7 +18,7 @@ public class FPSMovement : MonoBehaviour
     [Header("Physics")]
     public float gravity = -9.81f;
 
-    private CharacterController controller;
+    private CharacterController _controller;
     private Vector3 velocity;          
     private Transform cameraTransform; 
     private float xRotation = 0f;
@@ -31,11 +31,11 @@ public class FPSMovement : MonoBehaviour
     void Start()
     {
         // Get the CharacterController
-        controller = GetComponent<CharacterController>();
+        _controller = GetComponent<CharacterController>();
 
         // Get the default height and center
-        defaultHeight = controller.height;
-        defaultCenter = controller.center;
+        defaultHeight = _controller.height;
+        defaultCenter = _controller.center;
 
         // Find the Camera (child in the hierarchy)
         cameraTransform = GetComponentInChildren<Camera>().transform;
@@ -43,7 +43,7 @@ public class FPSMovement : MonoBehaviour
         // Lock the cursor to the game window
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        controller.Move(Vector3.down * 0.1f);
+        _controller.Move(Vector3.down * 0.1f);
     }
 
     void Update()
@@ -79,22 +79,22 @@ public class FPSMovement : MonoBehaviour
         {
             localMoveSpeed *= crouchSpeedFactor;
             isCrouching = true;
-            controller.height = 1f; // Adjust height for crouching
-            controller.center = new Vector3(0f, 0.5f, 0f); // Adjust center for crouching
+            _controller.height = 1f; // Adjust height for crouching
+            _controller.center = new Vector3(0f, 0.5f, 0f); // Adjust center for crouching
         }
         else if (isCrouching) // Only adjust if we were previously crouching
         {
             isCrouching = false;
 
             // Calculate the difference in height
-            float heightDifference = defaultHeight - controller.height;
+            float heightDifference = defaultHeight - _controller.height;
 
             // Adjust the vertical position based on the height difference
             transform.position += new Vector3(0f, heightDifference / 2f, 0f);
 
             // Reset height and center
-            controller.height = defaultHeight;
-            controller.center = defaultCenter;
+            _controller.height = defaultHeight;
+            _controller.center = defaultCenter;
         }
 
         // Rotate the camera up/down
@@ -112,18 +112,18 @@ public class FPSMovement : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal"); // A/D
         float vertical   = Input.GetAxis("Vertical");   // W/S
         Vector3 move = transform.right * horizontal + transform.forward * vertical;
-        controller.Move(move * localMoveSpeed * Time.deltaTime);
+        _controller.Move(move * localMoveSpeed * Time.deltaTime);
 
         // 3. Gravity & Jump
-        if (controller.isGrounded && velocity.y < 0)
+        if (_controller.isGrounded && velocity.y < 0)
         {
             velocity.y = -2f; // keep the player grounded
         }
 
         velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
+        _controller.Move(velocity * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && controller.isGrounded)
+        if (Input.GetButtonDown("Jump") && _controller.isGrounded)
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
         }

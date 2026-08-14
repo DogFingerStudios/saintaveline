@@ -31,7 +31,7 @@ public class SeenTrigger : MonoBehaviour
 
     private void Awake()
     {
-        // Find the main camera (or a custom FPS controller camera)
+        // Find the main camera (or a custom FPS _controller camera)
         playerCam = Camera.main?.transform;
         if (playerCam == null)
         {
